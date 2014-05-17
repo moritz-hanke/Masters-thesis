@@ -1,0 +1,168 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage{ucs}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[pdftex]{graphicx}
+\usepackage{a4wide}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[marginal]{footmisc}
+\usepackage{url}
+
+\usepackage{longtable}
+
+\usepackage{rotating}
+
+
+%für die Kopfzeile
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage} 
+
+%für römische Zahlen
+\newcommand{\RM}[1]{\MakeUppercase{\romannumeral #1}}
+
+
+\usepackage{multirow}
+\usepackage{tabularx}
+
+\usepackage{amsmath}
+
+
+\usepackage{apager}
+
+
+\usepackage{float}
+\restylefloat{figure}
+
+
+% Für Lit.-Verzeichnis folgenden Befehl im Terminal ausführen: bibtex Masterarbeit_Moritz_Hanke
+\bibliographystyle{apager_dgps}
+
+
+% Fürs Abkürzungsverzeichnis folgenden Befehl im Terminal ausführen: makeindex Masterarbeit_Moritz_Hanke.nlo -s nomencl.ist -o Masterarbeit_Moritz_Hanke.nls
+\usepackage{nomencl}
+\let\abk\nomenclature
+\renewcommand{\nomname}{Abkürzungsverzeichnis}
+\setlength{\nomlabelwidth}{.20\hsize}
+\renewcommand{\nomlabel}[1]{#1 \dotfill}
+\setlength{\nomitemsep}{-\parsep}
+\makenomenclature 
+
+
+\usepackage{Sweave}
+
+
+
+\begin{document}
+
+% Titelblatt
+\thispagestyle{empty}
+
+\begin{center}
+\textbf{\LARGE{TITEL DER ARBEIT\\}} 
+\end{center}
+
+\begin{center}
+\textbf{\Large{\\Masterarbeit}}
+\end{center}
+\begin{verbatim}
+
+\end{verbatim}
+
+\begin{figure}[htbp]
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+\includegraphics{Universitaet_Bremen.png}
+\end{center}
+\end{figure}
+
+\begin{center}
+\textbf{Fachbereich 3: Mathematik \\
+Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
+\end{center}
+\begin{verbatim}
+
+\end{verbatim}
+
+\begin{flushleft}
+\begin{tabular}{lll}
+& & \\
+& & \\
+\textbf{Eingereicht von:} & & Hanke, Moritz \\
+\textbf{Geboren am:} & & 07.08.1985 \\
+\textbf{Matrikelnummer:} & & 2404575 \\
+& & \\
+& & \\
+\textbf{Betreuung:} & & Prof. Dr. Iris Pigeot\\
+& & Dr. Ronja Foraita \\
+& & \\
+& & \\
+\textbf{Eingereicht am:} & & \today\\
+& & \\
+& & \\
+\end{tabular}
+\end{flushleft}
+
+
+
+
+
+%Verzeichnisse
+\pagenumbering{Roman}
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\printnomenclature 
+
+\abk{GWAS}{Genome-wide association study}
+
+
+
+% Begin der Arbeit
+\chapter{Einleitung}
+\pagenumbering{arabic}
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \cite{kim_network-based_2013}
+
+
+
+
+\chapter{Theorie}
+\section{Netzwerke und Graphen}
+
+
+\bibliography{Masterarbeit}
+
+
+\begin{appendix}
+% Die eidesstattliche Erklärung auf einer neuen Seite
+\newpage
+% Keine Nummerierung für diesen Teil
+\section*{Eigenständigkeitserklärung}
+% Keine Kopf- und Fußzeilen ausgeben
+\thispagestyle{empty}
+% Aber trotzdem ins Inhaltsverzeichnis aufnehmen
+\addcontentsline{toc}{chapter}{Eigenständigkeitserklärung}
+% Hier der offizielle Text der eidesstattlichen Erklärung
+Hiermit versichere ich, dass ich die vorliegende Arbeit "`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX"' selbstständig und ohne Benutzung anderer als der angegebenen 
+Hilfsmittel angefertigt habe; die aus fremden Quellen direkt oder indirekt übernommenen Gedanken sind als solche kenntlich gemacht. 
+Die Arbeit wurde bisher in gleicher oder ähnlicher Form keiner anderen Prüfungskommission vorgelegt und auch nicht veröffentlicht.
+% Etwas Abstand für die Unterschrift
+\vspace{3cm}
+% Hier kommt die Unterschrift drüber
+\begin{tabbing}
+\hspace{6cm}  \= \kill
+\textit{Bremen, \today} \> \textit{Moritz Hanke}
+\end{tabbing}
+
+\end{appendix}
+
+\end{document}
+
+
