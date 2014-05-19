@@ -135,10 +135,19 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla 
 
 \chapter{Theorie}
 \section{Netzwerke und Graphen}
-\cite{kolaczyk2009statistical}
-\cite{brandes2005graphfunda}
-\cite{koschuetzki2005centralityindices}
+\subsection{Graphen}
+Mit einem Graphen $G=(V,E)$ wird ein abstraktes Objekt bezeichnet, das aus einer Menge $V$ an \textit{Knoten} und einer Menge $E$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|N|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine Kante $e \in E$ ist die Zuordnung zweier Knoten $u$ und $v$ zueinander, für die $u,v \in V$ gilt. Dabei bezeichnet $e=\{u,v\}$, dass es sich um ein \textit{ungeordnetes} Paar an Knoten handelt, die durch die Kante $e$ verbunden sind. Graphen, die nur ungeordneten Knotenpaaren beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e=(u,v)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt und die Kante $e$ vom \textit{Anfangsknoten} $u$ auf den \textit{Endknoten} $v$ gerichtet ist, womit $(u,v) \neq (v, u)$ gilt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $T=(W,F)$ ist ein \textit{Subgraph} von $G=(V,E)$ wenn $W \subseteq V$ und $F \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, was bedeuetet, dass es weder \textit{Schlingen} ($e={u,u}$) noch mehrere Kanten zwischen zwei Knoten gibt \cite{tittmann2011graphen}.\\
+Zwei Knoten werden als \textit{adjazent} bezeichnet, wenn sie durch eine gemeinsame Kante verbunden sind. Die \textit{Adjazenzmatrix} $\textbf{A}$ ist eine $N_V \times N_V $ Matrix, deren Zeilen und Spalten jeweils den Knoten aus $V$ entspricht \cite{kolaczyk2009statistical}. Für einen ungerichteten Graphen ist $\textbf{A}$ symmetrisch und es gilt 
+\begin{align*}
+A_{ij} = \begin{cases}
+1, \qquad \text{wenn} \ \{i,j\} \in E,\\
+0, \qquad \text{sonst.}\\
+\end{cases}
+\end{align*}
 
+
+%CLUSTER?
+%DAG? <- kommt das bei Kim et al. vor?
 
 \bibliography{Masterarbeit}
 
