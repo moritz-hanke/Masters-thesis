@@ -136,13 +136,13 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla 
 \chapter{Theorie}
 \section{Netzwerke und Graphen}
 \subsection{Graphen}
-Mit einem Graphen $G=(V,E)$ wird ein abstraktes Objekt bezeichnet, das aus einer Menge $V$ an \textit{Knoten} und einer Menge $E$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|N|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine Kante $e \in E$ ist die Zuordnung zweier Knoten $u$ und $v$ zueinander, für die $u,v \in V$ gilt. Dabei bezeichnet $e=\{u,v\}$, dass es sich um ein \textit{ungeordnetes} Paar an Knoten handelt, die durch die Kante $e$ verbunden sind. Graphen, die nur ungeordneten Knotenpaaren beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e=(u,v)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt und die Kante $e$ vom \textit{Anfangsknoten} $u$ auf den \textit{Endknoten} $v$ gerichtet ist, womit $(u,v) \neq (v, u)$ gilt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $T=(W,F)$ ist ein \textit{Subgraph} von $G=(V,E)$ wenn $W \subseteq V$ und $F \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, was bedeuetet, dass es weder \textit{Schlingen} ($e={u,u}$) noch mehrere Kanten zwischen zwei Knoten gibt \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen berücksichtigt.\\
-Zwei Knoten werden als \textit{adjazent} bezeichnet, wenn sie durch eine gemeinsame Kante verbunden sind. Die \textit{Adjazenzmatrix} $\textbf{A}$ ist eine $N_V \times N_V $ Matrix, deren Zeilen und Spalten jeweils den Knoten aus $V$ entsprechen \cite{kolaczyk2009statistical}. Für einen ungerichteten Graphen\footnote{Werden von einem gerichteten Graph die Richtungen der Kanten entfernt, d.h. $(u,v)=\{u,v\}=(v,u)$, bleibt als "`Skelett"' ein ungerichteter Graph übrig, der die Adjazenzmatrix $\textbf{A}$ besitzt.} ist $\textbf{A}$ symmetrisch und es gilt 
+Mit einem Graphen $G=(V,E)$ wird ein abstraktes Objekt bezeichnet, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|N|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Ist eine Kante $e_k \in E$ die Zuordnung zweier Knoten $v_i,v_j \in V$ eines Graphen $G=(V,E)$, gilt ${v_i,v_j} \in e_k$ und die Knoten $v_i$ und $v_j$ werden als \textit{inzident} zu dem Knoten $e_k$ und \textit{adjazent} zueinander bezeichnet. Für $e_k=\{v_i,v_j\}$ handelt es sich um ein \textit{ungeordnetes} Paar an Knoten, d.h. $\{v_i,v_j\}=\{v_j,v_i\}$. Graphen, die nur ungeordneten Knotenpaaren beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e=(u,v)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt und die Kante $e$ vom \textit{Anfangsknoten} $u$ auf den \textit{Endknoten} $v$ gerichtet ist, womit $(u,v) \neq (v, u)$ gilt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $H=(W,F)$ ist ein \textit{Subgraph} von $G=(V,E)$ wenn $W \subseteq V$ und $F \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen} ($e_k={v_i,u_j}$ für $i=j$) noch mehrere Kanten zwischen zwei Knoten \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen berücksichtigt.\\
+Die \textit{Adjazenzmatrix} $\textbf{A}=(a_{ij})_{N_V \times N_V}$, deren Zeilen- und Spaltenbeschriftung jeweils den Knoten aus $V$ entsprechen \cite{kolaczyk2009statistical}, gibt an, ob es eine Kante zwischen zwei Knoten gibt. Für einen ungerichteten Graphen\footnote{Werden von einem gerichteten Graph die Richtungen der Kanten entfernt, d.h. $(u,v)=\{u,v\}=(v,u)$, bleibt als "`Skelett"' ein ungerichteter Graph übrig, der die Adjazenzmatrix $\textbf{A}$ besitzt.} ist $\textbf{A}$ symmetrisch und es gilt 
 \begin{align*}
 A_{ij} = \begin{cases}
-1, \qquad \text{wenn} \ \{i,j\} \in E,\\
+1, \qquad \text{wenn} \ \{v_i,v_j\} \in E,\\
 0, \qquad \text{sonst.}\\
-\end{cases}b
+\end{cases}
 \end{align*}
 Handelt es sich um einen gerichteten Graphen, ist $\textbf{A}$ als
 \begin{align*}
@@ -155,6 +155,8 @@ A_{ij} = \begin{cases}
 definiert \cite{brandes2005graphfunda}.
 
 %CLUSTER?
+%Cliquen? (maximale?)
+%E(G) oder E?
 %DAG? <- kommt das bei Kim et al. vor?
 
 \bibliography{Masterarbeit}
