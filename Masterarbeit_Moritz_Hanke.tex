@@ -29,7 +29,9 @@
 \usepackage{multirow}
 \usepackage{tabularx}
 
+%für Mathe
 \usepackage{amsmath}
+
 
 
 \usepackage{apager}
@@ -136,36 +138,49 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla 
 \chapter{Theorie}
 \section{Netzwerke und Graphen}
 \subsection{Graphen}
-Mit einem Graphen $G=(V,E)$ wird ein abstraktes Objekt bezeichnet, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|N|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Ist eine Kante $e_k \in E$ die Zuordnung zweier Knoten $v_i,v_j \in V$ eines Graphen $G=(V,E)$, gilt ${v_i,v_j} \in e_k$ und die Knoten $v_i$ und $v_j$ werden als \textit{inzident} zu dem Knoten $e_k$ und \textit{adjazent} zueinander bezeichnet. Für $e_k=\{v_i,v_j\}$ handelt es sich um ein \textit{ungeordnetes} Paar an Knoten, d.h. $\{v_i,v_j\}=\{v_j,v_i\}$. Graphen, die nur ungeordneten Knotenpaaren beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e=(u,v)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt und die Kante $e$ vom \textit{Anfangsknoten} $u$ auf den \textit{Endknoten} $v$ gerichtet ist, womit $(u,v) \neq (v, u)$ gilt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $H=(W,F)$ ist ein \textit{Subgraph} von $G=(V,E)$ wenn $W \subseteq V$ und $F \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen} ($e_k={v_i,u_j}$ für $i=j$) noch mehrere Kanten zwischen zwei Knoten \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen berücksichtigt.\\
-Die \textit{Adjazenzmatrix} $\textbf{A}=(a_{ij})_{N_V \times N_V}$, gibt an, ob es eine Kante zwischen zwei Knoten gibt. Für einen ungerichteten Graphen\footnote{Werden von einem gerichteten Graph die Richtungen der Kanten entfernt, d.h. $(u,v)=\{u,v\}=(v,u)$, bleibt als "`Skelett"' ein ungerichteter Graph übrig, der die Adjazenzmatrix $\textbf{A}$ besitzt.} ist $\textbf{A}$ symmetrisch und als 
-\begin{align*}
+Mit einem Graphen $G=(V,E)$ wird ein abstraktes Objekt bezeichnet, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|N|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Ist eine Kante $e_k \in E$ die Zuordnung zweier Knoten $v_i,v_j \in V$ eines Graphen $G=(V,E)$, gilt ${v_i,v_j} \in e_k$. Die Knoten $v_i$ und $v_j$ werden \mbox{i.d.F.} als \textit{inzident} zu dem Knoten $e_k$ und \textit{adjazent} zueinander bezeichnet. Für $e_k=\{v_i,v_j\}$ handelt es sich um ein \textit{ungeordnetes} Paar an Knoten, d.h. $\{v_i,v_j\}=\{v_j,v_i\}$. Graphen, die nur ungeordneten Knotenpaaren beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e_k=(v_i,v_j)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt und die Kante $e_k$ vom \textit{Anfangsknoten} $v_i$ auf den \textit{Endknoten} $v_j$ gerichtet ist, womit $(v_i,v_j) \neq (v_j, v_i)$ gilt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $H=(W,F)$ ist ein \textit{Subgraph} von $G=(V,E)$ wenn $W \subseteq V$ und $F \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen}\footnote{ Schlingen sind Kanten, die nur einen Endknoten an beiden Kantenenden besitzen, dh. $e_k=\{v_i,v_j\}$ bzw. $e_k=(v_i,v_j)$ für $i=j$.} noch mehrere Kanten zwischen zwei Knoten \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen berücksichtigt.\\
+Der Knotengrad $d_{v_i}$ für $v_i \in V$ gibt die Anzahl der Kanten an, die inzident auf den Knoten $v_i$ sind. Für einen Graphen $G=(V,E)$ sind der \textit{Minimumknotengrad} $\delta(G)$, der \textit{Maximumknotengrad} $\Delta(G)$ und der \textit{durchschnittliche Knotengrad} $d(G)$ als
+\begin{align}
+\delta(G):=\min\{d_{v_i} \ | \ v_i \in V\}
+\end{align}
+\begin{align}
+\Delta(G):=\max\{d_{v_i} \ | \ v_i \in V\}
+\end{align}
+\begin{align}
+d(G):=\frac{1}{N_V}\sum_{i=1}^{N_V}d_{v_i}
+\end{align}
+definiert \cite{diestel2006graph}.\\
+Die \textit{Adjazenzmatrix} $\textbf{A}=(a_{ij})_{N_V \times N_V}$, gibt an, ob es eine Kante zwischen zwei Knoten gibt und es sei 
+\begin{align}
 a_{ij} := \begin{cases}
-1, \qquad \text{wenn} \ \{v_i,v_j\} \in E,\\
-0, \qquad \text{sonst.}\\
+1, \qquad &\text{wenn} \ (v_i,v_j) \in E,\\
+0, \qquad &\text{sonst \ .}\\
 \end{cases}
-\end{align*}
-definiert ZITAT DIESTELLLLLL!!!!!\\ 
-Die \textit{Inzidenzmatrix} $\textbf{B}_{\text{ung}}=(b_{ik})_{N_V \times N_E}$ eines \textit{ungerichteten} Graphen $G=(V,E)$ gibt an ob eine Kante $e_k \in E$ inzident zu $v_i \in V$ ist und wird als
-\begin{align*}
+\end{align}
+Handelt es sich bei $G=(V,E)$ um einen ungerichteten Graphen ist $\textbf{A}$ eine symmetrische Matrix \cite{kolaczyk2009statistical}.\\
+Die \textit{Inzidenzmatrix} $\textbf{B}_{\text{u}}=(b_{ik})_{N_V \times N_E}$ eines \textit{ungerichteten} Graphen $G=(V,E)$ gibt an ob eine Kante $e_k \in E$ inzident zu $v_i \in V$ ist \cite{kolaczyk2009statistical} und es gilt
+\begin{align}
 b_{ik} := \begin{cases}
-1, \qquad \text{wenn} \ v_i \in e_k \ ,\\
-0, \qquad \text{sonst .}\\
-\end{cases}
-\end{align*}
-definiert. Für einen \textit{gerichteten} Graphen $G=(V,E)$ ist $\textbf{B}_{\text{ger}}=(b_{ik})_{N_V \times N_E}$ als
-\begin{align*}
-b_{ik} := \begin{cases}
--1, \qquad &\text{wenn} \ (v_i,v_j) \in e_k \ ,\\
-1, \qquad &\text{wenn} \ (v_j,v_i) \in e_k \ ,\\
+1, \qquad &\text{wenn} \ v_i \in e_k \ ,\\
 0, \qquad &\text{sonst .}\\
 \end{cases}
-\end{align*}
+\end{align}
+Für einen \textit{gerichteten} Graphen $G=(V,E)$ kann unterschieden werden ob $v_i \in e_k$ der Anfangs- oder Endknoten ist. \mbox{I.d.F} ist $\textbf{B}_{\text{g}}=(b_{ik})_{N_V \times N_E}$ als
+\begin{align}
+b_{ik} := \begin{cases}
+-1, \qquad &\text{wenn} \ (v_i,v_j) \in e_k \ ,\\
+\ 1, \qquad &\text{wenn} \ (v_j,v_i) \in e_k \ ,\\
+\ 0, \qquad &\text{sonst}\\
+\end{cases}
+\end{align}
 definiert \cite{brandes2005graphfunda}.
 
 %CLUSTER?
 %Cliquen? (maximale?)
 %E(G) oder E?
 %DAG? <- kommt das bei Kim et al. vor?
+%wird minimum, maximum, durchschnitsknotengrad benötigt?
+%macht der zweite teil bei der definition von schlingen in der Fussnote Sinn bzgl. der gerichtetheit der Kante?
 
 \bibliography{Masterarbeit}
 
