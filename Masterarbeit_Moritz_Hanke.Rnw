@@ -204,7 +204,7 @@ Ein ungerichteter Graph $G=(V,E)$ ist \textit{zusammenhängend}, wenn jeder Knot
 % macht der zweite teil bei der definition von schlingen in der Fussnote Sinn bzgl. der gerichtetheit der Kante?
 
 \subsection{Zentralitäts- und Verbundenheitsstatistiken}\label{Zentralitäts- und Verbundenheitsstatistiken}
-Wie in Abbildung \ref{fig:Degree_vs_Path} \cite{Fiedler1973}
+
 
 <<echo=FALSE>>=
 A <- matrix(c(0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1,  #1 
