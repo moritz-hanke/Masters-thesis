@@ -204,39 +204,42 @@ Ein ungerichteter Graph $G=(V,E)$ ist \textit{zusammenhängend}, wenn jeder Knot
 % macht der zweite teil bei der definition von schlingen in der Fussnote Sinn bzgl. der gerichtetheit der Kante?
 
 \subsection{Zentralitäts- und Verbundenheitsstatistiken}\label{Zentralitäts- und Verbundenheitsstatistiken}
+Um die Bedeutung eines Knoten $v_i \in V$ zu bestimmen, kann seine \textit{Zentralität} innerhalb Graphen $G=(V,E)$ angegeben werden. Hierfür finden sich in den Literatur diverse Statistiken, die teilweise zu sehr unterschiedlichen Ergebnissen für den selben Knoten kommen können. Grund dafür ist die Uneindeutigkeit des Begriss Zentralität, die in Abbildung \ref{fig:Degree_vs_Path} 
 
 
 <<echo=FALSE>>=
-A <- matrix(c(0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1,  #1 
-              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #2
-              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,#3
-              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #4
-              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #5
-              1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #6
-              0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,0,  #7
-              0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,0,  #8
-              0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,0,  #9
-              0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,0,  #10
-              0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,0,  #11
-              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,0,  #12
-              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,0,  #13
-              0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #14
-              0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #15
-              0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #16
-              0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,  #17
-              0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,#18
-              0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), ncol=20, byrow=T)
+
+#             1  2  3  4  5  6 6.5 7  8  9 10 11 12 13 14 15 16 17 18 19 
+A <- matrix(c(0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #1 
+              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #2
+              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #3
+              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #4
+              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #5
+              1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #6
+              1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #6.5
+              0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,  #7
+              0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,  #8
+              0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,  #9
+              0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,  #10
+              0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,  #11
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,  #12
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,  #13
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #14
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #15
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #16
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #17
+              0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #18
+              0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), ncol=20, byrow=T)
 
 library(igraph)
 
 g <- graph.adjacency(A, "undirected")
 V(g)$color <- 5
 V(g)[1]$color <- "yellow"
-V(g)[7]$color <- "red"
-V(g)[6]$color <- "green"
+V(g)[8]$color <- "red"
+V(g)[7]$color <- "green"
 @
-<<echo=FALSE, Degree_vs_Path, fig.pos="H", out.width='.6\\linewidth', fig.align='center', fig.lp="fig:", fig.cap="Graph mit drei unteschiedlich zentralen Knoten.">>=
+<<echo=FALSE, Degree_vs_Path, fig.pos="H", out.width='.6\\linewidth', fig.align='center', fig.lp="fig:", fig.cap="Beispiel für einen Graphen, in dem je nach Bestimmung, was Zentralität meint, der rote, der gelbe oder oder grüne Knoten eine relativ bedeutsame Position einnimmt.">>=
 plot(g, edge.width=3)
 @
 
