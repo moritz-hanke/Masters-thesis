@@ -131,7 +131,8 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 % Begin der Arbeit
 \chapter{Einleitung}
 \pagenumbering{arabic}
-Im Zusammenhang von linearen Regression bei \textit{hochdimensionalen Daten} stellt sich häufig das sogenannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um Umstand, dass der Datensatz weniger \textit{Beobachtungen n} als \textit{unabhängige Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h. es liegen bspw. Genexpressionsmessungen von mehreren tausend Genen von bloß einigen hundert oder noch weniger Probanden vor. Für das klassische lineare Regressionsmodell $\mathbf{Y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ kann die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) nur dann erfolgen, wenn $\boldsymbol{\beta}$ spärlich besetzt ist \cite{buehlmann2011statistics}.
+Im Zusammenhang von linearen Regression bei \textit{hochdimensionalen Daten} stellt sich häufig das sogenannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um den Umstand, dass ein Datensatz weniger \textit{Beobachtungen n} als \textit{unabhängige Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h. es werden bspw. es wird das Expressionslevel von mehreren tausend Genen bei wenigen hundert Probanden gemessen. Für das klassische lineare Regressionsmodell $\mathbf{Y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ kann dann die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) nur erfolgen, wenn $\boldsymbol{\beta}$ spärlich besetzt ist \cite{buehlmann2011statistics}.\\
+
 
 
 
