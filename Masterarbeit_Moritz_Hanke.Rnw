@@ -100,7 +100,7 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 \textbf{Matrikelnummer:} & & 2404575 \\
 & & \\
 & & \\
-\textbf{Betreuung:} & & Prof. Dr. Iris Pigeot\\
+\textbf{Betreuung:} & & Prof. Dr. Iris Pigeot-Kübler\\
 & & Dr. Ronja Foraita \\
 & & \\
 & & \\
@@ -131,9 +131,9 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 % Begin der Arbeit
 \chapter{Einleitung}
 \pagenumbering{arabic}
-Im Zusammenhang von linearen Regression bei \textit{hochdimensionalen Daten} stellt sich häufig das sogenannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um den Umstand, dass ein Datensatz weniger \textit{Beobachtungen n} als \textit{unabhängige Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h.es werden bspw. die Expressionslevel von mehreren tausend Genen bei wenigen hundert Probanden gemessen. Für das klassische lineare Regressionsmodell $\mathbf{Y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ kann i.d.F. die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) nur erfolgen, wenn $\boldsymbol{\beta}$ spärlich besetzt ist, da ansonsten die Schätzer nicht eindeutig sind \cite{buehlmann2011statistics}.\\
-\textit{Penalisierungen} bei linearen Regressionen verfolgen dazu den Ansatz der \textit{Variablenselektion}, indem ein \textit{Strafterm} beim Minimierungskriterium des OLS berücksichtigt wird. Der \textit{Least Absolute Shrinkage and Selection Operator} (\textit{LASSO}) von \citeA{tibshirani96regression} ist eine der bekanntesten Methoden für diese Strategie, durch die $\beta_i=0$ erreicht werden kann. Diese Idee wurde in den letzten Jahren im Hinblick auf die Einbeziehung von vorab bekannten Informationen im Strafterm erweitert. \citeA{li_network-constrained_2008} haben dazu einen Strafterm entwickelt, der die Netzwerkstruktur und Abhängigkeiten der unabhängigen Variablen untereinander berücksichtigt. Dieser Ansatz ist besonders in der Genetik vielversprechend, da durch Datenbanken wie der \textit{Kyoto Encyclopedia of Genes and Genomes} (\textit{KEGG}; \citeNP{Kanehisa2000KEGG}) relativ umfangreiche Informationen über biologische Pathways und damit die Abhängigkeit von einzelnen Genen untereinander vorliegen.\\
-In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Penalisierung durch \citeA{kim_network-based_2013} um verschiedene \textit{Zentralitätsmaße} für die Schätzung der Parameter $\boldsymbol{\hat{\beta}}$ ergänzt und untereinander sowie mit "`klassischen"' Penalisierungsansätzen verglichen. Ziel ist es dabei, den Einflusses der zusätzlichen Information über die Knoten auf die Güte der Schätzung darzustellen und darauf basierende Empfehlungen für die Anwendung von netzwerkbasierten Penalisierungen abzugeben.
+Im Zusammenhang mit linearen Regression bei \textit{hochdimensionalen Daten} stellt sich häufig das so genannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um den Umstand, dass ein Datensatz weniger \textit{Beobachtungen n} als \textit{unabhängige Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h. es werden bspw. die Expressionslevel von mehreren Tausend Genen bei wenigen Hundert Probanden gemessen. Für das klassische lineare Regressionsmodell $\mathbf{Y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ kann i.d.F. die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) nur erfolgen, wenn $\boldsymbol{\beta}$ spärlich besetzt ist, da ansonsten die Schätzer nicht eindeutig sind \cite{buehlmann2011statistics}.\\
+\textit{Penalisierungen} bei linearen Regressionen verfolgen dazu den Ansatz der \textit{Variablenselektion}, indem ein \textit{Strafterm} beim Minimierungskriterium des OLS berücksichtigt wird. Der \textit{Least Absolute Shrinkage and Selection Operator} (\textit{LASSO}) von \citeA{tibshirani96regression} ist eine der bekanntesten Methoden für diese Strategie, durch die $\beta_i=0$ erreicht werden kann. Diese Idee wurde in den letzten Jahren im Hinblick auf die Einbeziehung von vorab bekannten Informationen im Strafterm erweitert. \citeA{li_network-constrained_2008} haben dazu einen Strafterm entwickelt, der die Netzwerkstruktur der einzelnen unabhängigen Variablen untereinander berücksichtigt. Dieser Ansatz ist besonders in der Genetik vielversprechend, da durch Datenbanken wie der \textit{Kyoto Encyclopedia of Genes and Genomes} (\textit{KEGG}; \citeNP{Kanehisa2000KEGG}) relativ umfangreiche Informationen über biologische Pathways und damit die Abhängigkeit von einzelnen Genen untereinander vorliegen.\\
+In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Penalisierung durch \citeA{kim_network-based_2013} um verschiedene \textit{Zentralitätsmaße} für die Schätzung der Parameter $\boldsymbol{\hat{\beta}}$ ergänzt und untereinander sowie mit "`klassischen"' Penalisierungsansätzen verglichen. Ziel ist es dabei, den Einfluss der zusätzlichen Information über die Knoten auf die Güte der Schätzung darzustellen und darauf basierende Empfehlungen für die Anwendung von netzwerkbasierten Penalisierungen abzugeben.
 
 
 
@@ -149,48 +149,51 @@ In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Pen
 %
 In den nachfolgenden beiden Unterkapiteln soll eine Auswahl an grundlegenden Begriffen aus der Graphentheorie (Kapitel \ref{Grundlegende Begriffe der Graphentheorie}) sowie Statistiken für Netzwerkanalysen, insbesondere zur Zentralität und Verbundenheit von einzelnen Knoten (Kapitel \ref{Zentralitätsstatistiken}), eingeführt werden, die für diese Arbeit benötigt werden. Für eine ausführliche Erläuterung zur Graphentheorie bzw. zu Netzwerkstatistiken sei auf \citeA{diestel2006graph} sowie \citeA{kolaczyk2009statistical} und \citeA{newman2010networks} verwiesen.\\
 \subsection{Grundlegende Begriffe der Graphentheorie}\label{Grundlegende Begriffe der Graphentheorie}
-Mit einem Graphen $G=(V,E)$ wird ein abstraktes Objekt bezeichnet, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|V|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine Kante $e_k \in E$ ist die Zuordnung zweier Knoten $v_i,v_j \in V$ eines Graphen $G=(V,E)$, d.h. es gilt $\{v_i,v_j\} \in e_k$. Die Knoten $v_i$ und $v_j$ werden \mbox{i.d.F.} als \textit{inzident} zu der Kanten $e_k$ und \textit{adjazent} zueinander bezeichnet. Für $e_k=\{v_i,v_j\}$ handelt es sich um ein \textit{ungeordnetes} Paar an Knoten, d.h. $\{v_i,v_j\}=\{v_j,v_i\}$. Graphen, die nur ungeordnete Knotenpaare beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e_k=(v_i,v_j)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt und die Kante $e_k$ vom \textit{Anfangsknoten} $v_i$ auf den \textit{Endknoten} $v_j$ gerichtet ist, womit $(v_i,v_j) \neq (v_j, v_i)$ gilt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $H=(W,F)$ ist ein \textit{Teilgraph} von $G=(V,E)$ wenn $W \subseteq V$ und $F \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen}\footnote{ Schlingen sind Kanten, die nur einen Endknoten an beiden Kantenenden besitzen, d.h. $e_k=\{v_i,v_j\}$ bzw. $e_k=(v_i,v_j)$ für $i=j$.} noch mehrere Kanten zwischen zwei Knoten \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen berücksichtigt, die entweder gerichtet oder ungerichtet sind.\\
+Ein Graph ist ein Paar $G=(V,E)$, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|V|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine ungerichtete Kante $e_k \in E$, $k=1,\dots,N_E$, ist die Zuordnung zweier Knoten $v_i,v_j \in V$, $i,j \in \{1,\dots,N_V\}$, eines Graphen $G=(V,E)$, d.h. es gilt $\{v_i,v_j\} = e_k$. Die Knoten $v_i$ und $v_j$ werden in diesem Fall als \textit{inzident} zu der Kante $e_k$ und \textit{adjazent} zueinander bezeichnet. Für $e_k=\{v_i,v_j\}$ handelt es sich um ein \textit{ungeordnetes} Knotenpaar an Knoten, d.h. $\{v_i,v_j\}=\{(v_i,v_j),(v_j,v_i)\}$. Graphen, die nur ungeordnete Knotenpaare beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e_k=(v_i,v_j) \neq (v_j,v_i)$ ein \textit{geordnetes} Paar an Knoten handelt, wobei die Kante $e_k$ vom \textit{Anfangsknoten} $v_i$ auf den \textit{Endknoten} $v_j$ zeigt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $G_A=(V_A,E_A)$ ist ein \textit{Teilgraph} von $G=(V,E)$ wenn $V_A \subseteq V$ und $E_A \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen} noch mehrere Kanten zwischen zwei Knoten. Als Schlinge wird eine Kante bezeichnet, die nur einen Endknoten an beiden Kantenenden besitzen, d.h. $e_k=\{v_i,v_i\}$ bzw. $e_k=(v_i,v_i)$ \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen ($N_V < \infty$) berücksichtigt, die entweder gerichtet oder ungerichtet sind.\\
 
-Der Knotengrad $d(v_i)$ für $v_i \in V$ gibt die Anzahl der Kanten an, die inzident auf den Knoten $v_i$ sind. Für einen Graphen $G=(V,E)$ sind der \textit{Minimumknotengrad} $\delta(G)$, der \textit{Maximumknotengrad} $\Delta(G)$ und der \textit{durchschnittliche Knotengrad} $\bar{d}(G)$ als
+Der Knotengrad $d(v)$ für $v \in V$ gibt die Anzahl der Kanten an, die inzident auf den Knoten $v$ sind. Für einen Graphen $G=(V,E)$ sind der \textit{Minimumknotengrad} $\delta(G)$, der \textit{Maximumknotengrad} $\Delta(G)$ und der \textit{durchschnittliche Knotengrad} $\bar{d}(G)$ definiert \cite{diestel2006graph} als
 \begin{align}
-\delta(G)=\min\{d(v_i) \ | \ v_i \in V\}\label{Minimumknotengrad}
+\delta(G)=\min\{d(v) \ | \ v \in V\}\label{Minimumknotengrad}
 \end{align}
 \begin{align}
-\Delta(G)=\max\{d(v_i) \ | \ v_i \in V\}\label{Maximumknotengrad}
+\Delta(G)=\max\{d(v) \ | \ v \in V\}\label{Maximumknotengrad}
 \end{align}
 \begin{align}
-\bar{d}(G)=\frac{1}{N_V}\sum_{v_i \in V}d(v_i)\label{durchschnittlicher Knotengrad}
+\bar{d}(G)=\frac{1}{N_V}\sum_{v \in V}d(v).\label{durchschnittlicher Knotengrad}
 \end{align}
-definiert \cite{diestel2006graph}. Handelt es sich um einen gerichteten Graphen, kann für jeden Knoten $v_i \in V$ mittels $d^{in}(v_i)$ die Anzahl auf $v_i$ und mit $d^{out}(v_i)$ die Anzahl von $v_i$ gerichteten Kanten angegeben werden. Entsprechend können die Statistiken aus \eqref{Minimumknotengrad}, \eqref{Maximumknotengrad} und \eqref{durchschnittlicher Knotengrad} angepasst werden, indem nur $d^{in}(v_i)$ bzw. $d^{out}(v_i)$ berücksichtigt werden.\\
+Handelt es sich um einen gerichteten Graphen, kann für jeden Knoten $v_i \in V$ mittels $d^{in}(v_i)$ die Anzahl auf $v_i$ und mit $d^{out}(v_i)$ die Anzahl von $v_i$ gerichteten Kanten angegeben werden. Entsprechend können die Maße aus \eqref{Minimumknotengrad}, \eqref{Maximumknotengrad} und \eqref{durchschnittlicher Knotengrad} angepasst werden, indem nur $d^{in}(v_i)$ bzw. $d^{out}(v_i)$ berücksichtigt werden.\\
 
-Die \textit{Adjazenzmatrix} $\textbf{A}=(a_{i,j})_{N_V \times N_V}$ kennzeichnet, ob es eine Kante zwischen zwei Knoten gibt und es sei 
+Die \textit{Adjazenzmatrix} $\textbf{A}=(a_{i,j})_{1 \le i,j \le N_V}$ kennzeichnet die Konnektivität, d.h. ob es eine Kante zwischen zwei Knoten gibt. Dafür sei 
 \begin{align}
 a_{i,j} = \begin{cases}
 1, \qquad &\text{wenn} \ (v_i,v_j) \in E \ \textit{für} \ i \neq j \ ,\\
-0, \qquad &\text{sonst \ .}\\
+0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align}
 Handelt es sich bei $G=(V,E)$ um einen ungerichteten Graphen ist $\textbf{A}$ eine symmetrische Matrix \cite{kolaczyk2009statistical}.\\
-Die \textit{Inzidenzmatrix} $\textbf{\~B}=(b_{i,k})_{N_V \times N_E}$ eines \textit{ungerichteten} Graphen $G=(V,E)$ gibt an, ob $e_k \in E$ inzident zu $v_i \in V$ ist \cite{kolaczyk2009statistical} und es sei
+Die \textit{Inzidenzmatrix} $\textbf{B}=(b_{i,k})_{1 \le i \le N_V; 1 \le k \le N_E}$ eines \textit{ungerichteten} Graphen $G=(V,E)$ gibt an, ob $e_k \in E$ inzident zu $v_i \in V$ ist \cite{kolaczyk2009statistical} und es sei
 %nicht gut, dass da schon wieder "sei" ist
 \begin{align}
 b_{i,k} = \begin{cases}
 1, \qquad &\text{wenn} \ v_i \in e_k \ ,\\
-0, \qquad &\text{sonst .}\\
+0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align}
-Für einen \textit{gerichteten} Graphen $G=(V,E)$ kann unterschieden werden, ob $v_i \in e_k$ der Anfangs- oder Endknoten ist. \mbox{I.d.F} ist die Inzidenzmatrix $\textbf{B}=(b_{i,k})_{N_V \times N_E}$ als
+Für einen \textit{gerichteten} Graphen $G=(V,E)$ kann unterschieden werden, ob $v_i \in e_k$ der Anfangs- oder Endknoten ist. In diesem Fall ist die Inzidenzmatrix $\textbf{\~B}=(b_{i,k})_{1 \le i,j \le N_V; 1 \le k \le N_E}$ definiert \cite{brandes2005graphfunda} als
 \begin{align}
-b_{i,k} = \begin{cases}
+\tilde{b}_{i,k} = \begin{cases}
 -1, \qquad &\text{wenn} \ (v_i,v_j) \in e_k \ ,\\
 \ 1, \qquad &\text{wenn} \ (v_j,v_i) \in e_k \ ,\\
-\ 0, \qquad &\text{sonst}\\
+\ 0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align}
-definiert\footnote{Für die ersten beiden Fälle kann auch das Vorzeichen getauscht werden. Siehe dazu bspw. \citeA{kolaczyk2009statistical}.} \cite{brandes2005graphfunda}.\\
-Wird mit $\textbf{D}$ eine \textit{Diagonalmatrix} bezeichnet, deren $i,i$-Eintrag $d(v_i)$ entspricht, gilt $\textbf{BB}^T=\textbf{D}-\textbf{A}$, wobei $\textbf{B}^T$ die transponierte Matrix $\textbf{B}$ ist. $\textbf{BB}^T$ ist eine $N_V \times N_V$ Matrix und wird als \textit{Laplace-Matrix} $\textbf{L}$ bezeichnet \cite{kolaczyk2009statistical}. Sei $\textbf{D}^{1/2}$ eine Diagonalmatrix, deren Einträge für $v_i \in V$ in der $i,i$-Zelle $\frac{1}{\sqrt{d(v_i)}}$ bzw. $0$ für $d(v_i)=0$ sind, so bezeichne $\textbf{\~L}$ die \textit{normierte Laplace-Matrix} für die $\textbf{\~L}=\textbf{D}^{1/2}\textbf{L}\textbf{D}^{1/2}$ gilt \cite{brandes2005graphfunda}.\\ 
+Sei $\textbf{D}=\text{diag}(d(v), v \in V)$ eine \textit{Diagonalmatrix} und $\textbf{\~B}^T$ die transponierte Matrix von $\textbf{\~B}$, dann gilt $\textbf{\~B\~B}^T=\textbf{D}-\textbf{A}$. Dabei handelt es sich bei $\textbf{\~B\~B}^T$ um eine $N_V \times N_V$ Matrix, die als \textit{Laplace-Matrix} $\textbf{L}$ bezeichnet wird. Je größer der zweitkleinste \textit{Eigenwert} $\lambda_2$ der Laplace-Matrix ist, desto mehr Kanten gibt es zwischen den einzelnen Knoten \cite{kolaczyk2009statistical}.\\ 
+\begin{comment}
+Für die \textit{normierte Laplace-Matrix} $\textbf{\~L}$ gilt $\textbf{\~L}=\textbf{D}^{1/2}\textbf{L}\textbf{D}^{1/2}$, wobei $\textbf{D}^{1/2}=\text{diag}\frac{1}{\sqrt{d(v)}}$ für $d(v) \neq 0$ und ansonsten $0$ ist \cite{brandes2005graphfunda}.
+\end{comment}
+% WIRD das gebraucht, wenn der Graph partioniert werden soll??? -> Spectrum
 
-Ein \textit{Weg} $\mathcal{W}(v_0,v_l)$ zwischen den Knoten $v_0$ und $v_l$ in einem Graphen $G=(V,E)$ bezeichnet eine Abfolge $\{v_0, e_1, v_1, e_2, \dots,e_l,v_l \}$ mit $v_0, \dots, v_l \in V$ und $e_1,\dots,e_l \in E$, die die beiden Knoten miteinander verbindet und die \textit{Länge} $l$ hat \cite{diestel2006graph}. Für ungerichtete Graphen gilt hierbei $e_i=\{v_{i-1}, v_i\}$ und für gerichtete Graphen $e_i=(v_{i-1}, v_i)$. Wird zusätzlich gefordert, dass $e_i \neq e_j$ für $i \neq j$ gilt, d.h. keine Kante $e_i$ mehrmals in der Abfolge vorkommt, handelt es sich um eine \textit{Spur} $\mathcal{S}(v_0,v_l)$.\footnote{Nicht zu verwechseln mit der \textit{Spur einer Matrix}.} Erfüllt ein Weg die Bedingung $v_i \neq v_j$ für $i \neq j$, wird dieser \textit{Pfad} $\mathcal{P}(v_0,v_l)$ genannt \cite{brandes2005graphfunda}. Für $v_0 = v_l$ ist $\mathcal{W}(v_0,v_l)$ ein \textit{Zyklus} und für $\mathcal{P}(v_0,v_l)$ ein \textit{Kreis}. Der kürzeste Pfad zwischen zwei Knoten $v_0,v_l \in V$ heißt \textit{Distanz} $D(v_0,v_l)$ und seine Länge entspricht der Anzahl an zugehörigen Kanten. Mit der \textit{größten} Distanz aus allen Knotenkombinationen eines zusammenhängenden Graphen $G=(V,E)$ wird dessen Durchmesser $\phi(G)$ angegeben \cite{diestel2006graph}. Wege, Pfade, Spuren, Zyklen und Kreise sind gerichtet, wenn der zugrunde liegende Graph gerichtet ist. Dieser wird, wenn er keinen Zyklus beinhaltet, als \textit{gerichteter, azyklischer Graph}  (englisch: directed acyclic graph; \textit{DAG}) bezeichnet \cite{kolaczyk2009statistical}.\\
+Ein \textit{Weg} $\mathcal{W}(v_1,v_l)$ zwischen den Knoten $v_1$ und $v_l$ in einem Graphen $G=(V,E)$ bezeichnet eine Abfolge $\{v_1, e_1, v_2,\dots,e_{l-1},v_l \}$ mit $v_1, \dots, v_l \in V$ und $e_1,\dots,e_{l-1} \in E$, die die beiden Knoten miteinander verbindet und die \textit{Länge} $l-1$ hat \cite{diestel2006graph}. Für ungerichtete Graphen gilt hierbei $e_i=\{v_{i-1}, v_i\}$ und für gerichtete Graphen $e_i=(v_{i-1}, v_i)$. Wird zusätzlich gefordert, dass $e_i \neq e_j$ für $i \neq j$ gilt, d.h. keine Kante $e_i$ mehrmals in der Abfolge vorkommt, handelt es sich um eine \textit{Spur} $\mathcal{S}(v_1,v_l)$. Erfüllt ein Weg die Bedingung $v_i \neq v_j$ für $i \neq j$, wird dieser \textit{Pfad} $\mathcal{P}(v_1,v_l)$ genannt \cite{brandes2005graphfunda}. Für $v_1 = v_l$ ist $\mathcal{W}(v_1,v_l)$ ein \textit{Zyklus} und für $\mathcal{P}(v_1,v_l)$ ein \textit{Kreis}. Der kürzeste Pfad zwischen zwei Knoten $v_1,v_l \in V$ heißt \textit{Distanz} $D(v_1,v_l)$ und seine Länge entspricht der Anzahl an zugehörigen Kanten. Mit der \textit{größten} Distanz aus allen Knotenkombinationen eines zusammenhängenden Graphen $G=(V,E)$ wird dessen Durchmesser $\phi(G)$ angegeben \cite{diestel2006graph}. Wege, Pfade, Spuren, Zyklen und Kreise sind gerichtet, wenn der zugrunde liegende Graph gerichtet ist. Dieser wird, wenn er keinen Zyklus beinhaltet, als \textit{gerichteter, azyklischer Graph}  (englisch: directed acyclic graph; \textit{DAG}) bezeichnet \cite{kolaczyk2009statistical}.\\
 
 Ein ungerichteter Graph $G=(V,E)$ ist \textit{zusammenhängend}, wenn jeder Knoten $v_i \in V$ von jedem anderen Knoten $v_j \in V$ über einen Weg erreicht werden kann. Entsprechend ist ein Graph \textit{unzusammenhängend}, wenn mindestens ein Knoten nicht von allen übrigen Knoten erreicht werden kann. Ein maximal zusammenhängender Teilgraph $H=(W,F)$, für den $W \subseteq V$ und $F \subseteq E$ für $G=(V,E)$ gilt, heißt \textit{Komponente}. Ist $G=(V,E)$ gerichtet, so wird dieser als \textit{schwach verbunden} bezeichnet, wenn der zugrunde liegende ungerichtete Graph zusammenhängend ist, und als \textit{stark verbunden}, wenn jeder Knoten von jedem anderen Knoten über einen direkten Weg erreichbar ist \cite{brandes2005graphfunda}. Mit der $k$-\textit{Verbundeheit} $\kappa(G)$ wird angegeben, wie viele Knoten mindestens aus einem zusammenhängenden Graphen $G=(V,E)$ \textit{entfernt} werden müssen, damit dieser unzusammenhängend wird \cite{diestel2006graph}.\\
 
@@ -249,8 +252,8 @@ plot(g, edge.width=3)
 @
 
 \paragraph*{Eigenvektor-Zentralität}
-\paragraph*{Eigenvektor-Zentralität}
-\paragraph*{Eigenvektor-Zentralität}
+\paragraph*{Closeness-Zentralität}
+\paragraph*{Betweeness-Zentralität}
 
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
