@@ -187,7 +187,7 @@ Für einen \textit{gerichteten} Graphen $G=(V,E)$ kann unterschieden werden, ob 
 \ 0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align}
-Sei $\textbf{D}=\text{diag}(d(v), v \in V)$ eine \textit{Diagonalmatrix} und $\textbf{\~B}^T$ die transponierte Matrix von $\textbf{\~B}$, dann gilt $\textbf{\~B\~B}^T=\textbf{D}-\textbf{A}$. Dabei handelt es sich bei $\textbf{\~B\~B}^T$ um eine $N_V \times N_V$ Matrix, die als \textit{Laplace-Matrix} $\textbf{L}$ bezeichnet wird. Je größer der zweitkleinste \textit{Eigenwert} $\lambda_2$ der Laplace-Matrix ist, desto mehr Kanten gibt es zwischen den einzelnen Knoten \cite{kolaczyk2009statistical}.\\ 
+Sei $\textbf{D}=\text{diag}(d(v), v \in V)$ eine \textit{Diagonalmatrix} und $\textbf{\~B}^T$ die transponierte Matrix von $\textbf{\~B}$, dann gilt $\textbf{\~B\~B}^T=\textbf{D}-\textbf{A}$. Dabei handelt es sich bei $\textbf{\~B\~B}^T$ um eine $N_V \times N_V$ Matrix, die als \textit{Laplace-Matrix} $\textbf{L}$ bezeichnet wird. Deren zweitkleinste \textit{Eigenwert} $\lambda_2$ ist umso größer je mehr Kanten es zwischen den einzelnen Knoten gibt und kann als ein Maß für die \textit{Verbundenheit} des Graphen interpretiert werden \cite{kolaczyk2009statistical}.\\ 
 \begin{comment}
 Für die \textit{normierte Laplace-Matrix} $\textbf{\~L}$ gilt $\textbf{\~L}=\textbf{D}^{1/2}\textbf{L}\textbf{D}^{1/2}$, wobei $\textbf{D}^{1/2}=\text{diag}\frac{1}{\sqrt{d(v)}}$ für $d(v) \neq 0$ und ansonsten $0$ ist \cite{brandes2005graphfunda}.
 \end{comment}
@@ -195,24 +195,18 @@ Für die \textit{normierte Laplace-Matrix} $\textbf{\~L}$ gilt $\textbf{\~L}=\te
 
 Ein \textit{Weg} $\mathcal{W}(v_1,v_l)$ zwischen den Knoten $v_1$ und $v_l$ in einem Graphen $G=(V,E)$ bezeichnet eine Abfolge $\{v_1, e_1, v_2,\dots,e_{l-1},v_l \}$ mit $v_1, \dots, v_l \in V$ und $e_1,\dots,e_{l-1} \in E$, die die beiden Knoten miteinander verbindet und die \textit{Länge} $l-1$ hat \cite{diestel2006graph}. Für ungerichtete Graphen gilt hierbei $e_i=\{v_{i-1}, v_i\}$ und für gerichtete Graphen $e_i=(v_{i-1}, v_i)$. Wird zusätzlich gefordert, dass $e_i \neq e_j$ für $i \neq j$ gilt, d.h. keine Kante $e_i$ mehrmals in der Abfolge vorkommt, handelt es sich um eine \textit{Spur} $\mathcal{S}(v_1,v_l)$. Erfüllt ein Weg die Bedingung $v_i \neq v_j$ für $i \neq j$, wird dieser \textit{Pfad} $\mathcal{P}(v_1,v_l)$ genannt \cite{brandes2005graphfunda}. Für $v_1 = v_l$ ist $\mathcal{W}(v_1,v_l)$ ein \textit{Zyklus} und für $\mathcal{P}(v_1,v_l)$ ein \textit{Kreis}. Der kürzeste Pfad zwischen zwei Knoten $v_1,v_l \in V$ heißt \textit{Distanz} $D(v_1,v_l)$ und seine Länge entspricht der Anzahl an zugehörigen Kanten. Mit der \textit{größten} Distanz aus allen Knotenkombinationen eines zusammenhängenden Graphen $G=(V,E)$ wird dessen Durchmesser $\phi(G)$ angegeben \cite{diestel2006graph}. Wege, Pfade, Spuren, Zyklen und Kreise sind gerichtet, wenn der zugrunde liegende Graph gerichtet ist. Dieser wird, wenn er keinen Zyklus beinhaltet, als \textit{gerichteter, azyklischer Graph}  (englisch: directed acyclic graph; \textit{DAG}) bezeichnet \cite{kolaczyk2009statistical}.\\
 
-Ein ungerichteter Graph $G=(V,E)$ ist \textit{zusammenhängend}, wenn jeder Knoten $v_i \in V$ von jedem anderen Knoten $v_j \in V$ über einen Weg erreicht werden kann. Entsprechend ist ein Graph \textit{unzusammenhängend}, wenn mindestens ein Knoten nicht von allen übrigen Knoten erreicht werden kann. Ein maximal zusammenhängender Teilgraph $H=(W,F)$, für den $W \subseteq V$ und $F \subseteq E$ für $G=(V,E)$ gilt, heißt \textit{Komponente}. Ist $G=(V,E)$ gerichtet, so wird dieser als \textit{schwach verbunden} bezeichnet, wenn der zugrunde liegende ungerichtete Graph zusammenhängend ist, und als \textit{stark verbunden}, wenn jeder Knoten von jedem anderen Knoten über einen direkten Weg erreichbar ist \cite{brandes2005graphfunda}. Mit der $k$-\textit{Verbundeheit} $\kappa(G)$ wird angegeben, wie viele Knoten mindestens aus einem zusammenhängenden Graphen $G=(V,E)$ \textit{entfernt} werden müssen, damit dieser unzusammenhängend wird \cite{diestel2006graph}.\\
-
+Ein ungerichteter Graph $G=(V,E)$ ist \textit{zusammenhängend}, wenn jeder Knoten $v_i \in V$ von jedem anderen Knoten $v_j \in V$ über einen Weg erreicht werden kann. Entsprechend ist ein Graph \textit{unzusammenhängend}, wenn mindestens ein Knoten nicht von allen übrigen Knoten erreicht werden kann. 
+Als \textit{Komponente} eines Graphen wird ein \textit{maximal zusammenhängender} Subgraph $G_A=(V_A,E_A)$ mit $V_A \subseteq V$ und $E_A \subseteq E$ für $G=(V,E)$ bezeichnet, wobei "`maximal"' die Eigenschaft ist, dass es keinen zusammenhängenden Subgraphen  $G_B=(V_B, E_B)$ in $G=(V,E)$ gibt, für den $V_B \supseteq V_A$ und $E_B \supseteq E_A$ gilt. Eine \textit{Clique} ist ein Subgraph in dem alle Knoten adjazent zueinander sind.
+\begin{comment}
+Ein maximal zusammenhängender Teilgraph $G_A=(V_A,E_A)$, für den $V_A \subseteq V$ und $E_A \subseteq E$ für $G=(V,E)$ gilt und es keinen zusammenhängenden Subgraphen  gibt, heißt \textit{Komponente}.
+\end{comment} 
+Ist $G=(V,E)$ gerichtet, so wird dieser als \textit{schwach verbunden} bezeichnet, wenn der zugrunde liegende ungerichtete Graph zusammenhängend ist, und als \textit{stark verbunden}, wenn jeder Knoten von jedem anderen Knoten über einen direkten Weg erreichbar ist \cite{brandes2005graphfunda}. Mit der $k$-\textit{Verbundeheit} $\kappa(G)$ wird angegeben, wie viele Knoten mindestens aus einem zusammenhängenden Graphen $G=(V,E)$ \textit{entfernt} werden müssen, damit dieser unzusammenhängend wird \cite{diestel2006graph}.\\
 % Cluster?
 % tree?
-% := oder =
-% Cliquen? (maximale?)
-% induced subgraph
-% Beweis BB'=D-A ?
-% Kantengewichte?
-% k-Connectivity (unterscheidung knoten und edge k connectivity?)
-% was bedeutet maximal zusammenhängend bei Komponente? einfach nur, dass es keinen Knoten in dem Teilgraphen gibt, der diesen unzusammenhängend machen würde?
-% E(G) oder E?
-% DAG? <- kommt das bei Kim et al. vor?
-% wird minimum, maximum, durchschnitsknotengrad benötigt?
-% macht der zweite teil bei der definition von schlingen in der Fussnote Sinn bzgl. der gerichtetheit der Kante?
+% Cliquen?
 
 \subsection{Zentralitätsstatistiken}\label{Zentralitätsstatistiken}
-Um die \textit{Bedeutung} eines Knotens $v_i \in V$ zu bestimmen, kann seine \textit{Zentralität} innerhalb des Graphen $G=(V,E)$ angegeben werden. In der Literatur finden sich diverse Statistiken, die Zentralität teilweise sehr unterschiedlich definieren und daher bei der Beurteilung, wie zentral ein Knoten ist, zu unterschiedlichen Ergebnissen kommen können.\footnote{Vgl. dazu bspw. \citeA{koschuetzki2005centralityindices}.} Ein Beispiel für die Mehrdeutigkeit des Begriffs Zentralität sind die Knoten $1$, $7$ und $8$ im Graphen in Abbildung \ref{fig:Degree_vs_Path}. Wird die Zentralität schlicht als die Anzahl an benachbarten Knoten aufgefasst, hat Knoten $1$ (gelb) eine relativ zentrale Position ($d(1)=6$), Knoten $7$ (grün) hingegen ist nach dieser Definition weniger zentral gelegen ($d(7)=2$). Wird dagegen die Zentralität als die Anzahl an Pfaden, auf denen ein Knoten liegt aufgefasst, sind die Knoten $8$ (rot) und $7$ zentraler als der Knoten $1$.\\
+Um die \textit{Bedeutung} eines Knotens $v_i \in V$ zu bestimmen, kann seine \textit{Zentralität} innerhalb des Graphen $G=(V,E)$ angegeben werden. In der Literatur finden sich diverse Maße, die Zentralität teilweise sehr unterschiedlich definieren und daher bei der Beurteilung, wie zentral ein Knoten ist, zu unterschiedlichen Ergebnissen kommen können (vgl. dazu bspw. \citeA{koschuetzki2005centralityindices}). Ein Beispiel für die Mehrdeutigkeit des Begriffs Zentralität sind die Knoten $1$, $7$ und $8$ im Graphen in Abbildung \ref{fig:Degree_vs_Path}. Wird die Zentralität schlicht als die Anzahl an benachbarten Knoten aufgefasst, hat Knoten $1$ (gelb) eine relativ zentrale Position ($d(1)=6$), Knoten $7$ (grün) hingegen ist nach dieser Definition weniger zentral gelegen ($d(7)=2$). Wird dagegen die Zentralität als die Anzahl an Pfaden, auf denen ein Knoten liegt aufgefasst, sind die Knoten $8$ (rot) und $7$ zentraler als der Knoten $1$.\\
 
 
 <<echo=FALSE>>=
