@@ -261,16 +261,18 @@ plot(g, edge.width=3)
 \subsection{Multikollinearität und $p > n$}
 
 \section{Penalisierte Regression}\label{Penalisierte Regression}
-Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken
+Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
+Ridge wird eingeführt, weil Teil von Elastic Net
 
 \subsection{Ridge-Regression}
-Bei der \textit{Ridge-Regression} wird das kleinste Quadratkriterium $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i \boldsymbol{\beta})^2$ um die Nebenbedingung $\sum_{j=1}^{p}\beta_j \le t$ mit $t > 0$ ergänzt. Für den Ridge-Schätzer $\hat{\beta}^ridge$ für $\beta$ ergibt sich 
+Bei der \textit{Ridge-Regression} handelt es sich um einen Methode zur \textit{Schrumpfung} (englisch: shrinkage) der zu schätzenden $\boldsymbol{\beta}$, die allerdings in der Regel nicht zu einer Reduzierung der Anzahl an Kovariablen führt. Für die Ridge-Regression wird das kleinste Quadratkriterium $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i \boldsymbol{\beta})^2$ um die Nebenbedingung $\sum_{j=1}^{p}\beta_j \le t$ mit $t > 0$ ergänzt. Zusätzlich werden die abhängige Variable $Y$ sowie die Kovariablen $\boldsymbol{X}$ normiert, sodass sich $\frac{1}{n}\sum_{i}^{n}y_i =0$ sowie $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ ergibt. Somit ist
 \begin{align}
-\arg \displaystyle\min_{\boldsymbol{\beta}} \left\lbrace \sum_{i=1}^{n} y_i - \left(\sum_{j=1}^{p}\mathbf{x}_{ij} \boldsymbol{\beta_j}^2 \right) + \lambda \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \lambda \ge 0.
+\arg \displaystyle\min_{\boldsymbol{\beta}} \left\lbrace \sum_{i=1}^{n} y_i - \left(\sum_{j=1}^{p}\mathbf{x}_{ij} \boldsymbol{\beta_j}^2 \right) + \lambda \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \lambda \ge 0
 \end{align}
-als zu minimierender Term \cite{hastie2009elements}.
-$t$ und $\lambda$ hängen di
+der für die Schätzung $\boldsymbol{\beta}^{ridge}$ für $\boldsymbol{\beta}$ zu minimierender Term \cite{hastie2009elements}. Je kleiner der
+\textit{Restriktionsparameter} $t$ gewählt wird, desto größer wird der \textit{Tuningparamter} $\lambda$. Die Wahl des Restriktionsparamters bzw. Tuningsparamters wird vom Anwender getroffen und bspw. aus den Daten mittels Kreizvalidierung geschätzt 
 
+%beta_0 fällt weg?
 
 
 
