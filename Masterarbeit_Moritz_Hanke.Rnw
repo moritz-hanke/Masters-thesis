@@ -127,6 +127,7 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{Lasso}{Least absolute shrinkage and selection operator}
 \abk{DAG}{Directed acyclic graph}
 \abk{OLS}{Ordinary least squares}
+\abk{MSE}{Mean squared error}
 
 
 
@@ -250,6 +251,13 @@ plot(g, edge.width=3)
 \paragraph*{Eigenvektor-Zentralität}
 \paragraph*{Closeness-Zentralität}
 \paragraph*{Betweeness-Zentralität}
+
+\section{Lineare Regression}
+\subsection{Kleinste Quadrate Methode}
+\subsection{Multikollinearität und $p > n$}
+
+\section{Penalisierte Regression}\label{Penalisierte Regression}
+Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) 
 
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
