@@ -252,16 +252,24 @@ plot(g, edge.width=3)
 \paragraph*{Closeness-Zentralität}
 \paragraph*{Betweeness-Zentralität}
 
+% gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
+% statt d(v_i) sowas wie nachbran von nachbarn?
+
+
 \section{Lineare Regression}
 \subsection{Kleinste Quadrate Methode}
 \subsection{Multikollinearität und $p > n$}
 
 \section{Penalisierte Regression}\label{Penalisierte Regression}
-Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) 
+Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken
 
-% gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
-% statt d(v_i) sowas wie nachbran von nachbarn?
-
+\subsection{Ridge-Regression}
+Bei der \textit{Ridge-Regression} wird das kleinste Quadratkriterium $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i \boldsymbol{\beta})^2$ um die Nebenbedingung $\sum_{j=1}^{p}\beta_j \le t$ mit $t > 0$ ergänzt. Für den Ridge-Schätzer $\hat{\beta}^ridge$ für $\beta$ ergibt sich 
+\begin{align}
+\arg \displaystyle\min_{\boldsymbol{\beta}} \left\lbrace \sum_{i=1}^{n} y_i - \left(\sum_{j=1}^{p}\mathbf{x}_{ij} \boldsymbol{\beta_j}^2 \right) + \lambda \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \lambda \ge 0.
+\end{align}
+als zu minimierender Term \cite{hastie2009elements}.
+$t$ und $\lambda$ hängen di
 
 
 
