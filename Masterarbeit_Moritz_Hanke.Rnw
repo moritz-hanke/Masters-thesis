@@ -279,7 +279,63 @@ Alternativ lässt sich \ref{Ridge_lagrangian} auch in Matrixnotation darstellen
 
 %beta_0 fällt weg?
 
+<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', out.width='0.5\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
+#### R-Code Lasso vs Ridge Ellipsen
 
+library(ellipse)
+#
+# Plot an ellipse corresponding to a 95% probability region for a 
+# bivariate normal distribution with mean scale, variances scale and 
+# correlation 0.8. 
+#
+x <- y <- seq(-12,12,.1)
+covmat <- matrix(c(1,0.5,0.5,1),nrow=2,ncol=2)
+
+#par(mfcol=c(1,2))
+#layout(matrix(c(1,1), ncol=2, byrow = TRUE),
+#   widths=c(3,1), heights=c(1,2))
+
+### RIDGE
+
+plot(ellipse(x=covmat,scale=c(2.26,2.26),centre=c(4,9.35),level=0.95),
+     type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
+     ylab=expression(beta[2]),xaxt="n",yaxt="n") 
+abline(a=0,b=0,col="grey")
+abline(v=0,col="grey")
+lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
+lines(ellipse(x=covmat,scale=c(.3,.3),centre=c(4,9.35),level=0.95))
+points(4,9.35, pch=20, col="red", cex=1.7)
+text(5.15,8.6, expression(hat(beta)^{OLS}), cex=1.4)
+
+axis(1,at=0)
+axis(2,at=0)
+covmatc <- matrix(c(1,0,0,1),nrow=2,ncol=2)
+lines(ellipse(x=covmatc,scale=c(2,2),level=0.85))
+points(0.68,3.85, col="cyan2", pch=20, cex=1.7)
+text(1.4,4.8, expression(hat(beta)^{ridge}), cex=1.4)
+
+### LASSO
+plot(ellipse(x=covmat,scale=c(1.88,1.88),centre=c(4,9.35),level=0.95, lwd=3),
+     type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
+     ylab=expression(beta[2]),xaxt="n",yaxt="n") 
+abline(a=0,b=0,col="grey")
+abline(v=0,col="grey")
+lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
+lines(ellipse(x=covmat,scale=c(.3,.3),centre=c(4,9.35),level=0.95))
+points(4,9.35, pch=20, col="red", cex=1.7)
+text(5.15,8.6, expression(hat(beta)^{OLS}), cex=1.4)
+
+axis(1,at=0)
+axis(2,at=0)
+edge <- 5.4
+lines(x=c(-edge,0),y=c(0,edge), lwd=1)
+lines(x=c(-edge,0),y=c(0,-edge), lwd=1)
+lines(x=c(0,edge),y=c(-edge,0), lwd=1)
+lines(x=c(0,edge),y=c(edge,0), lwd=1)
+
+points(0,5.4, col="cyan2", pch=20, cex=1.7)
+text(1.2,6, expression(hat(beta)^{Lasso}), cex=1.4)
+@
 
 
 
