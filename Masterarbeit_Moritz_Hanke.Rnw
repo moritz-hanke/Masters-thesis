@@ -279,7 +279,7 @@ Alternativ lässt sich \ref{Ridge_lagrangian} auch in Matrixnotation darstellen
 
 %beta_0 fällt weg?
 
-<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', out.width='0.5\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
+<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
 #### R-Code Lasso vs Ridge Ellipsen
 
 library(ellipse)
@@ -291,15 +291,13 @@ library(ellipse)
 x <- y <- seq(-12,12,.1)
 covmat <- matrix(c(1,0.5,0.5,1),nrow=2,ncol=2)
 
-#par(mfcol=c(1,2))
-#layout(matrix(c(1,1), ncol=2, byrow = TRUE),
-#   widths=c(3,1), heights=c(1,2))
+
 
 ### RIDGE
 
 plot(ellipse(x=covmat,scale=c(2.26,2.26),centre=c(4,9.35),level=0.95),
      type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
-     ylab=expression(beta[2]),xaxt="n",yaxt="n") 
+          ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1)
 abline(a=0,b=0,col="grey")
 abline(v=0,col="grey")
 lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
@@ -317,7 +315,7 @@ text(1.4,4.8, expression(hat(beta)^{ridge}), cex=1.4)
 ### LASSO
 plot(ellipse(x=covmat,scale=c(1.88,1.88),centre=c(4,9.35),level=0.95, lwd=3),
      type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
-     ylab=expression(beta[2]),xaxt="n",yaxt="n") 
+     ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1) 
 abline(a=0,b=0,col="grey")
 abline(v=0,col="grey")
 lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
