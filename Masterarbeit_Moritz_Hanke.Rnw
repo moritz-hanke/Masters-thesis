@@ -269,13 +269,22 @@ Bei der \textit{Ridge-Regression} handelt es sich um einen Methode zur \textit{S
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\beta}^{ridge}(\lambda)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \lambda \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \lambda \ge 0.
 \end{align}
-Je kleiner der
-\textit{Restriktionsparameter} $t$ gewählt wird, desto größer wird der \textit{Tuningparamter} $\lambda$. Die Wahl des Restriktionsparamters bzw. Tuningsparamters wird vom Anwender getroffen und kann mit verschiedenen Methoden aus den Daten geschätzt werden (vgl. dazu ). 
-Alternativ lässt sich \ref{Ridge_lagrangian} auch in Matrixnotation darstellen
+Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \ref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\lambda$ durch
 \begin{align}
-\boldsymbol{\beta}^{ridge}(\lambda)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta} \notag \\
+PRSS(\boldsymbol{\beta}, \lambda)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta} \notag \\
 &=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta}
 \end{align}
+darstellen. Differenzieren nach $\boldsymbol{\beta}$ ergibt
+\begin{align}\label{Ableitung_Ridge}
+\frac{\partial \ PRSS(\boldsymbol{\beta}, \lambda)}{\partial \  \boldsymbol{\beta}}= -2\mathbf{y}^T\mathbf{X} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta}
+\end{align}
+und durch Nullsetzen von \ref{Ableitung_Ridge} ergibt sich für den Schätzer $\boldsymbol{\beta}^{ridge}$
+\begin{align}
+Inhalt...
+\end{align}
+Je kleiner der
+\textit{Restriktionsparameter} $t$ gewählt wird, desto größer wird der \textit{Tuningparamter} $\lambda$. Die Wahl des Restriktionsparamters bzw. Tuningsparamters wird vom Anwender getroffen und kann mit verschiedenen Methoden aus den Daten geschätzt werden (vgl. dazu ). 
+
 
 %beta_0 fällt weg?
 
