@@ -265,22 +265,25 @@ Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um d
 Ridge wird eingeführt, weil Teil von Elastic Net
 
 \subsection{Ridge-Regression}
-Bei der \textit{Ridge-Regression} handelt es sich um einen Methode zur \textit{Schrumpfung} (englisch: shrinkage) der zu schätzenden $\boldsymbol{\beta}$, die allerdings in der Regel nicht zu einer Reduzierung der Anzahl an Kovariablen führt. Dazu wird das kleinste Quadratkriterium $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die Nebenbedingung $\sum_{j=1}^{p}\beta_j \le t$ mit $t > 0$ ergänzt. Sowohl die abhängige Variable $Y$ als auch die Kovariablen $\boldsymbol{X}$ werden normiert, sodass sich $\frac{1}{n}\sum_{i}^{n}y_i =0$ sowie $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ ergibt. Als Minimierungsproblem ergibt sich \cite{hastie2009elements}
+Bei der \textit{Ridge-Regression} handelt es sich um einen Methode zur \textit{Schrumpfung} (englisch: shrinkage) der zu schätzenden $\boldsymbol{\beta}$, die allerdings in der Regel nicht zu einer Reduzierung der Anzahl an Kovariablen führt. Dazu wird das kleinste Quadratkriterium $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die Nebenbedingung $\sum_{j=1}^{p}\beta_j \le t$ mit $t > 0$ ergänzt. Zusätzlich ist abhängige Variable $Y$ zentriert,d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Als Minimierungsproblem ergibt sich \cite{hastie2009elements}
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\beta}^{ridge}(\lambda)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \lambda \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \lambda \ge 0.
 \end{align}
 Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \ref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\lambda$ durch
 \begin{align}
-PRSS(\boldsymbol{\beta}, \lambda)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta} \notag \\
+\text{PRSS}(\boldsymbol{\beta}, \lambda)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta} \notag \\
 &=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta}
 \end{align}
 darstellen. Differenzieren nach $\boldsymbol{\beta}$ ergibt
 \begin{align}\label{Ableitung_Ridge}
-\frac{\partial \ PRSS(\boldsymbol{\beta}, \lambda)}{\partial \  \boldsymbol{\beta}}= -2\mathbf{y}^T\mathbf{X} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta}
+\frac{\partial \text{PRSS}(\boldsymbol{\beta}, \lambda)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta}
 \end{align}
-und durch Nullsetzen von \ref{Ableitung_Ridge} ergibt sich für den Schätzer $\boldsymbol{\beta}^{ridge}$
+und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{ridge}$
 \begin{align}
-Inhalt...
+&& 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta} \notag \\
+&\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \lambda \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag \\
+&\Leftrightarrow & (\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \lambda \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag\\
+&\Rightarrow & \boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y}.
 \end{align}
 Je kleiner der
 \textit{Restriktionsparameter} $t$ gewählt wird, desto größer wird der \textit{Tuningparamter} $\lambda$. Die Wahl des Restriktionsparamters bzw. Tuningsparamters wird vom Anwender getroffen und kann mit verschiedenen Methoden aus den Daten geschätzt werden (vgl. dazu ). 
