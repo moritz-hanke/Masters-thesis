@@ -143,15 +143,16 @@ In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Pen
 
 
 
-\chapter{Theorie}\label{Theorie}
-\section{Graphen und Netzwerkstatistiken}\label{Graphen und Netzwerkstatistiken}
+\chapter{Theorie}\label{Kap_Theorie}
+\section{Graphen und Netzwerkstatistiken}\label{Kap_Graphen und Netzwerkstatistiken}
 %
 %
 % Netzwerke <--> Graphen
 %
 %
-In den nachfolgenden beiden Unterkapiteln wird eine Auswahl an grundlegenden Begriffen aus der Graphentheorie (Kapitel \ref{Grundlegende Begriffe der Graphentheorie}) sowie Statistiken für Netzwerkanalysen, insbesondere zur Zentralität und Verbundenheit von einzelnen Knoten (Kapitel \ref{Zentralitätsstatistiken}), eingeführt, die für diese Arbeit benötigt werden. Für eine ausführliche Erläuterung zur Graphentheorie bzw. zu Netzwerkstatistiken sei auf \citeA{diestel2006graph} sowie \citeA{kolaczyk2009statistical} und \citeA{newman2010networks} verwiesen.\\
-\subsection{Grundlegende Begriffe der Graphentheorie}\label{Grundlegende Begriffe der Graphentheorie}
+In den nachfolgenden beiden Unterkapiteln wird eine Auswahl an grundlegenden Begriffen aus der Graphentheorie (Kapitel \ref{Kap_Grundlegende Begriffe der Graphentheorie}) sowie Statistiken für Netzwerkanalysen, insbesondere zur Zentralität und Verbundenheit von einzelnen Knoten (Kapitel \ref{Kap_Zentralitätsstatistiken}), eingeführt, die für diese Arbeit benötigt werden. Für eine ausführliche Erläuterung zur Graphentheorie bzw. zu Netzwerkstatistiken sei auf \citeA{diestel2006graph} sowie \citeA{kolaczyk2009statistical} und \citeA{newman2010networks} verwiesen.\\
+
+\subsection{Grundlegende Begriffe der Graphentheorie}\label{Kap_Grundlegende Begriffe der Graphentheorie}
 Ein Graph ist ein Paar $G=(V,E)$, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|V|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine ungerichtete Kante $e_k \in E$, $k=1,\dots,N_E$, ist die Zuordnung zweier Knoten $v_i,v_j \in V$, $i,j \in \{1,\dots,N_V\}$, eines Graphen $G=(V,E)$, d.h. es gilt $\{v_i,v_j\} = e_k$. Die Knoten $v_i$ und $v_j$ werden in diesem Fall als \textit{inzident} zu der Kante $e_k$ und \textit{adjazent} zueinander bezeichnet. Für $e_k=\{v_i,v_j\}$ handelt es sich um ein \textit{ungeordnetes} Knotenpaar an Knoten, d.h. $\{v_i,v_j\}=\{(v_i,v_j),(v_j,v_i)\}$. Graphen, die nur ungeordnete Knotenpaare beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e_k=(v_i,v_j) \neq (v_j,v_i)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt, wobei die Kante $e_k$ vom \textit{Anfangsknoten} $v_i$ auf den \textit{Endknoten} $v_j$ zeigt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $G_A=(V_A,E_A)$ ist ein \textit{Teilgraph} von $G=(V,E)$ wenn $V_A \subseteq V$ und $E_A \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen} noch mehrere Kanten zwischen zwei Knoten. Als Schlinge wird eine Kante bezeichnet, die nur einen Endknoten an beiden Kantenenden besitzen, d.h. $e_k=\{v_i,v_i\}$ bzw. $e_k=(v_i,v_i)$ \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen ($N_V < \infty$) berücksichtigt, die entweder gerichtet oder ungerichtet sind.\\
 
 Der Knotengrad $d(v)$ für $v \in V$ gibt die Anzahl der Kanten an, die inzident auf den Knoten $v$ sind. Für einen Graphen $G=(V,E)$ sind der \textit{Minimumknotengrad} $\delta(G)$, der \textit{Maximumknotengrad} $\Delta(G)$ und der \textit{durchschnittliche Knotengrad} $\bar{d}(G)$ definiert \cite{diestel2006graph} als
@@ -208,7 +209,7 @@ Ist $G=(V,E)$ gerichtet, so wird dieser als \textit{schwach verbunden} bezeichne
 % tree?
 % Cliquen?
 
-\subsection{Zentralitätsstatistiken}\label{Zentralitätsstatistiken}
+\subsection{Zentralitätsstatistiken}\label{Kap_Zentralitätsstatistiken}
 Um die \textit{Bedeutung} eines Knotens $v_i \in V$ zu bestimmen, kann seine \textit{Zentralität} innerhalb des Graphen $G=(V,E)$ angegeben werden. In der Literatur finden sich diverse Maße, die Zentralität teilweise sehr unterschiedlich definieren und daher bei der Beurteilung, wie zentral ein Knoten ist, zu unterschiedlichen Ergebnissen kommen können (vgl. dazu bspw. \citeA{koschuetzki2005centralityindices}). Ein Beispiel für die Mehrdeutigkeit des Begriffs Zentralität sind die Knoten $1$, $7$ und $8$ im Graphen in Abbildung \ref{fig:Degree_vs_Path}. Wird die Zentralität schlicht als die Anzahl an benachbarten Knoten aufgefasst, hat Knoten $1$ (gelb) eine relativ zentrale Position ($d(1)=6$), Knoten $8$ (rot) hingegen ist nach dieser Definition weniger zentral gelegen ($d(8)=5$). Wird dagegen die Zentralität als die Anzahl an Pfaden, auf denen ein Knoten liegt aufgefasst, ist unmittelbar ersichtlich, dass der Knoten $8$ (rot) zentraler als der Knoten $1$ ist.\\
 
 
@@ -266,17 +267,18 @@ plot(g, edge.width=3)
 % - MSE
 
 
-\section{Penalisierte Regression}\label{Penalisierte Regression}
+\section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
 Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
 Ridge wird eingeführt, weil Teil von Elastic Net\\
 kein Intercept (bei allen Penalisierungen?); durch Standardiersung bzw. Zentralisierung fällt $\beta_0$ weg \cite{montgomery2012introduction}
 
-\subsection{Ridge-Regression}
-Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar. Allerdings findet in der Regel \textit{keine} Variablenselektion statt \cite{montgomery2012introduction}, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt. Für die Ridge-Regression wird $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. $t$ wird in diesem Zusammenhang als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $Y$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, wodurch $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Das Minimierungsproblem lässt sich mittels dem Tuningparameter $\gamma$ darstellen, der mit mit t zusammenhängt \cite{hastie2009elements}
+\subsection{Ridge-Regression}\label{Kap_Ridge-Regression}
+Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar. Allerdings findet in der Regel \textit{keine} Variablenselektion statt \cite{montgomery2012introduction}, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt. Für die Ridge-Regression wird $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. $t$ wird in diesem Zusammenhang als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $Y$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, wodurch $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Der Restriktionsparameter hängt mit einem Tuningparameter $\gamma$ zusammen, sodass sich für die Schätzung von $\boldsymbol{\hat{\beta}}^{ridge}$ das  Minimierungsproblem
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\beta}^{ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
-Wird $t \ge \sum_{j=1}^{p} (\hat{\beta}_j^{OLS})^2$ gesetzt, entsprichen die Ridge-Schätzer den OLS-Schätzern, da in diesem Fall $\gamma=0$ gilt und \ref{Ridge_lagrangian} sich zum einfachen KQ-Schätzer reduziert.
+ergibt \cite{hastie2009elements}.
+Wird $t \ge \sum_{j=1}^{p} (\hat{\beta}_j^{OLS})^2$ gesetzt, entsprichen die Ridge-Schätzer den OLS-Schätzern, da in diesem Fall $\gamma=0$ ist und \ref{Ridge_lagrangian} sich zum einfachen KQ-Minimierungsproblem reduziert.\\
 Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \ref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\gamma$ durch
 \begin{align}
 \text{PRSS}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\gamma\boldsymbol{\beta} \notag \\
@@ -287,27 +289,27 @@ darstellen. Differenzieren nach $\boldsymbol{\beta}$ ergibt
 \frac{\partial \text{PRSS}(\boldsymbol{\beta}, \gamma)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta}
 \end{align}
 und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{ridge}$ \cite{montgomery2012introduction}
-\begin{align}
+\begin{align}\label{Ridge_estimate}
 && 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta} \notag \\
 &\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \gamma \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag \\
 &\Leftrightarrow & (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag\\
 &\Rightarrow & \boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y}.
 \end{align}
-Der Ridge-Schätzer kann auch als Transformation des OLS-Schätzers dargestellt werden \cite{hoerl_ridge_1970}
+Der Ridge-Schätzer aus \ref{Ridge_estimate} kann auch als Transformation des OLS-Schätzers dargestellt werden \cite{hoerl_ridge_1970}
 \begin{align}\label{ridge_transformation}
 \boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
 &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
 &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
-&= (\mathbf{I} + \gamma (\mathbf{X}^T\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}
+&= (\mathbf{I} + \gamma (\mathbf{X}^T\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}.
 \end{align}
-woran erkennbar ist, dass $\boldsymbol{\beta}^{ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\gamma \ne 0$ gilt und $\boldsymbol{\beta}^{ridge}$ nicht erwartungstreu ist \cite{seber2003linear}. Es lässt sich zeigen, dass für den MSE für $\boldsymbol{\beta}^{ridge}$ 
+Daraus ist ersichtlich, dass $\boldsymbol{\beta}^{ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\gamma \ne 0$ gilt und in diesem Fall $\boldsymbol{\beta}^{ridge}$ nicht erwartungstreu ist \cite{seber2003linear}.\\ 
+Es lässt sich zeigen, dass für den MSE für $\boldsymbol{\beta}^{ridge}$ 
 \begin{align}\label{MSE_ridge}
 \text{MSE}(\boldsymbol{\beta}^{ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta} (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
-gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Teil des Terms \ref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}^{ridge}}$ und der rechte der durch $\gamma$ erzeugte Bias, woran deutlich wird, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den MSE minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, wodurch $MSE(\boldsymbol{\beta}^{ridge}) < MSE(\boldsymbol{\beta}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahren bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich bei \citeA{montgomery2012introduction}. 
-Je kleiner der
-\textit{Restriktionsparameter} $t$ gewählt wird, desto größer wird der \textit{Tuningparamter} $\lambda$. Die Wahl des Restriktionsparamters bzw. Tuningsparamters wird vom Anwender getroffen und kann mit verschiedenen Methoden aus den Daten geschätzt werden (vgl. dazu ). 
+gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Teil des Terms \ref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{ridge}$ und der rechte der durch $\gamma$ erzeugte Bias, woran deutlich wird, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den MSE minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $MSE(\boldsymbol{\beta}^{ridge}) < MSE(\boldsymbol{\beta}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahren bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
 
+\subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
 
 %beta_0 fällt weg?
 
