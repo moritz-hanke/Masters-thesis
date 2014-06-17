@@ -258,6 +258,7 @@ plot(g, edge.width=3)
 
 \section{Lineare Regression}
 \subsection{Kleinste Quadrate Methode}
+\subsection{Bias-variance-tradeoff}
 \subsection{Multikollinearität und $p > n$}
 
 \section{Penalisierte Regression}\label{Penalisierte Regression}
@@ -265,7 +266,7 @@ Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um d
 Ridge wird eingeführt, weil Teil von Elastic Net
 
 \subsection{Ridge-Regression}
-Bei der \textit{Ridge-Regression} handelt es sich um einen Methode zur \textit{Schrumpfung} (englisch: shrinkage) der zu schätzenden $\boldsymbol{\beta}$, die allerdings in der Regel nicht zu einer Reduzierung der Anzahl an Kovariablen führt. Dazu wird das kleinste Quadratkriterium $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. Zusätzlich ist abhängige Variable $Y$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Als Minimierungsproblem ergibt sich \cite{hastie2009elements}
+Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten $\hat{\beta}_j$ für $j=1, \dots, p$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar. Allerdings findet dadurch in der Regel keine Variablenselektion statt \cite{montgomery2012introduction}. Für die Ridge-Regression wird das kleinste Quadratkriterium $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. Zusätzlich ist die abhängige Variable $Y$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ werden standardisiert, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Als Minimierungsproblem ergibt sich \cite{hastie2009elements}
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\beta}^{ridge}(\lambda)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \lambda \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \lambda \ge 0.
 \end{align}
@@ -278,13 +279,21 @@ darstellen. Differenzieren nach $\boldsymbol{\beta}$ ergibt
 \begin{align}\label{Ableitung_Ridge}
 \frac{\partial \text{PRSS}(\boldsymbol{\beta}, \lambda)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta}
 \end{align}
-und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{ridge}$
+und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{ridge}$ \cite{montgomery2012introduction}
 \begin{align}
 && 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta} \notag \\
 &\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \lambda \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag \\
 &\Leftrightarrow & (\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \lambda \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag\\
 &\Rightarrow & \boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y}.
 \end{align}
+Der Ridge-Schätzer kann auch als Transformation des OLS-Schätzers dargestellt werden
+\begin{align}
+\boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
+&= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
+&= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
+&= (\mathbf{I} + \lambda (\mathbf{X}^T\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}
+\end{align}
+woran erkennbar ist, dass $\boldsymbol{\beta}^{ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\lambda \ne 0$ gilt und $\boldsymbol{\beta}^{ridge}$ nicht erwartungstreu ist \cite{seber2003linear}.
 Je kleiner der
 \textit{Restriktionsparameter} $t$ gewählt wird, desto größer wird der \textit{Tuningparamter} $\lambda$. Die Wahl des Restriktionsparamters bzw. Tuningsparamters wird vom Anwender getroffen und kann mit verschiedenen Methoden aus den Daten geschätzt werden (vgl. dazu ). 
 
