@@ -268,40 +268,43 @@ plot(g, edge.width=3)
 
 \section{Penalisierte Regression}\label{Penalisierte Regression}
 Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
-Ridge wird eingeführt, weil Teil von Elastic Net
+Ridge wird eingeführt, weil Teil von Elastic Net\\
+kein Intercept (bei allen Penalisierungen?); durch Standardiersung bzw. Zentralisierung fällt $\beta_0$ weg \cite{montgomery2012introduction}
 
 \subsection{Ridge-Regression}
-Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten $\hat{\beta}_j$ für $j=1, \dots, p$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar. Allerdings findet dadurch in der Regel keine Variablenselektion statt \cite{montgomery2012introduction}. Für die Ridge-Regression wird $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. Zusätzlich ist die abhängige Variable $Y$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ werden standardisiert, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Als Minimierungsproblem ergibt sich \cite{hastie2009elements}
+Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar. Allerdings findet in der Regel \textit{keine} Variablenselektion statt \cite{montgomery2012introduction}, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt. Für die Ridge-Regression wird $\displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. $t$ wird in diesem Zusammenhang als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $Y$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, wodurch $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Als Minimierungsproblem ergibt sich \cite{hastie2009elements}
 \begin{align}\label{Ridge_lagrangian}
-\boldsymbol{\beta}^{ridge}(\lambda)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \lambda \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \lambda \ge 0.
+\boldsymbol{\beta}^{ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
-Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \ref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\lambda$ durch
+Der \textit{Tuningparameter} $\gamma$ und der Restriktionsparameter $t$ direkt miteinander verbunden  besteht ein direkter Zusamme
+Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \ref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\gamma$ durch
 \begin{align}
-\text{PRSS}(\boldsymbol{\beta}, \lambda)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta} \notag \\
-&=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\lambda\boldsymbol{\beta}
+\text{PRSS}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\gamma\boldsymbol{\beta} \notag \\
+&=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\gamma\boldsymbol{\beta}
 \end{align}
 darstellen. Differenzieren nach $\boldsymbol{\beta}$ ergibt
 \begin{align}\label{Ableitung_Ridge}
-\frac{\partial \text{PRSS}(\boldsymbol{\beta}, \lambda)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta}
+\frac{\partial \text{PRSS}(\boldsymbol{\beta}, \gamma)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta}
 \end{align}
 und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{ridge}$ \cite{montgomery2012introduction}
 \begin{align}
-&& 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\lambda \boldsymbol{\beta} \notag \\
-&\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \lambda \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag \\
-&\Leftrightarrow & (\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \lambda \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag\\
-&\Rightarrow & \boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y}.
+&& 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta} \notag \\
+&\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \gamma \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag \\
+&\Leftrightarrow & (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag\\
+&\Rightarrow & \boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y}.
 \end{align}
 Der Ridge-Schätzer kann auch als Transformation des OLS-Schätzers dargestellt werden \cite{hoerl_ridge_1970}
 \begin{align}\label{ridge_transformation}
-\boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
-&= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
-&= (\mathbf{X}^T\mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
-&= (\mathbf{I} + \lambda (\mathbf{X}^T\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}
+\boldsymbol{\beta}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
+&= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
+&= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
+&= (\mathbf{I} + \gamma (\mathbf{X}^T\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}
 \end{align}
-woran erkennbar ist, dass $\boldsymbol{\beta}^{ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\lambda \ne 0$ gilt und $\boldsymbol{\beta}^{ridge}$ nicht erwartungstreu ist \cite{seber2003linear}. Der MSE für $\boldsymbol{\beta}^{ridge}$ lässt sich darstellen als
-\begin{align}
-\text{MSE}(\boldsymbol{\beta}^{ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + }
+woran erkennbar ist, dass $\boldsymbol{\beta}^{ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\gamma \ne 0$ gilt und $\boldsymbol{\beta}^{ridge}$ nicht erwartungstreu ist \cite{seber2003linear}. Es lässt sich zeigen, dass für den MSE für $\boldsymbol{\beta}^{ridge}$ 
+\begin{align}\label{MSE_ridge}
+\text{MSE}(\boldsymbol{\beta}^{ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta} (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
+gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Teil des Terms \ref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}^{ridge}}$ und der rechte der durch $\gamma$ erzeugte Bias, woran deutlich wird, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den MSE minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, wodurch $MSE(\boldsymbol{\beta}^{ridge}) < MSE(\boldsymbol{\beta}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahren bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich bei \citeA{montgomery2012introduction}. 
 Je kleiner der
 \textit{Restriktionsparameter} $t$ gewählt wird, desto größer wird der \textit{Tuningparamter} $\lambda$. Die Wahl des Restriktionsparamters bzw. Tuningsparamters wird vom Anwender getroffen und kann mit verschiedenen Methoden aus den Daten geschätzt werden (vgl. dazu ). 
 
