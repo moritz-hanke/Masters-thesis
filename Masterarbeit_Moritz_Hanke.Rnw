@@ -134,8 +134,8 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 % Begin der Arbeit
 \chapter{Einleitung}
 \pagenumbering{arabic}
-Im Zusammenhang mit linearen Regressionen bei \textit{hochdimensionalen Daten} stellt sich häufig das so genannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um den Umstand, dass ein Datensatz weniger \textit{Beobachtungen n} als \textit{erklärende Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h. es werden beispielsweise die Expressionslevel von mehreren Tausend Genen bei wenigen Hundert Probanden gemessen. Für das klassische lineare Regressionsmodell $\mathbf{Y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ liefert in diesem Fall die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) keine eindeutige Lösung und das Modell wird an die Daten überangepasst \cite{hastie_efficient_2004}. In der Regel wird deshalb gefordert, dass $\boldsymbol{\beta}$ \textit{spärlich} besetzt ist, d.h. für die meisten Regressionskoeffizienten $\beta_i=0$ gilt \cite{buehlmann2011statistics}.\\
-\textit{Penalisierungen} bei linearen Regressionen ergänzen das Kleinste-Quadrat-Kriterium\\ $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ des OLS \cite{ludwig2009regression} um einen \textit{Strafterm}, wodurch einzelne Regressionkoeffizienten $\beta_i$ als $\hat{\beta}_i=0$ geschätzt werden können und eine eindeutige Lösung bestimmbar ist. Der \textit{Least absolute shrinkage and selection operator} (\textit{Lasso}) von \citeA{tibshirani96regression} ist eine der bekanntesten Methoden für diese Strategie und wurde in den letzten Jahren im Hinblick auf die Einbeziehung von vorab bekannten Informationen im Strafterm erweitert. \citeA{li_network-constrained_2008} haben dazu einen Strafterm entwickelt, der die Netzwerkstruktur der erklärenden Variablen untereinander berücksichtigt. Dieser Ansatz ist besonders in der Genetik vielversprechend, da durch Datenbanken wie der \textit{Kyoto Encyclopedia of Genes and Genomes} (\textit{KEGG}; \citeNP{Kanehisa2000KEGG}) relativ umfangreiche Informationen über Genregulationsnetzwerke (sogenannte \textit{Pathways}) und damit über die Abhängigkeit von einzelnen Genen untereinander vorliegen.\\
+Im Zusammenhang mit linearen Regressionen bei \textit{hochdimensionalen Daten} stellt sich häufig das so genannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um den Umstand, dass ein Datensatz weniger \textit{Beobachtungen n} als \textit{erklärende Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h. es werden beispielsweise die Expressionslevel von mehreren Tausend Genen bei wenigen Hundert Probanden gemessen. Für das klassische lineare Regressionsmodell $\mathbf{y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ liefert in diesem Fall die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) keine eindeutige Lösung und das Modell wird an die Daten überangepasst \cite{hastie_efficient_2004}. In der Regel wird deshalb gefordert, dass $\boldsymbol{\beta}$ \textit{spärlich} besetzt ist, d.h. für die meisten Regressionskoeffizienten $\beta_i=0$ gilt \cite{buehlmann2011statistics}.\\
+\textit{Penalisierungen} bei linearen Regressionen ergänzen das Kleinste-Quadrat-Kriterium\\ $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ des OLS \cite{fahrmeir2009regression} um einen \textit{Strafterm}, wodurch einzelne Regressionkoeffizienten $\beta_i$ als $\hat{\beta}_i=0$ geschätzt werden können und eine eindeutige Lösung bestimmbar ist. Der \textit{Least absolute shrinkage and selection operator} (\textit{Lasso}) von \citeA{tibshirani96regression} ist eine der bekanntesten Methoden für diese Strategie und wurde in den letzten Jahren im Hinblick auf die Einbeziehung von vorab bekannten Informationen im Strafterm erweitert. \citeA{li_network-constrained_2008} haben dazu einen Strafterm entwickelt, der die Netzwerkstruktur der erklärenden Variablen untereinander berücksichtigt. Dieser Ansatz ist besonders in der Genetik vielversprechend, da durch Datenbanken wie der \textit{Kyoto Encyclopedia of Genes and Genomes} (\textit{KEGG}; \citeNP{Kanehisa2000KEGG}) relativ umfangreiche Informationen über Genregulationsnetzwerke (sogenannte \textit{Pathways}) und damit über die Abhängigkeit von einzelnen Genen untereinander vorliegen.\\
 In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Penalisierung durch \citeA{kim_network-based_2013} um verschiedene \textit{Zentralitätsmaße} bei der Schätzung der Parameter $\boldsymbol{\beta}$ vorgestellt. Die Ergebnisse werden untereinander sowie mit den "`klassischen"' Penalisierungsansätzen Lasso und \textit{Elastic net} \cite{zou_regularization_2005} verglichen. Ziel ist es dabei, den Einfluss der zusätzlichen Information über die erklärenden Variablen, die ein Netzwerk bilden, auf die Güte der Schätzung darzustellen und darauf basierende Empfehlungen für die Anwendung von netzwerkbasierten Penalisierungen abzugeben.
 
 
@@ -258,6 +258,45 @@ plot(g, edge.width=3)
 
 
 \section{Lineare Regression}
+\subsection{Das klassische lineare Modell}
+Im klassischen linearen Modell soll eine Beziehung zwischen der zu erklärende Variable $y$ und den Kovariablen $x_1, \dots, x_p$ durch eine \textit{Linearkombination}
+\begin{align}\label{klassisches_modell}
+y=\beta_0 + \beta_1 x_1 + \dots \beta_p k_p + \varepsilon.
+\end{align}
+Die Parameter $\beta_0, \beta_1, \dots, \beta_p$ müssen dafür geschätzt werden, wobei $\beta_0$ eine Konstante ist \cite{montgomery2012introduction}. $\epsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen vor und seien
+\begin{align*}
+\mathbf{y} = \begin{pmatrix}
+y_1\\ 
+\vdots\\
+y_n
+\end{pmatrix}
+\qquad \text{und} \qquad
+\boldsymbol{\beta} = \begin{pmatrix}
+\beta_1\\ 
+\vdots\\
+\beta_n
+\end{pmatrix}
+\qquad \text{sowie} \qquad
+\boldsymbol{\varepsilon} = \begin{pmatrix}
+\varepsilon_1\\ 
+\vdots\\
+\varepsilon_n
+\end{pmatrix}
+\end{align}
+Spaltenvektoren und
+\begin{align*}
+\mathbf{X} = \begin{pmatrix}
+1 & x_1 & \dots & x_{1p}\\ 
+\vdots & \vdots & &\vdots\\
+1 & x_n & \dots & x_{np}
+\end{pmatrix}
+\end{align*}
+die Kovariablenmatrix, so kann \ref{klassisches_modell} für die $n$ Beobachtungen das klassische Regressionsmodell als
+\begin{align}
+\mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
+\end{align}
+dargestellt werden XXXX ANDERE QUELLE MAL XXXX.
+
 \subsection{Kleinste Quadrate Methode}
 \subsection{Bias-variance-tradeoff}
 \subsection{Multikollinearität und $p > n$}
@@ -273,7 +312,7 @@ Ridge wird eingeführt, weil Teil von Elastic Net\\
 kein Intercept (bei allen Penalisierungen?); durch Standardiersung bzw. Zentralisierung fällt $\beta_0$ weg \cite{montgomery2012introduction}
 
 \subsection{Ridge-Regression}\label{Kap_Ridge-Regression}
-Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar \cite{montgomery2012introduction}. Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $Y$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Der Restriktionsparameter $t$ hängt invers mit einem \textit{Tuningparameter} $\gamma$ zusammen, wodurch sich die Schätzung von $\boldsymbol{\hat{\beta}}^{ridge}$ als Minimierungsproblem
+Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar \cite{montgomery2012introduction}. Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $\mathbf{y}$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Der Restriktionsparameter $t$ hängt invers mit einem \textit{Tuningparameter} $\gamma$ zusammen, wodurch sich die Schätzung von $\boldsymbol{\hat{\beta}}^{ridge}$ als Minimierungsproblem
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\beta}^{ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
