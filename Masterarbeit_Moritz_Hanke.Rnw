@@ -32,6 +32,7 @@
 
 %für Mathe
 \usepackage{amsmath}
+\usepackage{amsfonts}
 
 
 
@@ -263,7 +264,7 @@ Im klassischen linearen Modell wird eine Beziehung zwischen der zu erklärende V
 \begin{align}\label{klassisches_modell}
 y=\beta_0 + \beta_1 x_1 + \dots \beta_p k_p + \varepsilon.
 \end{align}
-Die Parameter $\beta_0, \beta_1, \dots, \beta_p$ müssen dafür geschätzt werden, wobei $\beta_0$ eine Konstante ist, die mit keiner Kovariable verknüpft ist \cite{montgomery2012introduction}. $\epsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
+Die Parameter $\beta_0, \beta_1, \dots, \beta_p$ müssen dafür geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\epsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
 \begin{align*}
 \mathbf{y} = \begin{pmatrix}
 y_1\\ 
@@ -286,16 +287,17 @@ y_n
 Spaltenvektoren und
 \begin{align*}
 \mathbf{X} = \begin{pmatrix}
-1 & x_1 & \dots & x_{1p}\\ 
+1 & x_{11} & \dots & x_{1p}\\ 
 \vdots & \vdots & &\vdots\\
-1 & x_n & \dots & x_{np}
+1 & x_{n1} & \dots & x_{np}
 \end{pmatrix}
 \end{align*}
-die \textit{Kovariablenmatrix}, so kann \ref{klassisches_modell} für die $n$ Beobachtungen als
+die \textit{Designmatrix}, so kann \ref{klassisches_modell} für die $n$ Beobachtungen als
 \begin{align}
 \mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
-dargestellt werden XXXX ANDERE QUELLE MAL XXXX. Die erste Spalte in der Kovariablenmatrix muss für Modellierung von $\beta_0$ angefügt, $\mathbf{X}$ wird deswegen auch als\textit{Designmatrix} bezeichnet
+dargestellt werden. Um den Intercept zu modellieren, muss die erste Spalte von $\mathbf{X}$ der Vektor $\mathbf{1}=(1,\dots, 1)'$ sein \cite{montgomery2012introduction}.\\
+Für die Fehler $\boldsymbol{\varepsilon}$ werden die Annahmen $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ getroffen, wobei $\mathbf{I}$ die Einheitsmatrix ist.
 
 \subsection{Kleinste Quadrate Methode}
 \subsection{Bias-variance-tradeoff}
