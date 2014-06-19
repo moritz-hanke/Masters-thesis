@@ -259,12 +259,14 @@ plot(g, edge.width=3)
 
 
 \section{Lineare Regression}
+$\mathbf{X}$ sind ZVs\\
+$\mathbf{y}$ ist eine kontinuierliche ZVs
 \subsection{Das klassische lineare Modell}
-Im klassischen linearen Modell wird eine Beziehung zwischen der zu erklärende Variable $y$ und den Kovariablen $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
+Im klassischen linearen Modell wird eine Beziehung zwischen der \textit{Responsevariable} $y$ und den \textit{Kovariablen} $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
 \begin{align}\label{klassisches_modell}
 y=\beta_0 + \beta_1 x_1 + \dots \beta_p k_p + \varepsilon.
 \end{align}
-Die Parameter $\beta_0, \beta_1, \dots, \beta_p$ müssen dafür geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\epsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
+Dafür müssen die Parameter $\beta_0, \beta_1, \dots, \beta_p$ geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\epsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt. \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
 \begin{align*}
 \mathbf{y} = \begin{pmatrix}
 y_1\\ 
@@ -293,11 +295,18 @@ Spaltenvektoren und
 \end{pmatrix}
 \end{align*}
 die \textit{Designmatrix}, so kann \ref{klassisches_modell} für die $n$ Beobachtungen als
-\begin{align}
+\begin{align}\label{klass_lin_matrix}
 \mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
-dargestellt werden. Um den Intercept zu modellieren, muss die erste Spalte von $\mathbf{X}$ der Vektor $\mathbf{1}=(1,\dots, 1)'$ sein \cite{montgomery2012introduction}.\\
-Für die Fehler $\boldsymbol{\varepsilon}$ werden die Annahmen $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ getroffen, wobei $\mathbf{I}$ die Einheitsmatrix ist.
+dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ bestehen, um den Intercept zu berücksichtigen  \cite{montgomery2012introduction}. Für die Fehler $\boldsymbol{\varepsilon}$ werden die Annahmen $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ getroffen, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt \cite{fahrmeir2009regression}
+\begin{align}
+\mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \notag\\
+\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}\text{ar}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \notag
+\end{align}
+und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern
+\begin{align}
+\mathbf{y} \sim \text{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).
+\end{align} 
 
 \subsection{Kleinste Quadrate Methode}
 \subsection{Bias-variance-tradeoff}
