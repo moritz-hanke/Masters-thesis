@@ -259,11 +259,11 @@ plot(g, edge.width=3)
 
 \section{Lineare Regression}
 \subsection{Das klassische lineare Modell}
-Im klassischen linearen Modell soll eine Beziehung zwischen der zu erklärende Variable $y$ und den Kovariablen $x_1, \dots, x_p$ durch eine \textit{Linearkombination}
+Im klassischen linearen Modell wird eine Beziehung zwischen der zu erklärende Variable $y$ und den Kovariablen $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
 \begin{align}\label{klassisches_modell}
 y=\beta_0 + \beta_1 x_1 + \dots \beta_p k_p + \varepsilon.
 \end{align}
-Die Parameter $\beta_0, \beta_1, \dots, \beta_p$ müssen dafür geschätzt werden, wobei $\beta_0$ eine Konstante ist \cite{montgomery2012introduction}. $\epsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen vor und seien
+Die Parameter $\beta_0, \beta_1, \dots, \beta_p$ müssen dafür geschätzt werden, wobei $\beta_0$ eine Konstante ist, die mit keiner Kovariable verknüpft ist \cite{montgomery2012introduction}. $\epsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
 \begin{align*}
 \mathbf{y} = \begin{pmatrix}
 y_1\\ 
@@ -282,7 +282,7 @@ y_n
 \vdots\\
 \varepsilon_n
 \end{pmatrix}
-\end{align}
+\end{align*}
 Spaltenvektoren und
 \begin{align*}
 \mathbf{X} = \begin{pmatrix}
@@ -291,11 +291,11 @@ Spaltenvektoren und
 1 & x_n & \dots & x_{np}
 \end{pmatrix}
 \end{align*}
-die Kovariablenmatrix, so kann \ref{klassisches_modell} für die $n$ Beobachtungen das klassische Regressionsmodell als
+die \textit{Kovariablenmatrix}, so kann \ref{klassisches_modell} für die $n$ Beobachtungen als
 \begin{align}
 \mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
-dargestellt werden XXXX ANDERE QUELLE MAL XXXX.
+dargestellt werden XXXX ANDERE QUELLE MAL XXXX. Die erste Spalte in der Kovariablenmatrix muss für Modellierung von $\beta_0$ angefügt, $\mathbf{X}$ wird deswegen auch als\textit{Designmatrix} bezeichnet
 
 \subsection{Kleinste Quadrate Methode}
 \subsection{Bias-variance-tradeoff}
