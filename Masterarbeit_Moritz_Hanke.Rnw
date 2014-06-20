@@ -370,7 +370,7 @@ gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die E
 
 %beta_0 fällt weg?
 
-<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
+<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
 #### R-Code Lasso vs Ridge Ellipsen
 
 library(ellipse)
@@ -434,6 +434,11 @@ text(1.2,6, expression(hat(beta)^{Lasso}), cex=1.4)
 
 
 \begin{appendix}
+
+\chapter{Erläuterungen}
+\section{Lagrange-Multiplikator}\label{Lagrange-Multiplikator}
+
+
 % Die eidesstattliche Erklärung auf einer neuen Seite
 \newpage
 % Keine Nummerierung für diesen Teil
