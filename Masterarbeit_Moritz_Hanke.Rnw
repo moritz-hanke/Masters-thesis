@@ -250,18 +250,18 @@ V(g)[7]$color <- "green"
 plot(g, edge.width=3)
 @
 
-\paragraph*{Eigenvektor-Zentralität}
-\paragraph*{Closeness-Zentralität}
-\paragraph*{Betweeness-Zentralität}
+\paragraph*{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
+\paragraph*{Closeness-Zentralität}\label{Kap_Closeness-Zentralität}
+\paragraph*{Betweeness-Zentralität}\label{Kap_Betweeness-Zentralität}
 
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
 
 
-\section{Lineare Regression}
+\section{Lineare Regression}\label{Kap_Lineare Regression}
 $\mathbf{X}$ sind ZVs\\
 $\mathbf{y}$ ist eine kontinuierliche ZVs
-\subsection{Das klassische lineare Modell}
+\subsection{Das klassische lineare Modell}\label{Kap_Das klassische lineare Modell}
 Im klassischen linearen Modell wird eine Beziehung zwischen der \textit{Responsevariable} $y$ und den \textit{Kovariablen} $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
 \begin{align}\label{klassisches_modell}
 y=\beta_0 + \beta_1 x_1 + \dots \beta_p k_p + \varepsilon.
@@ -300,17 +300,31 @@ die \textit{Designmatrix}, so kann \ref{klassisches_modell} für die $n$ Beobach
 \end{align}
 dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ bestehen, um den Intercept zu berücksichtigen  \cite{montgomery2012introduction}. Für die Fehler $\boldsymbol{\varepsilon}$ werden die Annahmen $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ getroffen, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt \cite{fahrmeir2009regression}
 \begin{align}
-\mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \notag\\
-\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}\text{ar}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \notag
+\mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta}\\
+\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}\text{ar}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I}
 \end{align}
 und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern
 \begin{align}
 \mathbf{y} \sim \text{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).
 \end{align} 
 
-\subsection{Kleinste Quadrate Methode}
-\subsection{Bias-variance-tradeoff}
-\subsection{Multikollinearität und $p > n$}
+\subsection{Kleinste Quadrate Methode}\label{Kap_Kleinste Quadrate Methode}
+Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ mit $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordenary least squares; \textit{OLS}) erfolgen \cite{fahrmeir2009regression}. Dazu wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
+\begin{align}\label{RSS_OLS}
+RSS(\boldsymbol{\beta})&=\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}=\sum_{i=1}^{n}(y_i - \mathbf{x}_i'\boldsymbol{\beta})^2=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}) \notag \\
+&=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
+\end{align}
+bzgl. $\boldsymbol{\beta}$ minimiert 
+\begin{align}
+\boldsymbol{\beta}^{OLS}&=\arg \displaystyle\min_{\beta} (\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}).
+\end{align}
+Differenzieren von \ref{RSS_OLS} nach $\boldsymbol{\beta}$ liefert
+\begin{align}
+Inhalt...
+\end{align}
+
+\subsection{Bias-variance-tradeoff}\label{Kap_Bias-variance-tradeoff}
+\subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
 
 %einführen:
 % - RSS
@@ -328,16 +342,15 @@ LAGARGIAN MULTIPLIER?????\\
 penalized bestraft größere Beta mehr - intercept raus, weil sonst bestrafung nicht unabhängig von der skala des outcomes wäre!!! (für allgemeine einführung: http://web.as.uky.edu/statistics/users/pbreheny/764-F11/notes/8-30.pdf)
 
 \subsection{Ridge-Regression}\label{Kap_Ridge-Regression}
-Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar \cite{montgomery2012introduction}. Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $\mathbf{y}$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. ERLÄREN WARUM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\\
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\\
-Der Restriktionsparameter $t$ hängt invers mit einem \textit{Tuningparameter} $\gamma$ zusammen, wodurch sich die Schätzung von $\boldsymbol{\hat{\beta}}^{ridge}$ als Minimierungsproblem
+Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar \cite{montgomery2012introduction}. Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $\mathbf{y}$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Dadurch ist die Penalisierung unabhängig von den einzelnen Skalen der Kovariablen und der Responsevariable.\\
+Der Restriktionsparameter $t$ hängt invers mit einem \textit{Tuningparameter} $\gamma$ zusammen, wodurch sich die Schätzung von $\boldsymbol{\hat{\beta}}^{ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{Lagrange-Multiplikator})
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\beta}^{ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
 darstellen lässt \cite{hastie2009elements}.
 Wird $t \ge \sum_{j=1}^{p} (\hat{\beta}_j^{OLS})^2$ gesetzt, entsprechen die Ridge-Schätzer den OLS-Schätzern, da in diesem Fall $\gamma=0$ ist und \ref{Ridge_lagrangian} sich zum einfachen KQ-Minimierungsproblem reduziert \cite{tibshirani96regression}.\\
 Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \ref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\gamma$ durch
-\begin{align}
+\begin{align}\label{PRSS_Ridge}
 \text{PRSS}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\gamma\boldsymbol{\beta} \notag \\
 &=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\gamma\boldsymbol{\beta}
 \end{align}
