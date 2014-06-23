@@ -309,7 +309,7 @@ und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern
 \end{align} 
 
 \subsection{Kleinste Quadrate Methode}\label{Kap_Kleinste Quadrate Methode}
-Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ mit $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordenary least squares; \textit{OLS}) erfolgen \cite{fahrmeir2009regression}. Dazu wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
+Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ mit $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordinary least squares; \textit{OLS}) erfolgen \cite{fahrmeir2009regression}. Geometrisch betrachtet handelt es sich um eine Projektion des BLA-Vektors auf die BLA-Ebene? STRANG! Für die Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
 \begin{align}\label{RSS_OLS}
 RSS(\boldsymbol{\beta})&=\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}=\sum_{i=1}^{n}(y_i - \mathbf{x}_i'\boldsymbol{\beta})^2=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}) \notag \\
 &=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
