@@ -300,8 +300,8 @@ die \textit{Designmatrix}, so kann \ref{klassisches_modell} für die $n$ Beobach
 \end{align}
 dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ bestehen, um den Intercept zu berücksichtigen  \cite{montgomery2012introduction}. Für die Fehler $\boldsymbol{\varepsilon}$ werden die Annahmen $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ getroffen, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt \cite{fahrmeir2009regression}
 \begin{align}
-\mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta}\\
-\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}\text{ar}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I}
+\mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \label{Erwartungswert_y} \\ 
+\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}\text{ar}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Covarianz_y}
 \end{align}
 und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern
 \begin{align}
@@ -309,7 +309,7 @@ und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern
 \end{align} 
 
 \subsection{Kleinste Quadrate Methode}\label{Kap_Kleinste Quadrate Methode}
-Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ mit $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordinary least squares; \textit{OLS}) erfolgen \cite{fahrmeir2009regression}. Geometrisch betrachtet handelt es sich um eine Projektion des BLA-Vektors auf die BLA-Ebene? STRANG! Für die Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
+Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ für $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordinary least squares; \textit{OLS}) erfolgen \cite{fahrmeir2009regression}. Für die Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
 \begin{align}\label{RSS_OLS}
 RSS(\boldsymbol{\beta})&=\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}=\sum_{i=1}^{n}(y_i - \mathbf{x}_i'\boldsymbol{\beta})^2=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}) \notag \\
 &=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
@@ -318,16 +318,34 @@ bzgl. $\boldsymbol{\beta}$ minimiert, d.h.
 \begin{align}
 \boldsymbol{\beta}^{OLS}&=\arg \displaystyle\min_{\beta} (\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}).
 \end{align}
-Differenzieren von \ref{RSS_OLS} nach $\boldsymbol{\beta}$ liefert
+Differenzieren von \ref{RSS_OLS} nach $\boldsymbol{\beta}$
 \begin{align}\label{Ableitung_OLS}
 \frac{\partial \text{RSS}(\boldsymbol{\beta})}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
 \end{align}
-und anschließendes Nullsetzen und nach $\boldsymbol{\beta}$ Auflösen liefert
-\begin{align}
+und anschließendes Nullsetzen ergibt die sogenannte \textit{Normalengleichung}
+\begin{align}\label{Normalengleichung}
 && 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} \notag \\
-&\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}^T\mathbf{y} \notag \\
-&\Rightarrow & \boldsymbol{\hat{\beta}}^{OLS} &= (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}.
+&\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}^T\mathbf{y}.
 \end{align}
+Sind die Spalten von $\mathbf{X}$ \textit{linear unabhängig} und gilt $p \le n$, sodass $rg(\mathbf{X})=p$, handelt es sich bei $(\mathbf{X}'\mathbf{X})$ um eine \textit{positiv definite} und damit invertierbare Matrix. Als Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich aus \ref{Normalengleichung} \cite{seber2003linear} 
+\begin{align}\label{OLS_Schätzer}
+\boldsymbol{\hat{\beta}}^{OLS} &= (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}.
+\end{align}
+Mittels $\boldsymbol{\hat{\beta}}^{OLS}$ kann die Responsevariable $\mathbf{y}$ als
+\begin{align}
+\mathbf{\hat{y}}=\mathbf{X}\boldsymbol{\hat{\beta}}
+\end{align}
+geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als Abweichungen der geschätzten zu den beobachteten Responsevariableausprägungen ergeben \cite{montgomery2012introduction}
+\begin{align}
+\boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}.
+\end{align}
+Unter der Annahme aus \ref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer erwartungstreu \cite{seber2003linear}
+\begin{align}
+\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
+&= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
+&=\boldsymbol{\beta}.
+\end{align}
+
 
 \subsection{Bias-variance-tradeoff}\label{Kap_Bias-variance-tradeoff}
 \subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
@@ -340,7 +358,7 @@ und anschließendes Nullsetzen und nach $\boldsymbol{\beta}$ Auflösen liefert
 \section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
 Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
 Ridge wird eingeführt, weil Teil von Elastic Net\\
-kein Intercept (bei allen Penalisierungen?); durch Standardiersung bzw. Zentralisierung fällt $\beta_0$ weg \cite{montgomery2012introduction}\\
+kein Intercept (bei allen Penalisierungen?); durch Standardisierung bzw. Zentralisierung fällt $\beta_0$ weg \cite{montgomery2012introduction}\\
 warum keine Subsetselection\\
 hat penalisierung, auch die netzwerkbasierte, was baysianisches?\\
 !!\\
