@@ -339,7 +339,7 @@ geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als
 \begin{align}
 \boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}.
 \end{align}
-Unter der Annahme aus \ref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer erwartungstreu \cite{seber2003linear}
+Unter Berücksichtigung der Modelannahme aus \ref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer erwartungstreu \cite{seber2003linear}
 \begin{align}
 \mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
 &= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
