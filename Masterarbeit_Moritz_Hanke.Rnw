@@ -339,13 +339,28 @@ geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als
 \begin{align}
 \boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}.
 \end{align}
-Unter Berücksichtigung der Modelannahme aus \ref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer erwartungstreu \cite{seber2003linear}
-\begin{align}
+Unter Berücksichtigung der Modelannahme aus \ref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$ \cite{seber2003linear}
+\begin{align}\label{Erwartungswert_OLS}
 \mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
 &= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
 &=\boldsymbol{\beta}.
 \end{align}
-
+Für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$ \cite{fahrmeir2009regression}
+\begin{align}\label{Cov_OLS}
+\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y})=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{y})((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')' \notag \\
+&=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \sigma^2 \mathbf{I}((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')'=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \notag \\
+&=\sigma^2(\mathbf{X}'\mathbf{X})^{-1}.
+\end{align}
+Mit dem Schätzer $\hat{\sigma}^2=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}$ kann die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ als
+\begin{align}
+\widehat{\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})}=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}(\mathbf{X}'\mathbf{X})^{-1}
+\end{align}
+geschätzt werden.\\
+Mittels dem \textit{Gauß-Markov-Theorem} lässt sich zeigen, dass der KQ-Schätzer unter allen \textit{unverzerrten linearen} Schätzern die kleinste Varianz hat (vgl. dazu \citeA{fahrmeir2009regression}). Das bedeutet, für jeden anderen erwartungstreuen linearen Schätzer $\boldsymbol{\tilde{\beta}}$ gilt
+\begin{align}
+\mathbb{V}\text{ar}(\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}}^{OLS})
+\end{align}
+und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE})
 
 \subsection{Bias-variance-tradeoff}\label{Kap_Bias-variance-tradeoff}
 \subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
