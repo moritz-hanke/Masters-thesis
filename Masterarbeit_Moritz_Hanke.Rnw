@@ -129,14 +129,15 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{DAG}{Directed acyclic graph}
 \abk{OLS}{Ordinary least squares}
 \abk{MSE}{Mean squared error}
-
+\abk{RSS}{Residual sum of squares}
+\abk{PRSS}{Penalized residual sum of squares}
 
 
 % Begin der Arbeit
 \chapter{Einleitung}
 \pagenumbering{arabic}
 Im Zusammenhang mit linearen Regressionen bei \textit{hochdimensionalen Daten} stellt sich häufig das so genannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um den Umstand, dass ein Datensatz weniger \textit{Beobachtungen n} als \textit{erklärende Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h. es werden beispielsweise die Expressionslevel von mehreren Tausend Genen bei wenigen Hundert Probanden gemessen. Für das klassische lineare Regressionsmodell $\mathbf{y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ liefert in diesem Fall die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) keine eindeutige Lösung und das Modell wird an die Daten überangepasst \cite{hastie_efficient_2004}. In der Regel wird deshalb gefordert, dass $\boldsymbol{\beta}$ \textit{spärlich} besetzt ist, d.h. für die meisten Regressionskoeffizienten $\beta_i=0$ gilt \cite{buehlmann2011statistics}.\\
-\textit{Penalisierungen} bei linearen Regressionen ergänzen das Kleinste-Quadrat-Kriterium\\ $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ des OLS \cite{fahrmeir2009regression} um einen \textit{Strafterm}, wodurch einzelne Regressionkoeffizienten $\beta_i$ als $\hat{\beta}_i=0$ geschätzt werden können und eine eindeutige Lösung bestimmbar ist. Der \textit{Least absolute shrinkage and selection operator} (\textit{Lasso}) von \citeA{tibshirani96regression} ist eine der bekanntesten Methoden für diese Strategie und wurde in den letzten Jahren im Hinblick auf die Einbeziehung von vorab bekannten Informationen im Strafterm erweitert. \citeA{li_network-constrained_2008} haben dazu einen Strafterm entwickelt, der die Netzwerkstruktur der erklärenden Variablen untereinander berücksichtigt. Dieser Ansatz ist besonders in der Genetik vielversprechend, da durch Datenbanken wie der \textit{Kyoto Encyclopedia of Genes and Genomes} (\textit{KEGG}; \citeNP{Kanehisa2000KEGG}) relativ umfangreiche Informationen über Genregulationsnetzwerke (sogenannte \textit{Pathways}) und damit über die Abhängigkeit von einzelnen Genen untereinander vorliegen.\\
+\textit{Penalisierungen} bei linearen Regressionen ergänzen das Kleinste-Quadrat-Kriterium\\ $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ des OLS \cite{fahrmeir2009regression} um einen \textit{Strafterm}, wodurch einzelne Regressionkoeffizienten $\beta_j$ als $\hat{\beta}_j=0$ geschätzt werden können und eine eindeutige Lösung bestimmbar ist. Der \textit{Least absolute shrinkage and selection operator} (\textit{Lasso}) von \citeA{tibshirani96regression} ist eine der bekanntesten Methoden für diese Strategie und wurde in den letzten Jahren im Hinblick auf die Einbeziehung von vorab bekannten Informationen im Strafterm erweitert. \citeA{li_network-constrained_2008} haben dazu einen Strafterm entwickelt, der die Netzwerkstruktur der erklärenden Variablen untereinander berücksichtigt. Dieser Ansatz ist besonders in der Genetik vielversprechend, da durch Datenbanken wie der \textit{Kyoto Encyclopedia of Genes and Genomes} (\textit{KEGG}; \citeNP{Kanehisa2000KEGG}) relativ umfangreiche Informationen über Genregulationsnetzwerke (sogenannte \textit{Pathways}) und damit über die Abhängigkeit von einzelnen Genen untereinander vorliegen.\\
 In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Penalisierung durch \citeA{kim_network-based_2013} um verschiedene \textit{Zentralitätsmaße} bei der Schätzung der Parameter $\boldsymbol{\beta}$ vorgestellt. Die Ergebnisse werden untereinander sowie mit den "`klassischen"' Penalisierungsansätzen Lasso und \textit{Elastic net} \cite{zou_regularization_2005} verglichen. Ziel ist es dabei, den Einfluss der zusätzlichen Information über die erklärenden Variablen, die ein Netzwerk bilden, auf die Güte der Schätzung darzustellen und darauf basierende Empfehlungen für die Anwendung von netzwerkbasierten Penalisierungen abzugeben.
 
 
@@ -360,10 +361,16 @@ Mittels dem \textit{Gauß-Markov-Theorem} lässt sich zeigen, dass der KQ-Schät
 \begin{align}
 \mathbb{V}\text{ar}(\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}}^{OLS})
 \end{align}
-und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE})
+und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) wegen $Bias(\boldsymbol{\tilde{\beta}})=Bias(\boldsymbol{\hat{\beta}}^{OLS})=0$ \cite{hastie2009elements}
+\begin{align}
+MSE(\boldsymbol{\tilde{\beta}}) \ge MSE(\boldsymbol{\hat{\beta}}^{OLS}).
+\end{align}
+
+\subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
+Liegt zwischen einzelnen Kovariablen aus $\mathbf{X}$ eine (exakte) lineare Abhängigkeit vor, d.h. es gilt $x_j = b \cdot x_{j'}$ für 
+Liegt für die Matrix $\mathbf{X}$ Multikollinearität vor, korrelieren zwei oder mehrere Kovariablen miteinander. 
 
 \subsection{Bias-variance-tradeoff}\label{Kap_Bias-variance-tradeoff}
-\subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
 
 %einführen:
 % - RSS
