@@ -260,8 +260,10 @@ plot(g, edge.width=3)
 
 
 \section{Lineare Regression}\label{Kap_Lineare Regression}
+\begin{comment}
 $\mathbf{X}$ sind ZVs\\
 $\mathbf{y}$ ist eine kontinuierliche ZVs
+\end{comment}
 \subsection{Das klassische lineare Modell}\label{Kap_Das klassische lineare Modell}
 Im klassischen linearen Modell wird eine Beziehung zwischen der \textit{Responsevariable} $y$ und den \textit{Kovariablen} $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
 \begin{align}\label{klassisches_modell}
@@ -344,9 +346,9 @@ Unter Berücksichtigung der Modelannahme aus \ref{klass_lin_matrix} und $\mathbb
 \begin{align}\label{Erwartungswert_OLS}
 \mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
 &= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
-&=\boldsymbol{\beta}.
+&=\boldsymbol{\beta}
 \end{align}
-Für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$ \cite{fahrmeir2009regression}
+und für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$ \cite{fahrmeir2009regression}
 \begin{align}\label{Cov_OLS}
 \mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y})=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{y})((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')' \notag \\
 &=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \sigma^2 \mathbf{I}((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')'=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \notag \\
@@ -367,8 +369,13 @@ MSE(\boldsymbol{\tilde{\beta}}) \ge MSE(\boldsymbol{\hat{\beta}}^{OLS}).
 \end{align}
 
 \subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
-Liegt zwischen einzelnen Kovariablen aus $\mathbf{X}$ eine (exakte) lineare Abhängigkeit vor, d.h. es gilt $x_j = b \cdot x_{j'}$ für 
-Liegt für die Matrix $\mathbf{X}$ Multikollinearität vor, korrelieren zwei oder mehrere Kovariablen miteinander. 
+Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander, liegt eine \textit{approximative Multikollinearität} vor. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ invertierbar, allerdings kommt es zu einer Inflation der Varianz von $\boldsymbol{\hat{\beta}}^{OLS}$. Sei $\hat{\beta}_j$ der Schätzer für der Kovariable $\mathbf{x}_j$, so kann dessen Varianz dargestellt werden \cite{seber2003linear} als
+\begin{align}\label{var_beta_j}
+\mathbb{V}\text{ar}(\hat{\beta}_j)=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
+\end{align}  
+wobei $R^2_j$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $x_j$ mit den restlichen Kovariablen korreliert, desto kleiner wird der Nenner von \ref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$.\\
+Bei einer \textit{exakten} Multikollinearität kann eine Kovariable als Linearkombination von anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ \textit{singulät} \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \ref{Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt. Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$, ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutiger Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.
+
 
 \subsection{Bias-variance-tradeoff}\label{Kap_Bias-variance-tradeoff}
 
@@ -378,6 +385,7 @@ Liegt für die Matrix $\mathbf{X}$ Multikollinearität vor, korrelieren zwei ode
 
 
 \section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
+\begin{comment}
 Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
 Ridge wird eingeführt, weil Teil von Elastic Net\\
 kein Intercept (bei allen Penalisierungen?); durch Standardisierung bzw. Zentralisierung fällt $\beta_0$ weg \cite{montgomery2012introduction}\\
@@ -386,7 +394,7 @@ hat penalisierung, auch die netzwerkbasierte, was baysianisches?\\
 !!\\
 LAGARGIAN MULTIPLIER?????\\
 penalized bestraft größere Beta mehr - intercept raus, weil sonst bestrafung nicht unabhängig von der skala des outcomes wäre!!! (für allgemeine einführung: http://web.as.uky.edu/statistics/users/pbreheny/764-F11/notes/8-30.pdf)
-
+\end{comment}
 \subsection{Ridge-Regression}\label{Kap_Ridge-Regression}
 Die \textit{Ridge-Regression} ist eine Methode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Dadurch verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ keinen vollen Rang besitzt, wird die Matrix $\mathbf{X}'\mathbf{X}$ invertierbar \cite{montgomery2012introduction}. Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i^T \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet. Zusätzlich muss die abhängige Variable $\mathbf{y}$ zentriert, d.h. $\frac{1}{n}\sum_{i}^{n}y_i =0$, und die Kovariablen $\boldsymbol{X}$ standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ bzw. $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Dadurch ist die Penalisierung unabhängig von den einzelnen Skalen der Kovariablen und der Responsevariable.\\
 Der Restriktionsparameter $t$ hängt invers mit einem \textit{Tuningparameter} $\gamma$ zusammen, wodurch sich die Schätzung von $\boldsymbol{\hat{\beta}}^{ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{Lagrange-Multiplikator})
