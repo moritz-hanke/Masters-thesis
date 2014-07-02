@@ -269,25 +269,15 @@ Im klassischen linearen Modell wird eine Beziehung zwischen der \textit{Response
 \begin{align}\label{klassisches_modell}
 y=\beta_0 + \beta_1 x_1 + \dots + \beta_p k_p + \varepsilon.
 \end{align}
-Dafür müssen die Parameter $\beta_0, \beta_1, \dots, \beta_p$ geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\varepsilon$ in \ref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
+Dafür müssen die Parameter $\beta_0, \beta_1, \dots, \beta_p$ geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\varepsilon$ in \eqref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
 \begin{align*}
-\mathbf{y} = \begin{pmatrix}
-y_1\\ 
-\vdots\\
-y_n
-\end{pmatrix}
+\mathbf{y} = (y_1,\dots,y_n)'
 \qquad \text{und} \qquad
-\boldsymbol{\beta} = \begin{pmatrix}
-\beta_1\\ 
-\vdots\\
-\beta_n
-\end{pmatrix}
+\boldsymbol{\beta} = (\beta_1,\dots,\beta_n
+)'
 \qquad \text{sowie} \qquad
-\boldsymbol{\varepsilon} = \begin{pmatrix}
-\varepsilon_1\\ 
-\vdots\\
-\varepsilon_n
-\end{pmatrix}
+\boldsymbol{\varepsilon} = (\varepsilon_1,\dots,\varepsilon_n
+)'
 \end{align*}
 Spaltenvektoren und
 \begin{align*}
@@ -297,7 +287,7 @@ Spaltenvektoren und
 1 & x_{n1} & \dots & x_{np}
 \end{pmatrix}
 \end{align*}
-die \textit{Designmatrix}, so kann \ref{klassisches_modell} für die $n$ Beobachtungen als
+die \textit{Designmatrix}, so kann \eqref{klassisches_modell} für die $n$ Beobachtungen als
 \begin{align}\label{klass_lin_matrix}
 \mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
@@ -321,7 +311,7 @@ bzgl. $\boldsymbol{\beta}$ minimiert, d.h.
 \begin{align}
 \boldsymbol{\beta}^{OLS}&=\arg \displaystyle\min_{\beta} (\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}).
 \end{align}
-Differenzieren von \ref{RSS_OLS} nach $\boldsymbol{\beta}$
+Differenzieren von \eqref{RSS_OLS} nach $\boldsymbol{\beta}$
 \begin{align}\label{Ableitung_OLS}
 \frac{\partial \text{RSS}(\boldsymbol{\beta})}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
 \end{align}
@@ -330,19 +320,19 @@ und anschließendes Nullsetzen ergibt die sogenannte \textit{Normalengleichung}
 && 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} \notag \\
 &\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}^T\mathbf{y}.
 \end{align}
-Sind die Spalten von $\mathbf{X}$ \textit{linear unabhängig} und gilt $p \le n$, sodass $rg(\mathbf{X})=p$, handelt es sich bei $(\mathbf{X}'\mathbf{X})$ um eine \textit{positiv definite} und damit invertierbare Matrix. Als Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich aus \ref{Normalengleichung} \cite{seber2003linear} 
+Sind die Spalten von $\mathbf{X}$ \textit{linear unabhängig} und gilt $p \le n$, sodass $rg(\mathbf{X})=p$, handelt es sich bei $(\mathbf{X}'\mathbf{X})$ um eine \textit{positiv definite} und damit invertierbare Matrix. Als Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich aus \eqref{Normalengleichung} \cite{seber2003linear} 
 \begin{align}\label{OLS_Schätzer}
 \boldsymbol{\hat{\beta}}^{OLS} &= (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}.
 \end{align}
 Mittels $\boldsymbol{\hat{\beta}}^{OLS}$ kann die Responsevariable $\mathbf{y}$ als
-\begin{align}
-\mathbf{\hat{y}}=\mathbf{X}\boldsymbol{\hat{\beta}}
+\begin{align}\label{y_Schaetzung}
+\mathbf{\hat{y}}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}=\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}
 \end{align}
 geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als Abweichungen der geschätzten von den beobachteten Responsevariablenausprägungen ergeben \cite{montgomery2012introduction}
 \begin{align}
-\boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}.
+\boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}.
 \end{align}
-Unter Berücksichtigung der Modellannahme aus \ref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$ \cite{seber2003linear}
+Unter Berücksichtigung der Modellannahme aus \eqref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$ \cite{seber2003linear}
 \begin{align}\label{Erwartungswert_OLS}
 \mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
 &= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
@@ -350,11 +340,11 @@ Unter Berücksichtigung der Modellannahme aus \ref{klass_lin_matrix} und $\mathb
 \end{align}
 und für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$ \cite{fahrmeir2009regression}, dass
 \begin{align}\label{Cov_OLS}
-\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y})=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{y})((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')' \notag \\
-&=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \sigma^2 \mathbf{I}((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')'=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \notag \\
+\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{y})\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]' \notag \\
+&=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \sigma^2 \mathbf{I}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]'=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \notag \\
 &=\sigma^2(\mathbf{X}'\mathbf{X})^{-1}.
 \end{align}
-Mit dem Schätzer $\hat{\sigma}^2=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}$ kann die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ als
+Mit dem Varianzschätzer $\hat{\sigma}^2=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}$ kann die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ als
 \begin{align}
 \widehat{\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})}=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}(\mathbf{X}'\mathbf{X})^{-1}
 \end{align}
@@ -363,9 +353,9 @@ Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass der KQ-Schä
 \begin{align}
 \mathbb{V}\text{ar}(\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}}^{OLS})
 \end{align}
-und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) wegen $Bias(\boldsymbol{\tilde{\beta}})=Bias(\boldsymbol{\hat{\beta}}^{OLS})=0$ nach \citeA{hastie2009elements}
+und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) wegen $\text{Bias}(\boldsymbol{\tilde{\beta}})=\text{Bias}(\boldsymbol{\hat{\beta}}^{OLS})=0$ nach \citeA{hastie2009elements}
 \begin{align}
-MSE(\boldsymbol{\tilde{\beta}}) \ge MSE(\boldsymbol{\hat{\beta}}^{OLS}).
+\text{MSE}(\boldsymbol{\tilde{\beta}}) \ge \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS}).
 \end{align}
 
 \subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
@@ -402,36 +392,36 @@ Der Restriktionsparameter $t$ hängt invers mit einem \textit{Tuningparameter} $
 \boldsymbol{\beta}^{ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
 darstellen lässt \cite{hastie2009elements}.
-Wird $t \ge \sum_{j=1}^{p} (\hat{\beta}_j^{OLS})^2$ gesetzt, entsprechen die Ridge-Schätzer den OLS-Schätzern, da in diesem Fall $\gamma=0$ ist und \ref{Ridge_lagrangian} sich zum einfachen KQ-Minimierungsproblem reduziert \cite{tibshirani96regression}.\\
-Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \ref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\gamma$ durch
+Wird $t \ge \sum_{j=1}^{p} (\hat{\beta}_j^{OLS})^2$ gesetzt, entsprechen die Ridge-Schätzer den OLS-Schätzern, da in diesem Fall $\gamma=0$ ist und \eqref{Ridge_lagrangian} sich zum einfachen KQ-Minimierungsproblem reduziert \cite{tibshirani96regression}.\\
+Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \eqref{Ridge_lagrangian} lässt sich als \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) in Abhängigkeit von $\gamma$ durch
 \begin{align}\label{PRSS_Ridge}
-\text{PRSS}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}^T\gamma\boldsymbol{\beta} \notag \\
-&=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\gamma\boldsymbol{\beta}
+\text{PRSS}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}'\gamma\boldsymbol{\beta} \notag \\
+&=\mathbf{y}'\mathbf{y} -2\mathbf{y}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\gamma\boldsymbol{\beta}
 \end{align}
 darstellen. Differenzierung nach $\boldsymbol{\beta}$ ergibt
 \begin{align}\label{Ableitung_Ridge}
-\frac{\partial \text{PRSS}(\boldsymbol{\beta}, \gamma)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta}
+\frac{\partial \text{PRSS}(\boldsymbol{\beta}, \gamma)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta}
 \end{align}
 und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{ridge}$ \cite{montgomery2012introduction}
 \begin{align}\label{Ridge_estimate}
-&& 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta} \notag \\
-&\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} + \gamma \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag \\
-&\Leftrightarrow & (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}^T\mathbf{y} \notag\\
-&\Rightarrow & \boldsymbol{\hat{\beta}}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y}.
+&& 0&=-2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta} \notag \\
+&\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma \boldsymbol{\beta} &= \mathbf{X}'\mathbf{y} \notag \\
+&\Leftrightarrow & (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}'\mathbf{y} \notag\\
+&\Rightarrow & \boldsymbol{\hat{\beta}}^{ridge} &= (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
 \end{align}
-Der Ridge-Schätzer aus \ref{Ridge_estimate} kann auch als Transformation des OLS-Schätzers dargestellt werden \cite{hoerl_ridge_1970}
+Der Ridge-Schätzer aus \eqref{Ridge_estimate} kann auch als Transformation des OLS-Schätzers dargestellt werden \cite{hoerl_ridge_1970}
 \begin{align}\label{ridge_transformation}
-\boldsymbol{\hat{\beta}}^{ridge} &= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
-&= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \notag\\
-&= (\mathbf{X}^T\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}^T\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
-&= (\mathbf{I} + \gamma (\mathbf{X}^T\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}.
+\boldsymbol{\hat{\beta}}^{ridge} =&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y} \notag\\
+\stackrel{\eqref{y_Schaetzung}}{=}&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}'\mathbf{X} (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y} \notag\\
+=&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}'\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
+=&(\mathbf{I} + \gamma (\mathbf{X}^T\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}.
 \end{align}
 Daraus ist ersichtlich, dass $\boldsymbol{\beta}^{ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\gamma \ne 0$ gilt und in diesem Fall $\boldsymbol{\beta}^{ridge}$ nicht erwartungstreu ist \cite{seber2003linear}, weil der OLS-Schätzer erwartungstreu ist.\\ 
-Es lässt sich zeigen, dass für den MSE für $\boldsymbol{\beta}^{ridge}$ 
+Es lässt sich zeigen, dass für den $\text{MSE}$ für $\boldsymbol{\beta}^{ridge}$ 
 \begin{align}\label{MSE_ridge}
 \text{MSE}(\boldsymbol{\beta}^{ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta} (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
-gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \ref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias, woran erkennbar ist, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $MSE(\boldsymbol{\beta}^{ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $MSE(\boldsymbol{\hat{\beta}}^{ridge}) < MSE(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
+gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias, woran erkennbar ist, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\beta}^{ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
 
@@ -455,7 +445,7 @@ covmat <- matrix(c(1,0.5,0.5,1),nrow=2,ncol=2)
 
 plot(ellipse(x=covmat,scale=c(2.26,2.26),centre=c(4,9.35),level=0.95),
      type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
-          ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1)
+          ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1, asp=1)
 abline(a=0,b=0,col="grey")
 abline(v=0,col="grey")
 lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
@@ -473,7 +463,7 @@ text(1.4,4.8, expression(hat(beta)^{ridge}), cex=1.4)
 ### LASSO
 plot(ellipse(x=covmat,scale=c(1.88,1.88),centre=c(4,9.35),level=0.95, lwd=3),
      type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
-     ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1) 
+     ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1, asp=1) 
 abline(a=0,b=0,col="grey")
 abline(v=0,col="grey")
 lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
