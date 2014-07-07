@@ -272,7 +272,7 @@ Im klassischen linearen Regressionsmodell wird eine Beziehung zwischen der \text
 \begin{align}\label{klassisches_modell}
 y=\beta_0 + \beta_1 x_1 + \dots + \beta_p k_p + \varepsilon.
 \end{align}
-Dafür müssen die Parameter $\beta_0, \beta_1, \dots, \beta_p$ geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\varepsilon$ in \eqref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt \cite{fahrmeir2009regression}. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
+Dafür müssen die Parameter $\beta_0, \beta_1, \dots, \beta_p$ geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\varepsilon$ in \eqref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
 \begin{align*}
 \mathbf{y} = (y_1,\dots,y_n)'
 \qquad \text{und} \qquad
@@ -294,7 +294,7 @@ die \textit{Designmatrix}, so kann \eqref{klassisches_modell} für die $n$ Beoba
 \begin{align}\label{klass_lin_matrix}
 \mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
-dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen \cite{montgomery2012introduction}. Sowohl die Responsevariable als auch die Kovariable werden als Realisierungen von Zufallsvariablen aufgefasst. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ sei, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt nach \citeA{fahrmeir2009regression}
+dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen. Sowohl die Responsevariable als auch die Kovariable werden als Realisierungen von Zufallsvariablen aufgefasst. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ sei, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt
 \begin{align}
 \mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \label{Erwartungswert_y} \\ 
 \mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Covarianz_y}
@@ -305,7 +305,7 @@ und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern, dass
 \end{align} 
 
 \subsection{Methode der Kleinsten Quadrate}\label{Kap_Methode der Kleinsten Quadrate}
-Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ für $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordinary least squares; \textit{OLS}) erfolgen \cite{fahrmeir2009regression}. Für die Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
+Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ für $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordinary least squares; \textit{OLS}) erfolgen. Für die Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
 \begin{align}\label{RSS_OLS}
 RSS(\boldsymbol{\beta})&=\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}=\sum_{i=1}^{n}(y_i - \mathbf{x}_i'\boldsymbol{\beta})^2=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}) \notag \\
 &=\mathbf{y}^T\mathbf{y} -2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
@@ -323,7 +323,7 @@ und anschließendes Nullsetzen ergibt die sogenannte \textit{Normalengleichung}
 && 0&=-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} \notag \\
 &\Leftrightarrow & \mathbf{X}^T\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}^T\mathbf{y}.
 \end{align}
-Sind die Spalten von $\mathbf{X}$ \textit{linear unabhängig} und gilt $p \le n$, sodass $rg(\mathbf{X})=p$, handelt es sich bei $(\mathbf{X}'\mathbf{X})$ um eine \textit{positiv definite} und damit invertierbare Matrix. Als Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich aus \eqref{Normalengleichung} \cite{seber2003linear} 
+Sind die Spalten von $\mathbf{X}$ \textit{linear unabhängig} und gilt $p \le n$, sodass $rg(\mathbf{X})=p$, handelt es sich bei $(\mathbf{X}'\mathbf{X})$ um eine \textit{positiv definite} und damit invertierbare Matrix. Als Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich aus \eqref{Normalengleichung}
 \begin{align}\label{OLS_Schätzer}
 \boldsymbol{\hat{\beta}}^{OLS} &= (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}.
 \end{align}
@@ -331,17 +331,17 @@ Mittels $\boldsymbol{\hat{\beta}}^{OLS}$ kann die Responsevariable $\mathbf{y}$ 
 \begin{align}\label{y_Schaetzung}
 \mathbf{\hat{y}}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}=\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}
 \end{align}
-geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als Abweichungen der geschätzten von den beobachteten Responsevariablenausprägungen ergeben \cite{montgomery2012introduction}
+geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als Abweichungen der geschätzten von den beobachteten Responsevariablenausprägungen ergeben
 \begin{align}
 \boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}.
 \end{align}
-Unter Berücksichtigung der Modellannahme aus \eqref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$ \cite{seber2003linear}, da
+Unter Berücksichtigung der Modellannahme aus \eqref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$, da
 \begin{align}\label{Erwartungswert_OLS}
 \mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
 &= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
 &=\boldsymbol{\beta}
 \end{align}
-und für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$ \cite{fahrmeir2009regression}, dass
+und für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$, dass
 \begin{align}\label{Cov_OLS}
 \mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{y})\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]' \notag \\
 &=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \sigma^2 \mathbf{I}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]'=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \notag \\
@@ -352,7 +352,7 @@ Mit dem Varianzschätzer $\hat{\sigma}^2=\frac{1}{n-p}\boldsymbol{\hat{\varepsil
 \widehat{\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})}=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}(\mathbf{X}'\mathbf{X})^{-1}
 \end{align}
 geschätzt werden.\\
-Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass der KQ-Schätzer unter allen \textit{unverzerrten linearen} Schätzern die kleinste Varianz hat (vgl. dazu \citeA{fahrmeir2009regression}). Das bedeutet, für jeden anderen erwartungstreuen linearen Schätzer $\boldsymbol{\tilde{\beta}}$ gilt
+Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass der KQ-Schätzer unter allen \textit{unverzerrten linearen} Schätzern die kleinste Varianz hat. Das bedeutet, für jeden anderen erwartungstreuen linearen Schätzer $\boldsymbol{\tilde{\beta}}$ gilt
 \begin{align}
 \mathbb{V}\text{ar}(\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}}^{OLS})
 \end{align}
@@ -362,7 +362,7 @@ und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squar
 \end{align}
 
 \subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
-Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander, liegt eine \textit{approximative Multikollinearität} vor. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ invertierbar, allerdings kommt es zu einer Inflation der Varianz von $\boldsymbol{\hat{\beta}}^{OLS}$. Sei $\hat{\beta}_j$ der Schätzer für die Kovariable $\mathbf{x}_j$, so kann dessen Varianz dargestellt werden \cite{seber2003linear} als
+Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander, liegt eine \textit{approximative Multikollinearität} vor. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ invertierbar, allerdings kommt es zu einer Inflation der Varianz von $\boldsymbol{\hat{\beta}}^{OLS}$. Sei $\hat{\beta}_j$ der Schätzer für die Kovariable $\mathbf{x}_j$, so kann dessen Varianz dargestellt werden als
 \begin{align}\label{var_beta_j}
 \mathbb{V}\text{ar}(\hat{\beta}_j)=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
 \end{align}  
