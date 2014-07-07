@@ -246,9 +246,9 @@ g <- graph.adjacency(A, "undirected")
 V(g)$color <- 5
 V(g)[1]$color <- "yellow"
 V(g)[8]$color <- "red"
-V(g)[7]$color <- "green"
+#V(g)[7]$color <- "green"
 @
-<<echo=FALSE, Degree_vs_Path, fig.pos="H", out.width='.6\\linewidth', fig.align='center', fig.lp="fig:", fig.cap="Beispiel für einen Graphen, in dem in Abhängigkeit von der Definition von Zentralität, der rote, der gelbe oder oder grüne Knoten eine relativ bedeutsame Position einnimmt.">>=
+<<echo=FALSE, Degree_vs_Path, fig.pos="H", out.width='.6\\linewidth', fig.align='center', fig.lp="fig:", fig.cap="Beispiel für einen Graphen, in dem in Abhängigkeit von der Definition von Zentralität, entweder der rote oder der gelbe Knoten die bedeutsamste Position einnimmt.">>=
 plot(g, edge.width=3)
 @
 
@@ -261,12 +261,14 @@ plot(g, edge.width=3)
 
 
 \section{Lineare Regression}\label{Kap_Lineare Regression}
+In den drei folgenden Unterkapiteln werden die Grundlagen und Annahmen des klassischen linearen Regressionsmodells vorgestellt, die für die Methoden der penalisierten Regression in Kapitel \ref{Kap_Penalisierte Regression} Voraussetzung sind. Wenn nicht anders gekennzeichnet, bezieht sich die Darstellung auf \citeA{fahrmeir2009regression}, \citeA{montgomery2012introduction} bzw. \citeA{seber2003linear}, die eine vertiefende und weiterführende Einführung in die lineare Regression geben. Kapitel \ref{Kap_Das klassische lineare Modell} beinhaltet eine kurze Übersicht über die Annahmen des klassischen linearen Modells. Die für die Schätzung der Regressionskoeffizienten am häufigsten verwendete Methode der kleinsten Quadrate wird in Kapiten \ref{Kap_Methode der Kleinsten Quadrate} erläutert. Im abschließenden Unterkapitel \ref{Kap_Multikollinearität und $p > n$} werden die Probleme der Multikollinearität und $p > n$, die beide in der Genetik vorkommen und Penalisierungsansätze notwendig machen, vorgestellt.
+
 \begin{comment}
 $\mathbf{X}$ sind ZVs\\
 $\mathbf{y}$ ist eine kontinuierliche ZVs
 \end{comment}
 \subsection{Das klassische lineare Modell}\label{Kap_Das klassische lineare Modell}
-Im klassischen linearen Modell wird eine Beziehung zwischen der \textit{Responsevariable} $y$ und den \textit{Kovariablen} $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
+Im klassischen linearen Regressionsmodell wird eine Beziehung zwischen der \textit{Responsevariable} $y$ und den \textit{Kovariablen} $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
 \begin{align}\label{klassisches_modell}
 y=\beta_0 + \beta_1 x_1 + \dots + \beta_p k_p + \varepsilon.
 \end{align}
@@ -292,10 +294,10 @@ die \textit{Designmatrix}, so kann \eqref{klassisches_modell} für die $n$ Beoba
 \begin{align}\label{klass_lin_matrix}
 \mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
-dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen  \cite{montgomery2012introduction}. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ sei, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt nach \citeA{fahrmeir2009regression}
+dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen \cite{montgomery2012introduction}. Sowohl die Responsevariable als auch die Kovariable werden als Realisierungen von Zufallsvariablen aufgefasst. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ sei, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt nach \citeA{fahrmeir2009regression}
 \begin{align}
 \mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \label{Erwartungswert_y} \\ 
-\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}\text{ar}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Covarianz_y}
+\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Covarianz_y}
 \end{align}
 und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern, dass
 \begin{align}
@@ -333,7 +335,7 @@ geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als
 \begin{align}
 \boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}.
 \end{align}
-Unter Berücksichtigung der Modellannahme aus \eqref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$ \cite{seber2003linear}
+Unter Berücksichtigung der Modellannahme aus \eqref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$ \cite{seber2003linear}, da
 \begin{align}\label{Erwartungswert_OLS}
 \mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
 &= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
@@ -354,7 +356,7 @@ Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass der KQ-Schä
 \begin{align}
 \mathbb{V}\text{ar}(\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}}^{OLS})
 \end{align}
-und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) wegen $\text{Bias}(\boldsymbol{\tilde{\beta}})=\text{Bias}(\boldsymbol{\hat{\beta}}^{OLS})=0$ nach \citeA{hastie2009elements}
+und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) wegen $\text{Bias}(\boldsymbol{\tilde{\beta}})=\text{Bias}(\boldsymbol{\hat{\beta}}^{OLS})=0$
 \begin{align}
 \text{MSE}(\boldsymbol{\tilde{\beta}}) \ge \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS}).
 \end{align}
@@ -364,15 +366,8 @@ Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander,
 \begin{align}\label{var_beta_j}
 \mathbb{V}\text{ar}(\hat{\beta}_j)=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
 \end{align}  
-wobei $R^2_j$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $x_j$ mit den restlichen Kovariablen korreliert, desto kleiner wird der Nenner von \ref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$.\\
-Bei einer \textit{exakten} Multikollinearität kann eine Kovariable als Linearkombination von anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \ref{Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt. Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.
-
-
-\subsection{Bias-variance-tradeoff}\label{Kap_Bias-variance-tradeoff}
-
-%einführen:
-% - RSS
-% - MSE
+wobei $R^2_j$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $\mathbf{x}_j$ mit den restlichen Kovariablen korreliert, desto kleiner wird der Nenner von \eqref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$.\\
+Bei einer \textit{exakten} Multikollinearität kann eine Kovariable als Linearkombination von anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \eqref{Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt. Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.
 
 
 \section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
