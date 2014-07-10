@@ -387,56 +387,54 @@ LAGARGIAN MULTIPLIER?????\\
 penalized bestraft größere Beta mehr - intercept raus, weil sonst bestrafung nicht unabhängig von der skala des outcomes wäre!!! (für allgemeine einführung: http://web.as.uky.edu/statistics/users/pbreheny/764-F11/notes/8-30.pdf)
 \end{comment}
 \subsection{Ridge-Regression}\label{Kap_Ridge-Regression}
-Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{ridge}$ \textit{realtiv} im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Die Schätzung der Regressionskoeffizienten erfolgt durch
+Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{Ridge}$ \textit{realtiv} im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Die Schätzung der Regressionskoeffizienten erfolgt durch
 \begin{align}\label{Ridge_estimate}
-\boldsymbol{\hat{\beta}}^{ridge} = (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
+\boldsymbol{\hat{\beta}}^{Ridge} = (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
 \end{align}
 Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär ist, wird der Ausdruck in der Klammer regulär und damit \eqref{Ridge_estimate} eindeutig lösbar \cite{montgomery2012introduction}.
-Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Schätzung von $\boldsymbol{\hat{\beta}}^{ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{Lagrange-Multiplikator})
+Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Schätzung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{Lagrange-Multiplikator})
 \begin{align}\label{Ridge_lagrangian}
-\boldsymbol{\beta}^{ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
+\boldsymbol{\hat{\beta}}^{Ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
 darstellen werden \cite{hastie2009elements}.
 Wird $t \ge \sum_{j=1}^{p} (\hat{\beta}_j^{OLS})^2$ gesetzt, entsprechen die Ridge-Schätzer den OLS-Schätzern, da in diesem Fall $\gamma=0$ ist und \eqref{Ridge_lagrangian} sich zum einfachen KQ-Minimierungsproblem reduziert \cite{tibshirani96regression}.\\
 Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \eqref{Ridge_lagrangian} lässt sich in Abhängigkeit von $\gamma$ durch
 \begin{align}\label{PRSS_Ridge}
-\text{PRSS}_{ridge}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}'\gamma\boldsymbol{\beta} \notag \\
+\text{PRSS}_{Ridge}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}'\gamma\boldsymbol{\beta} \notag \\
 &=\mathbf{y}'\mathbf{y} -2\mathbf{y}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\gamma\boldsymbol{\beta}
 \end{align}
 darstellen. Differenzierung nach $\boldsymbol{\beta}$ ergibt
 \begin{align}\label{Ableitung_Ridge}
-\frac{\partial \text{PRSS}_{ridge}(\boldsymbol{\beta}, \gamma)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta}
+\frac{\partial \text{PRSS}_{Ridge}(\boldsymbol{\beta}, \gamma)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta}
 \end{align}
-und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{ridge}$ aus \eqref{Ridge_estimate}
+und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{Ridge}$ aus \eqref{Ridge_estimate}
 \begin{align*}
 && 0&=-2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta} \notag \\
 &\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma \boldsymbol{\beta} &= \mathbf{X}'\mathbf{y} \notag \\
 &\Leftrightarrow & (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}'\mathbf{y} \notag\\
-&\Rightarrow & \boldsymbol{\hat{\beta}}^{ridge} &= (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
+&\Rightarrow & \boldsymbol{\hat{\beta}}^{Ridge} &= (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
 \end{align*}
 Der Ridge-Schätzer aus \eqref{Ridge_estimate} kann auch als Transformation des OLS-Schätzers dargestellt werden \cite{hoerl_ridge_1970}
 \begin{align}\label{ridge_transformation}
-\boldsymbol{\hat{\beta}}^{ridge} =&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y} \notag\\
+\boldsymbol{\hat{\beta}}^{Ridge} =&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y} \notag\\
 \stackrel{\eqref{y_Schaetzung}}{=}&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}'\mathbf{X} (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y} \notag\\
 =&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}'\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
 =&(\mathbf{I} + \gamma (\mathbf{X}'\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}.
 \end{align}
-Daraus ist ersichtlich, dass $\boldsymbol{\beta}^{ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\gamma \ne 0$ gilt und in diesem Fall $\boldsymbol{\beta}^{ridge}$ nicht erwartungstreu ist \cite{seber2003linear}, weil der OLS-Schätzer erwartungstreu ist.\\ 
-Es lässt sich zeigen, dass für den $\text{MSE}$ für $\boldsymbol{\beta}^{ridge}$ 
+Daraus ist ersichtlich, dass $\boldsymbol{\beta}^{Ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\gamma \ne 0$ gilt und in diesem Fall $\boldsymbol{\beta}^{Ridge}$ nicht erwartungstreu ist \cite{seber2003linear}, weil der OLS-Schätzer erwartungstreu ist.\\ 
+Es lässt sich zeigen, dass für den $\text{MSE}$ für $\boldsymbol{\beta}^{Ridge}$ 
 \begin{align}\label{MSE_ridge}
-\text{MSE}(\boldsymbol{\beta}^{ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta} (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
+\text{MSE}(\boldsymbol{\beta}^{Ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta} (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
-gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias, woran erkennbar ist, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\beta}^{ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
+gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias, woran erkennbar ist, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\beta}^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
-\begin{comment}
-Im Gegensatz zur Ridge-Regression wird bei der \textit{Lasso-Regression} ein $L_1$-Norm Strafterm zur $\text{RSS}(\boldsymbol{\beta})$ addiert. Damit ergibt sich 
+Im Gegensatz zur Ridge-Regression wird bei der \textit{Lasso-Regression} als Nebenbedingung $\sum_{j=1}^{p}|\beta_j| \le t$ gefordert, wodurch sich das Minimierungsproblem ergibt \cite{tibshirani96regression} als
 \begin{align}
-\text{PRSS}(\boldsymbol{\beta};\gamma)=||\mathbf{X}\boldsymbol{\beta}-y||_2^2+\gamma||\boldsymbol{\beta}||_1^1
+\boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
-wobei $||\cdot||_1^1$ und $||\cdot||_2^2$ die $L_1$- bzw. die quadrierte $L_2$-Norm angeben.
 
-\end{comment}
+
 
 <<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
 #### R-Code Lasso vs Ridge Ellipsen
