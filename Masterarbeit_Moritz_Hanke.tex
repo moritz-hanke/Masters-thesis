@@ -1,18 +1,69 @@
-\documentclass[12pt, a4paper]{report}
+\documentclass[12pt, a4paper]{report}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
 \usepackage{ucs}
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
-\usepackage[pdftex]{graphicx}
+%\usepackage[pdftex]{graphicx}
 \usepackage{a4wide}
 \usepackage[onehalfspacing]{setspace}
 \usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 \usepackage[marginal]{footmisc}
 \usepackage{url}
-
+\usepackage[font=small,labelfont=bf]{caption}
 \usepackage{longtable}
+\usepackage{comment} 
 
 \usepackage{rotating}
+
 
 
 %für die Kopfzeile
@@ -31,6 +82,7 @@
 
 %für Mathe
 \usepackage{amsmath}
+\usepackage{amsfonts}
 
 
 
@@ -55,7 +107,8 @@
 \makenomenclature 
 
 
-\usepackage{Sweave}
+%\usepackage{Sweave}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
 
 
@@ -75,13 +128,37 @@
 
 \end{verbatim}
 
+
 \begin{figure}[htbp]
+ \begin{minipage}{0.4\linewidth}
+  \centering
+  \setkeys{Gin}{width=0.4\textwidth}
+  \includegraphics{BIPS_Logo_deutsch.png}
+ \end{minipage}%
+ \begin{minipage}{0.5\linewidth}
+  \centering
+  \setkeys{Gin}{width=0.99\textwidth}
+  \includegraphics{Universitaet_Bremen.png}
+ \end{minipage}
+\end{figure} 
+
+
+\begin{comment}
+\begin{subfigure}[htbp]
+\begin{center}
+\setkeys{Gin}{width=0.2\textwidth}
+\includegraphics{BIPS_Logo_deutsch.png}
+\end{center}
+\end{subfigure}
+
+
+\begin{subfigure}[htbp]
 \begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
 \includegraphics{Universitaet_Bremen.png}
 \end{center}
-\end{figure}
-
+\end{subfigure}
+\end{comment}
 \begin{center}
 \textbf{Fachbereich 3: Mathematik \\
 Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
@@ -99,7 +176,7 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 \textbf{Matrikelnummer:} & & 2404575 \\
 & & \\
 & & \\
-\textbf{Betreuung:} & & Prof. Dr. Iris Pigeot\\
+\textbf{Betreuung:} & & Prof. Dr. Iris Pigeot-Kübler\\
 & & Dr. Ronja Foraita \\
 & & \\
 & & \\
@@ -123,95 +200,327 @@ Studiengang Medical Biometry/Biostatistics (M.Sc.)\\}
 
 \printnomenclature 
 
-\abk{GWAS}{Genome-wide association study}
-
+\abk{Lasso}{Least absolute shrinkage and selection operator}
+\abk{DAG}{Directed acyclic graph}
+\abk{OLS}{Ordinary least squares}
+\abk{MSE}{Mean squared error}
+\abk{RSS}{Residual sum of squares}
+\abk{PRSS}{Penalized residual sum of squares}
 
 
 % Begin der Arbeit
 \chapter{Einleitung}
 \pagenumbering{arabic}
-bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \cite{kim_network-based_2013}
+Im Zusammenhang mit linearen Regressionen bei \textit{hochdimensionalen Daten} stellt sich häufig das so genannte \textit{"`large p, small n"'}-Problem. Dabei handelt es sich um den Umstand, dass ein Datensatz weniger \textit{Beobachtungen n} als \textit{erklärende Variablen p} beinhaltet. Speziell in der Genetik gilt oftmals sogar $p \gg n$, d.h. es werden beispielsweise die Expressionslevel von mehreren Tausend Genen bei wenigen Hundert Probanden gemessen. Für das klassische lineare Regressionsmodell $\mathbf{y}=\textbf{X}\boldsymbol\beta+\boldsymbol\epsilon$ liefert in diesem Fall die Schätzung $\boldsymbol{\hat{\beta}}$ mittels der \textit{Methode der kleinsten Quadrate }(englisch: ordinary least squares; \textit{OLS}) keine eindeutige Lösung und das Modell wird an die Daten überangepasst \cite{hastie_efficient_2004}. Deshalb wird gefordert, dass $\boldsymbol{\beta}$ \textit{spärlich} besetzt ist, d.h. für die meisten Regressionskoeffizienten $\beta_i=0$ gilt \cite{buehlmann2011statistics}. Hierbei handelt es sich speziell in der Genetik um eine realistische Annahme, da in der Regel nur wenige Gene für ein spezifische Responsevariablenausprägung verantwortlich sind. Die Schwierigkeit besteht darin, den Einfluss der wenigen aktiven Kovariablen zu schätzen und gleichzeitig eine Variablenselektion vorzunehmen, sodass Kovariablen ohne Einfluss aus dem Modell entfernt werden.\\
+Ein verbreiteter Ansatz ist in diesem Zusammenhang die Einführung einer \textit{Penalisierungen} bei der Schätzung der Regressionskoeffizienten, was eine Schrumpfung und Selektion der Regressionskoeffizienten zur Folge hat. Dazu wird das Kleinste-Quadrat-Kriterium $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n}(y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ des OLS \cite{fahrmeir2009regression} um einen \textit{Strafterm} $P(\boldsymbol{\beta})$ erweitert, wodurch einzelne Regressionkoeffizienten $\beta_j$ als $\hat{\beta}_j=0$ geschätzt werden können. Die Folge ist eine eindeutige Lösung und der Vektor $\boldsymbol{\hat{\beta}}$ ist wie für $\boldsymbol{\beta}$ angenommen spärlich besetzt.\\ 
+Für diese Strategie ist der \textit{Least absolute shrinkage and selection operator} (\textit{Lasso}) von \citeA{tibshirani96regression} eine der bekanntesten Methoden und wurde in den letzten Jahren im Hinblick auf die Einbeziehung von vorab bekannten Informationen im Strafterm erweitert. \citeA{li_network-constrained_2008} haben dazu einen Strafterm entwickelt, der die Netzwerkstruktur der erklärenden Variablen untereinander berücksichtigt. Dieser Ansatz ist besonders in der Genetik vielversprechend, da durch Datenbanken wie der \textit{Kyoto Encyclopedia of Genes and Genomes} (\textit{KEGG}; \citeNP{Kanehisa2000KEGG}) relativ umfangreiche Informationen über Genregulationsnetzwerke (sogenannte \textit{Pathways}) und damit über die Abhängigkeit von einzelnen Genen untereinander vorliegen.\\
+In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Penalisierung durch \citeA{kim_network-based_2013} um verschiedene \textit{Zentralitätsmaße} bei der Schätzung der Parameter $\boldsymbol{\beta}$ vorgestellt. Die Ergebnisse werden untereinander sowie mit den "`klassischen"' Penalisierungsansätzen Lasso und \textit{Elastic net} \cite{zou_regularization_2005} verglichen. Ziel ist es dabei, den Einfluss der zusätzlichen Information über die erklärenden Variablen, die ein Netzwerk bilden, auf die Güte der Schätzung darzustellen und darauf basierende Empfehlungen für die Anwendung von netzwerkbasierten Penalisierungen abzugeben.
 
 
 
 
-\chapter{Theorie}\label{Theorie}
-\section{Graphen und Netzwerkstatistiken}\label{Graphen und Netzwerkstatistiken}
+
+
+\chapter{Theorie}\label{Kap_Theorie}
+\section{Graphen und Netzwerkstatistiken}\label{Kap_Graphen und Netzwerkstatistiken}
 %
 %
 % Netzwerke <--> Graphen
 %
 %
-In den nachfolgenden beiden Unterkapiteln soll eine Auswahl an grundlegenden Begriffen aus der Graphentheorie (Kapitel \ref{Grundlegende Begriffe der Graphentheorie}) sowie Statistiken für Netzwerkanalysen, insbesondere zur Zentralität und Verbundenheit von einzelnen Knoten (Kapitel \ref{Zentralitäts- und Verbundenheitsstatistiken}), eingeführt werden, die für diese Arbeit benötigt werden. Für eine ausführliche Erläuterungen zur Graphentheorie bzw. Netzwerkstatistiken sei auf \citeA{diestel2006graph} sowie \citeA{kolaczyk2009statistical} und \citeA{brandes2005graphfunda} verwiesen.\\
-\subsection{Grundlegende Begriffe der Graphentheorie}\label{Grundlegende Begriffe der Graphentheorie}
-Mit einem Graphen $G=(V,E)$ wird ein abstraktes Objekt bezeichnet, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|V|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine Kante $e_k \in E$ ist die Zuordnung zweier Knoten $v_i,v_j \in V$ eines Graphen $G=(V,E)$, d.h. es gilt $\{v_i,v_j\} \in e_k$. Die Knoten $v_i$ und $v_j$ werden \mbox{i.d.F.} als \textit{inzident} zu der Kanten $e_k$ und \textit{adjazent} zueinander bezeichnet. Für $e_k=\{v_i,v_j\}$ handelt es sich um ein \textit{ungeordnetes} Paar an Knoten, d.h. $\{v_i,v_j\}=\{v_j,v_i\}$. Graphen, die nur ungeordnete Knotenpaare beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e_k=(v_i,v_j)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt und die Kante $e_k$ vom \textit{Anfangsknoten} $v_i$ auf den \textit{Endknoten} $v_j$ gerichtet ist, womit $(v_i,v_j) \neq (v_j, v_i)$ gilt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $H=(W,F)$ ist ein \textit{Teilgraph} von $G=(V,E)$ wenn $W \subseteq V$ und $F \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen}\footnote{ Schlingen sind Kanten, die nur einen Endknoten an beiden Kantenenden besitzen, dh. $e_k=\{v_i,v_j\}$ bzw. $e_k=(v_i,v_j)$ für $i=j$.} noch mehrere Kanten zwischen zwei Knoten \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen berücksichtigt, die entweder gerichtet oder ungerichtet sind.\\
+In den nachfolgenden beiden Unterkapiteln wird eine Auswahl an grundlegenden Begriffen aus der Graphentheorie (Kapitel \ref{Kap_Grundlegende Begriffe der Graphentheorie}) sowie Statistiken für Netzwerkanalysen, insbesondere zur Zentralität und Verbundenheit von einzelnen Knoten (Kapitel \ref{Kap_Zentralitätsstatistiken}), eingeführt, die für diese Arbeit benötigt werden. Für eine ausführliche Erläuterung zur Graphentheorie bzw. zu Netzwerkstatistiken sei auf \citeA{diestel2006graph} sowie \citeA{kolaczyk2009statistical} und \citeA{newman2010networks} verwiesen.\\
 
-Der Knotengrad $d(v_i)$ für $v_i \in V$ gibt die Anzahl der Kanten an, die inzident auf den Knoten $v_i$ sind. Für einen Graphen $G=(V,E)$ sind der \textit{Minimumknotengrad} $\delta(G)$, der \textit{Maximumknotengrad} $\Delta(G)$ und der \textit{durchschnittliche Knotengrad} $\bar{d}(G)$ als
-\begin{align}
-\delta(G)=\min\{d(v_i) \ | \ v_i \in V\}\label{Minimumknotengrad}
-\end{align}
-\begin{align}
-\Delta(G)=\max\{d(v_i) \ | \ v_i \in V\}\label{Maximumknotengrad}
-\end{align}
-\begin{align}
-\bar{d}(G)=\frac{1}{N_V}\sum_{v_i \in V}d(v_i)\label{durchschnittlicher Knotengrad}
-\end{align}
-definiert \cite{diestel2006graph}. Handelt es sich um einen gerichteten Graphen, kann für jeden Knoten $v_i \in V$ mittels $d^{in}(v_i)$ die Anzahl auf $v_i$ und mit $d^{out}(v_i)$ die Anzahl von $v_i$ gerichteten Kanten angegeben werden. Entsprechend können die Statistiken aus \eqref{Minimumknotengrad}, \eqref{Maximumknotengrad} und \eqref{durchschnittlicher Knotengrad} angepasst werden, indem nur $d^{in}(v_i)$ bzw. $d^{out}(v_i)$ berücksichtigt werden.\\
+\subsection{Grundlegende Begriffe der Graphentheorie}\label{Kap_Grundlegende Begriffe der Graphentheorie}
+Ein Graph ist ein Paar $G=(V,E)$, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|V|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine ungerichtete Kante $e \in E$, ist die Zuordnung zweier Knoten $u,v \in V$, für $u \neq v$, eines Graphen $G=(V,E)$, d.h. es gilt $\{u,v\} = e$. Die Knoten $u$ und $v$ werden in diesem Fall als \textit{inzident} zu der Kante $e$ und \textit{adjazent} zueinander bezeichnet. Für $e=\{u,v\}$ handelt es sich um ein \textit{ungeordnetes} Knotenpaar an Knoten, d.h. $\{u,v\}=\{(u,v),(v,u)\}$. Graphen, die nur ungeordnete Knotenpaare beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e=(u,v) \neq (v,u)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt, wobei die Kante $e$ vom \textit{Anfangsknoten} $u$ auf den \textit{Endknoten} $v$ zeigt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $G_A=(V_A,E_A)$ ist ein \textit{Teilgraph} von $G=(V,E)$ wenn $V_A \subseteq V$ und $E_A \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen} noch mehrere Kanten zwischen zwei Knoten. Als Schlinge wird eine Kante bezeichnet, die nur einen Endknoten an beiden Kantenenden besitzen, d.h. $e=\{v,v\}$ bzw. $e=(v,v)$ \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen ($N_V < \infty$) berücksichtigt, die entweder gerichtet oder ungerichtet sind.\\
 
-Die \textit{Adjazenzmatrix} $\textbf{A}=(a_{i,j})_{N_V \times N_V}$, gibt an, ob es eine Kante zwischen zwei Knoten gibt und es sei 
+Der Knotengrad $d(v)$ für $v \in V$ gibt die Anzahl der Kanten an, die inzident auf den Knoten $v$ sind. Für einen Graphen $G=(V,E)$ sind der \textit{Minimumknotengrad} $\delta(G)$, der \textit{Maximumknotengrad} $\Delta(G)$ und der \textit{durchschnittliche Knotengrad} $\bar{d}(G)$ definiert \cite{diestel2006graph} als
 \begin{align}
-a_{i,j} = \begin{cases}
-1, \qquad &\text{wenn} \ (v_i,v_j) \in E \ \textit{für} \ i \neq j \ ,\\
-0, \qquad &\text{sonst \ .}\\
+\delta(G)=\min\{d(v) \ | \ v \in V\}\label{Minimumknotengrad}
+\end{align}
+\begin{align}
+\Delta(G)=\max\{d(v) \ | \ v \in V\}\label{Maximumknotengrad}
+\end{align}
+\begin{align}
+\bar{d}(G)=\frac{1}{N_V}\sum_{v \in V}d(v).\label{durchschnittlicher Knotengrad}
+\end{align}
+Handelt es sich um einen gerichteten Graphen, kann für jeden Knoten $v \in V$ mittels $d^{in}(v)$ die Anzahl auf $v$ und mit $d^{out}(v)$ die Anzahl von $v$ gerichteten Kanten angegeben werden. Entsprechend können die Maße aus \eqref{Minimumknotengrad}, \eqref{Maximumknotengrad} und \eqref{durchschnittlicher Knotengrad} angepasst werden, indem nur $d^{in}(v)$ bzw. $d^{out}(v)$ berücksichtigt werden.\\
+
+Die \textit{Adjazenzmatrix} $\textbf{A}=(a_{u,v})_{N_V \times N_V}$ kennzeichnet die Konnektivität, d.h. ob es eine Kante zwischen zwei Knoten gibt. Dafür sei 
+\begin{align}
+a_{u,v} = \begin{cases}
+1, \qquad &\text{wenn} \ (u,v) \in E \ \textit{für} \ u \neq v \ ,\\
+0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align}
 Handelt es sich bei $G=(V,E)$ um einen ungerichteten Graphen ist $\textbf{A}$ eine symmetrische Matrix \cite{kolaczyk2009statistical}.\\
-Die \textit{Inzidenzmatrix} $\textbf{\~B}=(b_{i,k})_{N_V \times N_E}$ eines \textit{ungerichteten} Graphen $G=(V,E)$ gibt an ob $e_k \in E$ inzident zu $v_i \in V$ ist \cite{kolaczyk2009statistical} und es sei
+Die \textit{Inzidenzmatrix} $\textbf{B}=(b_{v,e})_{N_V \times N_E}$ eines \textit{ungerichteten} Graphen $G=(V,E)$ gibt an, ob $e \in E$ inzident zu $v \in V$ ist \cite{kolaczyk2009statistical} und es sei
 %nicht gut, dass da schon wieder "sei" ist
 \begin{align}
-b_{i,k} = \begin{cases}
-1, \qquad &\text{wenn} \ v_i \in e_k \ ,\\
-0, \qquad &\text{sonst .}\\
+b_{v,e} = \begin{cases}
+1, \qquad &\text{wenn} \ v \in e \ ,\\
+0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align}
-Für einen \textit{gerichteten} Graphen $G=(V,E)$ kann unterschieden werden ob $v_i \in e_k$ der Anfangs- oder Endknoten ist. \mbox{I.d.F} ist die Inzidenzmatrix $\textbf{B}=(b_{i,k})_{N_V \times N_E}$ als
+Für einen \textit{gerichteten} Graphen $G=(V,E)$ kann unterschieden werden, ob $v \in e$ der Anfangs- oder Endknoten für einen beliebigen Knoten $u \in V$ ist. In diesem Fall ist die Inzidenzmatrix $\textbf{\~B}=(\tilde{b}_{v,e})_{N_V \times N_E}$ definiert \cite{brandes2005graphfunda} als
 \begin{align}
-b_{i,k} = \begin{cases}
--1, \qquad &\text{wenn} \ (v_i,v_j) \in e_k \ ,\\
-\ 1, \qquad &\text{wenn} \ (v_j,v_i) \in e_k \ ,\\
-\ 0, \qquad &\text{sonst}\\
+\tilde{b}_{v,e} = \begin{cases}
+-1, \qquad &\text{wenn} \ (v,u) = e \  ,\\
+\ 1, \qquad &\text{wenn} \ (u,v) = e \ ,\\
+\ 0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align}
-definiert\footnote{Für die ersten beiden Fälle kann auch das Vorzeichen getauscht werden. Siehe dazu bspw. \citeA{kolaczyk2009statistical}.} \cite{brandes2005graphfunda}.\\
-Wird mit $\textbf{D}$ eine \textit{Diagonalmatrix} bezeichnet, deren $i,i$-Eintrag $d(v_i)$ entspricht, gilt $\textbf{BB}^T=\textbf{D}-\textbf{A}$, wobei $\textbf{B}^T$ die transponierte Matrix $\textbf{B}$ ist. $\textbf{BB}^T$ ist eine $N_V \times N_V$ Matrix und wird als \textit{Laplace-Matrix} $\textbf{L}$ bezeichnet \cite{kolaczyk2009statistical}. Sei $\textbf{D}^{1/2}$ eine Diagonalmatrix, deren Einträge für $v_i \in V$ in der $i,i$-Zelle $\frac{1}{\sqrt{d(v_i)}}$ bzw. $0$ für $d(v_i)=0$ sind, so bezeichne $\textbf{\~L}$ die \textit{normierte Laplace-Matrix} für die $\textbf{\~L}=\textbf{D}^{1/2}\textbf{L}\textbf{D}^{1/2}$ gilt \cite{brandes2005graphfunda}.\\ 
+Sei $\textbf{D}=\text{diag}(d(v), v \in V)$ eine \textit{Diagonalmatrix} und $\textbf{\~B}'$ die transponierte Matrix von $\textbf{\~B}$, dann gilt $\textbf{\~B\~B}'=\textbf{D}-\textbf{A}$. Dabei handelt es sich bei $\textbf{\~B\~B}'$ um eine $N_V \times N_V$ Matrix, die als \textit{Laplace-Matrix} $\textbf{L}$ bezeichnet wird. Deren zweitkleinster \textit{Eigenwert} $\lambda_2$ ist umso größer, je mehr Kanten es zwischen den einzelnen Knoten gibt und kann als ein Maß für die \textit{Verbundenheit} des Graphen interpretiert werden \cite{kolaczyk2009statistical}.\\ 
+\begin{comment}
+Für die \textit{normierte Laplace-Matrix} $\textbf{\~L}$ gilt $\textbf{\~L}=\textbf{D}^{1/2}\textbf{L}\textbf{D}^{1/2}$, wobei $\textbf{D}^{1/2}=\text{diag}\frac{1}{\sqrt{d(v)}}$ für $d(v) \neq 0$ und ansonsten $0$ ist \cite{brandes2005graphfunda}.
+\end{comment}
+% WIRD das gebraucht, wenn der Graph partioniert werden soll??? -> Spectrum
 
-Ein \textit{Weg} $\mathcal{W}(v_0,v_l)$ zwischen den Knoten $v_0$ und $v_l$ in in einem Graphen $G=(V,E)$ bezeichnet eine Abfolge $\{v_0, e_1, v_1, e_2, \dots,e_l,v_l \}$ mit $v_0, \dots, v_l \in V$ und $e_1,\dots,e_l \in E$, der die beiden Knoten miteinander verbindet und die \textit{Länge} $l$ hat \cite{diestel2006graph}. Für ungerichtete Graphen gilt hierbei $e_i=\{v_{i-1}, v_i\}$ und für gerichtete Graphen $e_i=(v_{i-1}, v_i)$. Wird zusätzlich gefordert, dass $e_i \neq e_j$ für $i \neq j$ gilt, d.h. keine Kante $e_i$ mehrmals in der Abfolge vorkommt, handelt es sich um eine \textit{Spur} $\mathcal{S}(v_0,v_l)$.\footnote{Nicht zu verwechseln mit der \textit{Spur einer Matrix}.} Erfüllt ein Weg die Bedingung $v_i \neq v_j$ für $i \neq j$ handelt es sich um einen \textit{Pfad} $\mathcal{P}(v_0,v_l)$  \cite{brandes2005graphfunda}. Für $v_0 = v_l$ ist $\mathcal{W}(v_0,v_l)$ ein \textit{Zyklus} und für $\mathcal{P}(v_0,v_l)$ ein \textit{Kreis}. Der kürzeste Pfad zwischen zwei Knoten $v_0,v_l \in V$ heißt \textit{Distanz} $D(v_0,v_l)$ und seine Länge entspricht der Anzahl an zugehörigen Kanten. Mit der \textit{größten} Distanz aus allen Knotenkombinationen eines zusammenhängenden Graphen $G=(V,E)$ wird dessen Durchmesser $\phi(G)$ angegeben \cite{diestel2006graph}. Wege, Pfade, Spuren, Zyklen und Kreise sind gerichtet, wenn der zugrunde liegende Graph gerichtet ist. Dieser wird, wenn er keinen Zyklus beinhaltet, als \textit{gerichteter, azyklischer Graph}  (englisch: directed acyclic graph; \textit{DAG}) bezeichnet \cite{kolaczyk2009statistical}.\\
+Ein \textit{Weg} $\mathcal{W}(v_1,v_m)$ zwischen den Knoten $v_1$ und $v_m$ in einem Graphen $G=(V,E)$ bezeichnet eine Abfolge $\{v_1, e_1, v_2,\dots,e_{m-1},v_m \}$ mit $v_1, \dots, v_m \in V$ und $e_1,\dots,e_{m-1} \in E$, die die beiden Knoten miteinander verbindet und die \textit{Länge} $m-1$ hat \cite{diestel2006graph}. Für ungerichtete Graphen gilt hierbei $e_k=\{v_{k-1}, v_k\}$ und für gerichtete Graphen $e_k=(v_{k-1}, v_k)$. Wird zusätzlich gefordert, dass $e_k \neq e_l$ für $k \neq l$ gilt, d.h. dass keine Kante $e_k$ mehrmals in der Abfolge vorkommt, handelt es sich um eine \textit{Spur} $\mathcal{S}(v_1,v_m)$. Erfüllt ein Weg die Bedingung $v_k \neq v_l$ für $k \neq l$, wird dieser \textit{Pfad} $\mathcal{P}(v_1,v_m)$ genannt \cite{brandes2005graphfunda}. Für $v_1 = v_m$ ist $\mathcal{W}(v_1,v_m)$ ein \textit{Zyklus} und für $\mathcal{P}(v_1,v_m)$ ein \textit{Kreis}. Der kürzeste Pfad zwischen zwei Knoten $v_1,v_m \in V$ heißt \textit{Distanz} $D(v_1,v_m)$ und seine Länge entspricht der Anzahl an zugehörigen Kanten. Mit der \textit{größten} Distanz aus allen Knotenkombinationen eines zusammenhängenden Graphen $G=(V,E)$ wird dessen Durchmesser $\phi(G)$ angegeben \cite{diestel2006graph}. Wege, Pfade, Spuren, Zyklen und Kreise sind gerichtet, wenn der zugrunde liegende Graph gerichtet ist. Dieser wird, wenn er keinen Zyklus beinhaltet, als \textit{gerichteter, azyklischer Graph}  (englisch: directed acyclic graph; \textit{DAG}) bezeichnet \cite{kolaczyk2009statistical}.\\
 
-Ein ungerichteter Graph $G=(V,E)$ ist \textit{zusammenhängend}, wenn jeder Knoten $v_i \in V$ von jedem anderen Knoten $v_j \in V$ über einen Weg erreicht werden kann. Entsprechend ist ein Graph \textit{unzusammenhängend}, wenn mindestens ein Knoten nicht von allen übrigen Knoten erreicht werden kann. Ein maximal zusammenhängender Teilgraph $H=(W,F)$, für den $W \subseteq V$ und $F \subseteq E$ für $G=(V,E)$ gilt, heißt \textit{Komponente}. Ist $G=(V,E)$ gerichtet, so wird dieser als \textit{schwach verbunden} bezeichnet, wenn der zugrundeliegende ungerichtete Graph zusammenhängend ist, und als \textit{stark verbunden}, wenn jeder Knoten von jedem anderen Knoten über einen direkten Weg erreichbar ist \cite{brandes2005graphfunda}. Mit der $k$-\textit{Verbundeheit} $\kappa(G)$ wird angegeben, wie viele Knoten mindestens aus einem zusammenhängenden Graphen $G=(V,E)$ \textit{entfernt} werden müssen, damit dieser unzusammenhängend wird \cite{diestel2006graph}.\\
-
+Ein ungerichteter Graph $G=(V,E)$ ist \textit{zusammenhängend}, wenn jeder Knoten $v \in V$ von jedem anderen Knoten $u \in V$ über einen Weg erreicht werden kann. Entsprechend ist ein Graph \textit{unzusammenhängend}, wenn mindestens ein Knoten nicht von allen übrigen Knoten erreicht werden kann. 
+Als \textit{Komponente} eines Graphen wird ein \textit{maximal zusammenhängender} Subgraph $G_A=(V_A,E_A)$ mit $V_A \subseteq V$ und $E_A \subseteq E$ für $G=(V,E)$ bezeichnet, wobei "`maximal"' die Eigenschaft ist, dass es keinen zusammenhängenden Subgraphen  $G_B=(V_B, E_B)$ in $G=(V,E)$ gibt, für den $V_B \supseteq V_A$ und $E_B \supseteq E_A$ gilt. Eine \textit{Clique} ist ein Subgraph, in dem alle Knoten adjazent zueinander sind.
+\begin{comment}
+Ein maximal zusammenhängender Teilgraph $G_A=(V_A,E_A)$, für den $V_A \subseteq V$ und $E_A \subseteq E$ für $G=(V,E)$ gilt und es keinen zusammenhängenden Subgraphen  gibt, heißt \textit{Komponente}.
+\end{comment} 
+Ist $G=(V,E)$ gerichtet, so wird dieser als \textit{schwach verbunden} bezeichnet, wenn der zugrunde liegende ungerichtete Graph zusammenhängend ist, und als \textit{stark verbunden}, wenn jeder Knoten von jedem anderen Knoten über einen direkten Weg erreichbar ist \cite{brandes2005graphfunda}. Mit der $k$-\textit{Verbundeheit} $\kappa(G)$ wird angegeben, wie viele Knoten mindestens aus einem zusammenhängenden Graphen $G=(V,E)$ \textit{entfernt} werden müssen, damit dieser unzusammenhängend wird \cite{diestel2006graph}.\\
 % Cluster?
 % tree?
-% := oder =
-% Cliquen? (maximale?)
-% induced subgraph
-% Beweis BB'=D-A ?
-% Kantengewichte?
-% k-Connectivity (unterscheidung knoten und edge k connectivity?)
-% was bedeutet maximal zusammenhängend bei Komponente? einfach nur, dass es keinen Knoten in dem Teilgraphen gibt, der diesen unzusammenhängend machen würde?
-% E(G) oder E?
-% DAG? <- kommt das bei Kim et al. vor?
-% wird minimum, maximum, durchschnitsknotengrad benötigt?
-% macht der zweite teil bei der definition von schlingen in der Fussnote Sinn bzgl. der gerichtetheit der Kante?
+% Cliquen?
 
-\subsection{Zentralitäts- und Verbundenheitsstatistiken}\label{Zentralitäts- und Verbundenheitsstatistiken}
+\subsection{Zentralitätsstatistiken}\label{Kap_Zentralitätsstatistiken}
+Um die \textit{Bedeutung} eines Knotens $u \in V$ zu bestimmen, kann seine \textit{Zentralität} innerhalb des Graphen $G=(V,E)$ angegeben werden. In der Literatur finden sich diverse Maße, die Zentralität teilweise sehr unterschiedlich definieren und daher bei der Beurteilung, wie zentral ein Knoten ist, zu unterschiedlichen Ergebnissen kommen können (vgl. dazu bspw. \citeA{koschuetzki2005centralityindices}). Ein Beispiel für die Mehrdeutigkeit des Begriffs Zentralität sind die Knoten $1$ und $8$ im Graphen in Abbildung \ref{fig:Degree_vs_Path}. Wird die Zentralität schlicht als die Anzahl an benachbarten Knoten aufgefasst, hat Knoten $1$ (gelb) eine relativ zentrale Position ($d(1)=6$), Knoten $8$ (rot) hingegen ist nach dieser Definition weniger zentral gelegen ($d(8)=5$). Wird dagegen die Zentralität als die Anzahl an Pfaden, auf denen ein Knoten liegt aufgefasst, ist unmittelbar ersichtlich, dass der Knoten $8$ (rot) zentraler als der Knoten $1$ ist.\\
+
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[H]
+
+
+{\centering \includegraphics[width=.6\linewidth]{figure/Degree_vs_Path} 
+
+}
+
+\caption[Beispiel für einen Graphen, in dem in Abhängigkeit von der Definition von Zentralität, entweder der rote oder der gelbe Knoten die bedeutsamste Position einnimmt]{Beispiel für einen Graphen, in dem in Abhängigkeit von der Definition von Zentralität, entweder der rote oder der gelbe Knoten die bedeutsamste Position einnimmt.\label{fig:Degree_vs_Path}}
+\end{figure}
+
+
+\end{knitrout}
+
+
+\paragraph*{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
+\paragraph*{Closeness-Zentralität}\label{Kap_Closeness-Zentralität}
+\paragraph*{Betweeness-Zentralität}\label{Kap_Betweeness-Zentralität}
 
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
+
+
+\section{Lineare Regression}\label{Kap_Lineare Regression}
+In den drei folgenden Unterkapiteln werden die Grundlagen und Annahmen des klassischen linearen Regressionsmodells vorgestellt, die für die Methoden der penalisierten Regression in Kapitel \ref{Kap_Penalisierte Regression} Voraussetzung sind. Wenn nicht anders gekennzeichnet, bezieht sich die Darstellung auf \citeA{fahrmeir2009regression}, \citeA{montgomery2012introduction} bzw. \citeA{seber2003linear}, die eine vertiefende und weiterführende Einführung in die lineare Regression geben. Kapitel \ref{Kap_Das klassische lineare Modell} beinhaltet eine kurze Übersicht über die Annahmen des klassischen linearen Modells. Die für die Schätzung der Regressionskoeffizienten am häufigsten verwendete Methode der kleinsten Quadrate wird in Kapiten \ref{Kap_Methode der Kleinsten Quadrate} erläutert. Im abschließenden Unterkapitel \ref{Kap_Multikollinearität und $p > n$} werden die Probleme Multikollinearität und $p > n$, die beide in der Genetik vorkommen und Penalisierungsansätze notwendig machen, vorgestellt.
+
+\begin{comment}
+$\mathbf{X}$ sind ZVs\\
+$\mathbf{y}$ ist eine kontinuierliche ZVs
+\end{comment}
+\subsection{Das klassische lineare Modell}\label{Kap_Das klassische lineare Modell}
+Im klassischen linearen Regressionsmodell wird eine Beziehung zwischen der \textit{Responsevariable} $y$ und den \textit{Kovariablen} $x_1, \dots, x_p$ durch eine \textit{Linearkombination} modelliert
+\begin{align}\label{klassisches_modell}
+y=\beta_0 + \beta_1 x_1 + \dots + \beta_p k_p + \varepsilon.
+\end{align}
+Dafür müssen die Parameter $\beta_0, \beta_1, \dots, \beta_p$ geschätzt werden, wobei $\beta_0$ eine \textit{Konstante} (englisch: Intercept) ist. $\varepsilon$ in \eqref{klassisches_modell} bezeichnet eine \textit{zufällige Störgröße}, die unabhängig von den Beobachtungen auftritt und \textit{additiv} wirkt. Liegen $n$ Beobachtungen sowie $p$ Kovariablen vor und seien
+\begin{align*}
+\mathbf{y} = (y_1,\dots,y_n)'
+\qquad \text{und} \qquad
+\boldsymbol{\beta} = (\beta_1,\dots,\beta_n
+)'
+\qquad \text{sowie} \qquad
+\boldsymbol{\varepsilon} = (\varepsilon_1,\dots,\varepsilon_n
+)'
+\end{align*}
+Spaltenvektoren und
+\begin{align*}
+\mathbf{X} = \begin{pmatrix}
+1 & x_{11} & \dots & x_{1p}\\ 
+\vdots & \vdots & &\vdots\\
+1 & x_{n1} & \dots & x_{np}
+\end{pmatrix}
+\end{align*}
+die \textit{Designmatrix}, so kann \eqref{klassisches_modell} für die $n$ Beobachtungen als
+\begin{align}\label{klass_lin_matrix}
+\mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
+\end{align}
+dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen. Sowohl die Responsevariable als auch die Kovariable werden als Realisierungen von Zufallsvariablen aufgefasst. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ sei, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt
+\begin{align}
+\mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \notag \\ 
+\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Cov_epsilon}
+\end{align}
+und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern, dass
+\begin{align*}
+\mathbf{y} \sim \text{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).
+\end{align*} 
+
+\subsection{Methode der Kleinsten Quadrate}\label{Kap_Methode der Kleinsten Quadrate}
+Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ für $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordinary least squares; \textit{OLS}) erfolgen. Für die Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
+\begin{align}\label{RSS_OLS}
+RSS(\boldsymbol{\beta})&=\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}=\sum_{i=1}^{n}(y_i - \mathbf{x}_i'\boldsymbol{\beta})^2=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}) \notag \\
+&=\mathbf{y}'\mathbf{y} -2\mathbf{y}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta}
+\end{align}
+bzgl. $\boldsymbol{\beta}$ minimiert, d.h. 
+\begin{align}
+\boldsymbol{\beta}^{OLS}&=\arg \displaystyle\min_{\boldsymbol{\beta}} (\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}).
+\end{align}
+Differenzieren von \eqref{RSS_OLS} nach $\boldsymbol{\beta}$
+\begin{align}\label{Ableitung_OLS}
+\frac{\partial \text{RSS}(\boldsymbol{\beta})}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}
+\end{align}
+und anschließendes Nullsetzen ergibt die sogenannte \textit{Normalengleichung}
+\begin{align}\label{Normalengleichung}
+&& 0&=-2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} \notag \\
+&\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}'\mathbf{y}.
+\end{align}
+Sind die Spalten von $\mathbf{X}$ \textit{linear unabhängig} und gilt $p \le n$, sodass $rg(\mathbf{X})=p$, handelt es sich bei $(\mathbf{X}'\mathbf{X})$ um eine \textit{positiv definite} und damit invertierbare Matrix. Als Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich aus \eqref{Normalengleichung}
+\begin{align}\label{OLS_Schätzer}
+\boldsymbol{\hat{\beta}}^{OLS} &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}.
+\end{align}
+Mittels $\boldsymbol{\hat{\beta}}^{OLS}$ kann die Responsevariable $\mathbf{y}$ als
+\begin{align}\label{y_Schaetzung}
+\mathbf{\hat{y}}=\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}=\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}
+\end{align}
+geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als Abweichungen der geschätzten von den beobachteten Responsevariablenausprägungen ergeben
+\begin{align}
+\boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}.
+\end{align}
+Unter Berücksichtigung der Modellannahme aus \eqref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$, da
+\begin{align}\label{Erwartungswert_OLS}
+\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
+&= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
+&=\boldsymbol{\beta}
+\end{align}
+und für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$, dass
+\begin{align}\label{Cov_OLS}
+\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{y})\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]' \notag \\
+&=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \sigma^2 \mathbf{I}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]'=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \notag \\
+&=\sigma^2(\mathbf{X}'\mathbf{X})^{-1}.
+\end{align}
+Mit dem Varianzschätzer $\hat{\sigma}^2=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}$ kann die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ als
+\begin{align}
+\widehat{\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})}=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}(\mathbf{X}'\mathbf{X})^{-1}
+\end{align}
+geschätzt werden.\\
+Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass der KQ-Schätzer unter allen \textit{unverzerrten linearen} Schätzern die kleinste Varianz hat. Das bedeutet, für jeden anderen erwartungstreuen linearen Schätzer $\boldsymbol{\tilde{\beta}}$ gilt
+\begin{align}
+\mathbb{V}\text{ar}(\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}}^{OLS})
+\end{align}
+und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) wegen $\text{Bias}(\boldsymbol{\tilde{\beta}})=\text{Bias}(\boldsymbol{\hat{\beta}}^{OLS})=0$
+\begin{align}
+\text{MSE}(\boldsymbol{\tilde{\beta}}) \ge \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS}).
+\end{align}
+
+\subsection{Multikollinearität und $p > n$}\label{Kap_Multikollinearität und $p > n$}
+Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander, liegt eine \textit{approximative Multikollinearität} vor. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ invertierbar, allerdings kommt es zu einer Inflation der Varianz von $\boldsymbol{\hat{\beta}}^{OLS}$. Sei $\hat{\beta}_j$ der Schätzer für die Kovariable $\mathbf{x}_j$, so kann dessen Varianz dargestellt werden als
+\begin{align}\label{var_beta_j}
+\mathbb{V}\text{ar}(\hat{\beta}_j)=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
+\end{align}  
+wobei $R^2_j$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $\mathbf{x}_j$ mit den restlichen Kovariablen korreliert, desto kleiner wird der Nenner von \eqref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$.\\
+Bei einer \textit{exakten} Multikollinearität kann eine Kovariable als Linearkombination von anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \eqref{Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt. Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.
+
+
+\section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
+Für \textit{hochdimensionalen} Daten, wie sie in der Genetik vorliegen, kann aus \textit{inhaltlichen} Gründen häufig die Annahme vertreten werden, dass nur wenige Kovariablen einen Einfluss auf die Responsevariable haben. Wird dieser Zusammenhang als klassisches lineares Regressionsmodell $\mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ ausgedrückt, muss daher angenommen werden, dass der Regressionskoeffizientenvektor $\boldsymbol{\beta}$ in Wahrheit \textit{spärlich} besetzt ist, d.h. für die meisten der Kovariablen $\beta_j = 0$ gilt. Die Herausforderung besteht darin, durch die Regression sowohl die korrekten $\beta_j$, für die $\beta_j \neq 0$ gilt, zu \textit{selektieren} als auch deren Einfluss auf die Responsevariable möglichst genau zu schätzen. Wie in Kapitel \ref{Kap_Multikollinearität und $p > n$} dargestellt, hängt $\mathbb{V}\text{ar}(\hat{\beta}_j)$ einer Kovariable von der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ ab, weswegen es bei hoher Multikollinearität zu einer hohen Varianz und damit trotz der Unverzerrtheit des KQ-Schätzers zu einem hohen $\text{MSE}(\hat{\beta}_j)$ kommt. Dadurch sind die Schätzer häufig inhaltlich nicht mehr interpretierbar. Zudem kann die KQ-Methode bei exakter Multikollinearität bzw. $p > n$ keine (eindeutigen) Schätzer liefern.\\
+Penalisierungsansätze verfolgen die Strategie, die Unverzerrtheit des KQ-Schätzer zu "`opfern"', d.h. absichtlich ein Bias zu erzeugen, um einerseits eine Variablenselektion für die spärliche Besetzung von $\boldsymbol{\hat{\beta}}$ zu ermöglichen und gleichzeitig den $\text{MSE}(\boldsymbol{\hat{\beta}})$ zu senken. Wegen $\text{MSE}(\boldsymbol{\hat{\beta}})=\mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}})+ \text{Bias}(\boldsymbol{\hat{\beta}})$ darf dabei der erzeugte Bias nicht zu groß werden, da ansonsten der MSE der Penalisierungsmethode den MSE der KQ-Methode übertrifft. Als grundlegendes Prinzip wird bei der Penalisierung die zu minimierende Loss-Funktion, in der Regel die Residuenquadratsumme $\text{RSS}(\boldsymbol{\beta})$, um einen Strafterm $P(\boldsymbol{\beta})$ erweitert, sodass sich eine zu minimierende \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) als  \begin{align}
+\text{PRSS}(\boldsymbol{\beta};\boldsymbol{\gamma})=\text{RSS}(\boldsymbol{\beta}) + P(\boldsymbol{\beta}; \boldsymbol{\gamma})
+\end{align} mit einem oder mehreren speziell zu wählenden \textit{Tuningparametern} $\boldsymbol{\gamma}$ ergibt. Generell wird gefordert, dass die abhängige Variable $\mathbf{y}$ zentriert ist, d.h. es muss $\frac{1}{n}\sum_{i}^{n}y_i =0$ gelten, und die Kovariablen $\mathbf{X}$ müssen standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ und $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Dadurch ist die Penalisierung unabhängig von den einzelnen Skalen der Kovariablen bzw. der Responsevariable und das Intercept fällt weg.\\
+Kapitel \ref{Kap_Ridge-Regression} und \ref{Kap_Lasso-Regression} stellen zunächst die "`klassischen"' Penalisierungsmethoden \textit{Ridge-Regression} und \textit{Lasso-Regression} vor. Auf dieser Grundlage wird in Kapitel \ref{Kap_Elastic-Net} die Methode \textit{Elastic Net} eingeführt, die eine Kombination aus Lasso und Ridge ist. Abschließend werden \textit{netzwerkbasierte Penalisierungen} in Kapitel \ref{Netzwerkbasierte_Penalisierung} näher betrachtet und Möglichkeiten zur Berücksichtigung der in Kapitel \ref{Kap_Zentralitätsstatistiken} eingeführten Zentralitätsmaße aufgezeigt.
+\begin{comment}
+Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
+Ridge wird eingeführt, weil Teil von Elastic Net\\
+kein Intercept (bei allen Penalisierungen?); durch Standardisierung bzw. Zentralisierung fällt $\beta_0$ weg \cite{montgomery2012introduction}\\
+warum keine Subsetselection\\
+hat penalisierung, auch die netzwerkbasierte, was baysianisches?\\
+!!\\
+LAGARGIAN MULTIPLIER?????\\
+penalized bestraft größere Beta mehr - intercept raus, weil sonst bestrafung nicht unabhängig von der skala des outcomes wäre!!! (für allgemeine einführung: http://web.as.uky.edu/statistics/users/pbreheny/764-F11/notes/8-30.pdf)
+\end{comment}
+\subsection{Ridge-Regression}\label{Kap_Ridge-Regression}
+Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die geschätzten Regressionskoeffizienten in $\boldsymbol{\hat{\beta}}^{Ridge}$ \textit{realtiv} im Verhältnis zu den Schätzern in $\boldsymbol{\hat{\beta}}^{OLS}$ \textit{geschrumpft} werden. Die Schätzung der Regressionskoeffizienten erfolgt durch
+\begin{align}\label{Ridge_estimate}
+\boldsymbol{\hat{\beta}}^{Ridge} = (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
+\end{align}
+Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär ist, wird der Ausdruck in der Klammer regulär und damit ist \eqref{Ridge_estimate} eindeutig lösbar \cite{montgomery2012introduction}.
+Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Schätzung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{Lagrange-Multiplikator})
+\begin{align}\label{Ridge_lagrangian}
+\boldsymbol{\hat{\beta}}^{Ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
+\end{align}
+dargestellt werden \cite{hastie2009elements}.
+Wird $\sum_{j=1}^{p} (\hat{\beta}_j^{OLS})^2 \le t$ gesetzt, entsprechen die Ridge-Schätzer den OLS-Schätzern, da in diesem Fall $\gamma=0$ ist und \eqref{Ridge_lagrangian} sich zum einfachen KQ-Minimierungsproblem reduziert \cite{tibshirani96regression}.\\
+Der bzgl. $\boldsymbol{\beta}$ zu minimierende Term aus \eqref{Ridge_lagrangian} lässt sich in Abhängigkeit von $\gamma$ durch
+\begin{align}\label{PRSS_Ridge}
+\text{PRSS}_{Ridge}(\boldsymbol{\beta}, \gamma)&=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})+\boldsymbol{\beta}'\gamma\boldsymbol{\beta} \notag \\
+&=\mathbf{y}'\mathbf{y} -2\mathbf{y}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\gamma\boldsymbol{\beta}
+\end{align}
+darstellen. Differenzierung nach $\boldsymbol{\beta}$ ergibt
+\begin{align}\label{Ableitung_Ridge}
+\frac{\partial \text{PRSS}_{Ridge}(\boldsymbol{\beta}, \gamma)}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta}
+\end{align}
+und anschließendes Nullsetzen liefert den Schätzer $\boldsymbol{\beta}^{Ridge}$ aus \eqref{Ridge_estimate}
+\begin{align*}
+&& 0&=-2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + 2\gamma \boldsymbol{\beta} \notag \\
+&\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma \boldsymbol{\beta} &= \mathbf{X}'\mathbf{y} \notag \\
+&\Leftrightarrow & (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I}) \boldsymbol{\beta} &= \mathbf{X}'\mathbf{y} \notag\\
+&\Rightarrow & \boldsymbol{\hat{\beta}}^{Ridge} &= (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
+\end{align*}
+Der Ridge-Schätzer aus \eqref{Ridge_estimate} kann auch als Transformation des OLS-Schätzers dargestellt werden \cite{hoerl_ridge_1970}
+\begin{align}\label{ridge_transformation}
+\boldsymbol{\hat{\beta}}^{Ridge} =&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y} \notag\\
+\stackrel{\eqref{y_Schaetzung}}{=}&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}'\mathbf{X} (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y} \notag\\
+=&(\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1} \mathbf{X}'\mathbf{X} \boldsymbol{\hat{\beta}}^{OLS} \notag\\
+=&(\mathbf{I} + \gamma (\mathbf{X}'\mathbf{X})^{-1})^{-1}  \boldsymbol{\hat{\beta}}^{OLS}.
+\end{align}
+Daraus ist ersichtlich, dass $\boldsymbol{\beta}^{Ridge} \ne \boldsymbol{\hat{\beta}}^{OLS}$ für $\gamma \ne 0$ gilt und in diesem Fall $\boldsymbol{\beta}^{Ridge}$ nicht erwartungstreu ist \cite{seber2003linear}, weil der OLS-Schätzer erwartungstreu ist.\\ 
+Es lässt sich zeigen, dass mit der Varianz aus \eqref{Cov_epsilon} für den $\text{MSE}$ für $\boldsymbol{\beta}^{Ridge}$ 
+\begin{align}\label{MSE_ridge}
+\text{MSE}(\boldsymbol{\beta}^{Ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta} (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
+\end{align}
+gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias, woran erkennbar ist, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\beta}^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
+
+\subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
+Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} als Nebenbedingung $\sum_{j=1}^{p}|\beta_j| \le t$ gefordert, wodurch sich das Minimierungsproblem ergibt \cite{tibshirani96regression} als
+\begin{align}
+\boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
+\end{align}
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[H]
+
+
+{\centering \includegraphics[width=0.49\linewidth]{figure/Ridge_vs_Lasso1} 
+\includegraphics[width=0.49\linewidth]{figure/Ridge_vs_Lasso2} 
+
+}
+
+\caption[Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \beta_1^2 + \beta_2^2 = t$ ) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion]{Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \beta_1^2 + \beta_2^2 = t$ ) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.\label{fig:Ridge_vs_Lasso}}
+\end{figure}
+
+
+\end{knitrout}
+
+\subsection{Elastic Net}\label{Kap_Elastic-Net}
+\subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
+
+
 
 \bibliography{Masterarbeit}
 
 
 \begin{appendix}
+
+\chapter{Erläuterungen}
+\section{Lagrange-Multiplikator}\label{Lagrange-Multiplikator}
+
+
 % Die eidesstattliche Erklärung auf einer neuen Seite
 \newpage
 % Keine Nummerierung für diesen Teil
