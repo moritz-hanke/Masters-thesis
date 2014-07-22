@@ -280,7 +280,6 @@ plot(g, edge.width=3)
 \paragraph*{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
 \paragraph*{Closeness-Zentralität}\label{Kap_Closeness-Zentralität}
 \paragraph*{Betweeness-Zentralität}\label{Kap_Betweeness-Zentralität}
-
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
 
@@ -417,7 +416,7 @@ Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die gesch�
 \boldsymbol{\hat{\beta}}^{Ridge} = (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
 \end{align}
 Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär ist, wird der Ausdruck in der Klammer regulär und damit ist \eqref{Ridge_estimate} eindeutig lösbar \cite{montgomery2012introduction}.
-Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Schätzung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{Lagrange-Multiplikator})
+Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Schätzung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form})
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\hat{\beta}}^{Ridge}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
@@ -453,12 +452,13 @@ Es lässt sich zeigen, dass mit der Varianz aus \eqref{Cov_epsilon} für den $\t
 \end{align}
 gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias, woran erkennbar ist, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\beta}^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
 
+
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
 Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} als Nebenbedingung $\sum_{j=1}^{p}|\beta_j| \le t$ gefordert, wodurch sich
-\begin{align}
-\boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \left(\sum_{i=1}^{n} y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
+\begin{align}\label{Lasso_Lagrange}
+\boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
-als Minimierungsproblem ergibt \cite{tibshirani96regression}. 
+als Minimierungsproblem ergibt \cite{tibshirani96regression}. Durch die Betragsfunktion in \eqref{Lasso_Lagrange}
 
 
 <<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
@@ -527,8 +527,23 @@ text(1.2,6, expression(hat(beta)^{Lasso}), cex=1.4)
 \begin{appendix}
 
 \chapter{Erläuterungen}
-\section{Lagrange-Multiplikator}\label{Lagrange-Multiplikator}
-
+\section{Lagrange-Form}\label{App_Lagrange-Form}
+Optimierungsproble können um Bedingungen für die Variablen, über die minimiert werden soll, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise gefordert werden
+\begin{align}\label{Optimierung_Equal}
+&&\arg \displaystyle\min_{\boldsymbol{\beta}} \ & f(\boldsymbol{\beta}) \notag \\ 
+&&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^*
+\end{align}
+wobei $f(\boldsymbol{\beta})$ eine in diesem Fall zu minimierende Funktion  und $g_j(\boldsymbol{\beta})=t_i$ eine der $p^*$ zu erfüllenden Bedingungen ist. Es muss stets $p^* < p$ gelten, da ansonsten die Lösung für das Optimierungsproblem durch die Bedingungen nicht eingeschränkt, sondern bestimmt wäre. Werden die Bedingungen als $g_i(\boldsymbol{\beta})-t_i$ formuliert, kann \eqref{Optimierung_Equal} alternativ in der \textit{Lagrange-Form} dargestellt werden \cite{haftka1992elements}, die definiert ist als
+\begin{align}
+\mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})=f(\boldsymbol{\beta})- \sum_{i=1}^{p^*}\gamma_i (g_i(\boldsymbol{\beta})-t_i).
+\end{align}
+Die Lagrange-Form hat keine zusätzliche Bedingungen, ist dafür allerdings um $p^*$ Argumente, die die Bedingung aus \eqref{Optimierung_Equal} widerspiegeln, und zugehörigen \textit{Lagrange-Multiplikatoren} erweitert. Um eine Extremstelle, in diesem Fall ein Minimum, zu finden, muss $\mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})$ sowohl nach $\boldsymbol{\beta}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
+\begin{align}
+\frac{\partial \mathcal{L}}{\beta_j}=\frac{\partial f}{\beta_j} - \sum_{i=1}^{p^*}\gamma_i \frac{g_i}{\beta_j}&=0 \qquad \text{für} \ j=1,\dots,p \\
+\frac{\partial \mathcal{L}}{\gamma_i}=g_i(\boldsymbol{\beta})-t_i&=0 \qquad \text{für} \ i=1,\dots,p^*
+\end{align}
+womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculus}. 
+%AHCTUNG Minimum unter bedingung muss nicht ein (lokales) Minimum unter ohne bedingung sein
 
 % Die eidesstattliche Erklärung auf einer neuen Seite
 \newpage
