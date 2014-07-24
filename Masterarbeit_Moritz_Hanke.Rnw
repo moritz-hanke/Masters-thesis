@@ -455,15 +455,20 @@ gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die E
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
 WIESO KANN LASSO $p>n$ LÖSEN?????????? siehe übersichtspaper bzgl der quadrat durch betrag erweiterung?
-Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} als Nebenbedingung $\sum_{j=1}^{p}|\beta_j| \le t$ gefordert, wodurch sich
+Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} ein $L_1$-Norm-Strafterm in die Lagrange-Form als zusätzliches Argument eingeführt, wodurch sich
 \begin{align}\label{Lasso_Lagrange}
 \boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
-als Minimierungsproblem ergibt \cite{tibshirani96regression}. Durch die Betragsfunktion in \eqref{Lasso_Lagrange} kommt es zu einer gleichmäßigen Schrumpfung der Koeffizienten, wodurch eine spärliche Besetzung von $\boldsymbol{\hat{\beta}}$ und damit eine Variablenselektion erreicht werden kann.\\
+als Minimierungsproblem ergibt \cite{tibshirani96regression}. Durch die Betragsfunktion in \eqref{Lasso_Lagrange} kommt es zu einer gleichmäßigen Schrumpfung der Koeffizienten, wodurch eine spärliche Besetzung von $\boldsymbol{\hat{\beta}}$ und damit eine Variablenselektion erreicht werden kann. Eine äquivalente Darstellung für \eqref{Lasso_Lagrange} ist
+\begin{align}\label{Lasso_Constraint}
+\boldsymbol{\hat{\beta}}^{Lasso}(t)=\arg \displaystyle\min_{\beta} \ &\left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag  \\
+\text{s.t.} \ & \sum_{j=1}^{p}|\beta_j| \le t  \qquad \text{mit} \ t \ge 0
+\end{align}
+bei der sich für zwei Kovariablen die Bedingung als eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum für $R^2$ geometrisch darstellen lassen. Die Form der Ellipsen ist durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine (lokale) Extremstelle unter Erfüllung der Bedingung erreicht \cite{tibshirani96regression}. Abbildung \ref{fig:Ridge_vs_Lasso} zeigt den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer. Der geometrische Zusammenhang zwischen dem zu minimierenden Term und der Nebenbedingung gilt auch für höherdimensionale Daten.\\
 Durch den $L_1$-Norm-Strafterm ist eine geschlossene Darstellung des Minimierungsproblems \eqref{Lasso_Lagrange} und damit eine analytische Lösung nicht möglich. 
 % ABER: IST CONEVEX!!!!
 
-<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) und des Lasso-Strafterms ($L_1$-Norm) hinsichtlich des Schrupmfungseffekts und der Variablenselektion.">>=
+<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrupmfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Panalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer kante tangiert.">>=
 #### R-Code Lasso vs Ridge Ellipsen
 
 library(ellipse)
@@ -475,26 +480,6 @@ library(ellipse)
 x <- y <- seq(-12,12,.1)
 covmat <- matrix(c(1,0.5,0.5,1),nrow=2,ncol=2)
 
-
-
-### RIDGE
-
-plot(ellipse(x=covmat,scale=c(2.26,2.26),centre=c(4,9.35),level=0.95),
-     type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
-          ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1, asp=1)
-abline(a=0,b=0,col="grey")
-abline(v=0,col="grey")
-lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
-lines(ellipse(x=covmat,scale=c(.3,.3),centre=c(4,9.35),level=0.95))
-points(4,9.35, pch=20, col="red", cex=1.7)
-text(5.15,8.6, expression(hat(beta)^{OLS}), cex=1.4)
-
-axis(1,at=0)
-axis(2,at=0)
-covmatc <- matrix(c(1,0,0,1),nrow=2,ncol=2)
-lines(ellipse(x=covmatc,scale=c(2,2),level=0.85))
-points(0.68,3.85, col="cyan2", pch=20, cex=1.7)
-text(1.4,4.8, expression(hat(beta)^{ridge}), cex=1.4)
 
 ### LASSO
 plot(ellipse(x=covmat,scale=c(1.88,1.88),centre=c(4,9.35),level=0.95, lwd=3),
@@ -517,6 +502,27 @@ lines(x=c(0,edge),y=c(edge,0), lwd=1)
 
 points(0,5.4, col="cyan2", pch=20, cex=1.7)
 text(1.2,6, expression(hat(beta)^{Lasso}), cex=1.4)
+
+
+
+### RIDGE
+
+plot(ellipse(x=covmat,scale=c(2.26,2.26),centre=c(4,9.35),level=0.95),
+     type = 'l',xlim=c(-5,10),ylim=c(-5,10),xlab=expression(beta[1]),
+          ylab=expression(beta[2]),xaxt="n",yaxt="n", cex.lab=1, asp=1)
+abline(a=0,b=0,col="grey")
+abline(v=0,col="grey")
+lines(ellipse(x=covmat,scale=c(1.15,1.15),centre=c(4,9.35),level=0.95))
+lines(ellipse(x=covmat,scale=c(.3,.3),centre=c(4,9.35),level=0.95))
+points(4,9.35, pch=20, col="red", cex=1.7)
+text(5.15,8.6, expression(hat(beta)^{OLS}), cex=1.4)
+
+axis(1,at=0)
+axis(2,at=0)
+covmatc <- matrix(c(1,0,0,1),nrow=2,ncol=2)
+lines(ellipse(x=covmatc,scale=c(2,2),level=0.85))
+points(0.68,3.85, col="cyan2", pch=20, cex=1.7)
+text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 @
 \subsection{Elastic Net}\label{Kap_Elastic-Net}
 \subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
