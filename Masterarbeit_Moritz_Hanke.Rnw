@@ -455,20 +455,20 @@ gilt (vgl. \citeA{hoerl_ridge_1970}), wobei $\lambda_j$ für $j=1,\dots,p$ die E
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
 WIESO KANN LASSO $p>n$ LÖSEN?????????? siehe übersichtspaper bzgl der quadrat durch betrag erweiterung?
-Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} ein $L_1$-Norm-Strafterm in die Lagrange-Form als zusätzliches Argument eingeführt, wodurch sich
+Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} ein $L_1$-Norm-Strafterm in die Lagrange-Form als zusätzliches Argument eingeführt, womit sich
 \begin{align}\label{Lasso_Lagrange}
 \boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
-als Minimierungsproblem ergibt \cite{tibshirani96regression}. Durch die Betragsfunktion in \eqref{Lasso_Lagrange} kommt es zu einer gleichmäßigen Schrumpfung der Koeffizienten, wodurch eine spärliche Besetzung von $\boldsymbol{\hat{\beta}}$ und damit eine Variablenselektion erreicht werden kann. Eine äquivalente Darstellung für \eqref{Lasso_Lagrange} ist
+als Minimierungsproblem ergibt \cite{tibshirani96regression}. Die Betragsfunktion in \eqref{Lasso_Lagrange} hat eine \textit{gleichmäßigen} Schrumpfung der Koeffizienten zur Folge, wodurch für einzelne Regressionskoeffizienten $\hat{\beta}_j =0$  und damit eine Variablenselektion erreicht werden kann. Dieser Sachverhalt lässt sich geometrisch darstellen, wenn \eqref{Lasso_Lagrange} als Optimierungsproblem mit einer Bedingung ausgedrückt wird
 \begin{align}\label{Lasso_Constraint}
 \boldsymbol{\hat{\beta}}^{Lasso}(t)=\arg \displaystyle\min_{\beta} \ &\left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag  \\
-\text{s.t.} \ & \sum_{j=1}^{p}|\beta_j| \le t  \qquad \text{mit} \ t \ge 0
+\text{s.t.} \ & \sum_{j=1}^{p}|\beta_j| \le t  \qquad \text{mit} \ t \ge 0.
 \end{align}
-bei der sich für zwei Kovariablen die Bedingung als eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum für $R^2$ geometrisch darstellen lassen. Die Form der Ellipsen ist durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine (lokale) Extremstelle unter Erfüllung der Bedingung erreicht \cite{tibshirani96regression}. Abbildung \ref{fig:Ridge_vs_Lasso} zeigt den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer. Der geometrische Zusammenhang zwischen dem zu minimierenden Term und der Nebenbedingung gilt auch für höherdimensionale Daten.\\
-Durch den $L_1$-Norm-Strafterm ist eine geschlossene Darstellung des Minimierungsproblems \eqref{Lasso_Lagrange} und damit eine analytische Lösung nicht möglich. 
+Für den Fall von zwei Kovariablen ist dann die Bedingung aus \eqref{Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Bedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Die geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten. Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer. Für beide Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
+Eine geschlossene Darstellung des Minimierungsproblems \eqref{Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe \ref{App_Konvexe_Funktionen}), weswegen ein Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.
 % ABER: IST CONEVEX!!!!
 
-<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrupmfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Panalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer kante tangiert.">>=
+<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrupmfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Panalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer Kante tangiert.">>=
 #### R-Code Lasso vs Ridge Ellipsen
 
 library(ellipse)
@@ -535,7 +535,7 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 \begin{appendix}
 \chapter{Erläuterungen}
 \section{Lagrange-Form}\label{App_Lagrange-Form}
-Optimierungsproble können um Bedingungen für die Variablen, über die minimiert werden soll, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise gefordert werden
+Optimierungsproble können um Bedingungen für die Variablen, für die eine Extremstelle bestimmt werden soll, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise gefordert werden
 \begin{align}\label{Optimierung_Equal}
 &&\arg \displaystyle\min_{\boldsymbol{\beta}} \ & f(\boldsymbol{\beta}) \notag \\ 
 &&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^*
@@ -555,6 +555,21 @@ Die Lagrange-Form hat keine zusätzliche Bedingungen, ist dafür allerdings um $
 womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculus}. 
 %AHCTUNG Minimum unter bedingung muss nicht ein (lokales) Minimum unter ohne bedingung sein
 
+
+\section{Konvexe Funktionen}\label{App_Konvexe_Funktionen}
+Eine Funktion $f:X \rightarrow \mathbb{R}$ heißt \text{konvex}, wenn
+\begin{align*}\label{Eq:Convex_Funktion}
+f(\theta a + (1-\theta)b) \leq \theta f(a) + (1-\theta) f(b) \qquad \text{mit} \quad 0 \leq \theta \leq 1.
+\end{align*}
+für alle $a,b \in X$ gilt \cite{matousek2006understanding}. Es handelt sich bei $f$ um eine \textit{streng konvexe} Funktion, wenn für alle $a \neq b$ gilt
+\begin{align*}
+f(\theta a + (1-\theta)b) < \theta f(a) + (1-\theta) f(b) \qquad \text{mit} \quad 0 \leq \theta \leq 1.
+\end{align*}
+Sind $g$ und $h$ zwei konvexe Funktionen und $p,q \ge 0$, so lässt sich zeigen, dass
+\begin{align*}
+f=p \cdot g + q \cdot h
+\end{align*}
+ebenfalls eine konvexe Funktion ist \cite{boyd2004convex}.
 
 % Die eidesstattliche Erklärung auf einer neuen Seite
 \newpage
