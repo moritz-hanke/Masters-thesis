@@ -464,9 +464,12 @@ als Minimierungsproblem ergibt \cite{tibshirani96regression}. Die Betragsfunktio
 \boldsymbol{\hat{\beta}}^{Lasso}(t)=\arg \displaystyle\min_{\beta} \ &\left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag  \\
 \text{s.t.} \ & \sum_{j=1}^{p}|\beta_j| \le t  \qquad \text{mit} \ t \ge 0.
 \end{align}
-Für den Fall von zwei Kovariablen ist dann die Nebenbedingung aus \eqref{Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Nebenbedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Die geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten. Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer. Für beide Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
+Für den Fall von zwei Kovariablen ist dann die Nebenbedingung aus \eqref{Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Nebenbedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Diese geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten, wobei die Nebenbedingung ein p-dimensionaler Kreuzpolytop, der um den Faktor $t$ skaliert wird, und die Zielfunktion ein p-dimensionaler Ellipsoid mit dem OLS-Schätzer im Zentrum ist (vgl. dazu \citeNP{Perty2009ShrinkagePolytopes}). Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer für zwei Kovariablen. Bei beiden Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
 Eine geschlossene Darstellung des Minimierungsproblems \eqref{Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe \ref{App_Konvexe_Funktionen}), weswegen ein Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.
 % ABER: IST CONEVEX!!!!
+%%% Veerweisen:
+%Fused lasso Tibshirani 2005
+%Fused lasso for unordered predictors
 
 <<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.cap="Geometrische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrupmfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Panalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer Kante tangiert.">>=
 #### R-Code Lasso vs Ridge Ellipsen
@@ -538,7 +541,7 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 Optimierungsprobleme können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise
 \begin{align}\label{Optimierung_Equal}
 &&\arg \displaystyle\min_{\boldsymbol{\beta}} \ & f(\boldsymbol{\beta}) \notag \\ 
-&&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^* \ \text{mit} \ p^* \le p
+&&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p
 \end{align}
 ein Minimierungsproblem sein, wobei $f(\boldsymbol{\beta})$ die Zielfunktion und $g_j(\boldsymbol{\beta})=t_i$ für $i=1,\dots,p^*$ die zu erfüllenden Nebenbedingungen sind. 
 \begin{comment}Es muss stets $p^* < p$ gelten, da ansonsten die Lösung für das Optimierungsproblem durch die Bedingungen nicht eingeschränkt, sondern bestimmt wäre.
@@ -557,7 +560,7 @@ womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculu
 
 
 \section{Konvexe Funktionen}\label{App_Konvexe_Funktionen}
-Eine Funktion $f:X \rightarrow \mathbb{R}$ heißt \text{konvex}, wenn
+Eine Funktion $f:X \rightarrow \mathbb{R}$ heißt \textit{konvex}, wenn
 \begin{align*}\label{Eq:Convex_Funktion}
 f(\theta a + (1-\theta)b) \leq \theta f(a) + (1-\theta) f(b) \qquad \text{mit} \quad 0 \leq \theta \leq 1.
 \end{align*}
