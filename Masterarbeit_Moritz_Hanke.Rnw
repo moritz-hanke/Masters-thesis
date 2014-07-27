@@ -535,12 +535,12 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 \begin{appendix}
 \chapter{Erläuterungen}
 \section{Lagrange-Form}\label{App_Lagrange-Form}
-Optimierungsproble können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise gefordert werden
+Optimierungsprobleme können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise
 \begin{align}\label{Optimierung_Equal}
 &&\arg \displaystyle\min_{\boldsymbol{\beta}} \ & f(\boldsymbol{\beta}) \notag \\ 
-&&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^*
+&&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^* \ \text{mit} \ p^* \le p
 \end{align}
-wobei $f(\boldsymbol{\beta})$ eine in diesem Fall zu minimierende Funktion  und $g_j(\boldsymbol{\beta})=t_i$ eine der $p^*$ zu erfüllenden Nebenbedingungen ist. 
+ein Minimierungsproblem sein, wobei $f(\boldsymbol{\beta})$ die Zielfunktion und $g_j(\boldsymbol{\beta})=t_i$ für $i=1,\dots,p^*$ die zu erfüllenden Nebenbedingungen sind. 
 \begin{comment}Es muss stets $p^* < p$ gelten, da ansonsten die Lösung für das Optimierungsproblem durch die Bedingungen nicht eingeschränkt, sondern bestimmt wäre.
 \end{comment}
 Werden die Nebenbedingungen als $g_i(\boldsymbol{\beta})-t_i=0$ formuliert, kann \eqref{Optimierung_Equal} alternativ in der \textit{Lagrange-Form} dargestellt werden \cite{haftka1992elements}, die definiert ist als
