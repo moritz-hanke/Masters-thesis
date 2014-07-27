@@ -459,12 +459,12 @@ Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} ein $
 \begin{align}\label{Lasso_Lagrange}
 \boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
 \end{align}
-als Minimierungsproblem ergibt \cite{tibshirani96regression}. Die Betragsfunktion in \eqref{Lasso_Lagrange} hat eine \textit{gleichmäßigen} Schrumpfung der Koeffizienten zur Folge, wodurch für einzelne Regressionskoeffizienten $\hat{\beta}_j =0$  und damit eine Variablenselektion erreicht werden kann. Dieser Sachverhalt lässt sich geometrisch darstellen, wenn \eqref{Lasso_Lagrange} als Optimierungsproblem mit einer Bedingung ausgedrückt wird
+als Minimierungsproblem ergibt \cite{tibshirani96regression}. Die Betragsfunktion in \eqref{Lasso_Lagrange} hat eine \textit{gleichmäßigen} Schrumpfung der Koeffizienten zur Folge, wodurch für einzelne Regressionskoeffizienten $\hat{\beta}_j =0$  und damit eine Variablenselektion erreicht werden kann. Dieser Sachverhalt lässt sich geometrisch darstellen, wenn \eqref{Lasso_Lagrange} als Optimierungsproblem mit einer Nebenbedingung ausgedrückt wird
 \begin{align}\label{Lasso_Constraint}
 \boldsymbol{\hat{\beta}}^{Lasso}(t)=\arg \displaystyle\min_{\beta} \ &\left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag  \\
 \text{s.t.} \ & \sum_{j=1}^{p}|\beta_j| \le t  \qquad \text{mit} \ t \ge 0.
 \end{align}
-Für den Fall von zwei Kovariablen ist dann die Bedingung aus \eqref{Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Bedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Die geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten. Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer. Für beide Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
+Für den Fall von zwei Kovariablen ist dann die Nebenbedingung aus \eqref{Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Nebenbedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Die geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten. Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer. Für beide Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
 Eine geschlossene Darstellung des Minimierungsproblems \eqref{Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe \ref{App_Konvexe_Funktionen}), weswegen ein Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.
 % ABER: IST CONEVEX!!!!
 
@@ -535,23 +535,23 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 \begin{appendix}
 \chapter{Erläuterungen}
 \section{Lagrange-Form}\label{App_Lagrange-Form}
-Optimierungsproble können um Bedingungen für die Variablen, für die eine Extremstelle bestimmt werden soll, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise gefordert werden
+Optimierungsproble können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise gefordert werden
 \begin{align}\label{Optimierung_Equal}
 &&\arg \displaystyle\min_{\boldsymbol{\beta}} \ & f(\boldsymbol{\beta}) \notag \\ 
 &&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^*
 \end{align}
-wobei $f(\boldsymbol{\beta})$ eine in diesem Fall zu minimierende Funktion  und $g_j(\boldsymbol{\beta})=t_i$ eine der $p^*$ zu erfüllenden Bedingungen ist. 
+wobei $f(\boldsymbol{\beta})$ eine in diesem Fall zu minimierende Funktion  und $g_j(\boldsymbol{\beta})=t_i$ eine der $p^*$ zu erfüllenden Nebenbedingungen ist. 
 \begin{comment}Es muss stets $p^* < p$ gelten, da ansonsten die Lösung für das Optimierungsproblem durch die Bedingungen nicht eingeschränkt, sondern bestimmt wäre.
 \end{comment}
-Werden die Bedingungen als $g_i(\boldsymbol{\beta})-t_i=0$ formuliert, kann \eqref{Optimierung_Equal} alternativ in der \textit{Lagrange-Form} dargestellt werden \cite{haftka1992elements}, die definiert ist als
-\begin{align}
+Werden die Nebenbedingungen als $g_i(\boldsymbol{\beta})-t_i=0$ formuliert, kann \eqref{Optimierung_Equal} alternativ in der \textit{Lagrange-Form} dargestellt werden \cite{haftka1992elements}, die definiert ist als
+\begin{align*}
 \mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})=f(\boldsymbol{\beta})- \sum_{i=1}^{p^*}\gamma_i (g_i(\boldsymbol{\beta})-t_i).
-\end{align}
-Die Lagrange-Form hat keine zusätzliche Bedingungen, ist dafür allerdings um $p^*$ Argumente, die die Bedingung aus \eqref{Optimierung_Equal} widerspiegeln, und den zugehörigen \textit{Lagrange-Multiplikatoren} erweitert. Um eine Extremstelle, in diesem Fall ein Minimum, zu finden, muss $\mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})$ sowohl nach $\boldsymbol{\beta}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
-\begin{align}
+\end{align*}
+Die Lagrange-Form hat keine zusätzliche Nebenbedingungen, ist dafür allerdings um $p^*$ Argumente, die die Nebenbedingung aus \eqref{Optimierung_Equal} widerspiegeln, und den zugehörigen \textit{Lagrange-Multiplikatoren} erweitert. Um eine Extremstelle, in diesem Fall ein Minimum, zu finden, muss $\mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})$ sowohl nach $\boldsymbol{\beta}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
+\begin{align*}
 \frac{\partial \mathcal{L}}{\beta_j}=\frac{\partial f}{\beta_j} - \sum_{i=1}^{p^*}\gamma_i \frac{g_i}{\beta_j}&=0 \qquad \text{für} \ j=1,\dots,p \\
 \frac{\partial \mathcal{L}}{\gamma_i}=g_i(\boldsymbol{\beta})-t_i&=0 \qquad \text{für} \ i=1,\dots,p^*
-\end{align}
+\end{align*}
 womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculus}. 
 %AHCTUNG Minimum unter bedingung muss nicht ein (lokales) Minimum unter ohne bedingung sein
 
