@@ -285,14 +285,15 @@ plot(g, edge.width=3)
 
 
 \section{Lineare Regression}\label{Kap_Lineare Regression}
-In den drei folgenden Unterkapiteln werden die Grundlagen und Annahmen des klassischen linearen Regressionsmodells vorgestellt, die für die Methoden der penalisierten Regression in Kapitel \ref{Kap_Penalisierte Regression} Voraussetzung sind. Wenn nicht anders gekennzeichnet, bezieht sich die Darstellung auf \citeA{fahrmeir2009regression}, \citeA{montgomery2012introduction} bzw. \citeA{seber2003linear}, die eine vertiefende und weiterführende Einführung in die lineare Regression geben. Kapitel \ref{Kap_Das klassische lineare Modell} beinhaltet eine kurze Übersicht über die Annahmen des klassischen linearen Modells. Die für die Schätzung der Regressionskoeffizienten am häufigsten verwendete Methode der kleinsten Quadrate wird in Kapitel \ref{Kap_Methode der Kleinsten Quadrate} erläutert. Im abschließenden Unterkapitel \ref{Kap_Multikollinearität und $p > n$} werden die Probleme Multikollinearität und "`$p > n$"' vorgestellt, die beide in der Genetik vorkommen und Penalisierungsansätze notwendig machen.
+In den drei folgenden Unterkapiteln werden die Grundlagen und Annahmen des klassischen linearen Regressionsmodells vorgestellt, die für die Methoden der penalisierten Regression in Kapitel \ref{Kap_Penalisierte Regression} Voraussetzung sind. Wenn nicht anders gekennzeichnet, bezieht sich die Darstellung auf \citeA{fahrmeir2009regression}, \citeA{montgomery2012introduction} bzw. \citeA{seber2003linear}, die eine vertiefende und weiterführende Einführung in die lineare Regression geben. Kapitel \ref{Kap_Das klassische lineare Modell} beinhaltet eine kurze Übersicht über die Annahmen des klassischen linearen Modells. Die für die Schätzung der Regressionskoeffizienten am häufigsten verwendete Methode der kleinsten Quadrate wird in Kapitel \ref{Kap_Methode der Kleinsten Quadrate} erläutert. Im abschließenden Unterkapitel \ref{Kap_Multikollinearität und $p > n$} werden die Probleme Multikollinearität und "`$p > n$"' vorgestellt, die beide in der Genetik vorkommen und Penalisierungsansätze notwendig machen.\\
+Für die Notation werden \textit{Zufallsvariablen} mit kursiven Großbuchstaben wie $Y$ und $X$ und ihre \textit{Realisationen} als entsprechende Kleinbuchstaben $y$ und $x$ bezeichnet. 
 
 \begin{comment}
 $\mathbf{X}$ sind ZVs\\
 $\mathbf{y}$ ist eine kontinuierliche ZVs
 \end{comment}
 \subsection{Das klassische lineare Modell}\label{Kap_Das klassische lineare Modell}
-Im klassischen linearen Regressionsmodell wird eine Beziehung zwischen der \textit{Responsevariable} $Y$ und den \textit{Kovariablen} $X_1, \dots, X_p$, die als Zufallsvariablen angesehen werden, durch eine \textit{Linearkombination} modelliert
+Im klassischen linearen Regressionsmodell wird eine Beziehung zwischen der \textit{Responsevariable} $Y$ und den \textit{Kovariablen} $X_1, \dots, X_p$ durch eine \textit{Linearkombination} modelliert
 \begin{align}\label{klassisches_modell}
 Y=\beta_0 + \beta_1 X_1 + \dots + \beta_p X_p + \varepsilon.
 \end{align}
@@ -306,7 +307,7 @@ Dafür müssen die Parameter $\beta_0, \beta_1, \dots, \beta_p$ geschätzt werde
 \boldsymbol{\varepsilon} = (\varepsilon_1,\dots,\varepsilon_n
 )'
 \end{align*}
-Spaltenvektoren und
+einspaltige Matrizen und
 \begin{align*}
 \mathbf{X} = \begin{pmatrix}
 1 & X_{11} & \dots & X_{1p}\\ 
@@ -314,60 +315,60 @@ Spaltenvektoren und
 1 & X_{n1} & \dots & X_{np}
 \end{pmatrix}
 \end{align*}
-die \textit{Designmatrix}, so kann \eqref{klassisches_modell} für die $n$ Beobachtungen als
+die \textit{Designmatrix}, so kann \eqref{klassisches_modell} als
 \begin{align}\label{klass_lin_matrix}
 \mathbf{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
 dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen. Sowohl die Responsevariable als auch die Kovariablen werden als Realisierungen von Zufallsvariablen aufgefasst. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ seien, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt
 \begin{align}
-\mathbb{E}(\mathbf{y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \notag \\ 
-\mathbb{C}\text{ov}(\mathbf{y})&=\mathbb{C}\text{ov}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Cov_epsilon}
+\mathbb{E}(\mathbf{Y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \notag \\ 
+\mathbb{C}\text{ov}(\mathbf{Y})&=\mathbb{C}\text{ov}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Cov_epsilon}
 \end{align}
 und unter zusätzlicher Annahme von \textit{normalverteilten} Fehlern, dass
 \begin{align*}
-\mathbf{y} \sim \text{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).
+\mathbf{Y} \sim \text{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).
 \end{align*} 
 
 \subsection{Methode der Kleinsten Quadrate}\label{Kap_Methode der Kleinsten Quadrate}
 Die Schätzung der Regressionskoeffizienten $\boldsymbol{\beta}$ für $\boldsymbol{\beta} \in \mathbb{R}^p$ kann bei vollem Spaltenrang von $\mathbf{X}$ mittels der \textit{Methode der kleinsten Quadrate} (\textit{KQ-Methode}; englisch: ordinary least squares; \textit{OLS}) erfolgen. Für die Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ wird die \textit{Residuenquadratsumme} (englisch: residual sum of squares; \textit{RSS}) 
 \begin{align}\label{RSS_OLS}
-RSS(\boldsymbol{\beta})&=\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}=\sum_{i=1}^{n}(y_i - \mathbf{x}_i'\boldsymbol{\beta})^2=(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}) \notag \\
-&=\mathbf{y}'\mathbf{y} -2\mathbf{y}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta}
+RSS(\boldsymbol{\beta})&=\boldsymbol{\varepsilon}'\boldsymbol{\varepsilon}=\sum_{i=1}^{n}(Y_i - \mathbf{X}_i'\boldsymbol{\beta})^2=(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}) \notag \\
+&=\mathbf{Y}'\mathbf{Y} -2\mathbf{Y}'\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta}
 \end{align}
 bzgl. $\boldsymbol{\beta}$ minimiert, d.h. 
 \begin{align}
-\boldsymbol{\beta}^{OLS}&=\arg \displaystyle\min_{\boldsymbol{\beta}} (\mathbf{y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}).
+\boldsymbol{\beta}^{OLS}&=\arg \displaystyle\min_{\boldsymbol{\beta}} (\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}).
 \end{align}
 Differenzieren von \eqref{RSS_OLS} nach $\boldsymbol{\beta}$
 \begin{align}\label{Ableitung_OLS}
-\frac{\partial \text{RSS}(\boldsymbol{\beta})}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}
+\frac{\partial \text{RSS}(\boldsymbol{\beta})}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}
 \end{align}
 und anschließendes Nullsetzen ergibt die sogenannte \textit{Normalengleichung}
 \begin{align}\label{Normalengleichung}
-&& 0&=-2\mathbf{X}'\mathbf{y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} \notag \\
-&\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}'\mathbf{y}.
+&& 0&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} \notag \\
+&\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}'\mathbf{Y}.
 \end{align}
 Sind die Spalten von $\mathbf{X}$ \textit{linear unabhängig} und gilt $p \le n$, sodass $rg(\mathbf{X})=p$, handelt es sich bei $(\mathbf{X}'\mathbf{X})$ um eine \textit{positiv definite} und damit invertierbare Matrix. Als Schätzer $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich aus \eqref{Normalengleichung}
 \begin{align}\label{OLS_Schätzer}
-\boldsymbol{\hat{\beta}}^{OLS} &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}.
+\boldsymbol{\hat{\beta}}^{OLS} &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}.
 \end{align}
-Mittels $\boldsymbol{\hat{\beta}}^{OLS}$ kann die Responsevariable $\mathbf{y}$ als
+Mittels $\boldsymbol{\hat{\beta}}^{OLS}$ können die Responsevariablen $\mathbf{Y}$ als
 \begin{align}\label{y_Schaetzung}
-\mathbf{\hat{y}}=\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}=\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}
+\mathbf{\hat{Y}}=\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}=\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}
 \end{align}
 geschätzt werden, sodass sich die Residuen $\boldsymbol{\hat{\varepsilon}}$ als Abweichungen der geschätzten von den beobachteten Responsevariablenausprägungen ergeben
 \begin{align}
-\boldsymbol{\hat{\varepsilon}}=\mathbf{y}-\mathbf{\hat{y}}=\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}.
+\boldsymbol{\hat{\varepsilon}}=\mathbf{Y}-\mathbf{\hat{Y}}=\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{OLS}.
 \end{align}
 Unter Berücksichtigung der Modellannahme aus \eqref{klass_lin_matrix} und $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$ ist der OLS-Schätzer ein unverzerrter Schätzer für $\boldsymbol{\beta}$, da
 \begin{align}\label{Erwartungswert_OLS}
-\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
+\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}\right]=\mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon})\right] \notag \\
 &= \mathbb{E}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \right] \notag \\
 &=\boldsymbol{\beta}
 \end{align}
 und für die Kovarianz von $\boldsymbol{\hat{\beta}}^{OLS}$ gilt wegen $\mathbb{C}\text{ov}(\mathbf{y})=\sigma^2 \mathbf{I}$, dass
 \begin{align}\label{Cov_OLS}
-\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\right]=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{y})\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]' \notag \\
+\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})&=\mathbb{C}\text{ov}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}\right]=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \mathbb{C}\text{ov}(\mathbf{Y})\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]' \notag \\
 &=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}' \sigma^2 \mathbf{I}\left[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right]'=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \notag \\
 &=\sigma^2(\mathbf{X}'\mathbf{X})^{-1}.
 \end{align}
@@ -376,27 +377,36 @@ Mit dem Varianzschätzer $\hat{\sigma}^2=\frac{1}{n-p}\boldsymbol{\hat{\varepsil
 \widehat{\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})}=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}(\mathbf{X}'\mathbf{X})^{-1}
 \end{align}
 geschätzt werden.\\
-Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass der KQ-Schätzer unter allen \textit{unverzerrten linearen} Schätzern die kleinste Varianz hat. Das bedeutet, für jeden anderen erwartungstreuen linearen Schätzer $\boldsymbol{\tilde{\beta}}$ gilt
+Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass für den KQ-Schätzer und allen anderen \textit{unverzerrten linearen} Schätzern $\boldsymbol{\tilde{\beta}}$ für einen beliebigen Vektor $\mathbf{b}$ folgendes Verhältnis gilt:
+\begin{align*}
+\mathbb{V}\text{ar}(\mathbf{b}'\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\mathbf{b}'\boldsymbol{\hat{\beta}}^{OLS}).
+\end{align*}
+Das bedeutet, es gilt $\mathbb{V}\text{ar}(\mathbf{b}'\tilde{\beta}_j) \ge \mathbb{V}\text{ar}(\hat{\beta}_j^{OLS})$ wenn $\mathbf{b}$ als kanonischer Einheitsvektor mit der Eins an der j-ten Stelle definiert wird.\\
+Wegen $\text{Bias}(\tilde{\beta}_j)=\text{Bias}(\hat{\beta}_j^{OLS})=0$ gilt damit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) 
 \begin{align}
-\mathbb{V}\text{ar}(\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}}^{OLS})
-\end{align}
-und somit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) wegen $\text{Bias}(\boldsymbol{\tilde{\beta}})=\text{Bias}(\boldsymbol{\hat{\beta}}^{OLS})=0$
-\begin{align}
-\text{MSE}(\boldsymbol{\tilde{\beta}}) \ge \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS}).
+\text{MSE}(\tilde{\beta}_j) \ge \text{MSE}(\hat{\beta}_j^{OLS}).
 \end{align}
 
 \subsection{Multikollinearität und "`$p > n$"'}\label{Kap_Multikollinearität und $p > n$}
-Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander, liegt eine \textit{approximative Multikollinearität} vor. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ invertierbar, allerdings kommt es zu einer Inflation der Varianz von $\boldsymbol{\hat{\beta}}^{OLS}$. Sei $\hat{\beta}_j$ der Schätzer für den Regressionskoeffizienten $\beta_j$, so kann dessen Varianz ermittelt werden als
+Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander ohne dass sich eine Variable als Linearkombination der anderen Kovariablen beschreiben lässt, liegt eine \textit{annähernde Multikollinearität} vor. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ invertierbar, allerdings kommt es zu einer Inflation der Varianz von $\boldsymbol{\hat{\beta}}^{OLS}$. Sei $\hat{\beta}_j$ der Schätzer für den Regressionskoeffizienten $\beta_j$, so kann dessen Varianz ermittelt werden als
 \begin{align}\label{var_beta_j}
 \mathbb{V}\text{ar}(\hat{\beta}_j)=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
 \end{align}  
 wobei $0 \leq R^2_j \leq 1$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $\mathbf{x}_j$ mit den restlichen Kovariablen korreliert, desto kleiner wird der Nenner von \eqref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$.\\
 Bei einer \textit{exakten} Multikollinearität kann eine Kovariable als Linearkombination von anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \eqref{Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt.\\
-Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.
-
+Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.\\
+X\\
+X\\
+X\\
+X\\
+noch zur Länge des beta-vectors? wenn ja, paper liegt auf dem Schreibtisch
+X\\
+X\\
+X\\
+X\\
 
 \section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
-Für \textit{hochdimensionale} Daten, wie sie in der Genetik vorliegen, kann aus \textit{inhaltlichen} Gründen häufig die Annahme vertreten werden, dass nur wenige Kovariablen einen Einfluss auf die Responsevariable haben. Wird dieser Zusammenhang als klassisches lineares Regressionsmodell $\mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ ausgedrückt, muss daher angenommen werden, dass der Regressionskoeffizientenvektor $\boldsymbol{\beta}$ in Wahrheit \textit{spärlich} besetzt ist, d.h. für die meisten der Kovariablen $\beta_j = 0$ gilt. Die Herausforderung besteht darin, durch die Regression sowohl die $\beta_j$, für die $\beta_j \neq 0$ gilt, zu \textit{selektieren} als auch deren Einfluss auf die Responsevariable möglichst genau zu schätzen. Wie in Kapitel \ref{Kap_Multikollinearität und $p > n$} dargestellt, hängt $\mathbb{V}\text{ar}(\hat{\beta}_j)$ von der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ ab, weswegen es bei hoher Multikollinearität zu einer hohen Varianz und damit trotz der Unverzerrtheit des KQ-Schätzers zu einem hohen $\text{MSE}(\hat{\beta}_j)$ kommt. Zudem kann die KQ-Methode bei exakter Multikollinearität bzw. $p > n$ keine (eindeutigen) Schätzer liefern.\\
+Für \textit{hochdimensionale} Daten, wie sie in der Genetik vorliegen, kann aus \textit{inhaltlichen} Gründen häufig die Annahme vertreten werden, dass nur wenige Kovariablen einen Einfluss auf die Responsevariable haben. Wird dieser Zusammenhang als klassisches lineares Regressionsmodell $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ ausgedrückt, muss daher angenommen werden, dass der Regressionskoeffizientenvektor $\boldsymbol{\beta}$ in Wahrheit \textit{spärlich} besetzt ist, d.h. für die meisten Koeffizienten $\beta_j = 0$ gilt. Die Herausforderung besteht darin, durch die Regression sowohl die $\beta_j$, für die $\beta_j \neq 0$ gilt, zu \textit{selektieren} als auch deren Einfluss auf die Responsevariable möglichst genau zu schätzen. Wie in Kapitel \ref{Kap_Multikollinearität und $p > n$} dargestellt, hängt $\mathbb{V}\text{ar}(\hat{\beta}_j)$ von der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ ab, weswegen es bei hoher Multikollinearität zu einer hohen Varianz und damit trotz der Unverzerrtheit des KQ-Schätzers zu einem hohen $\text{MSE}(\hat{\beta}_j)$ kommt. Zudem kann die KQ-Methode bei exakter Multikollinearität bzw. $p > n$ keine (eindeutigen) Schätzer liefern.\\
 Penalisierungsansätze verfolgen die Strategie, die Unverzerrtheit des KQ-Schätzer zu "`opfern"', d.h. absichtlich ein Bias zu erzeugen, um einerseits eine Variablenselektion für die spärliche Besetzung von $\boldsymbol{\hat{\beta}}$ zu ermöglichen und gleichzeitig den $\text{MSE}(\boldsymbol{\hat{\beta}})$ zu senken. Wegen $\text{MSE}(\boldsymbol{\hat{\beta}})=\mathbb{V}\text{ar}(\boldsymbol{\hat{\beta}})+ \text{Bias}(\boldsymbol{\hat{\beta}})$ darf dabei der erzeugte Bias nicht zu groß werden, da ansonsten der MSE basierend auf der Penalisierungsmethode den MSE basierend auf der KQ-Methode übertrifft. Als grundlegendes Prinzip wird bei der Penalisierung die zu minimierende Verlustfunktion, in der Regel die Residuenquadratsumme $\text{RSS}(\boldsymbol{\beta})$, um einen Strafterm $P(\boldsymbol{\beta})$ erweitert, sodass sich eine zu minimierende \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) als  \begin{align}
 \text{PRSS}(\boldsymbol{\beta};\boldsymbol{\gamma})=\text{RSS}(\boldsymbol{\beta}) + P(\boldsymbol{\beta}; \boldsymbol{\gamma})
 \end{align} mit einem oder mehreren speziell zu wählenden \textit{Tuningparametern} $\boldsymbol{\gamma}$ ergibt. Generell wird gefordert, dass die abhängige Variable $\mathbf{y}$ zentriert ist, d.h. es muss $\frac{1}{n}\sum_{i}^{n}y_i =0$ gelten, und die Kovariablen $\mathbf{X}$ müssen standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ und $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Dadurch ist die Penalisierung unabhängig von den einzelnen Skalen der Kovariablen bzw. der Responsevariable und das Intercept fällt weg.\\
@@ -417,7 +427,7 @@ Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die gesch�
 \boldsymbol{\hat{\beta}}^{Ridge} = (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{y}.
 \end{align}
 Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer und für den Fall, dass $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär sind, wird der Ausdruck in der Klammer regulär und damit ist \eqref{Ridge_estimate} eindeutig lösbar \cite{montgomery2012introduction}.
-Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form})
+Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. XXXXXXXXXXXXXXXXXXXXXXXX DAS ggf noch mal überarbeiten im Hinblick auf "`große Parameter"' XXXXXXXXXXXXXXX Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form}) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 \begin{align}\label{Ridge_lagrangian}
 \boldsymbol{\hat{\beta}}^{Ridge}(\gamma)=\arg \displaystyle\min_{\boldsymbol{\beta}} \left\lbrace \sum_{i=1}^{n} (y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0
 \end{align}
@@ -451,7 +461,7 @@ Es lässt sich zeigen, dass mit der Varianz aus \eqref{Cov_epsilon} für den $\t
 \begin{align}\label{MSE_ridge}
 \text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta}' (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
-wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{MSE_ridge} ist die Varianz von $\boldsymbol{\hat{\beta}}^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias, woran erkennbar ist, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, die Verzerrung hingegen ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
+wobei $\lambda_j$ für $j=1,\dots,p$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{MSE_ridge} ist die Summe der Varianzen der $\hat{\beta}_j^{Ridge}$ in $\boldsymbol{\hat{\beta}}^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias. Anhand dieser Darstellung ist erkennbar, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt, gleichzeitig die Verzerrung ansteigt. Ziel ist es, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters muss dabei vom Anwender getroffen werden und kann bspw. mittels eines Kreuzvalidierungsverfahrens bestimmt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{montgomery2012introduction}.\\
 
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
