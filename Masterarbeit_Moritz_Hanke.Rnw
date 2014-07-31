@@ -318,7 +318,7 @@ die \textit{Designmatrix} mit den Realisierungen der Kovariablen, so kann \eqref
 \begin{align}\label{klass_lin_matrix}
 \mathbf{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}
 \end{align}
-dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ seien, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt
+dargestellt werden. Dazu muss angenommen werden, dass $\mathbf{X}$ \textit{vollen Spaltenrang} $\text{rg}(\mathbf{X})=p+1$ besitzt und die erste Spalte aus dem Vektor $\mathbf{1}=(1,\dots, 1)'$ besteht, um den Intercept zu berücksichtigen. Für die Fehler $\boldsymbol{\varepsilon}$ wird angenommen, dass  $\mathbb{E}(\boldsymbol{\varepsilon})=\mathbf{0}$, $\mathbb{V}\text{ar}(\varepsilon_i)=\sigma^2$ und $\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}')=\sigma^2\mathbf{I}$ seien, wobei $\mathbf{I}$ die Einheitsmatrix bezeichnet. Für die Responsevariable gilt
 \begin{align}
 \mathbb{E}(\mathbf{Y})&=\mathbb{E}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbf{X} \boldsymbol{\beta} \notag \\ 
 \mathbb{C}\text{ov}(\mathbf{Y})&=\mathbb{C}\text{ov}(\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon})=\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})=\sigma^2\mathbf{I} \label{Cov_epsilon}
@@ -380,7 +380,17 @@ Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass für den KQ-
 \begin{align*}
 \mathbb{V}\text{ar}(\mathbf{b}'\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\mathbf{b}'\boldsymbol{\hat{\beta}}^{OLS}).
 \end{align*}
-Das bedeutet, es gilt $\mathbb{V}\text{ar}(\mathbf{b}'\tilde{\beta}_j) \ge \mathbb{V}\text{ar}(\hat{\beta}_j^{OLS})$ wenn $\mathbf{b}$ als kanonischer Einheitsvektor mit der Eins an der j-ten Stelle definiert wird.\\
+Somit gilt $\mathbb{V}\text{ar}(\mathbf{b}'\tilde{\beta}_j) \ge \mathbb{V}\text{ar}(\hat{\beta}_j^{OLS})$ wenn $\mathbf{b}$ als kanonischer Einheitsvektor mit der Eins an der j-ten Stelle definiert wird.\\
+Wird die Genauigkeit eines Schätzers $\hat{\theta}_j$ für einen Parameter $\theta_j$ betrachtet, bietet sich der \textit{mittle quadratische Fehler} (englisch: mean squared error; \textit{mse}) an, der die \textit{erwartete mittlere Abweichung} des geschätzten Paramters vom wahren Parameter angibt:
+\begin{align*}
+mse(\hat{\theta}_j)=\mathbb{E}(\hat{\theta}_j - \theta_j)^2=\mathbb{V}\text{ar}(\hat{\theta}_j)+(Bias(\hat{\theta}_j))^2.
+\end{align*}
+Motiviert wird dieses Maß durch die Überlegung, dass ein unverzerrter Schätzer im Hinblick auf die Nähe zum wahren Parameter durch eine große Varianz sehr ungenau sein kann. Umgekehrt kann ein Schätzer, der eine nicht zu große systematische Verzerrung (Bias) beinhaltete, dafür aber nur eine geringe Varianz aufweist, im Bezug auf seine erwarte Lage zum wahren Paramter relativ dicht an diesem liegen.
+Wird mit $MSE$ die \textit{mse-Matrix} für einen Paramtervektor $\boldsymbol{\theta}$ und dessen Schätzungen $\boldsymbol{\hat{\theta}}$
+\begin{align}
+MSE(\boldsymbol{\theta}, \boldsymbol{\hat{\theta}})
+\end{align}
+
 Wegen $\text{Bias}(\tilde{\beta}_j)=\text{Bias}(\hat{\beta}_j^{OLS})=0$ gilt damit für den\textit{ mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) 
 \begin{align}
 \text{MSE}(\tilde{\beta}_j) \ge \text{MSE}(\hat{\beta}_j^{OLS}).
@@ -391,7 +401,7 @@ Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander 
 \begin{align}\label{var_beta_j}
 \mathbb{V}\text{ar}(\hat{\beta}_j)=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
 \end{align}  
-wobei $0 \leq R^2_j \leq 1$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $\mathbf{x}_j$ mit den restlichen Kovariablen korreliert, desto kleiner wird der Nenner von \eqref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$.\\
+wobei $0 \leq R^2_j \leq 1$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $\mathbf{x}_j$ mit den restlichen Kovariablen korreliert, d.h. je größer $R^2$ ist, desto kleiner wird der Nenner von \eqref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$.\\
 Bei einer \textit{exakten} Multikollinearität kann eine Kovariable als Linearkombination von anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \eqref{Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt.\\
 Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.\\
 X\\
