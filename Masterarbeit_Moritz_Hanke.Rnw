@@ -398,11 +398,31 @@ Wird mit $\text{MSE}$ die \textit{mse-Matrix} für einen Parametervektor $\bolds
  
 Bezeichnet $\mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) = (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta})$ den \textit{quadrierten Abstand} des OLS-Parametervektors $\boldsymbol{\hat{\beta}}$ zum wahren Parametervektor $\boldsymbol{\beta}$, so gilt (vgl. Anhang \ref{App_Erwarteter_quadrierter_Abstand}) für den \textit{erwarteten quadrierten Abstand} 
 \begin{align}
-\rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})=\mathbb{E} \left\lbrace \mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]
+\rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})=\mathbb{E} \left\lbrace \mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
-Trotz seiner Unverzerrtheit ist der Vektor
+Da $\mathbf{X}'\mathbf{X}$ auf der Diagonalen nur Werte $\geq 0$ haben kann und $\sigma^2 \geq 0$ gilt, muss stets auch $\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}] \geq 0$ gelten. 
+Für die \textit{erwartete quadrierte Länge} von $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich
+\begin{align}\label{Eq_Laenge_OLS}
+\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS} {'}\boldsymbol{\hat{\beta}}^{OLS})
+&=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}]'[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}] \right\rbrace \notag \\
+&=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon})]'
+[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon})]
+\right\rbrace \notag \\
+&=\mathbb{E}\left\lbrace
+[\boldsymbol{\beta}'\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]'[\boldsymbol{\beta}'\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]
+\right\rbrace \notag \\
+&=\boldsymbol{\beta}'\boldsymbol{\beta} +
+\mathbb{E}\left\lbrace
+[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]'[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]
+\right\rbrace \notag \\
+&=\boldsymbol{\beta}'\boldsymbol{\beta} +
+\mathbb{E}\left\lbrace
+\mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace \notag \\
+&\stackrel{\eqref{Eq_Erwarteter_Quadrierter_Abstand}}{=}\boldsymbol{\beta}'\boldsymbol{\beta} + 
+\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
+\end{align}
+Anhand von \eqref{Eq_Laenge_OLS} wird deutlich, dass der OLS-Schätzer trotz seiner Erwartungstreue im Hinblick auf seine erwartete quadrierte Länge "`zu lang"' ist. 
 
-spur covarianzmatrix ist gleich spur mit vielen x-en
 
 \subsection{Multikollinearität und "`$p > n$"'}\label{Kap_Multikollinearität und $p > n$}
 Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander ohne dass sich eine Variable als Linearkombination der anderen Kovariablen beschreiben lässt, liegt \textit{Multikollinearität} vor. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ invertierbar, allerdings kommt es zu einer Inflation der Varianz von $\boldsymbol{\hat{\beta}}^{OLS}$. Sei $\hat{\beta}_j$ der Schätzer für den Regressionskoeffizienten $\beta_j$, so kann dessen Varianz ermittelt werden als
@@ -410,18 +430,9 @@ Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander 
 \mathbb{V}\text{ar}(\hat{\beta}_j)=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
 \end{align}  
 wobei $0 \leq R^2_j \leq 1$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $\mathbf{x}_j$ mit den restlichen Kovariablen korreliert, d.h. je größer $R^2$ ist, desto kleiner wird der Nenner von \eqref{var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j$. Zudem kann es bereits durch kleine Änderungen in der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ zu geänderten Vorzeichen bei den $\hat{\beta}_j$ kommen.\\
-Durch Multikollinearität $\boldsymbol{\hat{\beta}}$
+Aus \eqref{Eq_Laenge_OLS} wird deutlich, dass die erwartete quadrierte Länge von $\boldsymbol{\hat{\beta}}^{OLS}$ um $\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]$ größer als die von $\boldsymbol{\beta}$ ist. Multikollinearität hat zur Folge, dass die Eigenwerte von $\mathbf{X}'\mathbf{X}$ stark schrumpfen bzw. die von $(\mathbf{X}'\mathbf{X})^{-1}$ stark steigen. Da die Summe der Eigenwerte einer Matrix der Spur derselben Matrix entspricht \cite{strang09ointro_linalg}, wird der Vektor $\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS}{'} \boldsymbol{\hat{\beta}}^{OLS})$ durch Multikollinearität deutlich länger als $\mathbb{E}(\boldsymbol{\beta}' \boldsymbol{\beta}$. Interpretiert man die Längendifferenz als Maß für die \textit{Gesamtgenauigkeit} der Schätzer, werden diese durch Multikollinearität insgesamt schlechter und zu groß (ZITAT XXXXXX? SCHREIBTISCH).
 Bei einer \textit{perfekten} Multikollinearität kann eine Kovariable als Linearkombination von anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \eqref{Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt.\\
 Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(X) < p$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.\\
-X\\
-X\\
-X\\
-X\\
-noch zur Länge des beta-vectors? wenn ja, paper liegt auf dem Schreibtisch
-X\\
-X\\
-X\\
-X\\
 
 \section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
 Für \textit{hochdimensionale} Daten, wie sie in der Genetik vorliegen, kann aus \textit{inhaltlichen} Gründen häufig die Annahme vertreten werden, dass nur wenige Kovariablen einen Einfluss auf die Responsevariable haben. Wird dieser Zusammenhang als klassisches lineares Regressionsmodell $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ ausgedrückt, muss daher angenommen werden, dass der Regressionskoeffizientenvektor $\boldsymbol{\beta}$ in Wahrheit \textit{spärlich} besetzt ist, d.h. für die meisten Koeffizienten $\beta_j = 0$ gilt. Die Herausforderung besteht darin, durch die Regression sowohl die $\beta_j$, für die $\beta_j \neq 0$ gilt, zu \textit{selektieren} als auch deren Einfluss auf die Responsevariable möglichst genau zu schätzen. Wie in Kapitel \ref{Kap_Multikollinearität und $p > n$} dargestellt, hängt $\mathbb{V}\text{ar}(\hat{\beta}_j)$ von der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ ab, weswegen es bei hoher Multikollinearität zu einer hohen Varianz und damit trotz der Unverzerrtheit des KQ-Schätzers zu einem hohen $\text{MSE}(\hat{\beta}_j)$ kommt. Zudem kann die KQ-Methode bei exakter Multikollinearität bzw. $p > n$ keine (eindeutigen) Schätzer liefern.\\
@@ -569,16 +580,17 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 \chapter{Erläuterungen}
 
 \section{Erwarteter quadrierter Abstand $\rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})$}\label{App_Erwarteter_quadrierter_Abstand}
-Ist $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $x \times n$-Matrix, so gilt für den Erwartungswert der quadratische Funktion $Q(\mathbf{b})$
-\begin{align}
-\mathbb{E}(\mathbf{b}'\mathbf{A}\mathbf{B})=sp(\mathbf{A}\Sigma)+\mathbb{E}(\mathbf{b})'\mathbf{A}\mathbb{E}(\mathbf{b}),
+Ist $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $n \times n$-Matrix, so gilt für den Erwartungswert der quadratische Funktion $Q(\mathbf{b})=\mathbf{b}'\mathbf{A}\mathbf{b}$
+\begin{align}\label{Eq_Erwartung_Quadrat}
+\mathbb{E}(\mathbf{b}'\mathbf{A}\mathbf{b})=\text{sp}(\mathbf{A}\boldsymbol{\Sigma})+\mathbb{E}(\mathbf{b})'\mathbf{A}\mathbb{E}(\mathbf{b}),
 \end{align}
-wobei $\Sigma$ die Kovarianzmatrix von $\mathbf{B}$ ist \cite{mathai1992quadratic}.
-\begin{align}
-\rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})&=\mathbb{E} \left\lbrace \mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace \notag \\
+wobei $\boldsymbol{\Sigma}$ die Kovarianzmatrix von $\mathbf{b}$ ist \cite{mathai1992quadratic}. Für den erwarteten quadrierten Abstand gilt damit
+\begin{align}\label{Eq_Erwarteter_Quadrierter_Abstand}
+\rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})
+&=\mathbb{E} \left\lbrace \mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace \notag \\
 &=\mathbb{E} \left\lbrace (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta}) \right\rbrace \notag \\
 &=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} - \boldsymbol{\beta}]' [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} - \boldsymbol{\beta}] \right\rbrace \notag \\
-&=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}]' [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}] \right\rbrace \notag \\
+&\stackrel{\eqref{klass_lin_matrix}}{=}\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}]' [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}] \right\rbrace \notag \\
 &=\mathbb{E}\left\lbrace [\mathbf{I}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} - \boldsymbol{\beta}]'[\mathbf{I}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} - \boldsymbol{\beta}]
 \right\rbrace \notag \\
 &=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]'[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] 
@@ -586,8 +598,8 @@ wobei $\Sigma$ die Kovarianzmatrix von $\mathbf{B}$ ist \cite{mathai1992quadrati
 &=\mathbb{E}\left\lbrace
 \boldsymbol{\varepsilon}'\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{n \times n \text{-Matrix}}}\boldsymbol{\varepsilon}
 \right\rbrace \notag \\
-&=\text{sp}[\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})] + \underbrace{\mathbb{E}(\boldsymbol{\varepsilon})'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}(\boldsymbol{\varepsilon})}_\substack{0} \notag \\
-&=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]
+&\stackrel{\eqref{Eq_Erwartung_Quadrat}}{=}\text{sp}[\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})] + \underbrace{\mathbb{E}(\boldsymbol{\varepsilon})'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}(\boldsymbol{\varepsilon})}_{\substack{0}} \notag \\
+&=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
 Dafür wurde ausgenutzt, dass 
 
