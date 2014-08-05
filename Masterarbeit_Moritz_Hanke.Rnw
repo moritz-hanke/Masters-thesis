@@ -580,7 +580,7 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 \chapter{Erläuterungen}
 
 \section{Erwarteter quadrierter Abstand $\rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})$}\label{App_Erwarteter_quadrierter_Abstand}
-Ist $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $n \times n$-Matrix, so gilt für den Erwartungswert der quadratische Funktion $Q(\mathbf{b})=\mathbf{b}'\mathbf{A}\mathbf{b}$
+Sei $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $n \times n$-Matrix, so gilt für den Erwartungswert der quadratische Funktion $Q(\mathbf{b})=\mathbf{b}'\mathbf{A}\mathbf{b}$
 \begin{align}\label{Eq_Erwartung_Quadrat}
 \mathbb{E}(\mathbf{b}'\mathbf{A}\mathbf{b})=\text{sp}(\mathbf{A}\boldsymbol{\Sigma})+\mathbb{E}(\mathbf{b})'\mathbf{A}\mathbb{E}(\mathbf{b}),
 \end{align}
@@ -601,7 +601,6 @@ wobei $\boldsymbol{\Sigma}$ die Kovarianzmatrix von $\mathbf{b}$ ist \cite{matha
 &\stackrel{\eqref{Eq_Erwartung_Quadrat}}{=}\text{sp}[\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})] + \underbrace{\mathbb{E}(\boldsymbol{\varepsilon})'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}(\boldsymbol{\varepsilon})}_{\substack{0}} \notag \\
 &=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
-Dafür wurde ausgenutzt, dass 
 
 \section{Lagrange-Form}\label{App_Lagrange-Form}
 Optimierungsprobleme können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise
