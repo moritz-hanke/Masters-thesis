@@ -400,7 +400,7 @@ Bezeichnet $\mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) = (\b
 \begin{align}\label{Eq_Erwarteter_Quadrierter_Abstand}
 \rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})=\mathbb{E} \left\lbrace \mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
-Da $\mathbf{X}'\mathbf{X}$ auf der Diagonalen nur Werte $\geq 0$ haben kann und $\sigma^2 \geq 0$ gilt, muss stets auch $\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}] \geq 0$ gelten. Unter Berücksichtigung, dass die Spur einer quadratischen Matrix gleich der Summe der Eigenwerte der Matrix ist, sofern kein Eigenwert gleich Null ist \cite{strang09ointro_linalg}, kann \eqref{Eq_Erwarteter_Quadrierter_Abstand} auch als \begin{align}\label{Eq_Lambda_Laenge_OLS}
+Da $\mathbf{X}'\mathbf{X}$ auf der Diagonalen nur Werte $\geq 0$ haben kann und $\sigma^2 \geq 0$ gilt, muss stets auch $\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}] \geq 0$ gelten. Unter Berücksichtigung, dass die Spur einer positiv definiten Matrix gleich der Summe der Eigenwerte dieser Matrix ist und für die Inverse der Matrix die Eigenwerte die Reziproke der ursprünglichen Eigenwerte sind \cite{strang09ointro_linalg}, kann \eqref{Eq_Erwarteter_Quadrierter_Abstand} auch als \begin{align}\label{Eq_Lambda_Laenge_OLS}
 \rho(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta})=\sigma^2 \sum_{j=0}^{p} \frac{1}{\lambda_j}
 \end{align}
 dargestellt werden, wobei $\lambda_{max}=\lambda_{0},\lambda_{1},\dots,\lambda_p=\lambda_{min}$ gilt \cite{hoerl_ridge_1970}.
