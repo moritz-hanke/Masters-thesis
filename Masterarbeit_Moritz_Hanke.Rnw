@@ -488,7 +488,15 @@ Es lässt sich zeigen, dass mit der Varianz aus \eqref{Eq_Cov_epsilon} für den 
 \begin{align}\label{Eq_MSE_ridge}
 \text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge})=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta}' (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
-wobei $\lambda_{max}= \lambda_1, \dots, \lambda_p= \lambda_{min}$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{Eq_MSE_ridge} ist in Anlehnung an \eqref{Eq_Lambda_Laenge_OLS} die Summe der Varianzen der $\hat{\beta}_j^{Ridge}$ in $\boldsymbol{\hat{\beta}}^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias. Anhand dieser Darstellung ist erkennbar, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt und gleichzeitig die Verzerrung ansteigt. Umgekehrt wird noch einmal deutlich, dass für $\gamma=0$ der Ridge-Schätzer dem OLS-Schätzer entspricht und folglich die selbe erwartete quadratische Distanz zum wahren $\boldsymbol{\beta}$ hat. Dieser Abstand ist wie in Abschnitt \ref{Kap_Multikollinearität und $p > n$} gezeigt deutlich von einer schlecht konditionierten Matrix $\mathbf{X}$ abhängig. Ziel bei der Wahl von $\gamma$ ist es deswegen, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt. Die Wahl des Tuningparameters $\gamma$ muss dabei vom Anwender getroffen werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{gross2003linear} und \citeA{montgomery2012introduction}.
+wobei $\lambda_{max}= \lambda_1, \dots, \lambda_p= \lambda_{min}$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{Eq_MSE_ridge} ist in Anlehnung an \eqref{Eq_Lambda_Laenge_OLS} die Summe der Varianzen der $\hat{\beta}_j^{Ridge}$ in $\boldsymbol{\hat{\beta}}^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias. Anhand dieser Darstellung ist erkennbar, dass mit größer werdendem $\gamma$ die Varianz des Schätzers sinkt und gleichzeitig die Verzerrung ansteigt. Umgekehrt wird noch einmal deutlich, dass für $\gamma=0$ der Ridge-Schätzer dem OLS-Schätzer entspricht und folglich die selbe erwartete quadratische Distanz zum wahren $\boldsymbol{\beta}$ hat. Dieser Abstand ist wie in Abschnitt \ref{Kap_Multikollinearität und $p > n$} gezeigt deutlich von einer schlecht konditionierten Matrix $\mathbf{X}$ abhängig. Ziel bei der Wahl von $\gamma$ ist es deswegen, ein optimales $\gamma$ zu finden, dass den $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\text{MSE}(\boldsymbol{\hat{\beta}}^{Ridge}) < \text{MSE}(\boldsymbol{\hat{\beta}}^{OLS})$ gilt.\\ 
+X\\
+X\\
+X\\
+ist das dann strikt besser im bezug auf die Risikofunktion?\\
+X\\
+X\\
+X\\
+Die Wahl des Tuningparameters $\gamma$ muss dabei vom Anwender getroffen werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{gross2003linear} und \citeA{montgomery2012introduction}.
 
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
@@ -620,13 +628,32 @@ Wird die Schätzung $\boldsymbol{\hat{\theta}}$ für den wahren Parametervektor 
 \begin{align*}
 \mathscr{L}:\Theta \times \text{D} \rightarrow \mathbb{R},
 \end{align*}
-die den Verlust als einen Wert aus $\mathbb{R}$ angibt, wenn sich beim wahren Parametervektor $\boldsymbol{\theta}$ für $d$ entschieden wird \cite{gross2003linear}. Dabei wird die Entscheidung $d$ über eine Entscheidungsfunktion $\nu$ für die Beobachtungen $\mathbf{y}$ getroffen. In der Regel wird $\mathbf{y}$ als Realisierung des Zufallsvektors $\mathbf{Y}$ angesehen, sodass $\nu(\mathbf{Y})=d$ auch als Zufallsvektor aufgefasst werden kann. Im Hinblick auf die Eingangsfrage, wie gut eine Entscheidung $d$ ist, ist daher nicht der Verlust durch die Funktion $\nu(\mathbf{y})$ für die konkrete Beobachtung, sondern für die Zufallsvariable $\mathbf{Y}$ von Interesse. Dafür bietet sich der \textit{erwartete} Verlust 
+die den Verlust als einen Wert aus $\mathbb{R}$ angibt, wenn sich beim wahren Parametervektor $\boldsymbol{\theta}$ für $d$ entschieden wird \cite{gross2003linear}. Dabei wird die Entscheidung $d$ über eine Entscheidungsfunktion $\nu$ für die Beobachtungen $\mathbf{y}$ getroffen. In der Regel wird $\mathbf{y}$ als Realisierung des Zufallsvektors $\mathbf{Y}$ angesehen, sodass $\nu(\mathbf{Y})=d$ auch als Zufallsvektor aufgefasst werden kann. Im Hinblick auf die Eingangsfrage, wie gut eine Entscheidung $d$ ist, ist daher nicht der Verlust durch die Funktion $\nu(\mathbf{y})$ für die konkrete Beobachtung, sondern für die Zufallsvariable $\mathbf{Y}$ von Interesse. Dafür bietet sich der \textit{erwartete Verlust} 
 \begin{align*}
-\mathbb{E} \left\lbrace \mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace
+\mathbb{E} \left\lbrace \mathscr{L}(\nu(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace
 \end{align*}
-an, der als der Erwartungswert der Verlustfunktion definiert ist und als \textit{Risko} oder \textit{Riskofunktion} bezeichnet wird \cite{gross2003linear,judge1985theory}.
-Beispielsweise kann bei der klassischen linearen Regression $\boldsymbol{\hat{\beta}}^{OLS}$ als Entscheidung $d$ durch die durch Methode der kleinsten Quadrate aufgefasst und als Verlustfunktion $\mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS}$ der quadrierte Abstand zu $\boldsymbol{\beta}$ gewählt werden. Die zugehörige Risikofunktion ist dann die erwartete quadrierte Länge von $\boldsymbol{\hat{\beta}}^{OLS}$.
+an, der der Erwartungswert der Verlustfunktion ist und als \textit{Risko} oder \textit{Riskofunktion} bezeichnet wird \cite{gross2003linear,judge1985theory}.
+Beispielsweise kann bei der klassischen linearen Regression $\boldsymbol{\hat{\beta}}^{OLS}$ als Entscheidung $d$ durch die durch Methode der kleinsten Quadrate aufgefasst und als Verlustfunktion $\mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS}$ der quadrierte Abstand zu $\boldsymbol{\beta}$ gewählt werden. Die zugehörige Risikofunktion ist dann die erwartete quadrierte Länge von $\boldsymbol{\hat{\beta}}^{OLS}$.\\
+Für den Vergleich von zwei verschiedenen Entscheidungsfunktionen $\nu_1(\mathbf{Y})$ und $\nu_2(\mathbf{Y})$, im Fall dieser Arbeit von Schätzmethoden für $\boldsymbol{\beta}$, können nach \citeNP{gross2003linear} drei Fälle unterschieden werden: 
+\begin{enumerate}
+\item Die Funktion $\nu_1(\mathbf{Y})$ ist \textit{gleichmäßig nicht schlechter} als eine Funktion $\nu_1(\mathbf{Y})$, wenn
+\begin{align*}
+\mathbb{E} \left\lbrace \mathscr{L}(\nu_1(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace \leq \mathbb{E} \left\lbrace \mathscr{L}(\nu_2(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace
+\end{align*}
+für alle $\boldsymbol{\theta} \in \Theta$ gilt
 
+\item Die Funktion $\nu_1(\mathbf{Y})$ ist \textit{gleichmäßig besser} als eine Funktion $\nu_1(\mathbf{Y})$, wenn
+\begin{align*}
+\mathbb{E} \left\lbrace \mathscr{L}(\nu_1(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace < \mathbb{E} \left\lbrace \mathscr{L}(\nu_2(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace
+\end{align*}
+für mindestens ein $\boldsymbol{\theta} \in \Theta$ und ansonsten Fall $1.$ gilt.
+
+\item Die Funktion $\nu_1(\mathbf{Y})$ ist \textit{strikt besser} als eine Funktion $\nu_1(\mathbf{Y})$, wenn
+\begin{align*}
+\mathbb{E} \left\lbrace \mathscr{L}(\nu_1(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace < \mathbb{E} \left\lbrace \mathscr{L}(\nu_2(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace
+\end{align*}
+für alle $\boldsymbol{\theta} \in \Theta$gilt.
+\end{enumerate}
 
 \section{Lagrange-Form}\label{App_Lagrange-Form}
 Optimierungsprobleme können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise
