@@ -511,7 +511,7 @@ Eine geschlossene Darstellung des Minimierungsproblems \eqref{Eq_Lasso_Lagrange}
 %Fused lasso Tibshirani 2005
 %Fused lasso for unordered predictors
 
-<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.scap="Geometrische Veranschaulichung des Lasso- und Ridge-Strafterms", fig.cap="Geometrische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrumpfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Panalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer Kante tangiert.">>=
+<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.scap="Graphische Veranschaulichung des Lasso- und Ridge-Strafterms", fig.cap="Graphische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrumpfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Panalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer Kante tangiert.">>=
 #### R-Code Lasso vs Ridge Ellipsen
 
 library(ellipse)
@@ -650,33 +650,27 @@ für alle $\boldsymbol{\theta} \in \Theta$gilt.
 \end{enumerate}
 
 \section{Lagrange-Form}\label{App_Lagrange-Form}
-Optimierungsprobleme können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\boldsymbol{\beta} \in R^p$, so kann beispielsweise
+Optimierungsprobleme können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\mathbf{x} \in R^p$, so kann beispielsweise
 \begin{align}\label{Eq_Optimierung_Equal}
-&&\arg \displaystyle\min_{\boldsymbol{\beta}} \ & f(\boldsymbol{\beta}) \notag \\ 
-&&\text{s.t.} \ & g_i(\boldsymbol{\beta})=t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p
+&&\arg \displaystyle\min_{\mathbf{x}} \ & f(\mathbf{x}) \notag \\ 
+&&\text{s.t.} \ & g_i(\mathbf{x})=t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p
 \end{align}
-ein Minimierungsproblem sein, wobei $f(\boldsymbol{\beta})$ die Zielfunktion und $g_j(\boldsymbol{\beta})=t_i$ für $i=1,\dots,p^*$ die zu erfüllenden Nebenbedingungen sind. 
+ein Minimierungsproblem sein, wobei $f(\mathbf{x})$ die Zielfunktion und $g_j(\mathbf{x})=t_i$ für $i=1,\dots,p^*$ die zu erfüllenden Nebenbedingungen sind. 
 \begin{comment}Es muss stets $p^* < p$ gelten, da ansonsten die Lösung für das Optimierungsproblem durch die Bedingungen nicht eingeschränkt, sondern bestimmt wäre.
 \end{comment}
-Werden die Nebenbedingungen als $g_i(\boldsymbol{\beta})-t_i=0$ formuliert, kann \eqref{Eq_Optimierung_Equal} alternativ in der \textit{Lagrange-Form} dargestellt werden \cite{haftka1992elements}, die definiert ist als
+Werden die Nebenbedingungen als $g_i(\mathbf{x})-t_i=0$ formuliert, kann \eqref{Eq_Optimierung_Equal} alternativ in der \textit{Lagrange-Form} dargestellt werden \cite{haftka1992elements}, die definiert ist als
 \begin{align}\label{Eq_lagrange_Allgemein}
-\mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})=f(\boldsymbol{\beta})- \sum_{i=1}^{p^*}\gamma_i (g_i(\boldsymbol{\beta})-t_i).
+\mathcal{L}(\mathbf{x},\boldsymbol{\gamma})=f(\mathbf{x})- \sum_{i=1}^{p^*}\gamma_i (g_i(\mathbf{x})-t_i).
 \end{align}
-Die Lagrange-Form hat keine zusätzliche Nebenbedingungen, ist dafür allerdings um $p^*$ Argumente, die die Nebenbedingung aus \eqref{Eq_Optimierung_Equal} widerspiegeln, und den zugehörigen \textit{Lagrange-Multiplikatoren} $\gamma_i$ erweitert. Um eine Extremstelle zu finden, die die Nebenbedingungen erfüllt, muss $\mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})$ sowohl nach $\boldsymbol{\beta}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
-\begin{align}
-\frac{\partial \mathcal{L}}{\beta_j}=\frac{\partial f}{\beta_j} - \sum_{i=1}^{p^*}\gamma_i \frac{g_i}{\beta_j}&=0 \qquad \text{für} \ j=1,\dots,p \label{Eq_Lagrange_Anzahl_Gleichungen_1} \\ 
-\frac{\partial \mathcal{L}}{\gamma_i}=g_i(\boldsymbol{\beta})-t_i&=0 \qquad \text{für} \ i=1,\dots,p^* \label{Eq_Lagrange_Anzahl_Gleichungen_2}
-\end{align}
-womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculus}. 
-%AHCTUNG Minimum unter bedingung muss nicht ein (lokales) Minimum unter ohne bedingung sein
-Werden \eqref{Eq_Lagrange_Anzahl_Gleichungen_1} und \eqref{Eq_Lagrange_Anzahl_Gleichungen_2} als Gradienten $\nabla$ von $f(\boldsymbol{\beta})$ bzw. $g(\boldsymbol{\beta})-\mathbf{t}$ mit $\mathbf{t}=(t_1,\dots,t_{p*})'$ aufgefasst, so muss für die Minimierung gelten:
-\begin{align}\label{Eq_Gradientengleichung}
-\nabla f(\boldsymbol{\beta}) &= \boldsymbol{\gamma} \nabla  (g(\boldsymbol{\beta})-\mathbf{t}) \notag \\
-\Rightarrow \quad  \nabla \mathcal{L}(\boldsymbol{\beta},\boldsymbol{\gamma})&= \nabla f(\boldsymbol{\beta}) - \boldsymbol{\gamma} \nabla  (g(\boldsymbol{\beta})-\mathbf{t}).
-\end{align}
-Damit wird gefordert, dass die beiden Gradienten von $f(\boldsymbol{\beta})$ und $g(\boldsymbol{\beta})$ parallel zueinander sind und sich nur in ihrer Länge um $\boldsymbol{\gamma}$ unterscheiden. Geometrisch lässt sich dieser Sachverhalt als der Punkt interpretieren, an dem sich die Konturlinien der Zielfunktion und die Nebenbedingung \textit{tangieren}. Abbildung \ref{Fig_Lagrange_Geo_Interpret} zeigt beispielsweise die Konturlinien der Zielfunktion $f(x,y)=(x-1)^2 + (y-1)^2$ und die Nebenbedingung $g(x,y)=x^2+y^2=0.5$, deren Gradienten im Punkt $(0.5,0.5)$ und $(-0.5,-0.5)$ parallel zueinander sind. An diesen Stellen befinden sich die Extremstellen für die Zielfunktion unter Einhaltung der Nebenbedingung. Anhand der rechten Abbildung ist erkennbar, dass die Zielfunktion ohne die Nebenbedingungen dort keine globalen oder lokalen Extremstellen hat.
+Die Lagrange-Form hat keine zusätzliche Nebenbedingungen, ist dafür allerdings um $p^*$ Argumente, die die Nebenbedingung aus \eqref{Eq_Optimierung_Equal} widerspiegeln, und den zugehörigen \textit{Lagrange-Multiplikatoren} $\gamma_i$ erweitert. Um eine Extremstelle zu finden, die die Nebenbedingungen erfüllt, muss $\mathcal{L}(\mathbf{x},\boldsymbol{\gamma})$ sowohl nach $\mathbf{x}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
+\begin{align*}
+\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} - \sum_{i=1}^{p^*}\gamma_i \frac{\partial g_i}{\partial x_j}&=0 \qquad \text{für} \ j=1,\dots,p \\ 
+\frac{\partial \mathcal{L}}{\partial \gamma_i}=g_i(\mathbf{x})-t_i&=0 \qquad \text{für} \ i=1,\dots,p^*
+\end{align*}
+womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculus}.\\
+Geometrisch lassen sich die Nebenbedingung als spezielle \textit{Konturlinien} der Nebenbedingungsfunktionen betrachten, die sich mit den Konturlinien der Zielfunktion überschneiden und an bestimmten Punkten diese \textit{tangieren}. Gesucht werden diese Tangentenpunkte, da nur dort ein stationärer Punkt für $f(\mathbf{x})$ und damit eine Extremstelle unter Einhaltung der Nebenbedingungen erreicht werden kann. Wird beispielsweise die Funktion $f(x,y)=(x-1)^2 + (y-1)^2$ mit der Nebenbedingung $g(x,y)=(x-1)^2+(y-1)^2=0.5$ betrachtet, überschneiden sich die Konturlinien der Zielfunktion mit der Konturlinie der Nebenbedingungen an allen Punkten bis auf an zwei Tangentenpunkten (siehe Abbildung \ref{Fig:Lagrange_Geo_Interpret}). Diese beiden Punkte sind das Minimum ($(0.5,0.5)$) und Maximum ($-0.5,0.5$), da es unter Berücksichtigung der Nebenbedingung keine extremeren Punkte für $f(x,y)$ gibt.\\
 
-\begin{figure}[H]\label{Fig_Lagrange_Geo_Interpret}
+\begin{figure}[H]
  \begin{minipage}{0.5\linewidth}
   \centering
   \setkeys{Gin}{width=0.99\textwidth}
@@ -687,17 +681,20 @@ Damit wird gefordert, dass die beiden Gradienten von $f(\boldsymbol{\beta})$ und
   \setkeys{Gin}{width=0.99\textwidth}
   \includegraphics{Funktionsplot.png}
  \end{minipage}
- \caption[Geometrische Interpretation einer Nebenbedingung]{Die linke Abbildung zeigt die Konturlinien (rote Kreise) der Zielfunktion $f(x,y)=(x-1)^2+(y-1)^2$ und als blauen Kreis die Nebenbedingung $g(x,y)=x^2+y^2=0.5$ sowie die zugehörigen Gradienten, die in der $xy$-Ebene am Punkt $(0.5,0.5)$ parallel zueinander sind. In der rechten Abbildung ist die Zielfunktion als elliptischer Paraboloid mit verschiedenen Konturlinien in rot eingezeichnet. Die blaue Ellipse kennzeichnet alle Punkte auf dem elliptischen Paraboloid, die die Nebenbedingung erfüllen. Am untersten Punkt dieser Ellipse ist eine Extremstelle (in diesem Fall ein Minimum) für die Zielfunktion unter Einhaltung der Nebenbedingung erreicht.}
+ \caption[Graphische Veranschaulichung einer Nebenbedingung]{Das linke Bild zeigt die Konturlinien (rote Kreise) der Zielfunktion $f(x,y)=(x-1)^2+(y-1)^2$ und als blauen Kreis die spezielle Konturlinie $g(x,y)=0.5$ der Nebenbedingung $g(x,y)=x^2+y^2$. Zusätzlich sind die Gradienten am Punkt $(0.5,0.5)$ für beide Funktionen eingezeichnet, die dort parallel zueinander sind. Im Bild ist die Zielfunktion als elliptischer Paraboloid mit verschiedenen Konturlinien in rot eingezeichnet. Die blaue Ellipse kennzeichnet alle Punkte auf dem elliptischen Paraboloid, die die Nebenbedingung erfüllen. Am untersten Punkt dieser Ellipse ist ein Minimum und am obersten Punkt ein Maximum für die Zielfunktion unter Einhaltung der Nebenbedingung erreicht. Aus dem rechten Bild wird auch deutlich, dass die Extremstellen unter Einhaltung der Nebenbedingung keine Extremstelle für die Zielfunktion ohne Nebenbedingung sein muss.}
+ \label{Fig:Lagrange_Geo_Interpret}
 \end{figure} 
+Bezeichnet $\nabla$ den \textit{Gradienten} einer Funktion, so befinden sich die Tangentenpunkte an allen Stellen, für die die Gleichung
+\begin{align}\label{Eq_Gradientengleichung}
+\nabla f(\mathbf{x}) &= \boldsymbol{\gamma} \nabla  (g(\mathbf{x})-\mathbf{t})
+\end{align}
+erfüllt ist. Mit \eqref{Eq_Gradientengleichung} wird gefordert, dass die beiden Gradienten von $f(\mathbf{x})$ und $g(\mathbf{x})-\mathbf{t}$ parallel zueinander sind und sich nur in ihrer Länge um $\boldsymbol{\gamma}$ unterscheiden. Da die Gradienten immer senkrecht zu den Konturlinien stehen \cite{strang1991calculus}, muss bei Parallelität von zwei Gradienten von zwei verschiedenen Konturlinien ein Tangentenpunkt für diese vorliegen. Durch Umstellen von \eqref{Eq_Gradientengleichung} ist ersichtlich, dass für die Extremstellen
+\begin{align*}
+\nabla \mathcal{L}(\mathbf{x},\boldsymbol{\gamma})&= \nabla f(\mathbf{x}) - \boldsymbol{\gamma} \nabla  (g(\mathbf{x})-\mathbf{t})=\mathbf{0}
+\end{align*}
+gesucht wird.\\
 
 
-XXXXXXX\\
-x\\
-x\\
-was ist die Jacobian?????\\
-x\\
-x\\
-x\\
 
 
 
