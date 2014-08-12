@@ -344,7 +344,7 @@ Differenzieren von \eqref{Eq_RSS_OLS} nach $\boldsymbol{\beta}$
 \begin{align}\label{Eq_Ableitung_OLS}
 \frac{\partial \text{RSS}(\boldsymbol{\beta})}{\partial  \boldsymbol{\beta}} = -2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}
 \end{align}
-und anschließendes Nullsetzen ergibt die sogenannte \textit{Normalengleichung}
+und anschließendes Nullsetzen ergibt die so genannte \textit{Normalengleichung}
 \begin{align}\label{Eq_Normalengleichung}
 && 0&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} \notag \\
 &\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}'\mathbf{Y}.
@@ -378,19 +378,19 @@ Mit dem Varianzschätzer $\hat{\sigma}^2=\frac{1}{n-p}\boldsymbol{\hat{\varepsil
 \widehat{\mathbb{C}\text{ov}(\boldsymbol{\hat{\beta}}^{OLS})}=\frac{1}{n-p}\boldsymbol{\hat{\varepsilon}}'\boldsymbol{\hat{\varepsilon}}(\mathbf{X}'\mathbf{X})^{-1}
 \end{align}
 geschätzt werden.\\
-Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass für den OLS-Schätzer und allen anderen \textit{unverzerrten linearen} Schätzern $\boldsymbol{\tilde{\beta}}$ für einen beliebigen Vektor $\mathbf{b} \in \mathbb{R}^{p+1}$ folgendes Verhältnis gilt:
+Mittels des \textit{Gauß-Markov-Theorems} lässt sich zeigen, dass für den OLS-Schätzer und alle anderen \textit{unverzerrten linearen} Schätzern $\boldsymbol{\tilde{\beta}}$ für einen beliebigen Vektor $\mathbf{b} \in \mathbb{R}^{p+1}$ folgendes Verhältnis gilt:
 \begin{align*}
 \mathbb{V}\text{ar}(\mathbf{b}'\boldsymbol{\tilde{\beta}}) \ge \mathbb{V}\text{ar}(\mathbf{b}'\boldsymbol{\hat{\beta}}^{OLS}).
 \end{align*}
-Somit gilt $\mathbb{V}\text{ar}(\tilde{\beta}_j) \ge \mathbb{V}\text{ar}(\hat{\beta}_j^{OLS})$ wenn $\mathbf{b}$ als kanonischer Einheitsvektor mit der Eins an der j-ten Stelle definiert wird.\\
+Somit gilt $\mathbb{V}\text{ar}(\tilde{\beta}_j) \ge \mathbb{V}\text{ar}(\hat{\beta}_j^{OLS})$, wenn $\mathbf{b}$ als kanonischer Einheitsvektor mit der Eins an der j-ten Stelle definiert wird.\\
 
 Wird die Genauigkeit des Schätzers $\hat{\beta}_j^{OLS}$ für $\beta_j$ betrachtet, bietet sich als Risikofunktion (siehe Anhang \ref{App_Risikofunktion}) der \textit{mittlere quadratische Fehler} (englisch: mean squared error; \textit{MSE}) an, der die \textit{erwartete mittlere Abweichung} eines geschätzten vom wahren Regressionskoeffizienten angibt:
 \begin{align*}
 \text{MSE}(\hat{\beta}_j)=\mathbb{E}[(\hat{\beta}_j - \beta_j)^2]=\mathbb{V}\text{ar}(\hat{\beta}_j)+(Bias(\hat{\beta}_j))^2.
 \end{align*}
-Motiviert wird dieses Maß durch die Überlegung, dass ein unverzerrter Schätzer im Hinblick auf die Nähe zum wahren Parameter durch eine große Varianz dennoch sehr ungenau sein kann. Umgekehrt kann ein Schätzer, der eine nicht zu große systematische Verzerrung (Bias) und eine geringe Varianz aufweist, im Bezug auf seine erwartete Lage relativ dicht am wahren Parameter liegen. In Abschnitt \ref{Kap_Multikollinearität und $p > n$} wird erläutert, wodurch die einzelnen OLS-Schätzer trotz ihrer Unverzerrtheit jeweils einen relativ große MSE haben können.\\
+Motiviert wird dieses Maß durch die Überlegung, dass ein unverzerrter Schätzer im Hinblick auf die Nähe zum wahren Parameter durch eine große Varianz dennoch sehr ungenau sein kann. Umgekehrt kann ein Schätzer, der eine nicht zu große systematische Verzerrung (Bias) und eine geringe Varianz aufweist, im Bezug auf seine erwartete Lage relativ dicht am wahren Parameter liegen. In Abschnitt \ref{Kap_Multikollinearität und $p > n$} wird erläutert, wodurch die einzelnen OLS-Schätzer trotz ihrer Unverzerrtheit jeweils einen relativ großen MSE haben können.\\
 
-Als eine Verallgemeinerung des MSE kann die Verlustfunktion $\mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) = (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta})$ aufgefasst werden, die den \textit{quadrierten Abstand} des OLS-Parametervektors $\boldsymbol{\hat{\beta}}$ zum wahren Parametervektor $\boldsymbol{\beta}$ wiedergibt. Die zugehörige Risikofunktion ist der \textit{erwartete quadrierten Abstand} (vgl. Anhang \ref{App_Beweis_Erwarteter_quadrierter_Abstand}):
+Als eine Verallgemeinerung des MSE kann die Verlustfunktion $\mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) = (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta})$ aufgefasst werden, die den \textit{quadrierten Abstand} des OLS-Parametervektors $\boldsymbol{\hat{\beta}}$ zum wahren Parametervektor $\boldsymbol{\beta}$ wiedergibt. Die zugehörige Risikofunktion ist der \textit{erwartete quadrierte Abstand} (vgl. Anhang \ref{App_Beweis_Erwarteter_quadrierter_Abstand}):
 \begin{align}\label{Eq_Erwarteter_Quadrierter_Abstand}
 \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
@@ -426,12 +426,12 @@ Korrelieren zwei oder mehr Kovariablen der Matrix $\mathbf{X}$ hoch miteinander,
 \mathbb{V}\text{ar}(\hat{\beta}_j^{OLS})=\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}_{jj}=\frac{\sigma^2}{1-R^2_j} \ ,
 \end{align}  
 wobei $0 \leq R^2_j \leq 1$ der (multiple) \textit{Determinationskoeffizient} für die Regression von $\mathbf{x}_j$ auf die übrigen $p-1$ Kovariablen ist. Je stärker $\mathbf{x}_j$ mit den restlichen Kovariablen korreliert, d.h. je größer $R^2$ ist, desto kleiner wird der Nenner von \eqref{Eq_var_beta_j} und damit umso größer die Varianz von $\hat{\beta}_j^{OLS}$. Zudem kann es bereits durch kleine Änderungen in der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ zu geänderten Vorzeichen bei den $\hat{\beta}_j^{OLS}$ kommen.\\
-Aus \eqref{Eq_Laenge_OLS} wird deutlich, dass die erwartete quadrierte Länge von $\boldsymbol{\hat{\beta}}^{OLS}$ um $\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]$ größer als die von $\boldsymbol{\beta}$ ist. Multikollinearität hat zur Folge, dass die Eigenwerte von $\mathbf{X}'\mathbf{X}$ stark schrumpfen und deswegen unter Berücksichtigung von \eqref{Eq_Lambda_Laenge_OLS} die Spur von $(\mathbf{X}'\mathbf{X})^{-1}$ ansteigt. Dadurch wird der Vektor $\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS}{'} \boldsymbol{\hat{\beta}}^{OLS})$ deutlich länger als $\mathbb{E}(\boldsymbol{\beta}' \boldsymbol{\beta})$. Interpretiert man die Längendifferenz als Maß für die \textit{Gesamtgenauigkeit} der Schätzer, werden diese durch Multikollinearität insgesamt schlechter und zu groß. Für die Absolutwerte $|\beta_j^{OLS}|$ bedeutet dass, dass die OLS-Methode den Einfluss einzelner Kovariablen überschätzt \cite{Marquardt1975RidgePractice,Brook1980ExpectedLengthOLS}.\\
+Aus \eqref{Eq_Laenge_OLS} wird deutlich, dass die erwartete quadrierte Länge von $\boldsymbol{\hat{\beta}}^{OLS}$ um $\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]$ größer als die von $\boldsymbol{\beta}$ ist. Multikollinearität hat zur Folge, dass die Eigenwerte von $\mathbf{X}'\mathbf{X}$ stark schrumpfen und deswegen unter Berücksichtigung von \eqref{Eq_Lambda_Laenge_OLS} die Spur von $(\mathbf{X}'\mathbf{X})^{-1}$ ansteigt. Dadurch wird der Vektor $\mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS}{'} \boldsymbol{\hat{\beta}}^{OLS})$ deutlich länger als $\mathbb{E}(\boldsymbol{\beta}' \boldsymbol{\beta})$. Interpretiert man die Längendifferenz als Maß für die \textit{Gesamtgenauigkeit} der Schätzer, werden diese durch Multikollinearität insgesamt schlechter und zu groß. Für die Absolutwerte $|\beta_j^{OLS}|$ bedeutet das, dass die OLS-Methode den Einfluss einzelner Kovariablen überschätzt \cite{Marquardt1975RidgePractice,Brook1980ExpectedLengthOLS}.\\
 Bei einer \textit{perfekten} Multikollinearität kann eine Kovariable als Linearkombination der anderen Kovariablen dargestellt werden. In diesem Fall ist $\mathbf{X}$ und damit auch $\mathbf{X}'\mathbf{X}$ singulär \cite{strang09ointro_linalg}, weswegen die Normalengleichung aus \eqref{Eq_Normalengleichung} nicht nach $\boldsymbol{\beta}$ aufgelöst werden kann und es keine eindeutige Lösung für $\boldsymbol{\beta}$ gibt.\\
 Bei hochdimensionalen Daten mit $p>n$ oder sogar $p \gg n$ ist $rg(\mathbf{X}) < p+1$ und die Normalengleichung kann keinen eindeutigen Schätzer für $\boldsymbol{\beta}$ liefern \cite{johnstone_statistical_2009}.\\
 
 \section{Penalisierte Regression}\label{Kap_Penalisierte Regression}
-Für \textit{hochdimensionale} Daten, wie sie in der Genetik vorliegen, kann aus \textit{inhaltlichen} Gründen häufig die Annahme vertreten werden, dass nur wenige Kovariablen einen Einfluss auf die Responsevariable haben. Wird dieser Zusammenhang als klassisches lineares Regressionsmodell $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ ausgedrückt, muss daher angenommen werden, dass der Regressionskoeffizientenvektor $\boldsymbol{\beta}$ in Wahrheit \textit{spärlich} besetzt ist, d.h. für die meisten Koeffizienten $\beta_j = 0$ gilt. Die Herausforderung besteht darin, durch die Regression sowohl die $\beta_j$, für die $\beta_j \neq 0$ gilt, zu \textit{selektieren} als auch deren Einfluss auf die Responsevariable möglichst genau zu schätzen. Wie in Kapitel \ref{Kap_Methode der Kleinsten Quadrate} und \ref{Kap_Multikollinearität und $p > n$} dargestellt, hängt $\mathbb{V}\text{ar}(\hat{\beta}_j)$ von der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ ab, weswegen es bei hoher Multikollinearität zu einem hohen $\text{MSE}(\hat{\beta}_j)$ kommt. Gleichzeitig wird der Einfluss der einzelnen Kovariablen insgesamt überschätzt. Sollte eine exakte Multikollinearität bzw. bzw. $p > n$ vorliegen, kann die OLS-Methode darüber hinaus keine (eindeutigen) Schätzer liefern.\\
+Für \textit{hochdimensionale} Daten, wie sie in der Genetik vorliegen, kann aus \textit{inhaltlichen} Gründen häufig die Annahme vertreten werden, dass nur wenige Kovariablen einen Einfluss auf die Responsevariable haben. Wird dieser Zusammenhang als klassisches lineares Regressionsmodell $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ ausgedrückt, muss daher angenommen werden, dass der Regressionskoeffizientenvektor $\boldsymbol{\beta}$ in Wahrheit \textit{spärlich} besetzt ist, d.h. für die meisten Koeffizienten $\beta_j = 0$ gilt. Die Herausforderung besteht darin, durch die Regression sowohl die $\beta_j$, für die $\beta_j \neq 0$ gilt, zu \textit{selektieren} als auch deren Einfluss auf die Responsevariable möglichst genau zu schätzen. Wie in Kapitel \ref{Kap_Methode der Kleinsten Quadrate} und \ref{Kap_Multikollinearität und $p > n$} dargestellt, hängt $\mathbb{V}\text{ar}(\hat{\beta}_j)$ von der Kovarianzmatrix $\mathbf{X}'\mathbf{X}$ ab, weswegen es bei hoher Multikollinearität zu einem hohen $\text{MSE}(\hat{\beta}_j)$ kommt. Gleichzeitig wird der Einfluss der einzelnen Kovariablen insgesamt überschätzt. Sollte eine exakte Multikollinearität bzw. $p > n$ vorliegen, kann die OLS-Methode darüber hinaus keine (eindeutigen) Schätzer liefern.\\
 Penalisierungsansätze verfolgen die Strategie, die Unverzerrtheit des OLS-Schätzers zu "`opfern"', d.h. absichtlich ein Bias zu erzeugen, um einerseits eine Variablenselektion für die spärliche Besetzung von $\boldsymbol{\hat{\beta}}$ zu ermöglichen und gleichzeitig den geschätzten Einfluss der einzelnen Kovariablen zu schrumpfen. Wegen $\text{MSE}(\hat{\beta}_j)=\mathbb{V}\text{ar}(\hat{\beta}_j)+ \text{Bias}(\hat{\beta}_j)$ darf der durch die Penalisierung erzeugte Bias nicht zu groß werden, da ansonsten der MSE basierend auf der Penalisierungsmethode den MSE basierend auf der OLS-Methode übertrifft.\\
 Als grundlegendes Prinzip wird bei der Penalisierung die zu minimierende Verlustfunktion, in der Regel die Residuenquadratsumme $\text{RSS}(\boldsymbol{\beta})$, um einen Strafterm $P(\boldsymbol{\beta})$ erweitert, sodass sich eine zu minimierende \textit{penalisierte Residuenquadratsumme} (englisch: penalized residual sum of squares; \textit{PRSS}) als  
 \begin{align}\label{Eq_PRSS_allgmein}
@@ -489,8 +489,8 @@ Es lässt sich zeigen, dass mit der Varianz aus \eqref{Eq_Cov_epsilon} für den 
 \begin{align}\label{Eq_Erw_Quad_Abst_ridge}
 \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta}' (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
-wobei $\lambda_{max}= \lambda_1, \dots, \lambda_p= \lambda_{min}$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{Eq_Erw_Quad_Abst_ridge} beinhaltet in Anlehnung an \eqref{Eq_Lambda_Laenge_OLS} die Summe der Varianzen der $\hat{\beta}_j^{Ridge}$ und der rechte Summand der durch $\gamma$ erzeugte Bias. Anhand dieser Darstellung ist erkennbar, dass mit größer werdendem $\gamma$ die Summe der Varianzen des Schätzers sinkt und gleichzeitig die gesamte Verzerrung ansteigt. Umgekehrt wird an dieser Risikofunktion deutlich, dass für $\gamma=0$ der Ridge-Schätzer dem OLS-Schätzer entspricht und folglich die selbe erwartete quadratische Distanz zum wahren $\boldsymbol{\beta}$ hat. Dieser Abstand ist wie in Abschnitt \ref{Kap_Multikollinearität und $p > n$} gezeigt deutlich von einer schlecht konditionierten Matrix $\mathbf{X}$ abhängig. Ziel bei der Wahl von $\gamma$ ist es deswegen, ein optimales $\gamma$ zu finden, dass $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace$ bzw. die einzelnen $\text{MSE}(\hat{\beta}_j^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace < \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace$ gilt. Im Bezug auf die Risikofunktion bedeutet das, dass die Ridge-Schätzer mit optimalem $\gamma$ für alle wahren $\boldsymbol{\beta}$ \textit{strikt besser} sind als die OLS-Schätzer \cite{gross2003linear}.\\
-Die Wahl des Tuningparameters $\gamma$ und muss dabei vom Anwender getroffen werden und kann, sollen er nicht subjektiv festgelegt werden, durch iterative Methoden geschätzt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{gross2003linear} und \citeA{montgomery2012introduction}.
+wobei $\lambda_{max}= \lambda_1, \dots, \lambda_p= \lambda_{min}$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{Eq_Erw_Quad_Abst_ridge} beinhaltet in Anlehnung an \eqref{Eq_Lambda_Laenge_OLS} die Summe der Varianzen der $\hat{\beta}_j^{Ridge}$ und der rechte Summand den durch $\gamma$ erzeugte Bias. Anhand dieser Darstellung ist erkennbar, dass mit größer werdendem $\gamma$ die Summe der Varianzen des Schätzers sinkt und gleichzeitig die gesamte Verzerrung ansteigt. Umgekehrt wird an dieser Risikofunktion deutlich, dass für $\gamma=0$ der Ridge-Schätzer dem OLS-Schätzer entspricht und folglich dieselbe erwartete quadratische Distanz zum wahren $\boldsymbol{\beta}$ hat. Dieser Abstand ist wie in Abschnitt \ref{Kap_Multikollinearität und $p > n$} gezeigt deutlich von einer schlecht konditionierten Matrix $\mathbf{X}$ abhängig. Ziel bei der Wahl von $\gamma$ ist es deswegen, ein optimales $\gamma$ zu finden, dass $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace$ bzw. die einzelnen $\text{MSE}(\hat{\beta}_j^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace < \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace$ gilt. In Bezug auf die Risikofunktion bedeutet das, dass die Ridge-Schätzer mit optimalem $\gamma$ für alle wahren $\boldsymbol{\beta}$ \textit{strikt besser} sind als die OLS-Schätzer \cite{gross2003linear}.\\
+Die Wahl des Tuningparameters $\gamma$ muss dabei vom Anwender getroffen werden und kann, soll er nicht subjektiv festgelegt werden, durch iterative Methoden geschätzt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{gross2003linear} und \citeA{montgomery2012introduction}.
 
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
@@ -504,14 +504,14 @@ als Minimierungsproblem ergibt \cite{tibshirani96regression}. Die Betragsfunktio
 \boldsymbol{\hat{\beta}}^{Lasso}(t)=\arg \displaystyle\min_{\beta} \ &\left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag  \\
 \text{s.t.} \ & \sum_{j=1}^{p}|\beta_j| \le t  \qquad \text{mit} \ t \ge 0.
 \end{align}
-Für den Fall von zwei Kovariablen ist dann die Nebenbedingung aus \eqref{Eq_Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Nebenbedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Diese geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten, wobei die Nebenbedingung ein p-dimensionaler Kreuzpolytop, der um den Faktor $t$ skaliert wird, und die Zielfunktion ein p-dimensionaler Ellipsoid mit dem OLS-Schätzer im Zentrum ist (vgl. dazu \citeNP{Perty2009ShrinkagePolytopes}). Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt vom Lasso- gegenüber dem Ridge-Schätzer für zwei Kovariablen. Bei beiden Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
-Eine geschlossene Darstellung des Minimierungsproblems \eqref{Eq_Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe \ref{App_Konvexe_Funktionen}), weswegen ein Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.
+Für den Fall von zwei Kovariablen ist dann die Nebenbedingung aus \eqref{Eq_Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Nebenbedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Diese geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten, wobei die Nebenbedingung ein p-dimensionaler Kreuzpolytop, der um den Faktor $t$ skaliert wird, und die Zielfunktion ein p-dimensionaler Ellipsoid mit dem OLS-Schätzer im Zentrum ist (vgl. dazu \citeNP{Perty2009ShrinkagePolytopes}). Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt des Lasso- gegenüber dem Ridge-Schätzer für zwei Kovariablen. Bei beiden Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
+Eine geschlossene Darstellung des Minimierungsproblems \eqref{Eq_Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe \ref{App_Konvexe_Funktionen}), weswegen eine Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.
 % ABER: IST CONEVEX!!!!
 %%% Veerweisen:
 %Fused lasso Tibshirani 2005
 %Fused lasso for unordered predictors
 
-<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.scap="Graphische Veranschaulichung des Lasso- und Ridge-Strafterms", fig.cap="Graphische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrumpfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Panalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer Kante tangiert.">>=
+<<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.scap="Graphische Veranschaulichung des Lasso- und Ridge-Strafterms", fig.cap="Graphische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrumpfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Penalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer Kante tangiert.">>=
 #### R-Code Lasso vs Ridge Ellipsen
 
 library(ellipse)
@@ -584,13 +584,13 @@ Bezeichnet $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times
 \end{align}
 und
 \begin{align}\label{Eq_Spurmultiplikation}
-\text{sp}(\mathbf{M}\mathbf{D})=d \cdot \text{sp}(\mathbf{M}).
+\text{sp}(\mathbf{M}\mathbf{D})=d \cdot \text{sp}(\mathbf{M})
 \end{align}
 für eine $m \times m$-Diagonalmatrix $\mathbf{D}=diag(d)$ mit den Werten $d$ und eine $m \times m$-Matrix $\mathbf{M}$ \cite{fahrmeir2009regression}.\\
 
-Sei $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $n \times n$-Matrix, so lässt sich zeigen \cite{mathai1992quadratic}, dass für den Erwartungswert der quadratische Funktion $Q(\mathbf{b})=\mathbf{b}'\mathbf{A}\mathbf{b}$
+Sei $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $n \times n$-Matrix, so lässt sich zeigen \cite{mathai1992quadratic}, dass für den Erwartungswert der quadratischen Funktion $Q(\mathbf{b})=\mathbf{b}'\mathbf{A}\mathbf{b}$
 \begin{align}\label{Eq_Erwartung_Quadrat}
-\mathbb{E}(\mathbf{b}'\mathbf{A}\mathbf{b})=\text{sp}(\mathbf{A}\boldsymbol{\Sigma})+\mathbb{E}(\mathbf{b})'\mathbf{A}\mathbb{E}(\mathbf{b}),
+\mathbb{E}(\mathbf{b}'\mathbf{A}\mathbf{b})=\text{sp}(\mathbf{A}\boldsymbol{\Sigma})+\mathbb{E}(\mathbf{b})'\mathbf{A}\mathbb{E}(\mathbf{b})
 \end{align}
 gilt, wobei $\boldsymbol{\Sigma}$ die Kovarianzmatrix von $\mathbf{b}$ ist.\\
 
@@ -626,15 +626,15 @@ die den Verlust als einen Wert aus $\mathbb{R}$ angibt, wenn sich beim wahren Pa
 \begin{align*}
 \mathbb{E} \left\lbrace \mathscr{L}(\nu(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace
 \end{align*}
-an, der der Erwartungswert der Verlustfunktion ist und als \textit{Risko} oder \textit{Riskofunktion} bezeichnet wird \cite{gross2003linear,judge1985theory}.
-Beispielsweise kann bei der klassischen linearen Regression $\boldsymbol{\hat{\beta}}^{OLS}$ als Entscheidung $d$ durch die Methode der kleinsten Quadrate aufgefasst und als Verlustfunktion $\mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS}$ der quadrierte Abstand zu $\boldsymbol{\beta}$ gewählt werden. Die zugehörige Risikofunktion ist dann die erwartete quadrierte Länge von $\boldsymbol{\hat{\beta}}^{OLS}$.\\
+an, welcher der Erwartungswert der Verlustfunktion ist und als \textit{Risko} oder \textit{Riskofunktion} bezeichnet wird \cite{gross2003linear,judge1985theory}.
+Beispielsweise kann bei der klassischen linearen Regression $\boldsymbol{\hat{\beta}}^{OLS}$ als Entscheidung $d$ durch die Methode der kleinsten Quadrate aufgefasst und als Verlustfunktion $\mathscr{L}(\boldsymbol{\hat{\beta}}^{OLS})$ der quadrierte Abstand zu $\boldsymbol{\beta}$ gewählt werden. Die zugehörige Risikofunktion ist dann die erwartete quadrierte Länge von $\boldsymbol{\hat{\beta}}^{OLS}$.\\
 Für den Vergleich von zwei verschiedenen Entscheidungsfunktionen $\nu_1(\mathbf{Y})$ und $\nu_2(\mathbf{Y})$, im Fall dieser Arbeit von Schätzmethoden für $\boldsymbol{\beta}$, können nach \citeNP{gross2003linear} drei Fälle unterschieden werden: 
 \begin{enumerate}
 \item Die Funktion $\nu_1(\mathbf{Y})$ ist \textit{gleichmäßig nicht schlechter} als eine Funktion $\nu_1(\mathbf{Y})$, wenn
 \begin{align*}
 \mathbb{E} \left\lbrace \mathscr{L}(\nu_1(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace \leq \mathbb{E} \left\lbrace \mathscr{L}(\nu_2(\mathbf{Y}),\boldsymbol{\theta}) \right\rbrace
 \end{align*}
-für alle $\boldsymbol{\theta} \in \Theta$ gilt
+für alle $\boldsymbol{\theta} \in \Theta$ gilt.
 
 \item Die Funktion $\nu_1(\mathbf{Y})$ ist \textit{gleichmäßig besser} als eine Funktion $\nu_1(\mathbf{Y})$, wenn
 \begin{align*}
@@ -662,13 +662,13 @@ Werden die Nebenbedingungen als $g_i(\mathbf{x})-t_i=0$ formuliert, kann \eqref{
 \begin{align}\label{Eq_lagrange_Allgemein}
 \mathcal{L}(\mathbf{x},\boldsymbol{\gamma})=f(\mathbf{x})- \sum_{i=1}^{p^*}\gamma_i (g_i(\mathbf{x})-t_i).
 \end{align}
-Die Lagrange-Form hat keine zusätzliche Nebenbedingungen, ist dafür allerdings um $p^*$ Argumente, die die Nebenbedingung aus \eqref{Eq_Optimierung_Equal} widerspiegeln, und den zugehörigen \textit{Lagrange-Multiplikatoren} $\gamma_i$ erweitert. Um eine Extremstelle zu finden, die die Nebenbedingungen erfüllt, muss $\mathcal{L}(\mathbf{x},\boldsymbol{\gamma})$ sowohl nach $\mathbf{x}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
+Die Lagrange-Form hat keine zusätzlichen Nebenbedingungen, ist dafür allerdings um $p^*$ Argumente, welche die Nebenbedingung aus \eqref{Eq_Optimierung_Equal} widerspiegeln, und den zugehörigen \textit{Lagrange-Multiplikatoren} $\gamma_i$ erweitert. Um eine Extremstelle zu finden, die die Nebenbedingungen erfüllt, muss $\mathcal{L}(\mathbf{x},\boldsymbol{\gamma})$ sowohl nach $\mathbf{x}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
 \begin{align*}
-\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} - \sum_{i=1}^{p^*}\gamma_i \frac{\partial g_i}{\partial x_j}&=0 \qquad \text{für} \ j=1,\dots,p \\ 
-\frac{\partial \mathcal{L}}{\partial \gamma_i}=g_i(\mathbf{x})-t_i&=0 \qquad \text{für} \ i=1,\dots,p^*
+\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} - \sum_{i=1}^{p^*}\gamma_i \frac{\partial g_i}{\partial x_j}&=0 \qquad \text{für} \ j=1,\dots,p , \\ 
+\frac{\partial \mathcal{L}}{\partial \gamma_i}=g_i(\mathbf{x})-t_i&=0 \qquad \text{für} \ i=1,\dots,p^* ,
 \end{align*}
 womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculus}.\\
-Geometrisch lassen sich die Nebenbedingung als spezielle \textit{Konturlinien} der Nebenbedingungsfunktionen betrachten, die sich mit den Konturlinien der Zielfunktion überschneiden und an bestimmten Punkten diese \textit{tangieren}. Gesucht werden diese Tangentenpunkte, da nur dort ein stationärer Punkt für $f(\mathbf{x})$ und damit eine Extremstelle unter Einhaltung der Nebenbedingungen erreicht werden kann. Wird beispielsweise die Funktion $f(x,y)=(x-1)^2 + (y-1)^2$ mit der Nebenbedingung $g(x,y)=(x-1)^2+(y-1)^2=0.5$ betrachtet, überschneiden sich die Konturlinien der Zielfunktion mit der Konturlinie der Nebenbedingungen an allen Punkten bis auf an zwei Tangentenpunkten (siehe Abbildung \ref{Fig:Lagrange_Geo_Interpret}). Diese beiden Punkte sind das Minimum $(x=0.5,y=0.5)$ und Maximum $(x=-0.5,y=-0.5)$, da es unter Berücksichtigung der Nebenbedingung keine extremeren Punkte für $f(x,y)$ gibt.\\
+Geometrisch lassen sich die Nebenbedingungen als spezielle \textit{Konturlinien} der Nebenbedingungsfunktionen betrachten, die sich mit den Konturlinien der Zielfunktion überschneiden und an bestimmten Punkten diese \textit{tangieren}. Gesucht werden diese Tangentenpunkte, da nur dort ein stationärer Punkt für $f(\mathbf{x})$ und damit eine Extremstelle unter Einhaltung der Nebenbedingungen erreicht werden kann. Wird beispielsweise die Funktion $f(x,y)=(x-1)^2 + (y-1)^2$ mit der Nebenbedingung $g(x,y)=(x-1)^2+(y-1)^2=0.5$ betrachtet, überschneiden sich die Konturlinien der Zielfunktion mit der Konturlinie der Nebenbedingungen an allen Punkten bis auf an zwei Tangentenpunkten (siehe Abbildung \ref{Fig:Lagrange_Geo_Interpret}). Diese beiden Punkte sind das Minimum $(x=0.5,y=0.5)$ und Maximum $(x=-0.5,y=-0.5)$, da es unter Berücksichtigung der Nebenbedingung keine extremeren Punkte für $f(x,y)$ gibt.\\
 
 \begin{figure}[ht]
  \begin{minipage}{0.5\linewidth}
@@ -684,7 +684,7 @@ Geometrisch lassen sich die Nebenbedingung als spezielle \textit{Konturlinien} d
  \caption[Graphische Veranschaulichung einer Nebenbedingung]{Das linke Bild zeigt die Konturlinien (rote Kreise) der Zielfunktion $f(x,y)=(x-1)^2+(y-1)^2$ und als blauen Kreis die spezielle Konturlinie $g(x,y)=0.5$ der Nebenbedingung $g(x,y)=x^2+y^2$. Zusätzlich sind die Gradienten am Punkt $(0.5,0.5)$ für beide Funktionen eingezeichnet, die dort parallel zueinander sind. Im rechten Bild ist die Zielfunktion als elliptischer Paraboloid mit verschiedenen Konturlinien in rot eingezeichnet. Die blaue Ellipse kennzeichnet alle Punkte auf dem elliptischen Paraboloid, die die Nebenbedingung erfüllen. Am untersten Punkt dieser Ellipse ist ein Minimum und am obersten Punkt ein Maximum für die Zielfunktion unter Einhaltung der Nebenbedingung erreicht. Aus dem rechten Bild wird auch deutlich, dass Extremstellen unter Einhaltung der Nebenbedingung keine Extremstelle für die Zielfunktion ohne Nebenbedingung sein müssen.}
  \label{Fig:Lagrange_Geo_Interpret}
 \end{figure} 
-Bezeichnet $\nabla$ den \textit{Gradienten} einer Funktion, so befinden sich die gesuchten Tangentenpunkte an allen Punkten, für die die Gleichung
+Bezeichnet $\nabla$ den \textit{Gradienten} einer Funktion, so befinden sich die gesuchten Tangentenpunkte an allen Punkten, für welche die Gleichung
 \begin{align}\label{Eq_Gradientengleichung}
 \nabla f(\mathbf{x}) &= \boldsymbol{\gamma} \nabla  (g(\mathbf{x})-\mathbf{t})
 \end{align}
@@ -694,29 +694,28 @@ erfüllt ist. Mit \eqref{Eq_Gradientengleichung} wird gefordert, dass die beiden
 \end{align*}
 gesucht wird.\\
 
-Für den Fall, dass die Bedingungen für die Zielfunktion aus \ref{Eq_Optimierung_Equal} \textit{Ungleichung} beinhalten, d.h.
+Für den Fall, dass die Bedingungen für die Zielfunktion aus \ref{Eq_Optimierung_Equal} \textit{Ungleichung} beinhalten, d.h. für
 \begin{align}\label{Eq_Optimierung_Unequal}
 &&\arg \displaystyle\min_{\mathbf{x}} \ & f(\mathbf{x}) \notag \\ 
-&&\text{s.t.} \ & g_i(\mathbf{x}) \le t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p
+&&\text{s.t.} \ & g_i(\mathbf{x}) \le t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p ,
 \end{align}
-muss eine sogenannte \textit{Slack-Variable} eingeführt werden, durch die die Ungleichung in \ref{Eq_Optimierung_Unequal} zu einer Gleichung umgewandelt wird. Dieses Vorgehen beruht auf der Tatsache, dass es für $g_i(\mathbf{x})-t_i \le 0$ eine Variable $s_i^2$ geben muss, durch die $g_i(\mathbf{x})-t_i + s_i^2 = 0$ gilt, was wiederum einer Nebenbedingung als Gleichung entspricht. Dadurch ergibt sich als Lagrange-Form
+muss eine sogenannte \textit{Slack-Variable} eingeführt werden, durch die die Ungleichung in \eqref{Eq_Optimierung_Unequal} zu einer Gleichung umgewandelt wird. Dieses Vorgehen beruht auf der Tatsache, dass es für $g_i(\mathbf{x})-t_i \le 0$ eine Variable $s_i^2$ geben muss, durch die $g_i(\mathbf{x})-t_i + s_i^2 = 0$ gilt, was wiederum einer Nebenbedingung als Gleichung entspricht \cite{haftka1992elements}. Dadurch ergibt sich als Lagrange-Form
 \begin{align}
-\mathcal{L}(\mathbf{X}, \boldsymbol{\gamma}, \mathbf{s})=f(\mathbf{x})+ \sum_{i=1}^{p^*}\gamma_i (g_i(\mathbf{x})-t_i + s_i^2),
+\mathcal{L}(\mathbf{x}, \boldsymbol{\gamma}, \mathbf{s})=f(\mathbf{x})+ \sum_{i=1}^{p^*}\gamma_i (g_i(\mathbf{x})-t_i + s_i^2),
 \end{align}
 die nach $\mathbf{x}$, $\boldsymbol{\gamma}$ und $\mathbf{s}$ abgeleitet und Null gesetzt werden muss:
-\begin{align*}
-\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} + \sum_{i=1}^{p*} \gamma_i \frac{\partial g_i}{\partial x_j} &= 0 \qquad \text{für} \ j=1,\dots,p \\
-\frac{\partial \mathcal{L}}{\partial \gamma_i}=g_i - t_i + s_i^2 &=0 \qquad \text{für} \ i=1,\dots,p* \\
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} + \sum_{i=1}^{p^*} \gamma_i \frac{\partial g_i}{\partial x_j} &= 0 \qquad \text{für} \ j=1,\dots,p  , \label{Eq_Lag_Part_1} \\
+\frac{\partial \mathcal{L}}{\partial \gamma_i}=g_i - t_i + s_i^2 &=0 \qquad \text{für} \ i=1,\dots,p*  , \label{Eq_Lag_Part_2} \\
 \frac{\partial \mathcal{L}}{\partial s_i}=2\gamma_i s_i &=0
-\qquad \text{für} \ j=i,\dots,p* .\\
-\end{align*}
-
-\cite{arora2011introductionOptimum}
+\qquad \text{für} \ j=i,\dots,p^*  . \label{Eq_Lag_Part_3}
+\end{align}
+Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und der Lagrange-Multiplikator $\gamma_i=0$  wegen \eqref{Eq_Lag_Part_3} ist. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i$ gibt \cite{arora2011introductionOptimum}. Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss generell gefordert werden, dass für alle Lagrange-Multiplikatoren $\gamma_i \ge 0$ für $i=1,\dots,p^*$ gilt (XXXXXXXXXXXXXXXXXXXXXXXXXXX angeben wieso XXXXXXXXXXXXXXXXXXX).  
 
 \section{Konvexe Funktionen}\label{App_Konvexe_Funktionen}
 Eine Funktion $f:X \rightarrow \mathbb{R}$ heißt \textit{konvex}, wenn
 \begin{align*}\label{Eq_Convex_Funktion}
-f(\epsilon a + (1-\epsilon)b) \leq \epsilon f(a) + (1-\epsilon) f(b) \qquad \text{mit} \quad 0 \leq \epsilon \leq 1.
+f(\epsilon a + (1-\epsilon)b) \leq \epsilon f(a) + (1-\epsilon) f(b) \qquad \text{mit} \quad 0 \leq \epsilon \leq 1
 \end{align*}
 für alle $a,b \in X$ gilt \cite{matousek2006understanding}. Es handelt sich bei $f$ um eine \textit{streng konvexe} Funktion, wenn für alle $a \neq b$ gilt
 \begin{align*}
