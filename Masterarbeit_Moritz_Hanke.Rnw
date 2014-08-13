@@ -455,7 +455,10 @@ Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die gesch�
 \boldsymbol{\hat{\beta}}^{Ridge} = (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}.
 \end{align}
 Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer im vergleich zu den OLS-Schätzern (siehe \eqref{Eq_Erw_Quad_Abst_ridge}) und für den Fall, dass $\text{rg}(\mathbf{X}) < p$ und damit $\mathbf{X}'\mathbf{X}$ singulär ist, wird der Ausdruck in der Klammer regulär und \eqref{Eq_Ridge_estimate} ist eindeutig lösbar \cite{montgomery2012introduction}.
-Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (Y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. XXXXXXXXXXXXXXXXXXXXXXXX DAS ggf noch mal überarbeiten im Hinblick auf "`große Parameter"' XXXXXXXXXXXXXXX Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form}) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (Y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. 
+%%%XXXXXXXXXXXXXXXXXXXXXXXX DAS ggf noch mal überarbeiten im Hinblick auf "`große Parameter"' XXXXXXXXXXXXXXX 
+Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form})
+%%%XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 \begin{align}\label{Eq_Ridge_lagrangian}
 \boldsymbol{\hat{\beta}}^{Ridge}(\gamma)=\arg \displaystyle\min_{\boldsymbol{\beta}} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0
 \end{align}
@@ -494,7 +497,7 @@ Die Wahl des Tuningparameters $\gamma$ muss dabei vom Anwender getroffen werden 
 
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
-WIESO KANN LASSO $p>n$ LÖSEN?????????? siehe übersichtspaper bzgl der quadrat durch betrag erweiterung?
+%%%WIESO KANN LASSO $p>n$ LÖSEN?????????? siehe übersichtspaper bzgl der quadrat durch betrag erweiterung?
 Anders als bei der Ridge-Regression wird bei der \textit{Lasso-Regression} ein $L_1$-Norm-Strafterm in die Lagrange-Form als zusätzliches Argument eingeführt, womit sich
 \begin{align}\label{Eq_Lasso_Lagrange}
 \boldsymbol{\hat{\beta}}^{Lasso}(\gamma)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \sum_{j=1}^{p}|\beta_j| \right\rbrace \qquad \text{mit} \ \gamma \ge 0.
@@ -697,20 +700,28 @@ gesucht wird.\\
 Für den Fall, dass die Bedingungen für die Zielfunktion aus \ref{Eq_Optimierung_Equal} \textit{Ungleichung} beinhalten, d.h. für
 \begin{align}\label{Eq_Optimierung_Unequal}
 &&\arg \displaystyle\min_{\mathbf{x}} \ & f(\mathbf{x}) \notag \\ 
-&&\text{s.t.} \ & g_i(\mathbf{x}) \le t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p ,
+&&\text{s.t.} \ & h_i(\mathbf{x}) \le t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p ,
 \end{align}
-muss eine sogenannte \textit{Slack-Variable} eingeführt werden, durch die die Ungleichung in \eqref{Eq_Optimierung_Unequal} zu einer Gleichung umgewandelt wird. Dieses Vorgehen beruht auf der Tatsache, dass es für $g_i(\mathbf{x})-t_i \le 0$ eine Variable $s_i^2$ geben muss, durch die $g_i(\mathbf{x})-t_i + s_i^2 = 0$ gilt, was wiederum einer Nebenbedingung als Gleichung entspricht \cite{haftka1992elements}. Dadurch ergibt sich als Lagrange-Form
+muss eine sogenannte \textit{Slack-Variable} eingeführt werden, durch die die Ungleichung in \eqref{Eq_Optimierung_Unequal} zu einer Gleichung umgewandelt wird. Dieses Vorgehen beruht auf der Tatsache, dass es für $h_i(\mathbf{x})-t_i \le 0$ eine Variable $s_i^2$ geben muss, durch die $h_i(\mathbf{x})-t_i + s_i^2 = 0$ gilt, was wiederum einer Nebenbedingung als Gleichung entspricht \cite{haftka1992elements}. Dadurch ergibt sich als Lagrange-Form
 \begin{align}
-\mathcal{L}(\mathbf{x}, \boldsymbol{\gamma}, \mathbf{s})=f(\mathbf{x})+ \sum_{i=1}^{p^*}\gamma_i (g_i(\mathbf{x})-t_i + s_i^2),
+\mathcal{L}(\mathbf{x}, \boldsymbol{\gamma}, \mathbf{s})=f(\mathbf{x})+ \sum_{i=1}^{p^*}\gamma_i (h_i(\mathbf{x})-t_i + s_i^2),
 \end{align}
 die nach $\mathbf{x}$, $\boldsymbol{\gamma}$ und $\mathbf{s}$ abgeleitet und Null gesetzt werden muss:
 \begin{align}
-\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} + \sum_{i=1}^{p^*} \gamma_i \frac{\partial g_i}{\partial x_j} &= 0 \qquad \text{für} \ j=1,\dots,p  , \label{Eq_Lag_Part_1} \\
-\frac{\partial \mathcal{L}}{\partial \gamma_i}=g_i - t_i + s_i^2 &=0 \qquad \text{für} \ i=1,\dots,p*  , \label{Eq_Lag_Part_2} \\
+\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} + \sum_{i=1}^{p^*} \gamma_i \frac{\partial h_i}{\partial x_j} &= 0 \qquad \text{für} \ j=1,\dots,p  , \label{Eq_Lag_Part_1} \\
+\frac{\partial \mathcal{L}}{\partial \gamma_i}=h_i - t_i + s_i^2 &=0 \qquad \text{für} \ i=1,\dots,p*  , \label{Eq_Lag_Part_2} \\
 \frac{\partial \mathcal{L}}{\partial s_i}=2\gamma_i s_i &=0
 \qquad \text{für} \ j=i,\dots,p^*  . \label{Eq_Lag_Part_3}
 \end{align}
-Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und der Lagrange-Multiplikator $\gamma_i=0$  wegen \eqref{Eq_Lag_Part_3} ist. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i$ gibt \cite{arora2011introductionOptimum}. Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss generell gefordert werden, dass für alle Lagrange-Multiplikatoren $\gamma_i \ge 0$ für $i=1,\dots,p^*$ gilt (XXXXXXXXXXXXXXXXXXXXXXXXXXX angeben wieso XXXXXXXXXXXXXXXXXXX).  
+Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})_i-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und damit wegen \eqref{Eq_Lag_Part_3} für den Lagrange-Multiplikator $\gamma_i=0$ gilt. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i$ gibt \cite{arora2011introductionOptimum}. Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss generell gefordert werden, dass für alle Lagrange-Multiplikatoren $\gamma_i \ge 0$ für Nebenbedingungen in der Form $h_i(\mathbf{x}) - t_i \le 0$ gilt. 
+
+\begin{comment}
+
+%%%
+Dazu wird die 
+Eine intuitive Erklärung hierfür ist der Umstand, dass für eine Nebenbedingung $h_i(\mathbf{x})-t_i \le 0$ \textit{gelockert} werden kann, indem sie zu $h_i(\mathbf{x})-t_i \le u_i$ mit $u_i > 0$ erweitert wird. Dadurch erweitern sich das Set der Möglichen Punkte für eine Extremstelle
+
+\end{comment}
 
 \section{Konvexe Funktionen}\label{App_Konvexe_Funktionen}
 Eine Funktion $f:X \rightarrow \mathbb{R}$ heißt \textit{konvex}, wenn
