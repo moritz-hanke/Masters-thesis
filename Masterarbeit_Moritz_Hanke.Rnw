@@ -391,7 +391,7 @@ Wird die Genauigkeit des Schätzers $\hat{\beta}_j^{OLS}$ für $\beta_j$ betrach
 \end{align*}
 Motiviert wird dieses Maß durch die Überlegung, dass ein unverzerrter Schätzer im Hinblick auf die Nähe zum wahren Parameter durch eine große Varianz dennoch sehr ungenau sein kann. Umgekehrt kann ein Schätzer, der eine nicht zu große systematische Verzerrung (Bias) und eine geringe Varianz aufweist, im Bezug auf seine erwartete Lage relativ dicht am wahren Parameter liegen. In Abschnitt \ref{Kap_Multikollinearität und $p > n$} wird erläutert, wodurch die einzelnen OLS-Schätzer trotz ihrer Unverzerrtheit jeweils einen relativ großen MSE haben können.\\
 
-Als eine Verallgemeinerung des MSE kann die Verlustfunktion $\mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) = (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta})$ aufgefasst werden, die den \textit{quadrierten Abstand} des OLS-Parametervektors $\boldsymbol{\hat{\beta}}$ zum wahren Parametervektor $\boldsymbol{\beta}$ wiedergibt. Die zugehörige Risikofunktion ist der \textit{erwartete quadrierte Abstand} (vgl. Anhang \ref{App_Beweis_Erwarteter_quadrierter_Abstand}):
+Als eine Verallgemeinerung des MSE kann die Verlustfunktion $\mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) = (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta})$ aufgefasst werden, die den \textit{quadrierten Abstand} des OLS-Parametervektors $\boldsymbol{\hat{\beta}}$ zum wahren Parametervektor $\boldsymbol{\beta}$ wiedergibt. Die zugehörige Risikofunktion ist der \textit{erwartete quadrierte Abstand} (siehe Anhang \ref{App_Beweis_Erwarteter_quadrierter_Abstand}):
 \begin{align}\label{Eq_Erwarteter_Quadrierter_Abstand}
 \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
@@ -458,7 +458,7 @@ Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die gesch�
 Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer im Vergleich zu den OLS-Schätzern (siehe \eqref{Eq_Erw_Quad_Abst_ridge}) und für den Fall, dass $\text{rg}(\mathbf{X}) < p$ und damit $\mathbf{X}'\mathbf{X}$ singulär ist, wird der Ausdruck in der Klammer regulär und \eqref{Eq_Ridge_estimate} ist eindeutig lösbar \cite{montgomery2012introduction}.
 Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (Y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. 
 %%%XXXXXXXXXXXXXXXXXXXXXXXX DAS ggf noch mal überarbeiten im Hinblick auf "`große Parameter"' XXXXXXXXXXXXXXX 
-Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form})
+Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe Anhang \ref{App_Lagrange-Form})
 %%%XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 \begin{align}\label{Eq_Ridge_lagrangian}
 \boldsymbol{\hat{\beta}}^{Ridge}(\gamma)=\arg \displaystyle\min_{\boldsymbol{\beta}} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0
@@ -565,12 +565,12 @@ lines(ellipse(x=covmatc,scale=c(2,2),level=0.85))
 points(0.68,3.85, col="cyan2", pch=20, cex=1.7)
 text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 @
-Eine geschlossene Darstellung des Minimierungsproblems \eqref{Eq_Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe \ref{App_Konvexe_Funktionen}), weswegen eine Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.\\ 
-Für den Fall, dass $\mathbf{X}'\mathbf{X}$ orthonormal ist, können die Lasso-Schätzer durch die OLS-Schätzer bestimmt werden \cite{tibshirani96regression}:
+Eine geschlossene Darstellung des Minimierungsproblems \eqref{Eq_Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe Anhang \ref{App_Konvexe_Funktionen}), weswegen eine Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.\\ 
+Für den Fall, dass $\mathbf{X}'\mathbf{X}$ orthonormal ist, d.h. $\mathbf{X}'\mathbf{X}=\mathbf{I}$ gilt, können die Lasso-Schätzer durch die OLS-Schätzer bestimmt werden \cite{tibshirani96regression}:
 \begin{align}\label{Eq_Lasso_Orthonormaldesign}
 \beta_j^{Lasso}=\text{sign}(\beta_j^{OLS})(|\beta_j^{OLS}|-\gamma)^+
 \end{align}
-Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass der Ausdruck in der Klammer nur ausgewertet wird, wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. 
+Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass der Ausdruck in der Klammer nur ausgewertet wird, wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}.
 
 %%% Veerweisen:
 %Fused lasso Tibshirani 2005
@@ -625,6 +625,7 @@ Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat
 &=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
 
+\section{Lasso-Schätzer für ein orthonormales Design}\label{App_Lasso_Orthonormal}
 
 \chapter{Erläuterungen}
 \section{Verlust- und Risikofunktionen}\label{App_Risikofunktion}
