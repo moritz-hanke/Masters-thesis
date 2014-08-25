@@ -124,7 +124,7 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 & & \\
 & & \\
 \textbf{Eingereicht von:} & & Hanke, Moritz \\
-\textbf{Geboren am:} & & 07.08.1985 \\
+%\textbf{Geboren am:} & & 07.08.1985 \\
 \textbf{Matrikelnummer:} & & 2404575 \\
 & & \\
 & & \\
@@ -158,6 +158,7 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{MSE}{Mean squared error}
 \abk{RSS}{Residual sum of squares}
 \abk{PRSS}{Penalized residual sum of squares}
+\abk{KEGG}{Kyoto Encyclopedia of Genes and Genomes}
 
 
 % Begin der Arbeit
@@ -580,7 +581,7 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 
 \begin{appendix}
 \chapter{Beweise}
-\section{Erwarteter quadrierter Abstand}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
+\section{Erwarteter quadrierter Abstand von $\boldsymbol{\hat{\beta}}^{OLS}$ zu $\boldsymbol{\beta}$}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
 Bezeichnet $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times n$-Matrix, so gilt
 \begin{align}\label{Eq_Spurgleichheit}
 \text{sp}(\mathbf{BC})=\text{sp}(\mathbf{CB})
@@ -652,7 +653,7 @@ für mindestens ein $\boldsymbol{\theta} \in \Theta$ und ansonsten Fall $1.$ gil
 für alle $\boldsymbol{\theta} \in \Theta$gilt.
 \end{enumerate}
 
-\section{Lagrange-Form}\label{App_Lagrange-Form}
+\section{Lagrange-Form und -Multiplikatoren}\label{App_Lagrange-Form}
 Optimierungsprobleme können um Nebenbedingungen für die Variablen, die variiert werden sollen, ergänzt werden. Sei $\mathbf{x} \in R^p$, so kann beispielsweise
 \begin{align}\label{Eq_Optimierung_Equal}
 &&\arg \displaystyle\min_{\mathbf{x}} \ & f(\mathbf{x}) \notag \\ 
@@ -709,11 +710,25 @@ muss eine sogenannte \textit{Slack-Variable} eingeführt werden, durch die die U
 die nach $\mathbf{x}$, $\boldsymbol{\gamma}$ und $\mathbf{s}$ abgeleitet und Null gesetzt werden muss:
 \begin{align}
 \frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} + \sum_{i=1}^{p^*} \gamma_i \frac{\partial h_i}{\partial x_j} &= 0 \qquad \text{für} \ j=1,\dots,p  , \label{Eq_Lag_Part_1} \\
-\frac{\partial \mathcal{L}}{\partial \gamma_i}=h_i - t_i + s_i^2 &=0 \qquad \text{für} \ i=1,\dots,p*  , \label{Eq_Lag_Part_2} \\
+\frac{\partial \mathcal{L}}{\partial \gamma_i}=h_i - t_i + s_i^2 &=0 \qquad \text{für} \ i=1,\dots,p^*  , \label{Eq_Lag_Part_2} \\
 \frac{\partial \mathcal{L}}{\partial s_i}=2\gamma_i s_i &=0
-\qquad \text{für} \ j=i,\dots,p^*  . \label{Eq_Lag_Part_3}
+\qquad \text{für} \ i=1,\dots,p^*  . \label{Eq_Lag_Part_3}
 \end{align}
-Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})_i-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und damit wegen \eqref{Eq_Lag_Part_3} für den Lagrange-Multiplikator $\gamma_i=0$ gilt. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i$ gibt \cite{arora2011introductionOptimum}. Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss generell gefordert werden, dass für alle Lagrange-Multiplikatoren $\gamma_i \ge 0$ für Nebenbedingungen in der Form $h_i(\mathbf{x}) - t_i \le 0$ gilt. 
+Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})_i-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und damit wegen \eqref{Eq_Lag_Part_3} für den Lagrange-Multiplikator $\gamma_i=0$ gilt. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i$ gibt \cite{arora2011introductionOptimum}. Geometrische bedeutet eine Deaktivierung, dass sich eine Extremstelle der Zielfunktion innerhalb der Fläche befindet, die durch die Konturlinie einer Nebenbedingung entsteht, und deswegen die Lösung unabhängig von dieser Nebenbedingung ist. Um eindeutige Lagrange-Multiplikatoren $\gamma_i$ zu erhalten, müssen die Gradienten der aktiven Nebenbedingungen linear unabhängig sein.\\
+Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss für die Nebenbedingungen $h_i(\mathbf{x}) - t_i \le 0$ gefordert werden, dass alle $\gamma_i \ge 0$ sind. Als Erklärung muss zunächst die \textit{Sensitivitätsanalyse} für die Zielfunktionen mit Nebenbedingungen eingeführt werden. Sei dazu $\mathbf{x}^*$ ein Punkt, der eine Extremstelle unter Einhaltung der Nebenbedingungen aus \eqref{Eq_Optimierung_Unequal} beschreibt und darüber abhängig von der Wahl von $t_i$ für $i=1,\dots,p^*$ ist, d.h. $\mathbf{x}^*=\mathbf{x}^*(\mathbf{t})$. Somit hängt auch der Zielfunktion $f^*=f^*(\mathbf{t})$, die die Nebenbedingung \textit{erfüllt}, von $\mathbf{t}$ ab. Beschreibt $\boldsymbol{\gamma}^* > \mathbf{0}$ die für die Lösung $\mathbf{x}^*$ zugehörigen Lagrange-Multiplikatoren, d.h. alle Nebenbedingungen sind aktiviert, gilt im Fall von $\mathbf{t}=\mathbf{0}$
+\begin{align}\label{Eq_Ableitung_t_0}
+\frac{\partial f^*}{\partial t_i}=\frac{\partial f^*(\mathbf{x}^*(\mathbf{0}))}{\partial t_i}=\frac{\partial \mathcal{L}(\mathbf{x}^*(\mathbf{0}), \boldsymbol{\gamma}^*, \mathbf{t})}{\partial t_i}=-\gamma^*_i \qquad \text{für} \ i=1,\dots,p^* .
+\end{align}
+Mittels der \textit{Taylor-Erweiterung} kann dann für einen beliebigen Vektor $\mathbf{t}$ die Zielfunktion $f(\mathbf{t})$ als 
+\begin{align}\label{Eq_Taylor_Sensi_Lag-Multipli}
+f(\mathbf{t})=f^*(\mathbf{x}^*(\mathbf{0})) + \sum_{i=1}^{p^*} \frac{\partial f^*(\mathbf{x}^*(\mathbf{0}))}{\partial t_i} t_i \stackrel{\eqref{Eq_Ableitung_t_0}}{=} f^*(\mathbf{x}^*(\mathbf{0})) -\sum_{i=1}^{p^*} \gamma^*_i \cdot t_i
+\end{align}
+beschrieben werden  \cite{arora2011introductionOptimum}. Durch Umstellen von \eqref{Eq_Taylor_Sensi_Lag-Multipli} gibt
+\begin{align}\label{Eq_Differenz_Sensi_t_0}
+\delta f^*=f(\mathbf{t})-f^*(\mathbf{x}^*(\mathbf{0}))=- \sum_{i=1}^{p^*} \gamma^* \cdot t_i
+\end{align}
+an, wie sich die optimale Lösung der Zielfunktion unter Einhaltung der Nebenbedingung verändert, wenn $\mathbf{t}$ variiert wird. Werden bspw. einzelne $t_i$ erhöht, kann dies wegen $h_i(\mathbf{x}) \le t_i$ als eine \textit{Abmilderung} der Nebenbedingungen aufgefasst werden, da sich das Set der möglichen Lösungen für das Optimierungsproblem vergrößert. Umgekehrt hat eine Verkleinerung von einzelnen $t_i$ eine \textit{Verstärkung der Einschränkung} durch die Nebenbedingungen zur Folge, weil das Set der möglichen Lösungen verkleinert wird.\\
+Für das Minimierungsproblem aus \eqref{Eq_Optimierung_Unequal}   Berücksichtigung von \eqref{Eq_Differenz_Sensi_t_0} das Minimierungsproblem aus  betrachtet, kann für eine Abmilderung 
 
 \begin{comment}
 
