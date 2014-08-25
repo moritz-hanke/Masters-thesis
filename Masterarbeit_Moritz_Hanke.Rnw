@@ -455,10 +455,10 @@ Die \textit{Ridge-Regression} ist eine Penalisierungsmethode, bei der die gesch�
 \begin{align}\label{Eq_Ridge_estimate}
 \boldsymbol{\hat{\beta}}^{Ridge} = (\mathbf{X}'\mathbf{X} + \gamma \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}.
 \end{align}
-Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer im vergleich zu den OLS-Schätzern (siehe \eqref{Eq_Erw_Quad_Abst_ridge}) und für den Fall, dass $\text{rg}(\mathbf{X}) < p$ und damit $\mathbf{X}'\mathbf{X}$ singulär ist, wird der Ausdruck in der Klammer regulär und \eqref{Eq_Ridge_estimate} ist eindeutig lösbar \cite{montgomery2012introduction}.
+Durch die Addition von $\gamma \mathbf{I}$ verringert sich die Varianz der Schätzer im Vergleich zu den OLS-Schätzern (siehe \eqref{Eq_Erw_Quad_Abst_ridge}) und für den Fall, dass $\text{rg}(\mathbf{X}) < p$ und damit $\mathbf{X}'\mathbf{X}$ singulär ist, wird der Ausdruck in der Klammer regulär und \eqref{Eq_Ridge_estimate} ist eindeutig lösbar \cite{montgomery2012introduction}.
 Allerdings findet in der Regel \textit{keine} Variablenselektion statt, sodass die Annahme, dass $\boldsymbol{\beta}$ spärlich besetzt ist, sich nicht in $\boldsymbol{\hat{\beta}}^{Ridge}$ widerspiegelt \cite{tibshirani96regression}. Für die Ridge-Regression wird $\arg\min\limits_{\boldsymbol{\beta}} \sum_{i=1}^{n} (Y_i - \mathbf{x}_i' \boldsymbol{\beta})^2$ um die $L_2$-Norm-Nebenbedingung $\sum_{j=1}^{p}\beta_j^2 \le t$ mit $t > 0$ ergänzt. In diesem Zusammenhang wird $t$ als \textit{Restriktionsparameter} bezeichnet, der als Bedingung vorgibt, wie groß die Summe der quadrierten Regressionskoeffizienten maximal sein darf. 
 %%%XXXXXXXXXXXXXXXXXXXXXXXX DAS ggf noch mal überarbeiten im Hinblick auf "`große Parameter"' XXXXXXXXXXXXXXX 
-Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, durch den große Parameter stärker bestraft werden, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form})
+Da $t$ invers mit dem Tuningparameter $\gamma$ zusammenhängt, kann die Berechnung von $\boldsymbol{\hat{\beta}}^{Ridge}$ als Minimierungsproblem in der \textit{Lagrange-Form} (siehe \ref{App_Lagrange-Form})
 %%%XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 \begin{align}\label{Eq_Ridge_lagrangian}
 \boldsymbol{\hat{\beta}}^{Ridge}(\gamma)=\arg \displaystyle\min_{\boldsymbol{\beta}} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2  + \gamma \sum_{j=1}^{p}\beta_j^2 \right\rbrace \qquad \text{mit} \ \gamma \ge 0
@@ -664,11 +664,11 @@ ein Minimierungsproblem sein, wobei $f(\mathbf{x})$ die Zielfunktion und $g_j(\m
 \end{comment}
 Werden die Nebenbedingungen als $g_i(\mathbf{x})-t_i=0$ formuliert, kann \eqref{Eq_Optimierung_Equal} alternativ in der \textit{Lagrange-Form} dargestellt werden \cite{haftka1992elements}, die definiert ist als
 \begin{align}\label{Eq_lagrange_Allgemein}
-\mathcal{L}(\mathbf{x},\boldsymbol{\gamma})=f(\mathbf{x})- \sum_{i=1}^{p^*}\gamma_i (g_i(\mathbf{x})-t_i).
+\mathcal{L}(\mathbf{x},\boldsymbol{\gamma})=f(\mathbf{x})+ \sum_{i=1}^{p^*}\gamma_i (g_i(\mathbf{x})-t_i).
 \end{align}
 Die Lagrange-Form hat keine zusätzlichen Nebenbedingungen, ist dafür allerdings um $p^*$ Argumente, welche die Nebenbedingung aus \eqref{Eq_Optimierung_Equal} widerspiegeln, und den zugehörigen \textit{Lagrange-Multiplikatoren} $\gamma_i$ erweitert. Um eine Extremstelle zu finden, die die Nebenbedingungen erfüllt, muss $\mathcal{L}(\mathbf{x},\boldsymbol{\gamma})$ sowohl nach $\mathbf{x}$ als auch nach $\boldsymbol{\gamma}$ abgeleitet und Null gesetzt werden
 \begin{align*}
-\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} - \sum_{i=1}^{p^*}\gamma_i \frac{\partial g_i}{\partial x_j}&=0 \qquad \text{für} \ j=1,\dots,p , \\ 
+\frac{\partial \mathcal{L}}{\partial x_j}=\frac{\partial f}{\partial x_j} + \sum_{i=1}^{p^*}\gamma_i \frac{\partial g_i}{\partial x_j}&=0 \qquad \text{für} \ j=1,\dots,p , \\ 
 \frac{\partial \mathcal{L}}{\partial \gamma_i}=g_i(\mathbf{x})-t_i&=0 \qquad \text{für} \ i=1,\dots,p^* ,
 \end{align*}
 womit sich $p+p^*$ zu lösende Gleichungssysteme ergeben \cite{strang1991calculus}.\\
@@ -690,20 +690,20 @@ Geometrisch lassen sich die Nebenbedingungen als spezielle \textit{Konturlinien}
 \end{figure} 
 Bezeichnet $\nabla$ den \textit{Gradienten} einer Funktion, so befinden sich die gesuchten Tangentenpunkte an allen Punkten, für welche die Gleichung
 \begin{align}\label{Eq_Gradientengleichung}
-\nabla f(\mathbf{x}) &= \boldsymbol{\gamma} \nabla  (g(\mathbf{x})-\mathbf{t})
+\nabla f(\mathbf{x}) &= \sum_{i=1}^{p^*} \gamma_i \nabla  (g_i(\mathbf{x})-t_i)
 \end{align}
-erfüllt ist. Mit \eqref{Eq_Gradientengleichung} wird gefordert, dass die beiden Gradienten von $f(\mathbf{x})$ und $g(\mathbf{x})-\mathbf{t}$ parallel zueinander sind und sich nur in ihrer Länge um $\boldsymbol{\gamma}$ unterscheiden. Da die Gradienten immer senkrecht zu den Konturlinien stehen \cite{strang1991calculus}, muss bei Parallelität von zwei Gradienten in einem Punkt von zwei verschiedenen Konturlinien ein Tangentenpunkt für diese vorliegen. Durch Umstellen von \eqref{Eq_Gradientengleichung} ist ersichtlich, dass für die Extremstellen
+erfüllt ist. Mit \eqref{Eq_Gradientengleichung} wird gefordert, dass der Gradient von $f(\mathbf{x})$ parallel zur der Linearkombination der Gradienten $\sum_{i=1}^{p^*} \nabla  (g_i(\mathbf{x})-t_i)$ ist, die jeweils um $\gamma_i$ gestreckt bzw. gestaucht sind. Da Gradienten immer senkrecht zu den Konturlinien stehen \cite{strang1991calculus}, kann die Parallelität aus \eqref{Eq_Gradientengleichung} in den \textit{Tangentenpunkt} der Konturlinien erfüllt sein. Durch Umstellen von \eqref{Eq_Gradientengleichung} ist ersichtlich, dass für die Extremstellen ein Vektor $\mathbf{x}$ gesucht wird, der
 \begin{align*}
-\nabla \mathcal{L}(\mathbf{x},\boldsymbol{\gamma})&= \nabla f(\mathbf{x}) - \boldsymbol{\gamma} \nabla  (g(\mathbf{x})-\mathbf{t})=\mathbf{0}
+\nabla \mathcal{L}(\mathbf{x},\boldsymbol{\gamma})&= \nabla f(\mathbf{x}) - \sum_{i=1}^{p^*} \gamma_i \nabla  (g_i(\mathbf{x})-t_i)=\mathbf{0}
 \end{align*}
-gesucht wird.\\
+erfüllt.\\
 
-Für den Fall, dass die Bedingungen für die Zielfunktion aus \ref{Eq_Optimierung_Equal} \textit{Ungleichung} beinhalten, d.h. für
+Für den Fall, dass die Bedingungen für die Zielfunktion aus \ref{Eq_Optimierung_Equal} \textit{Ungleichungen} beinhalten, d.h. für
 \begin{align}\label{Eq_Optimierung_Unequal}
 &&\arg \displaystyle\min_{\mathbf{x}} \ & f(\mathbf{x}) \notag \\ 
 &&\text{s.t.} \ & h_i(\mathbf{x}) \le t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p ,
 \end{align}
-muss eine sogenannte \textit{Slack-Variable} eingeführt werden, durch die die Ungleichung in \eqref{Eq_Optimierung_Unequal} zu einer Gleichung umgewandelt wird. Dieses Vorgehen beruht auf der Tatsache, dass es für $h_i(\mathbf{x})-t_i \le 0$ eine Variable $s_i^2$ geben muss, durch die $h_i(\mathbf{x})-t_i + s_i^2 = 0$ gilt, was wiederum einer Nebenbedingung als Gleichung entspricht \cite{haftka1992elements}. Dadurch ergibt sich als Lagrange-Form
+müssen sogenannte \textit{Slackvariablen} eingeführt werden, durch die die Ungleichungen zu Gleichungen umgewandelt wird. Dieses Vorgehen beruht auf der Tatsache, dass es für $h_i(\mathbf{x})-t_i \le 0$ eine Variable $s_i^2$ geben muss, durch die $h_i(\mathbf{x})-t_i + s_i^2 = 0$ gilt, was wiederum einer Nebenbedingung als Gleichung entspricht \cite{haftka1992elements}. Dadurch ergibt sich als Lagrange-Form
 \begin{align}
 \mathcal{L}(\mathbf{x}, \boldsymbol{\gamma}, \mathbf{s})=f(\mathbf{x})+ \sum_{i=1}^{p^*}\gamma_i (h_i(\mathbf{x})-t_i + s_i^2),
 \end{align}
@@ -714,21 +714,21 @@ die nach $\mathbf{x}$, $\boldsymbol{\gamma}$ und $\mathbf{s}$ abgeleitet und Nul
 \frac{\partial \mathcal{L}}{\partial s_i}=2\gamma_i s_i &=0
 \qquad \text{für} \ i=1,\dots,p^*  . \label{Eq_Lag_Part_3}
 \end{align}
-Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})_i-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und damit wegen \eqref{Eq_Lag_Part_3} für den Lagrange-Multiplikator $\gamma_i=0$ gilt. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i$ gibt \cite{arora2011introductionOptimum}. Geometrische bedeutet eine Deaktivierung, dass sich eine Extremstelle der Zielfunktion innerhalb der Fläche befindet, die durch die Konturlinie einer Nebenbedingung entsteht, und deswegen die Lösung unabhängig von dieser Nebenbedingung ist. Um eindeutige Lagrange-Multiplikatoren $\gamma_i$ zu erhalten, müssen die Gradienten der aktiven Nebenbedingungen linear unabhängig sein.\\
-Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss für die Nebenbedingungen $h_i(\mathbf{x}) - t_i \le 0$ gefordert werden, dass alle $\gamma_i \ge 0$ sind. Als Erklärung muss zunächst die \textit{Sensitivitätsanalyse} für die Zielfunktionen mit Nebenbedingungen eingeführt werden. Sei dazu $\mathbf{x}^*$ ein Punkt, der eine Extremstelle unter Einhaltung der Nebenbedingungen aus \eqref{Eq_Optimierung_Unequal} beschreibt und darüber abhängig von der Wahl von $t_i$ für $i=1,\dots,p^*$ ist, d.h. $\mathbf{x}^*=\mathbf{x}^*(\mathbf{t})$. Somit hängt auch der Zielfunktion $f^*=f^*(\mathbf{t})$, die die Nebenbedingung \textit{erfüllt}, von $\mathbf{t}$ ab. Beschreibt $\boldsymbol{\gamma}^* > \mathbf{0}$ die für die Lösung $\mathbf{x}^*$ zugehörigen Lagrange-Multiplikatoren, d.h. alle Nebenbedingungen sind aktiviert, gilt im Fall von $\mathbf{t}=\mathbf{0}$
+Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})_i-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und damit wegen \eqref{Eq_Lag_Part_3} für den Lagrange-Multiplikator $\gamma_i=0$ gilt. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i \ge 0$ gibt \cite{arora2011introductionOptimum}. Geometrische bedeutet eine Deaktivierung, dass sich eine Extremstelle der Zielfunktion innerhalb der Fläche befindet, die durch die Konturlinie einer Nebenbedingung entsteht, und deswegen die Lösung unabhängig von dieser Nebenbedingung ist. Um eindeutige Lagrange-Multiplikatoren $\gamma_i$ zu erhalten, müssen die Gradienten der aktiven Nebenbedingungen linear unabhängig sein.\\
+Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss für die Nebenbedingungen $h_i(\mathbf{x}) - t_i \le 0$ bei Minimierungsproblemen gefordert werden, dass alle $\gamma_i \ge 0$ sind. Für die Begründung muss zunächst die \textit{Sensitivitätsanalyse} für die Zielfunktionen mit Nebenbedingungen eingeführt werden. Sei $\mathbf{x}^*$ ein Punkt, der eine Extremstelle unter Einhaltung der Nebenbedingungen aus \eqref{Eq_Optimierung_Unequal} beschreibt und abhängig von der Wahl von $t_i$ für $i=1,\dots,p^*$ ist, d.h. $\mathbf{x}^*=\mathbf{x}^*(\mathbf{t})$. Somit hängt auch die Zielfunktion $f^*=f^*(\mathbf{t})$, die die Nebenbedingung \textit{erfüllt}, von $\mathbf{t}$ ab. Beschreibt $\boldsymbol{\gamma}^* > \mathbf{0}$ die für die Lösung $\mathbf{x}^*$ zugehörigen Lagrange-Multiplikatoren, d.h. alle Nebenbedingungen sind aktiviert, gilt im Fall von $\mathbf{t}=\mathbf{0}$
 \begin{align}\label{Eq_Ableitung_t_0}
 \frac{\partial f^*}{\partial t_i}=\frac{\partial f^*(\mathbf{x}^*(\mathbf{0}))}{\partial t_i}=\frac{\partial \mathcal{L}(\mathbf{x}^*(\mathbf{0}), \boldsymbol{\gamma}^*, \mathbf{t})}{\partial t_i}=-\gamma^*_i \qquad \text{für} \ i=1,\dots,p^* .
 \end{align}
-Mittels der \textit{Taylor-Erweiterung} kann dann für einen beliebigen Vektor $\mathbf{t}$ die Zielfunktion $f(\mathbf{t})$ als 
+Mittels der \textit{Taylorreihe} kann dann für einen beliebigen Vektor $\mathbf{t}$ die Zielfunktion $f(\mathbf{t})$ als 
 \begin{align}\label{Eq_Taylor_Sensi_Lag-Multipli}
 f(\mathbf{t})=f^*(\mathbf{x}^*(\mathbf{0})) + \sum_{i=1}^{p^*} \frac{\partial f^*(\mathbf{x}^*(\mathbf{0}))}{\partial t_i} t_i \stackrel{\eqref{Eq_Ableitung_t_0}}{=} f^*(\mathbf{x}^*(\mathbf{0})) -\sum_{i=1}^{p^*} \gamma^*_i \cdot t_i
 \end{align}
-beschrieben werden  \cite{arora2011introductionOptimum}. Durch Umstellen von \eqref{Eq_Taylor_Sensi_Lag-Multipli} gibt
+dargestellt werden  \cite{arora2011introductionOptimum}. Durch Umstellen von \eqref{Eq_Taylor_Sensi_Lag-Multipli} gibt
 \begin{align}\label{Eq_Differenz_Sensi_t_0}
 \delta f^*=f(\mathbf{t})-f^*(\mathbf{x}^*(\mathbf{0}))=- \sum_{i=1}^{p^*} \gamma^* \cdot t_i
 \end{align}
 an, wie sich die optimale Lösung der Zielfunktion unter Einhaltung der Nebenbedingung verändert, wenn $\mathbf{t}$ variiert wird. Werden bspw. einzelne $t_i$ erhöht, kann dies wegen $h_i(\mathbf{x}) \le t_i$ als eine \textit{Abmilderung} der Nebenbedingungen aufgefasst werden, da sich das Set der möglichen Lösungen für das Optimierungsproblem vergrößert. Umgekehrt hat eine Verkleinerung von einzelnen $t_i$ eine \textit{Verstärkung der Einschränkung} durch die Nebenbedingungen zur Folge, weil das Set der möglichen Lösungen verkleinert wird.\\
-Für das Minimierungsproblem aus \eqref{Eq_Optimierung_Unequal}   Berücksichtigung von \eqref{Eq_Differenz_Sensi_t_0} das Minimierungsproblem aus  betrachtet, kann für eine Abmilderung 
+Für das Minimierungsproblem aus \eqref{Eq_Optimierung_Unequal} bedeutet das, dass alle $\gamma_i$ positiv sein müssen, da \eqref{Eq_Differenz_Sensi_t_0} der Anstiegt bzw. den Abfall in $f(\mathbf{t})$ beschreibt, wenn einzelne $t_i$ verändert werden. Für ein negatives $\gamma_i$ würde eine Vergrößerung eines $t_i$ einen Anstieg in $f(t_i)$ bedeuten, was ein Widerspruch zur Vergrößerung des Sets der möglichen Lösungen für das Minimierungsproblem ist.
 
 \begin{comment}
 
