@@ -570,7 +570,7 @@ Für den Fall, dass $\mathbf{X}'\mathbf{X}$ orthonormal ist, d.h. $\mathbf{X}'\m
 \begin{align}\label{Eq_Lasso_Orthonormaldesign}
 \beta_j^{Lasso}=\text{sign}(\beta_j^{OLS})(|\beta_j^{OLS}|-\gamma)^+
 \end{align}
-Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass der Ausdruck in der Klammer nur ausgewertet wird, wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}.
+Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass der Ausdruck in der Klammer nur ausgewertet wird, wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}. ABER ORTHONORMALES DESIGN SETZT $p=n$ VORAUS!!!
 
 %%% Veerweisen:
 %Fused lasso Tibshirani 2005
@@ -626,6 +626,36 @@ Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat
 \end{align}
 
 \section{Lasso-Schätzer für ein orthonormales Design}\label{App_Lasso_Orthonormal}
+Im orthonormalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\beta^{OLS}=\mathbf{X}'\mathbf{Y}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
+\begin{align*}
+\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)
+&=(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}-2\mathbf{Y}'\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}-2\boldsymbol{\hat{\beta}}^{OLS}{'}\boldsymbol{\beta} + \boldsymbol{\beta}'\boldsymbol{\beta}+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}-2 \sum_{j=1}^{p}\beta_j^{OLS} \cdot \beta_j + \sum_{j=1}^{p} \beta^2 + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}+\sum_{j=1}^{p}\left( -2 \beta_j^{OLS} \cdot \beta_j + \beta^2 + \gamma |\beta_j| \right).
+\end{align*}
+Somit ergeben sich $j=1,\dots,p$ Gleichungssysteme, die nach $\beta_j$ abgeleitet und Null gesetzt werden müssen:
+\begin{align}\label{Eq_Lasso_Einzelbeta}
+\hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\beta_j^{OLS} \cdot \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
+\end{align}
+Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\beta_j^{OLS}>0$ von $\beta_j^{OLS}<0$ unterschieden werden muss. Denn für $\beta_j^{OLS}>0$ muss $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert möglich wäre. Umgekehrt muss für den Fall $\beta_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert für das Minimum gibt. Für den Fall $\beta_j^{OLS}>0$ ergibt sich
+\begin{align}
+0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\beta_j^{OLS} \cdot \beta_j + \beta_j^2 + \gamma |\beta_j| \notag \\
+&=-2\beta_j^{OLS} + 2\beta_j + \gamma \frac{\beta_j}{|\beta_j|}
+\end{align}
+
+\begin{align}
+\frac{\partial \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)}{\partial \beta_j}
+	&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \frac{\beta_j}{|\beta_j|} \notag \\
+\end{align}
+BLA
+\begin{align}
+\frac{\partial \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)}{\partial \boldsymbol{\beta}}
+	&=-2\boldsymbol{\hat{\beta}}^{OLS} + 2\boldsymbol{\beta} + \gamma \sum_{j=1}^{p} \frac{\beta_j}{|\beta_j|} \notag \\
+	&=-2\boldsymbol{\hat{\beta}}^{OLS} + 2\boldsymbol{\beta} + \gamma \text{sign}(\boldsymbol{\beta})
+\end{align}
+
 
 \chapter{Erläuterungen}
 \section{Verlust- und Risikofunktionen}\label{App_Risikofunktion}
