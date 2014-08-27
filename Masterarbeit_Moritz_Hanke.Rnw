@@ -578,6 +578,109 @@ Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Sch�
 
 
 \subsection{Elastic Net}\label{Kap_Elastic-Net}
+
+\begin{comment}
+###################################
+###################################
+###################################
+ELASTIC NET\\
+
+\begin{itemize}
+\item allgemeine Darstellung:
+\begin{align*}
+L(\gamma_1, \gamma_2, \boldsymbol{\beta})= |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2 + \gamma_1 |\boldsymbol{\beta}| + \gamma_2|\boldsymbol{\beta}|^2
+\end{align*}
+\item durch $\alpha = \gamma_2/(\gamma_1 + \gamma_2)$ wird Anteil f체r $L_1$- und $L_2$-Norm bei der Penalisierung festgelegt:
+\begin{align*}
+L(\gamma_1, \gamma_2, \boldsymbol{\beta})&= |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2 + (1-\alpha) |\boldsymbol{\beta}| + \alpha|\boldsymbol{\beta}|^2 \ \text{mit} \ \alpha \in [0,1)\\
+&=|\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2 + \frac{\gamma_1}{\gamma_1+\gamma_2} |\boldsymbol{\beta}| + \frac{\gamma_2}{\gamma_1+\gamma_2}|\boldsymbol{\beta}|^2
+\end{align*}
+\item f체r $\alpha > 1$ Funktion ist convex; f체r $\alpha=0$ ist sie singul채r (?)
+\begin{align*}
+\mathbf{X^*_{(n+p) \times p}}=\frac{1}{\sqrt{1+\gamma_2}}
+\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}, \qquad \mathbf{Y^*_{(n+p) \times 1}}=\begin{pmatrix}
+\mathbf{Y}\\
+\mathbf{0}
+\end{pmatrix}
+\end{align*}
+\item $\Psi = \gamma_1/(1+\gamma_2)$ und $\boldsymbol{\beta^*}=\sqrt{(1+\gamma_2)}\boldsymbol{\beta}$
+\begin{align*}
+L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \Psi|\boldsymbol{\beta^*}| \notag \\
+&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi|\boldsymbol{\beta^*}| \\
+&=\underbrace{\mathbf{Y^*}'\mathbf{Y^*}}_{\text{weglassen!}} -2\mathbf{Y^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]+[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]'\mathbf{X^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}] + \Psi|[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]|\\
+&=-2\mathbf{Y^*}'\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}
+\boldsymbol{\beta}+\boldsymbol{\beta}'\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}'\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}\boldsymbol{\beta} + \gamma_1|\boldsymbol{\beta}|
+\end{align*}
+\begin{align*}
+\frac{\partial L(\gamma_1, \gamma_2, \boldsymbol{\beta})}{\partial \boldsymbol{\beta}}
+&=-2\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}'\mathbf{Y^*} + 2\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}'\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}\boldsymbol{\beta}
++\gamma_1\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}
+\end{align*}
+\item Nullsetzen liefert
+\begin{align*}
+0&=-2\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}'\mathbf{Y^*} + 2\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}'\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}\boldsymbol{\beta}
++\gamma_1\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|} \\
+2\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}'\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}\boldsymbol{\beta}&=2\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}'\underbrace{\mathbf{Y^*}}_{\text{bewirkt wegall } \sqrt{\gamma_2}\mathbf{I}} -
+\gamma_1\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}\\
+(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})\boldsymbol{\beta}&=\mathbf{X}'\mathbf{Y}-
+\frac{\gamma_1}{2}\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}\\
+\boldsymbol{\hat{\beta}}&=\underbrace{(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}}_{\text{Ridge-Sch채tzer}}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\frac{\gamma_1}{2}\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}
+\end{align*}
+\item es muss $\mathbf{\beta} \neq 0$ gelten! 
+\item andere Darstellung:
+\begin{align*}
+L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \Psi|\boldsymbol{\beta^*}| \notag \\
+&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi|\boldsymbol{\beta^*}| \\
+\Rightarrow \frac{\partial L(\Psi, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
+&=-2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \\
+\Rightarrow 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}\\
+\Leftrightarrow \boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \Psi\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}
+\end{align*}
+\end{itemize}
+###################################
+###################################
+###################################
+\end{comment}
+
 \subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
 
 
