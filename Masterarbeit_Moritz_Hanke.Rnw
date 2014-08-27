@@ -398,7 +398,7 @@ Als eine Verallgemeinerung des MSE kann die Verlustfunktion $\mathcal{D}(\boldsy
 Da $\mathbf{X}'\mathbf{X}$ auf der Diagonalen nur Werte $\geq 0$ haben kann und $\sigma^2 \geq 0$ gilt, muss stets auch $\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}] \geq 0$ gelten. Unter Berücksichtigung, dass die Spur einer positiv definiten Matrix gleich der Summe der Eigenwerte dieser Matrix ist und für die Inverse der Matrix die Eigenwerte die Reziproke der ursprünglichen Eigenwerte sind \cite{strang09ointro_linalg}, kann \eqref{Eq_Erwarteter_Quadrierter_Abstand} auch als \begin{align}\label{Eq_Lambda_Laenge_OLS}
 \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \sum_{j=0}^{p} \frac{1}{\lambda_j}
 \end{align}
-dargestellt werden, wobei $\lambda_{max}=\lambda_{0},\lambda_{1},\dots,\lambda_p=\lambda_{min}$ gilt \cite{hoerl_ridge_1970}.
+dargestellt werden, wobei $\lambda_{max}=\lambda_{0},\lambda_{1},\dots,\lambda_p=\lambda_{min}$ für die Eigenwerte von $\mathbf{X}'\mathbf{X}$ gilt \cite{hoerl_ridge_1970}.
 Für die \textit{erwartete quadrierte Länge} von $\boldsymbol{\hat{\beta}}^{OLS}$ ergibt sich
 \begin{align}\label{Eq_Laenge_OLS}
 \mathbb{E}(\boldsymbol{\hat{\beta}}^{OLS} {'}\boldsymbol{\hat{\beta}}^{OLS})
@@ -568,7 +568,7 @@ text(1.4,4.8, expression(hat(beta)^{Ridge}), cex=1.4)
 Eine geschlossene Darstellung des Minimierungsproblems \eqref{Eq_Lasso_Lagrange} und damit eine analytische Lösung ist durch den $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe Anhang \ref{App_Konvexe_Funktionen}), weswegen eine Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}.\\ 
 Für den Fall, dass $\mathbf{X}'\mathbf{X}$ orthonormal ist, d.h. $\mathbf{X}'\mathbf{X}=\mathbf{I}$ gilt, können die Lasso-Schätzer durch die OLS-Schätzer bestimmt werden \cite{tibshirani96regression}:
 \begin{align}\label{Eq_Lasso_Orthonormaldesign}
-\beta_j^{Lasso}=\text{sign}(\beta_j^{OLS})(|\beta_j^{OLS}|-\gamma)^+
+\hat{\beta}_j^{Lasso}=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
 \end{align}
 Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass der Ausdruck in der Klammer nur ausgewertet wird, wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}. ABER ORTHONORMALES DESIGN SETZT $p=n$ VORAUS!!!
 
@@ -640,23 +640,22 @@ Somit ergeben sich $j=1,\dots,p$ Gleichungssysteme, die nach $\beta_j$ abgeleite
 \hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS} \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
 \end{align}
 Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\hat{\beta}_j^{OLS}>0$ von $\hat{\beta}_j^{OLS}<0$ unterschieden werden muss. Denn für $\hat{\beta}_j^{OLS}>0$ muss $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert möglich wäre. Umgekehrt muss für den Fall $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert für das Minimum gibt. FÜR BETA GLEICH = NICHT DEFINIERT: DURCH UNTERSCHEIDUNG KANN BETRAG BEI ABLEITEN WEGGELASSEN WERDEN UND VORZEICHEN VOR GAMMA GEÄNDERT WERDEN!! Für den Fall $\hat{\beta}_j^{OLS}>0$ ergibt sich
-\begin{align}
+\begin{align}\label{Eq_Lasso_Ortho_Beta_greater0}
 && 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma \beta_j \notag \\
 &\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \notag \\
-&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}-\frac{\gamma}{2} \notag \\
-&\Leftrightarrow&\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
+&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}-\frac{\gamma}{2} 
+\end{align}
+und für $\hat{\beta}_j^{OLS}<0$
+\begin{align}\label{Eq_Lasso_Ortho_Beta_smaller0}
+&& 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 - \gamma \beta_j \notag \\
+&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j - \gamma \notag \\
+&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}+\frac{\gamma}{2} .
+\end{align}
+Da in \eqref{Eq_Lasso_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_Lasso_Ortho_Beta_smaller0} kleiner Null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
+\begin{align}
+\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ .
 \end{align}
 
-\begin{align}
-\frac{\partial \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)}{\partial \beta_j}
-	&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \frac{\beta_j}{|\beta_j|} \notag \\
-\end{align}
-BLA
-\begin{align}
-\frac{\partial \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)}{\partial \boldsymbol{\beta}}
-	&=-2\boldsymbol{\hat{\beta}}^{OLS} + 2\boldsymbol{\beta} + \gamma \sum_{j=1}^{p} \frac{\beta_j}{|\beta_j|} \notag \\
-	&=-2\boldsymbol{\hat{\beta}}^{OLS} + 2\boldsymbol{\beta} + \gamma \text{sign}(\boldsymbol{\beta})
-\end{align}
 
 
 \chapter{Erläuterungen}
@@ -731,13 +730,13 @@ Bezeichnet $\nabla$ den \textit{Gradienten} einer Funktion, so befinden sich die
 \begin{align}\label{Eq_Gradientengleichung}
 \nabla f(\mathbf{x}) &= \sum_{i=1}^{p^*} \gamma_i \nabla  (g_i(\mathbf{x})-t_i)
 \end{align}
-erfüllt ist. Mit \eqref{Eq_Gradientengleichung} wird gefordert, dass der Gradient von $f(\mathbf{x})$ parallel zur der Linearkombination der Gradienten $\sum_{i=1}^{p^*} \nabla  (g_i(\mathbf{x})-t_i)$ ist, die jeweils um $\gamma_i$ gestreckt bzw. gestaucht sind. Da Gradienten immer senkrecht zu den Konturlinien stehen \cite{strang1991calculus}, kann die Parallelität aus \eqref{Eq_Gradientengleichung} in den \textit{Tangentenpunkt} der Konturlinien erfüllt sein. Durch Umstellen von \eqref{Eq_Gradientengleichung} ist ersichtlich, dass für die Extremstellen ein Vektor $\mathbf{x}$ gesucht wird, der
+erfüllt ist. Mit \eqref{Eq_Gradientengleichung} wird gefordert, dass der Gradient von $f(\mathbf{x})$ parallel zur der Linearkombination der Gradienten $\sum_{i=1}^{p^*} \nabla  (g_i(\mathbf{x})-t_i)$ ist, die jeweils um $\gamma_i$ gestreckt bzw. gestaucht sind. Da Gradienten immer senkrecht zu den Konturlinien stehen \cite{strang1991calculus}, kann die Parallelität aus \eqref{Eq_Gradientengleichung} nur in den \textit{Tangentenpunkt} der Konturlinien erfüllt sein. Durch Umstellen von \eqref{Eq_Gradientengleichung} ist ersichtlich, dass für die Extremstellen ein Vektor $\mathbf{x}$ gesucht wird, der
 \begin{align*}
 \nabla \mathcal{L}(\mathbf{x},\boldsymbol{\gamma})&= \nabla f(\mathbf{x}) - \sum_{i=1}^{p^*} \gamma_i \nabla  (g_i(\mathbf{x})-t_i)=\mathbf{0}
 \end{align*}
 erfüllt.\\
 
-Für den Fall, dass die Bedingungen für die Zielfunktion aus \ref{Eq_Optimierung_Equal} \textit{Ungleichungen} beinhalten, d.h. für
+Für den Fall, dass die Bedingungen für die Zielfunktion aus \ref{Eq_Optimierung_Equal} als \textit{Ungleichungen} formuliert sind, d.h.
 \begin{align}\label{Eq_Optimierung_Unequal}
 &&\arg \displaystyle\min_{\mathbf{x}} \ & f(\mathbf{x}) \notag \\ 
 &&\text{s.t.} \ & h_i(\mathbf{x}) \le t_i \qquad \text{für} \  i=1,\dots,p^* \qquad \text{mit} \ p^* \le p ,
@@ -753,7 +752,7 @@ die nach $\mathbf{x}$, $\boldsymbol{\gamma}$ und $\mathbf{s}$ abgeleitet und Nul
 \frac{\partial \mathcal{L}}{\partial s_i}=2\gamma_i s_i &=0
 \qquad \text{für} \ i=1,\dots,p^*  . \label{Eq_Lag_Part_3}
 \end{align}
-Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existieren muss, da für den Fall, dass $g(\mathbf{x})_i-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und damit wegen \eqref{Eq_Lag_Part_3} für den Lagrange-Multiplikator $\gamma_i=0$ gilt. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i \ge 0$ gibt \cite{arora2011introductionOptimum}. Geometrische bedeutet eine Deaktivierung, dass sich eine Extremstelle der Zielfunktion innerhalb der Fläche befindet, die durch die Konturlinie einer Nebenbedingung entsteht, und deswegen die Lösung unabhängig von dieser Nebenbedingung ist. Um eindeutige Lagrange-Multiplikatoren $\gamma_i$ zu erhalten, müssen die Gradienten der aktiven Nebenbedingungen linear unabhängig sein.\\
+Anhand von \eqref{Eq_Lag_Part_2} und \eqref{Eq_Lag_Part_3} ist erkennbar, für welche Nebenbedingungen später ein Lagrange-Multiplikator existiert, da für den Fall, dass $g(\mathbf{x})_i-t_i < 0$ ist, die Slackvariable $s^2_i > 0$ sein muss und damit wegen \eqref{Eq_Lag_Part_3} für den Lagrange-Multiplikator $\gamma_i=0$ gilt. Die Nebenbedingung ist dann \textit{deaktiviert}, wohingegen für $s_i^2=0$ die Nebenbedingung \textit{aktiviert} ist und es einen Lagrange-Multipliaktor $\gamma_i \ge 0$ gibt \cite{arora2011introductionOptimum}. Geometrische bedeutet eine Deaktivierung, dass sich eine Extremstelle der Zielfunktion innerhalb der Fläche befindet, die durch die Konturlinie einer Nebenbedingung entsteht, und deswegen die Lösung unabhängig von dieser Nebenbedingung ist. Um eindeutige Lagrange-Multiplikatoren $\gamma_i$ zu erhalten, müssen die Gradienten der aktiven Nebenbedingungen linear unabhängig sein.\\
 Neben den Ableitungen \eqref{Eq_Lag_Part_1} bis \eqref{Eq_Lag_Part_3} muss für die Nebenbedingungen $h_i(\mathbf{x}) - t_i \le 0$ bei Minimierungsproblemen gefordert werden, dass alle $\gamma_i \ge 0$ sind. Für die Begründung muss zunächst die \textit{Sensitivitätsanalyse} für die Zielfunktionen mit Nebenbedingungen eingeführt werden. Sei $\mathbf{x}^*$ ein Punkt, der eine Extremstelle unter Einhaltung der Nebenbedingungen aus \eqref{Eq_Optimierung_Unequal} beschreibt und abhängig von der Wahl von $t_i$ für $i=1,\dots,p^*$ ist, d.h. $\mathbf{x}^*=\mathbf{x}^*(\mathbf{t})$. Somit hängt auch die Zielfunktion $f^*=f^*(\mathbf{t})$, die die Nebenbedingung \textit{erfüllt}, von $\mathbf{t}$ ab. Beschreibt $\boldsymbol{\gamma}^* > \mathbf{0}$ die für die Lösung $\mathbf{x}^*$ zugehörigen Lagrange-Multiplikatoren, d.h. alle Nebenbedingungen sind aktiviert, gilt im Fall von $\mathbf{t}=\mathbf{0}$
 \begin{align}\label{Eq_Ableitung_t_0}
 \frac{\partial f^*}{\partial t_i}=\frac{\partial f^*(\mathbf{x}^*(\mathbf{0}))}{\partial t_i}=\frac{\partial \mathcal{L}(\mathbf{x}^*(\mathbf{0}), \boldsymbol{\gamma}^*, \mathbf{t})}{\partial t_i}=-\gamma^*_i \qquad \text{für} \ i=1,\dots,p^* .
@@ -767,7 +766,7 @@ dargestellt werden  \cite{arora2011introductionOptimum}. Durch Umstellen von \eq
 \delta f^*=f(\mathbf{t})-f^*(\mathbf{x}^*(\mathbf{0}))=- \sum_{i=1}^{p^*} \gamma^* \cdot t_i
 \end{align}
 an, wie sich die optimale Lösung der Zielfunktion unter Einhaltung der Nebenbedingung verändert, wenn $\mathbf{t}$ variiert wird. Werden bspw. einzelne $t_i$ erhöht, kann dies wegen $h_i(\mathbf{x}) \le t_i$ als eine \textit{Abmilderung} der Nebenbedingungen aufgefasst werden, da sich das Set der möglichen Lösungen für das Optimierungsproblem vergrößert. Umgekehrt hat eine Verkleinerung von einzelnen $t_i$ eine \textit{Verstärkung der Einschränkung} durch die Nebenbedingungen zur Folge, weil das Set der möglichen Lösungen verkleinert wird.\\
-Für das Minimierungsproblem aus \eqref{Eq_Optimierung_Unequal} bedeutet das, dass alle $\gamma_i$ positiv sein müssen, da \eqref{Eq_Differenz_Sensi_t_0} der Anstiegt bzw. den Abfall in $f(\mathbf{t})$ beschreibt, wenn einzelne $t_i$ verändert werden. Für ein negatives $\gamma_i$ würde eine Vergrößerung eines $t_i$ einen Anstieg in $f(t_i)$ bedeuten, was ein Widerspruch zur Vergrößerung des Sets der möglichen Lösungen für das Minimierungsproblem ist.
+Für das Minimierungsproblem aus \eqref{Eq_Optimierung_Unequal} bedeutet das, dass alle $\gamma_i$ positiv sein müssen, da \eqref{Eq_Differenz_Sensi_t_0} der Anstiegt bzw. den Abfall in $f(\mathbf{t})$ beschreibt, wenn einzelne $t_i$ verändert werden. Für ein negatives $\gamma_i$ würde eine Vergrößerung eines $t_i$ einen Anstieg in $f(t_i)$ für das Minimum bedeuten, was ein Widerspruch ist, da durch eine Abmilderung der Nebenbedingung das Set der möglichen Lösungen vergrößert wird und das neue Minimum kleiner oder gleich dem alten sein muss.
 
 \begin{comment}
 
