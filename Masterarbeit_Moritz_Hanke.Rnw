@@ -626,23 +626,25 @@ Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat
 \end{align}
 
 \section{Lasso-Schätzer für ein orthonormales Design}\label{App_Lasso_Orthonormal}
-Im orthonormalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\beta^{OLS}=\mathbf{X}'\mathbf{Y}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
+Im orthonormalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\hat{\beta}^{OLS}=\mathbf{X}'\mathbf{Y}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
 \begin{align*}
 \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)
 &=(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
 &=\mathbf{Y}'\mathbf{Y}-2\mathbf{Y}'\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
 &=\mathbf{Y}'\mathbf{Y}-2\boldsymbol{\hat{\beta}}^{OLS}{'}\boldsymbol{\beta} + \boldsymbol{\beta}'\boldsymbol{\beta}+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
-&=\mathbf{Y}'\mathbf{Y}-2 \sum_{j=1}^{p}\beta_j^{OLS} \cdot \beta_j + \sum_{j=1}^{p} \beta^2 + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
-&=\mathbf{Y}'\mathbf{Y}+\sum_{j=1}^{p}\left( -2 \beta_j^{OLS} \cdot \beta_j + \beta^2 + \gamma |\beta_j| \right).
+&=\mathbf{Y}'\mathbf{Y}-2 \sum_{j=1}^{p}\hat{\beta}_j^{OLS} \beta_j + \sum_{j=1}^{p} \beta^2 + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}+\sum_{j=1}^{p}\left( -2 \hat{\beta}_j^{OLS}  \beta_j + \beta^2 + \gamma |\beta_j| \right).
 \end{align*}
 Somit ergeben sich $j=1,\dots,p$ Gleichungssysteme, die nach $\beta_j$ abgeleitet und Null gesetzt werden müssen:
 \begin{align}\label{Eq_Lasso_Einzelbeta}
-\hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\beta_j^{OLS} \cdot \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
+\hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS} \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
 \end{align}
-Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\beta_j^{OLS}>0$ von $\beta_j^{OLS}<0$ unterschieden werden muss. Denn für $\beta_j^{OLS}>0$ muss $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert möglich wäre. Umgekehrt muss für den Fall $\beta_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert für das Minimum gibt. Für den Fall $\beta_j^{OLS}>0$ ergibt sich
+Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\hat{\beta}_j^{OLS}>0$ von $\hat{\beta}_j^{OLS}<0$ unterschieden werden muss. Denn für $\hat{\beta}_j^{OLS}>0$ muss $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert möglich wäre. Umgekehrt muss für den Fall $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert für das Minimum gibt. FÜR BETA GLEICH = NICHT DEFINIERT: DURCH UNTERSCHEIDUNG KANN BETRAG BEI ABLEITEN WEGGELASSEN WERDEN UND VORZEICHEN VOR GAMMA GEÄNDERT WERDEN!! Für den Fall $\hat{\beta}_j^{OLS}>0$ ergibt sich
 \begin{align}
-0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\beta_j^{OLS} \cdot \beta_j + \beta_j^2 + \gamma |\beta_j| \notag \\
-&=-2\beta_j^{OLS} + 2\beta_j + \gamma \frac{\beta_j}{|\beta_j|}
+&& 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma \beta_j \notag \\
+&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \notag \\
+&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}-\frac{\gamma}{2} \notag \\
+&\Leftrightarrow&\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
 \end{align}
 
 \begin{align}
