@@ -36,6 +36,7 @@
 %für Mathe
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{amsthm}
 
 
 
@@ -508,7 +509,7 @@ als Minimierungsproblem ergibt \cite{tibshirani96regression}. Die Betragsfunktio
 \boldsymbol{\hat{\beta}}^{Lasso}(t)=\arg \displaystyle\min_{\beta} \ &\left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag  \\
 \text{s.t.} \ & \sum_{j=1}^{p}|\beta_j| \le t  \qquad \text{mit} \ t \ge 0.
 \end{align}
-Für den Fall von zwei Kovariablen ist dann die Nebenbedingung aus \eqref{Eq_Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ dargestellt werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Nebenbedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Diese geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten, wobei die Nebenbedingung ein p-dimensionaler Kreuzpolytop, der um den Faktor $t$ skaliert wird, und die Zielfunktion ein p-dimensionaler Ellipsoid mit dem OLS-Schätzer im Zentrum ist (vgl. dazu \citeNP{Perty2009ShrinkagePolytopes}). Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt des Lasso- gegenüber dem Ridge-Schätzer für zwei Kovariablen. Bei beiden Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
+Für den Fall von zwei Kovariablen ist dann die Nebenbedingung aus \eqref{Eq_Lasso_Constraint} eine gleichwinkelige Raute und die zu minimierende Residuenquadratsumme kann als Ellipsen um den OLS-Schätzer im euklidischen Vektorraum $\mathbb{R}^2$ gezeichnet werden. Die Form der Ellipsen ist dabei durch $\mathbf{X}'\mathbf{X}$ bestimmt und für die Stelle, an der die Raute zuerst tangiert wird, ist eine globale Extremstelle unter Einhaltung der Nebenbedingung erreicht \cite{tibshirani96regression}. Tangieren die Ellipsen eine \textit{Ecke} der Raute, muss einer der beiden Koeffizienten Null gesetzt werden. Diese geometrische Interpretation des Lasso-Schätzers gilt auch für höherdimensionale Daten, wobei die Nebenbedingung ein p-dimensionaler Kreuzpolytop, der um den Faktor $t$ skaliert wird, und die Zielfunktion ein p-dimensionaler Ellipsoid mit dem OLS-Schätzer im Zentrum ist (vgl. dazu \citeNP{Perty2009ShrinkagePolytopes}). Abbildung \ref{fig:Ridge_vs_Lasso} veranschaulicht den Schrumpfungs- und Selektionseffekt des Lasso- gegenüber dem Ridge-Schätzer für zwei Kovariablen. Bei beiden Methoden sind $\hat{\beta}_1$ und $\hat{\beta}_2$ im Vergleich zur OLS-Schätzung geschrumpft, allerdings kommt es nur bei der Lasso-Methode zu einer Variablenselektion.\\
 <<echo=FALSE, Ridge_vs_Lasso, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.49\\linewidth', fig.lp="fig:", fig.scap="Graphische Veranschaulichung des Lasso- und Ridge-Strafterms", fig.cap="Graphische Veranschaulichung des Lasso-Strafterms ($L_1$-Norm, Raute $|\\beta_1|+|\\beta_2|=t$) und des Ridge-Strafterms ($L_2$-Norm, Einheitskreis $ \\beta_1^2 + \\beta_2^2 = t$ ) hinsichtlich des Schrumpfungseffekts und der Variablenselektion. Die Ellipsen um den OLS-Schätzer (rot) werden solange vergrößert, bis sie die Nebenbedingung erfüllen (hellblau) und die Raute bzw. den Einheitskreis tangieren. Während es bei beiden Methoden zu einer Schrumpfung der Koeffizientenschätzer kommt, wird nur bei der Lasso-Penalisierung ein Koeffizient Null gesetzt, da die Ellipse die Raute an einer Kante tangiert.">>=
 #### R-Code Lasso vs Ridge Ellipsen
 
@@ -570,9 +571,11 @@ Für den Fall, dass $\mathbf{X}'\mathbf{X}$ orthonormal ist, d.h. $\mathbf{X}'\m
 \begin{align}\label{Eq_Lasso_Orthonormaldesign}
 \hat{\beta}_j^{Lasso}=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
 \end{align}
-Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass nur der positive Teil in der Klammer ausgewertet wird, d.h. wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}. ABER ORTHONORMALES DESIGN SETZT $p=n$ VORAUS!!!
+Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass nur der positive Teil in der Klammer ausgewertet wird, d.h. wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}. Allerdings setzt dieses Design den eher selten auftretenden Fall voraus, dass die Anzahl der Variablen gleich der Anzahl an Beobachtungen ist, d.h. $p=n$ gilt.\\
+ 
+%%% ACHTUNG: p>n werden nur n Variablen ausgewählt (Bühlmann findet gut an Lasso, weil eine starke Dimensionreduktion, aber im Hinblick auf den Sachverhalt, dass man möglichst alle relevanten Kovariablen haben will, ist solch eine Einschränkung eher kritisch zu sehen); wenn zwei oder mehr Kovariablen miteinander Korrelieren (oder identisch sind???) wählt Lasso nur eine ZUFÄLLIG aus
 
-%%% Veerweisen:
+%%% Verweisen:
 %Fused lasso Tibshirani 2005
 %Fused lasso for unordered predictors
 
@@ -691,7 +694,7 @@ L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^
 \begin{appendix}
 \chapter{Beweise}
 \section{Erwarteter quadrierter Abstand von $\boldsymbol{\hat{\beta}}^{OLS}$ zu $\boldsymbol{\beta}$}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
-Bezeichnet $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times n$-Matrix, so gilt
+Bezeichne $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times n$-Matrix, so gilt
 \begin{align}\label{Eq_Spurgleichheit}
 \text{sp}(\mathbf{BC})=\text{sp}(\mathbf{CB})
 \end{align}
@@ -725,7 +728,8 @@ Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat
 &\stackrel{\eqref{Eq_Spurmultiplikation}}{=}\sigma^2\text{sp}[\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}}_{\substack{n \times p \text{-Matrix}}}\underbrace{(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{p \times n \text{-Matrix}}}] \notag \\
 &\stackrel{\eqref{Eq_Spurgleichheit}}{=}\sigma^2\text{sp}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}] 
 \notag \\
-&=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
+&=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]. \\ 
+\tag*{$\square$} \notag
 \end{align}
 
 \section{Lasso-Schätzer für ein orthonormales Design}\label{App_Lasso_Orthonormal}
@@ -742,7 +746,7 @@ Somit ergeben sich $j=1,\dots,p$ Gleichungssysteme, die nach $\beta_j$ abgeleite
 \begin{align}\label{Eq_Lasso_Einzelbeta}
 \hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS} \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
 \end{align}
-Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\hat{\beta}_j^{OLS}>0$ von $\hat{\beta}_j^{OLS}<0$ unterschieden werden muss. Denn für $\hat{\beta}_j^{OLS}>0$ muss $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert möglich wäre. Umgekehrt muss für den Fall $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert für das Minimum gibt. Für den Fall $\hat{\beta}_j^{OLS}>0$ ergibt sich
+Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\hat{\beta}_j^{OLS}>0$ von $\hat{\beta}_j^{OLS}<0$ unterschieden werden muss. Denn für $\hat{\beta}_j^{OLS}>0$ muss auch $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert für das Minimum möglich wäre. Umgekehrt muss für den Fall $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert gibt. Für den Fall $\hat{\beta}_j^{OLS}>0$ ergibt sich
 \begin{align}\label{Eq_Lasso_Ortho_Beta_greater0}
 && 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma \beta_j \notag \\
 &\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \notag \\
@@ -756,15 +760,15 @@ und für $\hat{\beta}_j^{OLS}<0$
 \end{align}
 Da in \eqref{Eq_Lasso_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_Lasso_Ortho_Beta_smaller0} kleiner Null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
 \begin{align}\label{Eq_Lasso_Orthonormaldarstellung}
-\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ .
+\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ .\\ \tag*{$\square$} \notag
 \end{align}
-Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$. \citeNP{tibshirani96regression} sowie \citeNP{friedman2007pathwise} verweisen darauf, dass \eqref{Eq_Lasso_Orthonormaldarstellung} einem \textit{soft thresholding} entspricht:
+Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$. \citeNP{tibshirani96regression} sowie \citeNP{friedman2007pathwise} verweisen darauf, dass deswegen \eqref{Eq_Lasso_Orthonormaldarstellung} einem \textit{weichen Schwellwert} entspricht:
 \begin{align*}
 \hat{\beta}_j^{Lasso} =
 \begin{cases}
 \hat{\beta}_j^{OLS}-\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} > 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
 \hat{\beta}_j^{OLS}+\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} < 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
-0, \qquad &\text{wenn} \ \frac{\gamma}{2} > |\hat{\beta}_j^{OLS}|.
+0, \qquad &\text{wenn} \ \frac{\gamma}{2} > |\hat{\beta}_j^{OLS}|. 
 \end{cases}
 \end{align*}
 
