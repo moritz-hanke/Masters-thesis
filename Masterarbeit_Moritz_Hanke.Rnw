@@ -570,7 +570,7 @@ Für den Fall, dass $\mathbf{X}'\mathbf{X}$ orthonormal ist, d.h. $\mathbf{X}'\m
 \begin{align}\label{Eq_Lasso_Orthonormaldesign}
 \hat{\beta}_j^{Lasso}=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
 \end{align}
-Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass der Ausdruck in der Klammer nur ausgewertet wird, wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}. ABER ORTHONORMALES DESIGN SETZT $p=n$ VORAUS!!!
+Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass nur der positive Teil in der Klammer ausgewertet wird, d.h. wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}. ABER ORTHONORMALES DESIGN SETZT $p=n$ VORAUS!!!
 
 %%% Veerweisen:
 %Fused lasso Tibshirani 2005
@@ -722,14 +722,14 @@ Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat
 \boldsymbol{\varepsilon}'\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{n \times n \text{-Matrix}}}\boldsymbol{\varepsilon}
 \right\rbrace \notag \\
 &\stackrel{\eqref{Eq_Erwartung_Quadrat}}{=}\text{sp}[\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\underbrace{\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})}_{\substack{\sigma^2\mathbf{I}}}] + \underbrace{\mathbb{E}(\boldsymbol{\varepsilon})'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}(\boldsymbol{\varepsilon})}_{\substack{0}} \notag \\
-&\stackrel{\eqref{Eq_Spurmultiplikation}}{=}\sigma^2\text{sp}[\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}}_{\substack{:=\mathbf{C}}}\underbrace{(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{:=\mathbf{D}}}] \notag \\
+&\stackrel{\eqref{Eq_Spurmultiplikation}}{=}\sigma^2\text{sp}[\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}}_{\substack{n \times p \text{-Matrix}}}\underbrace{(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{p \times n \text{-Matrix}}}] \notag \\
 &\stackrel{\eqref{Eq_Spurgleichheit}}{=}\sigma^2\text{sp}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}] 
 \notag \\
 &=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
 \end{align}
 
 \section{Lasso-Schätzer für ein orthonormales Design}\label{App_Lasso_Orthonormal}
-Im orthonormalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\hat{\beta}^{OLS}=\mathbf{X}'\mathbf{Y}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
+Im orthonormalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\boldsymbol{\hat{\beta}}^{OLS}=\mathbf{X}'\mathbf{Y}$ und damit $\mathbf{Y}'\mathbf{X}=\boldsymbol{\hat{\beta}}^{OLS}{'}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
 \begin{align*}
 \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)
 &=(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
@@ -742,7 +742,7 @@ Somit ergeben sich $j=1,\dots,p$ Gleichungssysteme, die nach $\beta_j$ abgeleite
 \begin{align}\label{Eq_Lasso_Einzelbeta}
 \hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS} \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
 \end{align}
-Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\hat{\beta}_j^{OLS}>0$ von $\hat{\beta}_j^{OLS}<0$ unterschieden werden muss. Denn für $\hat{\beta}_j^{OLS}>0$ muss $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert möglich wäre. Umgekehrt muss für den Fall $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert für das Minimum gibt. FÜR BETA GLEICH = NICHT DEFINIERT: DURCH UNTERSCHEIDUNG KANN BETRAG BEI ABLEITEN WEGGELASSEN WERDEN UND VORZEICHEN VOR GAMMA GEÄNDERT WERDEN!! Für den Fall $\hat{\beta}_j^{OLS}>0$ ergibt sich
+Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass der Fall $\hat{\beta}_j^{OLS}>0$ von $\hat{\beta}_j^{OLS}<0$ unterschieden werden muss. Denn für $\hat{\beta}_j^{OLS}>0$ muss $\beta_j > 0$ sein, da ansonsten ein kleinerer Wert möglich wäre. Umgekehrt muss für den Fall $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten, um ebenfalls auszuschließen, dass es durch einen Vorzeichenwechsel einen noch kleineren Wert für das Minimum gibt. Für den Fall $\hat{\beta}_j^{OLS}>0$ ergibt sich
 \begin{align}\label{Eq_Lasso_Ortho_Beta_greater0}
 && 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma \beta_j \notag \\
 &\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \notag \\
@@ -755,10 +755,18 @@ und für $\hat{\beta}_j^{OLS}<0$
 &\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}+\frac{\gamma}{2} .
 \end{align}
 Da in \eqref{Eq_Lasso_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_Lasso_Ortho_Beta_smaller0} kleiner Null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
-\begin{align}
+\begin{align}\label{Eq_Lasso_Orthonormaldarstellung}
 \hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ .
 \end{align}
-
+Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$. \citeNP{tibshirani96regression} sowie \citeNP{friedman2007pathwise} verweisen darauf, dass \eqref{Eq_Lasso_Orthonormaldarstellung} einem \textit{soft thresholding} entspricht:
+\begin{align*}
+\hat{\beta}_j^{Lasso} =
+\begin{cases}
+\hat{\beta}_j^{OLS}-\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} > 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
+\hat{\beta}_j^{OLS}+\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} < 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
+0, \qquad &\text{wenn} \ \frac{\gamma}{2} > |\hat{\beta}_j^{OLS}|.
+\end{cases}
+\end{align*}
 
 
 \chapter{Erläuterungen}
