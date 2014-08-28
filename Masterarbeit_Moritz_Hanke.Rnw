@@ -572,7 +572,11 @@ Für den Fall, dass $\mathbf{X}'\mathbf{X}$ orthonormal ist, d.h. $\mathbf{X}'\m
 \hat{\beta}_j^{Lasso}=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
 \end{align}
 Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass nur der positive Teil in der Klammer ausgewertet wird, d.h. wenn $|\beta_j^{OLS}|-\gamma > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\gamma \ge |\beta_j^{OLS}|$ ist. Ein Beweis für \eqref{Eq_Lasso_Orthonormaldesign} findet sich in Anhang \ref{App_Lasso_Orthonormal}. Allerdings setzt dieses Design den eher selten auftretenden Fall voraus, dass die Anzahl der Variablen gleich der Anzahl an Beobachtungen ist, d.h. $p=n$ gilt.\\
- 
+
+%%% Vorteil von Lasso: durch gleichmäßige Schrumpfung werden wertvolle Variablen, also die, die unbedingt ins Modell solten, nicht so stark gegen Null geschrumpft wie die, die nicht rein sollten nud eh schon kleine Werte haben (siehe Paper von Tim Hesterberg zu LARS)
+
+%%% Kann wegen der Sparsity-Voraussetzung Lasso maximal n Kovariablen auswählen???
+
 %%% ACHTUNG: p>n werden nur n Variablen ausgewählt (Bühlmann findet gut an Lasso, weil eine starke Dimensionreduktion, aber im Hinblick auf den Sachverhalt, dass man möglichst alle relevanten Kovariablen haben will, ist solch eine Einschränkung eher kritisch zu sehen); wenn zwei oder mehr Kovariablen miteinander Korrelieren (oder identisch sind???) wählt Lasso nur eine ZUFÄLLIG aus
 
 %%% Verweisen:
@@ -686,6 +690,29 @@ L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^
 
 \subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
 
+\chapter{Fazit}
+\begin{comment}
+#######
+## 1 ##
+#######
+Zu Sig-Test bei adaptiven Methoden zur Variablenselektion:
+"Classical tools for analyzing regression results, such as t statistics for judging
+the significance of individual predictors, are based on the assumption that the
+set of predictors is fixed in advance. When instead the set is chosen adaptively,
+incorporating those variables that give the best fit for a particular set of data,
+the classical tools are biased. For example, if there are 10 candidate predictors,
+and we select the single one that gives the best fit, there is about a 40% chance
+that that variable will be judged significant at the 5% level, when in fact all
+predictors are independent of the response and each other. Similar bias holds
+for the F test for comparing two models; it is based on the assumption that the
+two models are fixed in advance, rather than chosen adaptively.
+This bias affects the variable selection process itself. Formal selection proce-
+dures such as stepwise regression and all-subsets regression are ultimately based
+on statistics related to the F statistics for comparing models. Informal selection
+procedures, in which an analyst picks variables that give a good fit, are similarly
+affected."
+aus Hesterberg "Least angle and l1 penalized regression: A review"
+\end{comment}
 
 
 \bibliography{Masterarbeit}
