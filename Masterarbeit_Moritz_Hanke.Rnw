@@ -33,10 +33,16 @@
 \usepackage{multirow}
 \usepackage{tabularx}
 
+%für Pseudo-Algoirthmen-Code
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+
+
 %für Mathe
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amsthm}
+
+
 
 
 
@@ -573,6 +579,21 @@ Für den Fall, dass $\mathbf{X}$ orthogonal ist, d.h. $\mathbf{X}'\mathbf{X}=\ma
 \hat{\beta}_j^{Lasso}=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
 \end{align}
 Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass nur der positive Teil in der Klammer ausgewertet wird, d.h. wenn $|\beta_j^{OLS}|-\frac{\gamma}{2} > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\frac{\gamma}{2} \ge |\beta_j^{OLS}|$ ist. Ein Ausführung für \eqref{Eq_Lasso_Orthogonaldesign} findet sich in Anhang \ref{App_Lasso_Orthogonal}. Allerdings setzt dieses Design den eher selten auftretenden Fall voraus, dass die Anzahl der Variablen gleich der Anzahl an Beobachtungen ist, d.h. $p=n$ gilt.\\
+Wird \eqref{Eq_Lasso_Lagrange} nach $\boldsymbol{\beta}$ abgeleitet
+\begin{align*}
+\frac{\partial \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)}{\partial \boldsymbol{\beta}}=-2\mathbf{X}'\mathbf{Y}+2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+\gamma\text{sign}(\boldsymbol{\beta})
+\end{align*}
+und bezeichnet $\text{sign}(\boldsymbol{\beta})$ einen $p$-dimensionalen Vektor, der die Vorzeichen von $\boldsymbol{\beta}$ in der Form $(\pm1,\pm1,\dots, \pm1)$ beinhaltet, kann der Lasso-Schätzer für ein festes $\gamma$ allgemein dargestellt werden als
+\begin{align}
+&& 0&=-2\mathbf{X}'\mathbf{Y}+2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+\gamma\text{sign}(\boldsymbol{\beta}) \notag \\
+&\Leftrightarrow &\mathbf{X}'\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}'\mathbf{Y}-\frac{\gamma}{2}\text{sign}(\boldsymbol{\beta}) \notag \\
+&\Rightarrow & \boldsymbol{\hat{\beta}}^{Lasso}&=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X})^{-1}\frac{\gamma}{2}\text{sign}(\boldsymbol{\beta}).
+\end{align}
+\citeNP{tibshirani96regression} schlagen zur Lösung einen Algorithmus für quadratische Programme vor, der allerdings wegen $2^p$ möglichen Vorzeichenkombinationen in $\text{sign}(\boldsymbol{\beta})$ für ein großes $p$ ineffektiv ist. Zudem ist dieser Algorithmus nicht geeignet für den Fall $p>n$, da $(\mathbf{X}'\mathbf{X})$ nicht invertierbar ist. \citeNP{Efron04leastangle} zeigen, dass ihr Algorithmus für die \textit{kleinste Winkel Regression} (englisch: least angle regression; \textit{LARS}) einen Lasso-Schätzers liefert, dessen Berechnung nicht mehr Ressourcen braucht als eine OLS-Schätzung aber ebenfalls nicht für $p > n$ geeignet ist. Dagegen liefern \citeNP{Osborne99onthe} einen Lösungsweg für $\boldsymbol{\hat{\beta}}^{Lasso}$ für $p > n$, der jedoch bei großem $p$ ebenfalls ineffektiv ist und maximal $n$ Regressionskoeffizienten ungleich Null schätzen kann.\\
+Da die Schätzung von $\boldsymbol{\hat{\beta}}^{Lasso}$ von der Wahl des Restriktionsparameters $t$ bzw. dem Tuningparameter $\gamma$ abhängt, müssen die Algorithmen für verschiedene Werte durchlaufen werden und mittels einer Kennzahl verglichen werden. \citeNP{leng06noteonthelasso} zeigen, dass Methoden, die die Vorhersagegenauigkeit als Maß zur Wahl von $\gamma$ nutzen, nicht \textit{konsistente} Schätzer für $\boldsymbol{\beta}$ liefern, d.h. die Wahrscheinlichkeit, dass $\boldsymbol{\hat{\beta}}^{Lasso}$ das wahre Model liefert, ist auch für $n \rightarrow \infty$ kleiner als $1$.
+
+
+
 
 %%% Vorteil von Lasso: durch gleichmäßige Schrumpfung werden wertvolle Variablen, also die, die unbedingt ins Modell solten, nicht so stark gegen Null geschrumpft wie die, die nicht rein sollten nud eh schon kleine Werte haben (siehe Paper von Tim Hesterberg zu LARS)
 
