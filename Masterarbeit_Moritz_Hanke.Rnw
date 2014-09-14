@@ -166,6 +166,7 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{RSS}{Residual sum of squares}
 \abk{PRSS}{Penalized residual sum of squares}
 \abk{KEGG}{Kyoto Encyclopedia of Genes and Genomes}
+\abk{Enet}{Elastic Net}
 
 
 % Begin der Arbeit
@@ -501,7 +502,7 @@ Es lässt sich zeigen, dass mit der Varianz aus \eqref{Eq_Cov_epsilon} für den 
 \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace=\sigma^2 \sum_{j=1}^{p} \frac{\lambda_j}{(\lambda_j + \gamma)^2} + \gamma^2 \boldsymbol{\beta}' (\mathbf{X}'\mathbf{X}+ \gamma \mathbf{I})^{-2}\boldsymbol{\beta}
 \end{align}
 wobei $\lambda_{max}= \lambda_1, \dots, \lambda_p= \lambda_{min}$ die Eigenwerte von $\mathbf{X}'\mathbf{X}$ sind. Der linke Summand von \eqref{Eq_Erw_Quad_Abst_ridge} beinhaltet in Anlehnung an \eqref{Eq_Lambda_Laenge_OLS} die Summe der Varianzen der $\hat{\beta}_j^{Ridge}$ und der rechte Summand den durch $\gamma$ erzeugte Bias. Anhand dieser Darstellung ist erkennbar, dass mit größer werdendem $\gamma$ die Summe der Varianzen des Schätzers sinkt und gleichzeitig die gesamte Verzerrung ansteigt. Umgekehrt wird an dieser Risikofunktion deutlich, dass für $\gamma=0$ der Ridge-Schätzer dem OLS-Schätzer entspricht und folglich dieselbe erwartete quadratische Distanz zum wahren $\boldsymbol{\beta}$ hat. Dieser Abstand ist wie in Abschnitt \ref{Kap_Multikollinearität und $p > n$} gezeigt deutlich von der Multikollinearität von $\mathbf{X}$ abhängig. Ziel bei der Wahl von $\gamma$ ist es deswegen, ein optimales $\gamma$ zu finden, dass $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace$ bzw. die einzelnen $\text{MSE}(\hat{\beta}_j^{Ridge})$ minimiert. \citeA{hoerl_ridge_1970} zeigen, dass es immer ein $\gamma$ gibt, für das $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{Ridge},\boldsymbol{\beta}) \right\rbrace < \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace$ gilt. In Bezug auf die Risikofunktion bedeutet das, dass die Ridge-Schätzer mit optimalem $\gamma$ für alle wahren $\boldsymbol{\beta}$ \textit{strikt besser} sind als die OLS-Schätzer \cite{gross2003linear}.\\
-Die Wahl des Tuningparameters $\gamma$ muss dabei vom Anwender getroffen werden und kann, soll er nicht subjektiv festgelegt werden, durch iterative Methoden geschätzt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeA{gross2003linear} und \citeA{montgomery2012introduction}.
+Die Wahl des Tuningparameters $\gamma$ muss dabei vom Anwender getroffen werden und kann, soll er nicht subjektiv festgelegt werden, durch iterative Methoden geschätzt werden. Eine Übersicht über verschiedene Methoden bzw. weiterführende Literatur zur Wahl von $\gamma$ findet sich u.a. bei \citeNP{gross2003linear} und \citeNP{montgomery2012introduction}.
 
 
 \subsection{Lasso-Regression}\label{Kap_Lasso-Regression}
@@ -588,10 +589,10 @@ und bezeichnet $\text{sign}(\boldsymbol{\beta})$ einen $p$-dimensionalen Vektor,
 &\Leftrightarrow &\mathbf{X}'\mathbf{X}\boldsymbol{\beta}&= \mathbf{X}'\mathbf{Y}-\frac{\gamma}{2}\text{sign}(\boldsymbol{\beta}) \notag \\
 &\Rightarrow & \boldsymbol{\hat{\beta}}^{Lasso}&=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X})^{-1}\frac{\gamma}{2}\text{sign}(\boldsymbol{\beta}) \label{Eq_Lasso-Schätzer_Allgemein}.
 \end{align}
-\eqref{Eq_Lasso-Schätzer_Allgemein} verdeutlicht, dass eine geschlossene Darstellung des Minimierungsproblems aus \eqref{Eq_Lasso_Lagrange} und damit eine analytische Lösung wegen dem $L_1$-Norm-Strafterm für die Lasso-Methode nicht möglich ist. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe Anhang \ref{App_Konvexe_Funktionen}), weswegen eine Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}. \citeNP{tibshirani96regression} schlagen zur Lösung einen iterativen Algorithmus für quadratische Programme vor, der allerdings wegen $2^p$ möglichen Vorzeichenkombinationen in $\text{sign}(\boldsymbol{\beta})$ für ein großes $p$ ineffektiv ist. Zudem ist dieser Algorithmus nicht geeignet für den Fall $p>n$, da $(\mathbf{X}'\mathbf{X})$ nicht invertierbar ist und als "`Startschätzer"' für die Regressionkoeffizienten der OLS-Schätzer benutzt wird. \citeNP{Efron04leastangle} zeigen, dass eine Modifikation ihres Algorithmus für die \textit{kleinste Winkel Regression} (englisch: least angle regression; \textit{LARS}) einen Lasso-Schätzer liefert, dessen Berechnung nicht mehr Ressourcen als eine OLS-Schätzung benötigt und für $p > n$ anwendbar ist, allerdings nur maximal $n$ Schätzer ungleich Null setzen kann. Der Homotopie Algorithmus von \citeNP{Osborne99onthe} ist ebenfalls ein Lösungsweg für $\boldsymbol{\hat{\beta}}^{Lasso}$ für $p > n$, dessen Berechnung jedoch für große $p$ sehr aufwändig wird.\\
-Neben der Herausforderung der Schätzung von $\boldsymbol{\beta}$, insbesondere für $p > n$, muss ein geeignetes $\gamma$ gewählt werden, da $\boldsymbol{\hat{\beta}}^{Lasso}$ von der Wahl des Restriktionsparameters $t$ bzw. dem Tuningparameter $\gamma$ abhängt. Dazu müssen die oben erwähnten Algorithmen mit verschiedenen $\gamma$ durchgeführt und mittels einer Kennzahl verglichen werden. \citeNP{leng06noteonthelasso} zeigen, dass Methoden, die die \textit{Vorhersagegenauigkeit} als Maß zur Wahl von $\gamma$ für den Lasso-Schätzer nutzen, nicht \textit{konsistente} Schätzer für $\boldsymbol{\beta}$ liefern, d.h. die Wahrscheinlichkeit, dass $\boldsymbol{\hat{\beta}}^{Lasso}$ das wahre Model liefert, ist dann auch für $n \rightarrow \infty$ kleiner als $1$. Gleichzeitig weisen die Autoren darauf hin, dass die Genauigkeit der einzelnen geschätzten Regressionskoeffizienten durch die Lasso-Methode gegenüber der OLS-Schätzung verbessert werden. \citeNP{Zhao2006Lasso_Consistency} weisen nach, dass der Lasso-Schätzer eine konsistente Schätzung für ein vorgegebenes $\gamma$ liefern kann, wenn die sogenannte \textit{Irrepresentable Condition} erfüllt ist. Allerdings räumen die Autoren ein, dass diese Annahme in der Regel nicht überprüft werden kann und deshalb in Anwendungsfällen davon ausgegangen werden muss, dass die Schätzung nicht konsistent ist.\\
-Ein weiteres Problem bei der Anwendung des Lasso-Schätzers sind Korrelationsstrukturen, die insbesondere bei hochdimensionalen Daten, auftreten. Korrelieren zwei oder mehrere Kovariablen hoch miteinander und gilt für diese Kovariablen $\beta_j \neq 0$, so wählt der Lasso-Schätzer davon zufällig nur eine Kovariable aus und setzt die restlichen Regressionskoeffizienten dieser "`Gruppe"' gleich Null \cite{Bondell2008OSCAR}.\\
-Weiterentwicklungen des Lasso-Schätzers wie der \textit{Grouped Lasso-Schätzer} oder der \textit{Adaptive Lasso-Schätzer} finden sich bei \citeNP{Yuan06Grouped_modelselection}) bzw. \citeNP{zou2006Adaptive_Lasso_oracle_prop}. Beide Ansätze verfolgen die Idee, den ursprünglichen Lasso-Schätzer um vorab bekannte Informationen bzw. Annahmen zu erweitern, um die oben benannten Limitationen zumindest teilweise zu minimieren. Dabei wird für den Adaptive Lasso-Schätzer eine Gewichtung der einzelnen Regressionskoeffizienten im Strafterm vorgenommen und bei dem Grouped Lasso-Schätzer werden die Kovariablen zuvor in Gruppen zusammengefasst und gemeinsam "`bestraft"'. 
+\eqref{Eq_Lasso-Schätzer_Allgemein} verdeutlicht, dass eine geschlossene Darstellung des Minimierungsproblems aus \eqref{Eq_Lasso_Lagrange} und damit eine analytische Lösung für die Lasso-Methode nicht möglich ist, da diese die Vorzeichen der zu schätzenden $\boldsymbol{\beta}$ beinhaltet. Allerdings handelt es sich sowohl bei $\text{RSS}(\boldsymbol{\beta})$ als auch bei $P(\boldsymbol{\beta}, \boldsymbol{\gamma})=\gamma \sum_{j=1}^{p}|\beta_j|$ um \textit{konvexe} Funktionen (siehe Anhang \ref{App_Konvexe_Funktionen}), weswegen eine Lösung für das Minimierungsproblem existiert \cite{Osborne99onthe}. \citeNP{tibshirani96regression} schlagen zur Lösung einen iterativen Algorithmus für quadratische Programme vor, der allerdings wegen $2^p$ möglichen Vorzeichenkombinationen in $\text{sign}(\boldsymbol{\beta})$ für ein großes $p$ ineffektiv ist. Zudem ist dieser Algorithmus nicht geeignet für den Fall $p>n$, da $(\mathbf{X}'\mathbf{X})$ nicht invertierbar ist und als "`Startschätzer"' für die Regressionkoeffizienten der OLS-Schätzer benutzt wird. \citeNP{Efron04leastangle} zeigen, dass eine Modifikation ihres Algorithmus für die \textit{kleinste Winkel Regression} (englisch: least angle regression; \textit{LARS}) einen Lasso-Schätzer liefert, dessen Berechnung nicht mehr Ressourcen als eine OLS-Schätzung benötigt und für $p > n$ anwendbar ist, allerdings nur maximal $n$ Schätzer ungleich Null setzen kann. Der Homotopie Algorithmus von \citeNP{Osborne99onthe} ist ebenfalls ein Lösungsweg für $\boldsymbol{\hat{\beta}}^{Lasso}$ für $p > n$, dessen Berechnung jedoch für große $p$ sehr aufwändig wird.\\
+Neben der Herausforderung der Schätzung von $\boldsymbol{\beta}$, insbesondere für $p > n$, muss ein geeignetes $\gamma$ gewählt werden, da $\boldsymbol{\hat{\beta}}^{Lasso}$ von der Wahl dieses Parameters bzw. des Restriktionsparameters $t$ abhängt. Dazu müssen die oben erwähnten Algorithmen mit verschiedenen $\gamma$ durchgeführt und mittels einer Kennzahl verglichen werden. \citeNP{leng06noteonthelasso} zeigen, dass Methoden, die die \textit{Vorhersagegenauigkeit} als Maß zur Wahl von $\gamma$ für den Lasso-Schätzer nutzen, nicht \textit{konsistente} Schätzer für $\boldsymbol{\beta}$ liefern, d.h. die Wahrscheinlichkeit, dass $\boldsymbol{\hat{\beta}}^{Lasso}$ das wahre Model liefert, ist dann auch für $n \rightarrow \infty$ kleiner als $1$. Gleichzeitig weisen die Autoren darauf hin, dass die Genauigkeit der einzelnen geschätzten Regressionskoeffizienten durch die Lasso-Methode gegenüber der OLS-Schätzung verbessert werden. \citeNP{Zhao2006Lasso_Consistency} weisen nach, dass der Lasso-Schätzer eine konsistente Schätzung für ein vorgegebenes $\gamma$ liefern kann, wenn die sogenannte \textit{Irrepresentable Condition} erfüllt ist. Allerdings räumen die Autoren ein, dass diese Annahme in der Regel nicht überprüft werden kann und deshalb in Anwendungsfällen davon ausgegangen werden muss, dass die Schätzung nicht konsistent ist.\\
+Ein weiteres Problem bei der Anwendung des Lasso-Schätzers sind Korrelationsstrukturen, die insbesondere bei hochdimensionalen Daten auftreten. Korrelieren zwei oder mehrere Kovariablen hoch miteinander und gilt für diese Kovariablen jeweils $\beta_j \neq 0$, wählt der Lasso-Schätzer davon zufällig nur eine Kovariable aus und setzt die restlichen Regressionskoeffizienten dieser "`Gruppe"' gleich Null \cite{Bondell2008OSCAR}.\\
+Um zumindest einen Teil dieser Limitierungen des Lasso-Schätzers zu beseitigen, gibt es inzwischen diverse Weiterentwicklungen des Lasso-Schätzers wie bspw. den \textit{Grouped Lasso-Schätzer} \cite{Yuan06Grouped_modelselection} oder den \textit{Adaptive Lasso-Schätzer} \cite{zou2006Adaptive_Lasso_oracle_prop}. Beide Ansätze verfolgen die Idee, den ursprünglichen Lasso-Schätzer um vorab bekannte Informationen bzw. Annahmen zu erweitern. Für den Adaptive Lasso-Schätzer wird eine Gewichtung der einzelnen Regressionskoeffizienten im Strafterm vorgenommen und für den Grouped Lasso-Schätzer werden die Kovariablen zuvor in Gruppen zusammengefasst und im Strafterm gemeinsam "`bestraft"'. 
 
 
 
@@ -608,14 +609,17 @@ Weiterentwicklungen des Lasso-Schätzers wie der \textit{Grouped Lasso-Schätzer
 
 
 \subsection{Elastic Net}\label{Kap_Elastic-Net}
-Um sowohl die Limitationen des Ridge- als auch des Lasso-Schätzers zu umgehen, 
+Um sowohl die Vorteile des Ridge- als auch des Lasso-Schätzers, d.h. Stabilisierung der Schätzungen und Anwendbarkeit für $p>n$ sowie Variablenselektion, in einer Methode zu vereinen, haben \citeNP{zou_regularization_2005} den \textit{Elastic Net-Schätzer} (\textit{Enet}) entwickelt:
+\begin{align}\label{Eq_Enet_Lagrange}
+\boldsymbol{\hat{\beta}}^{Enet}(\gamma_1, \gamma_2)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma_1 \sum_{j=1}^{p}|\beta_j| + \gamma_2 \sum_{j=1}^{p}\beta_j^2 \right\rbrace \quad \text{mit} \ \gamma_1,\gamma_2 \ge 0.
+\end{align}
+Der Schätzer beinhaltet somit eine Kombination aus dem $L_1$-Norm-Bestrafung der Lasso-Regression und der $L_2$-Norm-Bestrafung des Ridge-Regression. Wird $\alpha=\frac{\gamma_2}{\gamma_1+\gamma_2}$ für $\alpha \in [0,1)$ definiert, lässt sich \eqref{Eq_Enet_Lagrange} auch alternativ darstellen als das Optimierungsproblem
+\begin{align}\label{Eq_Enet_Constraint}
+\boldsymbol{\hat{\beta}}^{Enet}(\gamma_1, \gamma_2)=\arg \displaystyle\min_{\beta} &\left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag \\
+\text{s.t.} \ &(1-\alpha)\sum_{j=1}^{p}|\beta_j|+\alpha \sum_{j=1}^{p}\beta_j^2 \leq t \qquad \text{mit} \  t \geq 0.
+\end{align}
+$\alpha$ beschreibt demnach den verhältnismäßigen Einfluss des Ridge- zum Lasso-Term bei der Schätzung von $\boldsymbol{\beta}$ und solange $\alpha > 0$ gilt, handelt es sich bei der Enet-Regression um ein strinkt konvexes Optimierungsproblem.\\
 
-
-\begin{comment}
-###################################
-###################################
-###################################
-ELASTIC NET\\
 
 \begin{itemize}
 \item allgemeine Darstellung:
@@ -638,11 +642,11 @@ L(\gamma_1, \gamma_2, \boldsymbol{\beta})&= |\mathbf{Y}-\mathbf{X}\boldsymbol{\b
 \mathbf{0}
 \end{pmatrix}
 \end{align*}
-\item $\Psi = \gamma_1/(1+\gamma_2)$ und $\boldsymbol{\beta^*}=\sqrt{(1+\gamma_2)}\boldsymbol{\beta}$
+\item $\omega = \frac{\gamma_1}{\sqrt{1+\gamma_2}}$ und $\boldsymbol{\beta^*}=\sqrt{(1+\gamma_2)}\boldsymbol{\beta}$
 \begin{align*}
-L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \Psi|\boldsymbol{\beta^*}| \notag \\
-&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi|\boldsymbol{\beta^*}| \\
-&=\underbrace{\mathbf{Y^*}'\mathbf{Y^*}}_{\text{weglassen!}} -2\mathbf{Y^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]+[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]'\mathbf{X^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}] + \Psi|[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]|\\
+L(\omega, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \omega|\boldsymbol{\beta^*}| \notag \\
+&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega|\boldsymbol{\beta^*}| \\
+&=\underbrace{\mathbf{Y^*}'\mathbf{Y^*}}_{\text{weglassen!}} -2\mathbf{Y^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]+[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]'\mathbf{X^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}] + \omega|[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]|\\
 &=-2\mathbf{Y^*}'\begin{pmatrix}
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{I}
@@ -681,7 +685,7 @@ L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{I}
 \end{pmatrix}\boldsymbol{\beta}
-+\gamma_1\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|} \\
++\gamma_1 \text{sign}(\boldsymbol{\beta} \\
 2\begin{pmatrix}
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{I}
@@ -692,26 +696,23 @@ L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{I}
 \end{pmatrix}'\underbrace{\mathbf{Y^*}}_{\text{bewirkt wegall } \sqrt{\gamma_2}\mathbf{I}} -
-\gamma_1\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}\\
+\gamma_1 \text{sign}(\boldsymbol{\beta}\\
 (\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})\boldsymbol{\beta}&=\mathbf{X}'\mathbf{Y}-
-\frac{\gamma_1}{2}\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}\\
-\boldsymbol{\hat{\beta}}&=\underbrace{(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}}_{\text{Ridge-Schätzer}}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\frac{\gamma_1}{2}\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}
+\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}\\
+\boldsymbol{\hat{\beta}}&=\underbrace{(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}}_{\text{Ridge-Schätzer}}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta})
 \end{align*}
 \item es muss $\mathbf{\beta} \neq 0$ gelten! 
 \item andere Darstellung:
 \begin{align*}
-L(\Psi, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \Psi|\boldsymbol{\beta^*}| \notag \\
-&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi|\boldsymbol{\beta^*}| \\
-\Rightarrow \frac{\partial L(\Psi, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
-&=-2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \\
-\Rightarrow 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \Psi\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}\\
-\Leftrightarrow \boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \Psi\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}
+L(\omega, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \omega|\boldsymbol{\beta^*}| \notag \\
+&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega|\boldsymbol{\beta^*}| \\
+\Rightarrow \frac{\partial L(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
+&=-2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \\
+\Rightarrow 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}\\
+\Leftrightarrow \boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \omega\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}
 \end{align*}
 \end{itemize}
-###################################
-###################################
-###################################
-\end{comment}
+
 
 \subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
 
@@ -811,7 +812,7 @@ und für $\hat{\beta}_j^{OLS}<0$ als
 \end{align}
 Da in \eqref{Eq_Lasso_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_Lasso_Ortho_Beta_smaller0} kleiner Null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
 \begin{align}\label{Eq_Lasso_Orthogonaldarstellung}
-\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ .\\ %\tag*{$\square$} \notag
+\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ . %\\ \tag*{$\square$} \notag
 \end{align}
 Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$. \citeNP{tibshirani96regression} sowie \citeNP{friedman2007pathwise} verweisen darauf, dass deswegen \eqref{Eq_Lasso_Orthogonaldarstellung} einem \textit{weichen Schwellenwert} entspricht:
 \begin{align*}
