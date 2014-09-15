@@ -42,8 +42,7 @@
 \usepackage{amsfonts}
 \usepackage{amsthm}
 
-
-
+\newtheorem{lemma}{Lemma}
 
 
 \usepackage{apager}
@@ -613,14 +612,50 @@ Um sowohl die Vorteile des Ridge- als auch des Lasso-Schätzers, d.h. Stabilisie
 \begin{align}\label{Eq_Enet_Lagrange}
 \boldsymbol{\hat{\beta}}^{Enet}(\gamma_1, \gamma_2)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma_1 \sum_{j=1}^{p}|\beta_j| + \gamma_2 \sum_{j=1}^{p}\beta_j^2 \right\rbrace \quad \text{mit} \ \gamma_1,\gamma_2 \ge 0.
 \end{align}
-Der Schätzer beinhaltet somit eine Kombination aus dem $L_1$-Norm-Bestrafung der Lasso-Regression und der $L_2$-Norm-Bestrafung des Ridge-Regression. Wird $\alpha=\frac{\gamma_2}{\gamma_1+\gamma_2}$ für $\alpha \in [0,1)$ definiert, lässt sich \eqref{Eq_Enet_Lagrange} auch alternativ darstellen als das Optimierungsproblem
+Der Schätzer beinhaltet somit eine Kombination aus dem $L_1$-Norm-Bestrafung der Lasso-Regression und der $L_2$-Norm-Bestrafung des Ridge-Regression. Wird $\alpha=\gamma_2 / (\gamma_1+\gamma_2)$ für $\alpha \in [0,1)$ definiert, lässt sich \eqref{Eq_Enet_Lagrange} auch alternativ darstellen als das Optimierungsproblem
 \begin{align}\label{Eq_Enet_Constraint}
 \boldsymbol{\hat{\beta}}^{Enet}(\gamma_1, \gamma_2)=\arg \displaystyle\min_{\beta} &\left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2 \right\rbrace \notag \\
 \text{s.t.} \ &(1-\alpha)\sum_{j=1}^{p}|\beta_j|+\alpha \sum_{j=1}^{p}\beta_j^2 \leq t \qquad \text{mit} \  t \geq 0.
 \end{align}
 $\alpha$ beschreibt demnach den verhältnismäßigen Einfluss des Ridge- zum Lasso-Term bei der Schätzung von $\boldsymbol{\beta}$ und solange $\alpha > 0$ gilt, handelt es sich bei der Enet-Regression um ein strinkt konvexes Optimierungsproblem.\\
-
-
+\begin{lemma}
+Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikatoren $\gamma_1$ und $\gamma_2$, sei $(\mathbf{X^*}, \mathbf{Y^*})$ ein künstlicher Datensatz mit
+\begin{align*}
+\mathbf{X^*}_{(n+p)\times p} = \frac{1}{\sqrt{1+\gamma_2}}
+\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{I}
+\end{pmatrix}, 
+\qquad 
+\mathbf{Y^*_{(n+p) \times 1}}=\begin{pmatrix}
+\mathbf{Y}\\
+\mathbf{0}
+\end{pmatrix}.
+\end{align*}
+Sei darüber hinaus $\omega = \gamma_1 /(\sqrt{1+\gamma_2})$, $\boldsymbol{\beta^*}=\sqrt{1+\gamma_2}\boldsymbol{\beta}$ und $|\cdot|^2_2$ die quadrierte $L_2$-Norm, so lässt sich die penalisierte Residuenquadratsumme schreiben als 
+\begin{align}\label{Eq_Naiv_Enet_Lassoform}
+\textnormal{PRSS}(\omega, \boldsymbol{\beta})=\textnormal{PRSS}(\omega, \boldsymbol{\beta^*})=|\mathbf{Y^*} -\mathbf{X^*}\boldsymbol{\beta^*}|^2+\omega|\boldsymbol{\beta^*}|.
+\end{align}
+Sei zudem
+\begin{align*}
+\boldsymbol{\hat{\beta}^*}=\arg \displaystyle\min_{\boldsymbol{\beta^*}} \textnormal{PRSS}(\omega, \boldsymbol{\beta^*}),
+\end{align*}
+so gilt
+\begin{align}\label{Eq_Naiv_Enet}
+\boldsymbol{\hat{\beta}}^{NaivEnet}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
+\end{align}
+\end{lemma}
+Der Schätzer in \eqref{Eq_Naiv_Enet} wird als als \textit{naiven Elastic Net-Schätzer} bezeichnet \cite{zou_regularization_2005}, da noch eine geeignete Modifikation wegen des doppelten Schrumpfungseffekts vorgenommen werden muss (siehe XXXXXX). Nachfolgend soll der von den Autoren ausgelassene Beweis \eqref{Eq_Naiv_Enet} dargestellt werden.
+\begin{proof}
+Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, gilt für die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen
+\begin{align}
+&& \frac{\textnormal{PRSS}(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
+&=-2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \notag \\
+&\Rightarrow & 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \textnormal{sign}(\boldsymbol{\beta^*}) \notag \\
+&\Leftrightarrow &\boldsymbol{\hat{\beta}^*} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \omega \textnormal{sign}(\boldsymbol{\beta^*})
+\end{align}
+\end{proof}
+ 
 \begin{itemize}
 \item allgemeine Darstellung:
 \begin{align*}
