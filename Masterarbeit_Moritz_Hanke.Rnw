@@ -41,6 +41,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{amssymb}
 
 \newtheorem{lemma}{Lemma}
 
@@ -610,7 +611,8 @@ Um zumindest einen Teil dieser Limitierungen des Lasso-Schätzers zu beseitigen,
 \subsection{Elastic Net}\label{Kap_Elastic-Net}
 Um sowohl die Vorteile des Ridge- als auch des Lasso-Schätzers, d.h. Stabilisierung der Schätzungen und Anwendbarkeit für $p>n$ sowie Variablenselektion, in einer Methode zu vereinen, haben \citeNP{zou_regularization_2005} den \textit{Elastic Net-Schätzer} (\textit{Enet}-Schätzer) entwickelt:
 \begin{align}\label{Eq_Enet_Lagrange}
-\boldsymbol{\hat{\beta}}^{Enet}(\gamma_1, \gamma_2)=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma_1 \sum_{j=1}^{p}|\beta_j| + \gamma_2 \sum_{j=1}^{p}\beta_j^2 \right\rbrace \quad \text{mit} \ \gamma_1,\gamma_2 \ge 0.
+\boldsymbol{\hat{\beta}}^{Enet}(\gamma_1, \gamma_2)&=\arg \displaystyle\min_{\beta} \textnormal{PRSS}_{Enet} \notag \\
+&=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma_1 \sum_{j=1}^{p}|\beta_j| + \gamma_2 \sum_{j=1}^{p}\beta_j^2 \right\rbrace \quad \text{mit} \ \gamma_1,\gamma_2 \ge 0.
 \end{align}
 Der Schätzer beinhaltet somit eine Kombination aus dem $L_1$-Norm-Bestrafung der Lasso-Regression und der $L_2$-Norm-Bestrafung des Ridge-Regression. Wird $\alpha=\gamma_2 / (\gamma_1+\gamma_2)$ für $\alpha \in [0,1)$ definiert, lässt sich \eqref{Eq_Enet_Lagrange} auch alternativ darstellen als das Optimierungsproblem
 \begin{align}\label{Eq_Enet_Constraint}
@@ -618,6 +620,11 @@ Der Schätzer beinhaltet somit eine Kombination aus dem $L_1$-Norm-Bestrafung de
 \text{s.t.} \ &(1-\alpha)\sum_{j=1}^{p}|\beta_j|+\alpha \sum_{j=1}^{p}\beta_j^2 \leq t \qquad \text{mit} \  t \geq 0.
 \end{align}
 $\alpha$ beschreibt demnach den verhältnismäßigen Einfluss des Ridge- zum Lasso-Term bei der Schätzung von $\boldsymbol{\beta}$ und solange $\alpha > 0$ gilt, handelt es sich bei der Enet-Regression um ein strinkt konvexes Optimierungsproblem.\\
+Wird \eqref{Eq_Enet_Lagrange} in Matrixnotation dargestellt, ergibt sich für den \textit{naiven Elastic Net-Schätzer} (\textit{nEnet}-Schätzer) durch ableiten und Null setzen
+\begin{align}
+\frac{\partial \textnormal{PRSS}_{Enet}}{\partial \boldsymbol{\beta}}=
+\end{align}
+
 \cite{zou_regularization_2005} weisen darauf hin, dass das Minimierungsproblem aus \eqref{Eq_Enet_Lagrange} sich durch geeigente Erweiterungen des Datensatzes als Lasso-Penalisierung darstellen lässt:
 \begin{lemma}\label{Lemma_Naiv_Enet}
 Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikatoren $\gamma_1$ und $\gamma_2$, sei $(\mathbf{X^*}, \mathbf{Y^*})$ ein erweiterter Datensatz mit
@@ -647,9 +654,9 @@ so gilt
 \end{align}
 \end{lemma}
 Der Schätzer in \eqref{Eq_Naiv_Enet} wird als \textit{naiven Elastic Net-Schätzer} bezeichnet \cite{zou_regularization_2005}, da noch eine geeignete Modifikation wegen des doppelten Schrumpfungseffekts vorgenommen werden muss (siehe XXXXXX). Ein Beweis für Lemma \ref{Lemma_Naiv_Enet} findet sich in Anhang \ref{App_Beweis_Naiv_Enet}.\\
-Wird \eqref{Eq_Naiv_Enet} mit dem ursprünglichen Datensatz $(\mathbf{X}, \mathbf{Y})$, dargestellt, ergibt sich
+Wird \eqref{Eq_Naiv_Enet} mit dem ursprünglichen Datensatz $(\mathbf{X}, \mathbf{Y})$, dargestellt und unter Berücksichtigung, dass wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) $\sqrt{1+\gamma_2} \geq 1$ gilt, ergibt sich
 \begin{align}
-\boldsymbol{\hat{\beta}}^{nEnet}=
+\boldsymbol{\hat{\beta}}^{nEnet}&=
 	\frac{1}{\sqrt{1+\gamma_2}} 
 		\left\lbrace
 			\left[
@@ -671,9 +678,28 @@ Wird \eqref{Eq_Naiv_Enet} mit dem ursprünglichen Datensatz $(\mathbf{X}, \mathb
 			 \mathbf{Y}\\
 			 \mathbf{0}
 			\end{pmatrix}
-			-
+			\right. \notag \\
+			& \phantom{{}=1}- \left.
 			\left[
 			 \frac{1}{1+\gamma_2}
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}'
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}
+			\right]^{-1}
+			\frac{\gamma_1/ \sqrt{1+\gamma_2}}{2}
+			\frac{\sqrt{1+\gamma_2} \boldsymbol{\beta}}{|\sqrt{1+\gamma_2} \boldsymbol{\beta}|}
+		\right\rbrace \notag \\
+%
+&=
+\frac{1}{\sqrt{1+\gamma_2}} 
+		\left\lbrace
+			(1+\gamma_2)
+			\left[
 			 \begin{pmatrix}
 			  \mathbf{X}\\
 			  \sqrt{\gamma_2}\mathbf{I}
@@ -682,10 +708,35 @@ Wird \eqref{Eq_Naiv_Enet} mit dem ursprünglichen Datensatz $(\mathbf{X}, \mathb
 			  \sqrt{\gamma_2}\mathbf{I}
 			 \end{pmatrix}
 			\right]^{-1}
-			\frac{\gamma_1}{\sqrt{1+\gamma_2}}
+			\frac{1}{\sqrt{1+\gamma_2}}
+			\begin{pmatrix}
+			 \mathbf{X}\\
+			 \sqrt{\gamma_2}\mathbf{I}
+			\end{pmatrix}'
+			\begin{pmatrix}
+			 \mathbf{Y}\\
+			 \mathbf{0}
+			\end{pmatrix}
+			\right. \notag \\
+			& \phantom{{}=1}- \left.
+			(1+\gamma_2)
+			\left[
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}'
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}
+			\right]^{-1}
+			\frac{\gamma_1 / \sqrt{1+\gamma_2}}{2}
+			\frac{ \boldsymbol{\beta}}
+			{|\boldsymbol{\beta}|}
+		\right\rbrace \notag \\
+%
+&=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta})
 \end{align}
-
-
 
 
 
