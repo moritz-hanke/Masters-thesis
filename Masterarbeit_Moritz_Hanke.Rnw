@@ -782,7 +782,7 @@ so gilt
 \boldsymbol{\hat{\beta}}^{nEnet}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
 \end{align}
 \end{lemma}
-Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) muss $\sqrt{1+\gamma_2} \geq 1$ gelten, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen
+Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) $\sqrt{1+\gamma_2} \geq 1$ gelten muss, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen
 \begin{align}\label{Eq_Naiv_Enet_Zou_APPENDIX}
 && \frac{\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
 &=-2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \notag \\
@@ -877,7 +877,7 @@ Der Schätzer aus \eqref{Eq_Naiv_Enet_Zou_APPENDIX} lässt sich unter Berücksic
 &=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
 \tag*{$\square$} \notag
 \end{align}
-
+was der Darstellung aus \eqref{Eq_Naiv_ENet_Eigene} entspricht.
 
 
 
