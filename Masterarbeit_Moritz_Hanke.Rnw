@@ -167,6 +167,7 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{PRSS}{Penalized residual sum of squares}
 \abk{KEGG}{Kyoto Encyclopedia of Genes and Genomes}
 \abk{Enet}{Elastic Net}
+\abk{nEnet}{naives Elastic Net}
 
 
 % Begin der Arbeit
@@ -620,15 +621,142 @@ Der Schätzer beinhaltet somit eine Kombination aus dem $L_1$-Norm-Bestrafung de
 \text{s.t.} \ &(1-\alpha)\sum_{j=1}^{p}|\beta_j|+\alpha \sum_{j=1}^{p}\beta_j^2 \leq t \qquad \text{mit} \  t \geq 0.
 \end{align}
 $\alpha$ beschreibt demnach den verhältnismäßigen Einfluss des Ridge- zum Lasso-Term bei der Schätzung von $\boldsymbol{\beta}$ und solange $\alpha > 0$ gilt, handelt es sich bei der Enet-Regression um ein strinkt konvexes Optimierungsproblem.\\
-Wird \eqref{Eq_Enet_Lagrange} in Matrixnotation dargestellt, ergibt sich für den \textit{naiven Elastic Net-Schätzer} (\textit{nEnet}-Schätzer) durch ableiten und Null setzen
-\begin{align}
-\frac{\partial \textnormal{PRSS}_{Enet}}{\partial \boldsymbol{\beta}}=
+Wird \eqref{Eq_Enet_Lagrange} in Matrixnotation dargestellt, ergibt sich für den \textit{naiven Elastic Net-Schätzer} (\textit{nEnet}-Schätzer) durch Ableiten und Null setzen
+\begin{align}\label{Eq_Naiv_ENet_Eigene}
+&&\frac{\partial \textnormal{PRSS}_{Enet}}{\partial \boldsymbol{\beta}}&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+2\gamma_2 \mathbf{\boldsymbol{\beta}} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) \notag \\
+&\Rightarrow & 0 &=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+2\gamma_2 \mathbf{\boldsymbol{\beta}} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) \notag \\
+&\Leftrightarrow & \mathbf{X}'\mathbf{X}\boldsymbol{\beta}+\gamma_2 \mathbf{\boldsymbol{\beta}} &=\mathbf{X}'\mathbf{Y} - \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
+&\Leftrightarrow & (\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I}) \mathbf{\boldsymbol{\beta}} &=\mathbf{X}'\mathbf{Y} - \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
+&\Leftarrow & \boldsymbol{\hat{\beta}}^{nEnet} 
+&=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
+\end{align}
+Diese Darstellung entspricht dem nEnet-Schätzer von \citeNP{zou_regularization_2005}, der durch eine Erweiterung des Datensatzes einem Lasso-Problem entspricht (für den Beweis sowie die ausführliche Darstellung siehe Anhang \ref{App_Beweis_Naiv_Zou_Darstellung}):
+\begin{align}\label{Eq_Naiv_Enet_Zou}
+\boldsymbol{\hat{\beta}}^{nEnet} = \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}
+\end{align} 
+
+
+
+
+\subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
+
+\chapter{Fazit}
+\begin{comment}
+#######
+## 1 ##
+#######
+Zu Sig-Test bei adaptiven Methoden zur Variablenselektion:
+"Classical tools for analyzing regression results, such as t statistics for judging
+the significance of individual predictors, are based on the assumption that the
+set of predictors is fixed in advance. When instead the set is chosen adaptively,
+incorporating those variables that give the best fit for a particular set of data,
+the classical tools are biased. For example, if there are 10 candidate predictors,
+and we select the single one that gives the best fit, there is about a 40% chance
+that that variable will be judged significant at the 5% level, when in fact all
+predictors are independent of the response and each other. Similar bias holds
+for the F test for comparing two models; it is based on the assumption that the
+two models are fixed in advance, rather than chosen adaptively.
+This bias affects the variable selection process itself. Formal selection proce-
+dures such as stepwise regression and all-subsets regression are ultimately based
+on statistics related to the F statistics for comparing models. Informal selection
+procedures, in which an analyst picks variables that give a good fit, are similarly
+affected."
+aus Hesterberg "Least angle and l1 penalized regression: A review"
+\end{comment}
+
+
+\bibliography{Masterarbeit}
+
+
+\begin{appendix}
+\chapter{Selbst geführte Ausführungen und Beweise}
+\section{Erwarteter quadrierter Abstand von $\boldsymbol{\hat{\beta}}^{OLS}$ zu $\boldsymbol{\beta}$}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
+Bezeichne $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times n$-Matrix, so gilt
+\begin{align}\label{Eq_Spurgleichheit}
+\text{sp}(\mathbf{BC})=\text{sp}(\mathbf{CB})
+\end{align}
+und
+\begin{align}\label{Eq_Spurmultiplikation}
+\text{sp}(\mathbf{M}\mathbf{D})=d \cdot \text{sp}(\mathbf{M})
+\end{align}
+für eine $p \times p$-Diagonalmatrix $\mathbf{D}=diag(d)$ mit den Werten $d$ und eine $p \times p$-Matrix $\mathbf{M}$ (siehe \cite{fahrmeir2009regression}).\\
+
+Sei $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $n \times n$-Matrix, so lässt sich zeigen (siehe \cite{mathai1992quadratic}), dass für den Erwartungswert der quadratischen Funktion $Q(\mathbf{b})=\mathbf{b}'\mathbf{A}\mathbf{b}$
+\begin{align}\label{Eq_Erwartung_Quadrat}
+\mathbb{E}(\mathbf{b}'\mathbf{A}\mathbf{b})=\text{sp}(\mathbf{A}\boldsymbol{\Sigma})+\mathbb{E}(\mathbf{b})'\mathbf{A}\mathbb{E}(\mathbf{b})
+\end{align}
+gilt, wobei $\boldsymbol{\Sigma}$ die Kovarianzmatrix von $\mathbf{b}$ ist.\\
+
+Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat} kann in dieser Arbeit der in der Literatur nur abgekürzte Nachweis für $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace = \sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]$ ausführlich dargestellt werden:
+\begin{align}\label{Eq_Beweis_Erwarteter_Quadrierter_Abstand}
+\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace
+&=\mathbb{E} \left\lbrace (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta}) \right\rbrace \notag \\
+&=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} - \boldsymbol{\beta}]' [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} - \boldsymbol{\beta}] \right\rbrace \notag \\
+&\stackrel{\eqref{Eq_klass_lin_matrix}}{=}\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}]' [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}] \right\rbrace \notag \\
+&=\mathbb{E}\left\lbrace [\mathbf{I}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} - \boldsymbol{\beta}]'[\mathbf{I}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} - \boldsymbol{\beta}]
+\right\rbrace \notag \\
+&=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]'[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] 
+\right\rbrace \notag \\
+&=\mathbb{E}\{
+\boldsymbol{\varepsilon}'\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{n \times n \text{-Matrix}}}\boldsymbol{\varepsilon}
+\} \notag \\
+&\stackrel{\eqref{Eq_Erwartung_Quadrat}}{=}\text{sp}[\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\underbrace{\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})}_{\substack{\sigma^2\mathbf{I}}}] + \underbrace{\mathbb{E}(\boldsymbol{\varepsilon})'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}(\boldsymbol{\varepsilon})}_{\substack{0}} \notag \\
+&\stackrel{\eqref{Eq_Spurmultiplikation}}{=}\sigma^2\text{sp}[\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}}_{\substack{n \times p \text{-Matrix}}}\underbrace{(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{p \times n \text{-Matrix}}}] \notag \\
+&\stackrel{\eqref{Eq_Spurgleichheit}}{=}\sigma^2\text{sp}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}] 
+\notag \\
+&=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]. 
+%\tag*{$\square$} \notag
 \end{align}
 
-\cite{zou_regularization_2005} weisen darauf hin, dass das Minimierungsproblem aus \eqref{Eq_Enet_Lagrange} sich durch geeigente Erweiterungen des Datensatzes als Lasso-Penalisierung darstellen lässt:
+\section{Beweis des Lasso-Schätzers für ein orthogonal Design}\label{App_Lasso_Orthogonal}
+Im orthogonalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\boldsymbol{\hat{\beta}}^{OLS}=\mathbf{X}'\mathbf{Y}$ und damit $\mathbf{Y}'\mathbf{X}=\boldsymbol{\hat{\beta}}^{OLS}{'}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
+\begin{align*}
+\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)
+&=(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}-2\mathbf{Y}'\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}-2\boldsymbol{\hat{\beta}}^{OLS}{'}\boldsymbol{\beta} + \boldsymbol{\beta}'\boldsymbol{\beta}+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}-2 \sum_{j=1}^{p}\hat{\beta}_j^{OLS} \beta_j + \sum_{j=1}^{p} \beta^2 + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
+&=\mathbf{Y}'\mathbf{Y}+\sum_{j=1}^{p}\left( -2 \hat{\beta}_j^{OLS}  \beta_j + \beta^2 + \gamma |\beta_j| \right).
+\end{align*}
+Somit ergeben sich $j=1,\dots,p$ Gleichungssysteme, die nach $\beta_j$ abgeleitet und Null gesetzt werden müssen:
+\begin{align}\label{Eq_Lasso_Einzelbeta}
+\hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS} \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
+\end{align}
+Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass für $\hat{\beta}_j^{OLS}>0$  auch $\beta_j > 0$ bzw. für $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten muss. Somit ergibt sich der Lasso-Schätzer für $\hat{\beta}_j^{OLS}>0$ als
+\begin{align}\label{Eq_Lasso_Ortho_Beta_greater0}
+&& 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma \beta_j \notag \\
+&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \notag \\
+&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}-\frac{\gamma}{2} 
+\end{align}
+und für $\hat{\beta}_j^{OLS}<0$ als
+\begin{align}\label{Eq_Lasso_Ortho_Beta_smaller0}
+&& 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 - \gamma \beta_j \notag \\
+&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j - \gamma \notag \\
+&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}+\frac{\gamma}{2} .
+\end{align}
+Da in \eqref{Eq_Lasso_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_Lasso_Ortho_Beta_smaller0} kleiner Null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
+\begin{align}\label{Eq_Lasso_Orthogonaldarstellung}
+\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ . \\ \tag*{$\square$} \notag
+\end{align}
+Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$. \citeNP{tibshirani96regression} sowie \citeNP{friedman2007pathwise} verweisen darauf, dass deswegen \eqref{Eq_Lasso_Orthogonaldarstellung} einem \textit{weichen Schwellenwert} entspricht:
+\begin{align*}
+\hat{\beta}_j^{Lasso} =
+\begin{cases}
+\hat{\beta}_j^{OLS}-\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} > 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
+\hat{\beta}_j^{OLS}+\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} < 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
+0, \qquad &\text{wenn} \ \frac{\gamma}{2} \geq |\hat{\beta}_j^{OLS}|. 
+\end{cases}
+\end{align*}
+
+
+
+
+
+\section{Beweis der der alternativen nEnet-Darstellung}\label{App_Beweis_Naiv_Zou_Darstellung}
+Nachfolgend wird das Lemma \ref{Lemma_Naiv_Enet} von \citeNP{zou_regularization_2005} für den naiven Elastic Net-Schätzer und die Äquivalenz zur Darstellung aus \eqref{Eq_Naiv_ENet_Eigene} bewiesen.
 \begin{lemma}\label{Lemma_Naiv_Enet}
 Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikatoren $\gamma_1$ und $\gamma_2$, sei $(\mathbf{X^*}, \mathbf{Y^*})$ ein erweiterter Datensatz mit
-\begin{align}\label{Eq_Enet_Artifical_Data}
+\begin{align}\label{Eq_Erweiterter_Datensatz_ENet}
 \mathbf{X^*}_{(n+p)\times p} = \frac{1}{\sqrt{1+\gamma_2}}
 \begin{pmatrix}
 \mathbf{X}\\
@@ -649,12 +777,22 @@ Sei zudem
 \boldsymbol{\hat{\beta}^*}=\arg \displaystyle\min_{\boldsymbol{\beta^*}} \textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*}),
 \end{align*}
 so gilt
-\begin{align}\label{Eq_Naiv_Enet}
+\begin{align}
 \boldsymbol{\hat{\beta}}^{nEnet}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
 \end{align}
 \end{lemma}
-Der Schätzer in \eqref{Eq_Naiv_Enet} wird als \textit{naiven Elastic Net-Schätzer} bezeichnet \cite{zou_regularization_2005}, da noch eine geeignete Modifikation wegen des doppelten Schrumpfungseffekts vorgenommen werden muss (siehe XXXXXX). Ein Beweis für Lemma \ref{Lemma_Naiv_Enet} findet sich in Anhang \ref{App_Beweis_Naiv_Enet}.\\
-Wird \eqref{Eq_Naiv_Enet} mit dem ursprünglichen Datensatz $(\mathbf{X}, \mathbf{Y})$, dargestellt und unter Berücksichtigung, dass wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) $\sqrt{1+\gamma_2} \geq 1$ gilt, ergibt sich
+Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) muss $\sqrt{1+\gamma_2} \geq 1$ gelten, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen
+\begin{align}\label{Eq_Naiv_Enet_Zou_APPENDIX}
+&& \frac{\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
+&=-2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \notag \\
+&\Rightarrow & 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\sqrt{1+\gamma_2}\boldsymbol{\beta}}{\sqrt{1+\gamma_2}|\boldsymbol{\beta}|} \notag \\
+&\Leftrightarrow &\boldsymbol{\hat{\beta}^*} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
+&\Leftrightarrow &\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
+&\Leftrightarrow & \boldsymbol{\hat{\beta}}^{nEnet} &= \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}. \\ 
+\tag*{$\square$} \notag
+\end{align}
+
+Der Schätzer aus \eqref{Eq_Naiv_Enet_Zou_APPENDIX} lässt sich unter Berücksichtigung von \eqref{Eq_Erweiterter_Datensatz_ENet} umformen zu
 \begin{align}
 \boldsymbol{\hat{\beta}}^{nEnet}&=
 	\frac{1}{\sqrt{1+\gamma_2}} 
@@ -735,232 +873,11 @@ Wird \eqref{Eq_Naiv_Enet} mit dem ursprünglichen Datensatz $(\mathbf{X}, \mathb
 			{|\boldsymbol{\beta}|}
 		\right\rbrace \notag \\
 %
-&=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta})
-\end{align}
-
-
-
-%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%
-% ab hier nur versuche müll etc
-
-
-
- 
-\begin{itemize}
-\item allgemeine Darstellung:
-\begin{align*}
-L(\gamma_1, \gamma_2, \boldsymbol{\beta})= |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2 + \gamma_1 |\boldsymbol{\beta}| + \gamma_2|\boldsymbol{\beta}|^2
-\end{align*}
-\item durch $\alpha = \gamma_2/(\gamma_1 + \gamma_2)$ wird Anteil für $L_1$- und $L_2$-Norm bei der Penalisierung festgelegt:
-\begin{align*}
-L(\gamma_1, \gamma_2, \boldsymbol{\beta})&= |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2 + (1-\alpha) |\boldsymbol{\beta}| + \alpha|\boldsymbol{\beta}|^2 \ \text{mit} \ \alpha \in [0,1)\\
-&=|\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2 + \frac{\gamma_1}{\gamma_1+\gamma_2} |\boldsymbol{\beta}| + \frac{\gamma_2}{\gamma_1+\gamma_2}|\boldsymbol{\beta}|^2
-\end{align*}
-\item für $\alpha > 1$ Funktion ist convex; für $\alpha=0$ ist sie singulär (?)
-\begin{align*}
-\mathbf{X^*_{(n+p) \times p}}=\frac{1}{\sqrt{1+\gamma_2}}
-\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}, \qquad \mathbf{Y^*_{(n+p) \times 1}}=\begin{pmatrix}
-\mathbf{Y}\\
-\mathbf{0}
-\end{pmatrix}
-\end{align*}
-\item $\omega = \frac{\gamma_1}{\sqrt{1+\gamma_2}}$ und $\boldsymbol{\beta^*}=\sqrt{(1+\gamma_2)}\boldsymbol{\beta}$
-\begin{align*}
-L(\omega, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \omega|\boldsymbol{\beta^*}| \notag \\
-&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega|\boldsymbol{\beta^*}| \\
-&=\underbrace{\mathbf{Y^*}'\mathbf{Y^*}}_{\text{weglassen!}} -2\mathbf{Y^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]+[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]'\mathbf{X^*}'\mathbf{X^*}[(\sqrt{1+\gamma_2})\boldsymbol{\beta}] + \omega|[(\sqrt{1+\gamma_2})\boldsymbol{\beta}]|\\
-&=-2\mathbf{Y^*}'\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}
-\boldsymbol{\beta}+\boldsymbol{\beta}'\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}'\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}\boldsymbol{\beta} + \gamma_1|\boldsymbol{\beta}|
-\end{align*}
-\begin{align*}
-\frac{\partial L(\gamma_1, \gamma_2, \boldsymbol{\beta})}{\partial \boldsymbol{\beta}}
-&=-2\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}'\mathbf{Y^*} + 2\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}'\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}\boldsymbol{\beta}
-+\gamma_1\frac{\boldsymbol{\beta}}{|\boldsymbol{\beta}|}
-\end{align*}
-\item Nullsetzen liefert
-\begin{align*}
-0&=-2\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}'\mathbf{Y^*} + 2\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}'\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}\boldsymbol{\beta}
-+\gamma_1 \text{sign}(\boldsymbol{\beta} \\
-2\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}'\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}\boldsymbol{\beta}&=2\begin{pmatrix}
-\mathbf{X}\\
-\sqrt{\gamma_2}\mathbf{I}
-\end{pmatrix}'\underbrace{\mathbf{Y^*}}_{\text{bewirkt wegall } \sqrt{\gamma_2}\mathbf{I}} -
-\gamma_1 \text{sign}(\boldsymbol{\beta}\\
-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})\boldsymbol{\beta}&=\mathbf{X}'\mathbf{Y}-
-\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}\\
-\boldsymbol{\hat{\beta}}&=\underbrace{(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}}_{\text{Ridge-Schätzer}}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta})
-\end{align*}
-\item es muss $\mathbf{\beta} \neq 0$ gelten! 
-\item andere Darstellung:
-\begin{align*}
-L(\omega, \boldsymbol{\beta^*})&=|\mathbf{Y^*}- \mathbf{X^*}\boldsymbol{\beta^*}|^2 + \omega|\boldsymbol{\beta^*}| \notag \\
-&=\mathbf{Y^*}'\mathbf{Y^*}-2\mathbf{Y^*}'\mathbf{X^*}\boldsymbol{\beta^*}+\boldsymbol{\beta^*}'\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega|\boldsymbol{\beta^*}| \\
-\Rightarrow \frac{\partial L(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
-&=-2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \\
-\Rightarrow 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}\\
-\Leftrightarrow \boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \omega\frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|}
-\end{align*}
-\end{itemize}
-
-
-\subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
-
-\chapter{Fazit}
-\begin{comment}
-#######
-## 1 ##
-#######
-Zu Sig-Test bei adaptiven Methoden zur Variablenselektion:
-"Classical tools for analyzing regression results, such as t statistics for judging
-the significance of individual predictors, are based on the assumption that the
-set of predictors is fixed in advance. When instead the set is chosen adaptively,
-incorporating those variables that give the best fit for a particular set of data,
-the classical tools are biased. For example, if there are 10 candidate predictors,
-and we select the single one that gives the best fit, there is about a 40% chance
-that that variable will be judged significant at the 5% level, when in fact all
-predictors are independent of the response and each other. Similar bias holds
-for the F test for comparing two models; it is based on the assumption that the
-two models are fixed in advance, rather than chosen adaptively.
-This bias affects the variable selection process itself. Formal selection proce-
-dures such as stepwise regression and all-subsets regression are ultimately based
-on statistics related to the F statistics for comparing models. Informal selection
-procedures, in which an analyst picks variables that give a good fit, are similarly
-affected."
-aus Hesterberg "Least angle and l1 penalized regression: A review"
-\end{comment}
-
-
-\bibliography{Masterarbeit}
-
-
-\begin{appendix}
-\chapter{Selbst geführte Ausführungen und Beweise}
-\section{Erwarteter quadrierter Abstand von $\boldsymbol{\hat{\beta}}^{OLS}$ zu $\boldsymbol{\beta}$}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
-Bezeichne $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times n$-Matrix, so gilt
-\begin{align}\label{Eq_Spurgleichheit}
-\text{sp}(\mathbf{BC})=\text{sp}(\mathbf{CB})
-\end{align}
-und
-\begin{align}\label{Eq_Spurmultiplikation}
-\text{sp}(\mathbf{M}\mathbf{D})=d \cdot \text{sp}(\mathbf{M})
-\end{align}
-für eine $p \times p$-Diagonalmatrix $\mathbf{D}=diag(d)$ mit den Werten $d$ und eine $p \times p$-Matrix $\mathbf{M}$ (siehe \cite{fahrmeir2009regression}).\\
-
-Sei $\mathbf{b}$ ein $n \times 1$-Spaltenvektor und $\mathbf{A}$ eine $n \times n$-Matrix, so lässt sich zeigen (siehe \cite{mathai1992quadratic}), dass für den Erwartungswert der quadratischen Funktion $Q(\mathbf{b})=\mathbf{b}'\mathbf{A}\mathbf{b}$
-\begin{align}\label{Eq_Erwartung_Quadrat}
-\mathbb{E}(\mathbf{b}'\mathbf{A}\mathbf{b})=\text{sp}(\mathbf{A}\boldsymbol{\Sigma})+\mathbb{E}(\mathbf{b})'\mathbf{A}\mathbb{E}(\mathbf{b})
-\end{align}
-gilt, wobei $\boldsymbol{\Sigma}$ die Kovarianzmatrix von $\mathbf{b}$ ist.\\
-
-Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat} kann in dieser Arbeit der in der Literatur nur abgekürzte Nachweis für $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace = \sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]$ ausführlich dargestellt werden:
-\begin{align}\label{Eq_Beweis_Erwarteter_Quadrierter_Abstand}
-\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace
-&=\mathbb{E} \left\lbrace (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta}) \right\rbrace \notag \\
-&=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} - \boldsymbol{\beta}]' [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} - \boldsymbol{\beta}] \right\rbrace \notag \\
-&\stackrel{\eqref{Eq_klass_lin_matrix}}{=}\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}]' [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} +\boldsymbol{\varepsilon} ) -\boldsymbol{\beta}] \right\rbrace \notag \\
-&=\mathbb{E}\left\lbrace [\mathbf{I}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} - \boldsymbol{\beta}]'[\mathbf{I}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} - \boldsymbol{\beta}]
-\right\rbrace \notag \\
-&=\mathbb{E}\left\lbrace [(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]'[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] 
-\right\rbrace \notag \\
-&=\mathbb{E}\{
-\boldsymbol{\varepsilon}'\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{n \times n \text{-Matrix}}}\boldsymbol{\varepsilon}
-\} \notag \\
-&\stackrel{\eqref{Eq_Erwartung_Quadrat}}{=}\text{sp}[\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\underbrace{\mathbb{C}\text{ov}(\boldsymbol{\varepsilon})}_{\substack{\sigma^2\mathbf{I}}}] + \underbrace{\mathbb{E}(\boldsymbol{\varepsilon})'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}(\boldsymbol{\varepsilon})}_{\substack{0}} \notag \\
-&\stackrel{\eqref{Eq_Spurmultiplikation}}{=}\sigma^2\text{sp}[\underbrace{\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}}_{\substack{n \times p \text{-Matrix}}}\underbrace{(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'}_{\substack{p \times n \text{-Matrix}}}] \notag \\
-&\stackrel{\eqref{Eq_Spurgleichheit}}{=}\sigma^2\text{sp}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}] 
-\notag \\
-&=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]. \\ 
-%\tag*{$\square$} \notag
-\end{align}
-
-\section{Beweis des Lasso-Schätzers für ein orthogonal Design}\label{App_Lasso_Orthogonal}
-Im orthogonalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\boldsymbol{\hat{\beta}}^{OLS}=\mathbf{X}'\mathbf{Y}$ und damit $\mathbf{Y}'\mathbf{X}=\boldsymbol{\hat{\beta}}^{OLS}{'}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
-\begin{align*}
-\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)
-&=(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
-&=\mathbf{Y}'\mathbf{Y}-2\mathbf{Y}'\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\beta}'\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
-&=\mathbf{Y}'\mathbf{Y}-2\boldsymbol{\hat{\beta}}^{OLS}{'}\boldsymbol{\beta} + \boldsymbol{\beta}'\boldsymbol{\beta}+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
-&=\mathbf{Y}'\mathbf{Y}-2 \sum_{j=1}^{p}\hat{\beta}_j^{OLS} \beta_j + \sum_{j=1}^{p} \beta^2 + \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
-&=\mathbf{Y}'\mathbf{Y}+\sum_{j=1}^{p}\left( -2 \hat{\beta}_j^{OLS}  \beta_j + \beta^2 + \gamma |\beta_j| \right).
-\end{align*}
-Somit ergeben sich $j=1,\dots,p$ Gleichungssysteme, die nach $\beta_j$ abgeleitet und Null gesetzt werden müssen:
-\begin{align}\label{Eq_Lasso_Einzelbeta}
-\hat{\beta}_j^{Lasso}=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS} \beta_j + \beta_j^2 + \gamma |\beta_j| \qquad \text{für} \ j=1,\dots,p .
-\end{align}
-Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass für $\hat{\beta}_j^{OLS}>0$  auch $\beta_j > 0$ bzw. für $\hat{\beta}_j^{OLS}<0$ auch $\beta_j < 0$ gelten muss. Somit ergibt sich der Lasso-Schätzer für $\hat{\beta}_j^{OLS}>0$ als
-\begin{align}\label{Eq_Lasso_Ortho_Beta_greater0}
-&& 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma \beta_j \notag \\
-&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma \notag \\
-&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}-\frac{\gamma}{2} 
-\end{align}
-und für $\hat{\beta}_j^{OLS}<0$ als
-\begin{align}\label{Eq_Lasso_Ortho_Beta_smaller0}
-&& 0&=\frac{\partial}{\partial \beta_j} \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 - \gamma \beta_j \notag \\
-&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j - \gamma \notag \\
-&\Leftrightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}+\frac{\gamma}{2} .
-\end{align}
-Da in \eqref{Eq_Lasso_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_Lasso_Ortho_Beta_smaller0} kleiner Null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
-\begin{align}\label{Eq_Lasso_Orthogonaldarstellung}
-\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ . \\ \tag*{$\square$} \notag
-\end{align}
-Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$. \citeNP{tibshirani96regression} sowie \citeNP{friedman2007pathwise} verweisen darauf, dass deswegen \eqref{Eq_Lasso_Orthogonaldarstellung} einem \textit{weichen Schwellenwert} entspricht:
-\begin{align*}
-\hat{\beta}_j^{Lasso} =
-\begin{cases}
-\hat{\beta}_j^{OLS}-\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} > 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
-\hat{\beta}_j^{OLS}+\frac{\gamma}{2}, \qquad &\text{wenn} \ \hat{\beta}_j^{OLS} < 0 \ \text{und} \ \frac{\gamma}{2} < |\hat{\beta}_j^{OLS}| ,\\
-0, \qquad &\text{wenn} \ \frac{\gamma}{2} \geq |\hat{\beta}_j^{OLS}|. 
-\end{cases}
-\end{align*}
-
-\section{Beweis für Lemma 1}\label{App_Beweis_Naiv_Enet}
-Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, gilt für die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen
-\begin{align}
-&& \frac{\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
-&=-2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \notag \\
-&\Rightarrow & 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\sqrt{1+\gamma_2}\boldsymbol{\beta}}{\sqrt{1+\gamma_2}|\boldsymbol{\beta}|} \notag \\
-&\Leftrightarrow &\boldsymbol{\hat{\beta}^*} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
-&\Leftrightarrow &\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
-&\Leftrightarrow & \boldsymbol{\hat{\beta}}^{nEnet} &= \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}. \notag \\ 
+&=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
 \tag*{$\square$} \notag
 \end{align}
+
+
 
 
 \chapter{Erläuterungen}
