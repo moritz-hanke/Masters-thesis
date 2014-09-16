@@ -709,7 +709,7 @@ Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat
 %\tag*{$\square$} \notag
 \end{align}
 
-\section{Beweis des Lasso-Schätzers für ein orthogonal Design}\label{App_Lasso_Orthogonal}
+\section{Beweis der Lasso-Schätzerdarstellung für ein orthogonales Design}\label{App_Lasso_Orthogonal}
 Im orthogonalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\boldsymbol{\hat{\beta}}^{OLS}=\mathbf{X}'\mathbf{Y}$ und damit $\mathbf{Y}'\mathbf{X}=\boldsymbol{\hat{\beta}}^{OLS}{'}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
 \begin{align*}
 \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)
