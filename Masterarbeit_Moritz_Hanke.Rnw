@@ -630,12 +630,12 @@ Wird \eqref{Eq_Enet_Lagrange} in Matrixnotation dargestellt, ergibt sich für de
 &\Leftarrow & \boldsymbol{\hat{\beta}}^{nEnet} 
 &=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
 \end{align}
-Diese Darstellung entspricht dem naiven nEnet-Schätzer von \citeNP{zou_regularization_2005}, der durch eine Erweiterung des Datensatzes einem Lasso-Minimierungsproblem entspricht (für den Beweis sowie die ausführliche Darstellung siehe Anhang \ref{App_Beweis_Naiv_Zou_Darstellung}):
+Der Schätzer ist identisch mit dem naiven nEnet-Schätzer von \citeNP{zou_regularization_2005}, der durch eine Erweiterung des Datensatzes einem Lasso-Minimierungsproblem entspricht (für den Beweis sowie die ausführliche Darstellung siehe Anhang \ref{App_Beweis_Naiv_Zou_Darstellung}):
 \begin{align}\label{Eq_Naiv_Enet_Zou}
 \boldsymbol{\hat{\beta}}^{nEnet} = \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}
 \end{align} 
 Die Bezeichnung "`naiver Elastic Net-Schätzer"' für \eqref{Eq_Naiv_ENet_Eigene} bzw. \eqref{Eq_Naiv_Enet_Zou} rührt daher, dass eine doppelte Penalisierung vorgenommen wird und es deswegen ohne geeignete Adjustierung zu einer zu starken Schrumpfung der Regressionskoeffizientenschätzer kommt (siehe weiter unten XXXXX).\\
-Anhand von \eqref{Eq_Naiv_ENet_Eigene} lässt sich sehen, dass Gamma1, Gamma2 Lasso Ridge BLA
+Anhand von \eqref{Eq_Naiv_ENet_Eigene} lässt sich sehen, dass Gamma1, Gamma2 Lasso Ridge STabiliserung Invertierbarkeit BLA
 
 
 
@@ -782,7 +782,7 @@ so gilt
 \boldsymbol{\hat{\beta}}^{nEnet}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
 \end{align}
 \end{lemma}
-Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) $\sqrt{1+\gamma_2} \geq 1$ gelten muss, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen
+Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen den nEnet-Schätzer
 \begin{align}\label{Eq_Naiv_Enet_Zou_APPENDIX}
 && \frac{\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
 &=-2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \notag \\
