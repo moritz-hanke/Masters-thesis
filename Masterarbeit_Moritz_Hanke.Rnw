@@ -580,7 +580,7 @@ Für den Fall, dass $\mathbf{X}$ orthogonal ist, d.h. $\mathbf{X}'\mathbf{X}=\ma
 \begin{align}\label{Eq_Lasso_Orthogonaldesign}
 \hat{\beta}_j^{Lasso}=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+
 \end{align}
-Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass nur der positive Teil in der Klammer ausgewertet wird, d.h. wenn $|\beta_j^{OLS}|-\frac{\gamma}{2} > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\frac{\gamma}{2} \ge |\beta_j^{OLS}|$ ist. Ein Ausführung für \eqref{Eq_Lasso_Orthogonaldesign} findet sich in Anhang \ref{App_Lasso_Orthogonal}. Allerdings setzt dieses Design den eher selten auftretenden Fall voraus, dass die Anzahl der Variablen gleich der Anzahl an Beobachtungen ist, d.h. $p=n$ gilt.\\
+Mit $\text{sign}(\beta_j^{OLS})$ wird das Vorzeichen des entsprechenden OLS-Schätzers bezeichnet und $(\cdot)^+$ gibt an, dass nur der positive Teil in der Klammer ausgewertet wird, d.h. wenn $|\beta_j^{OLS}|-\frac{\gamma}{2} > 0$ gilt. Somit wird $\beta_j^{Lasso} = 0$ gesetzt, wenn $\frac{\gamma}{2} \ge |\beta_j^{OLS}|$ ist. Der Beweis für \eqref{Eq_Lasso_Orthogonaldesign} findet sich in Anhang \ref{App_Lasso_Orthogonal}. Allerdings setzt dieses Design den eher selten auftretenden Fall voraus, dass die Anzahl der Variablen gleich der Anzahl an Beobachtungen ist, d.h. $p=n$ gilt.\\
 Wird \eqref{Eq_Lasso_Lagrange} nach $\boldsymbol{\beta}$ abgeleitet
 \begin{align*}
 \frac{\partial \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)}{\partial \boldsymbol{\beta}}=-2\mathbf{X}'\mathbf{Y}+2\mathbf{X}'\mathbf{X}\boldsymbol{\beta}+\gamma\text{sign}(\boldsymbol{\beta})
@@ -689,7 +689,13 @@ Sei $\mathbf{b}$ ein zufälliger $n \times 1$-Spaltenvektor und $\mathbf{A}$ ein
 \end{align}
 gilt, wobei $\boldsymbol{\Sigma}$ die Kovarianzmatrix von $\mathbf{b}$ ist.\\
 
-Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat} kann in dieser Arbeit der in der Literatur nur abgekürzte Nachweis für $\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace = \sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]$ ausführlich dargestellt werden:
+\begin{lemma}
+Unter Berücksichtigung der Sätze \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat} gilt
+\begin{align*}
+\mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace = \sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}].
+\end{align*}
+\end{lemma}
+\begin{proof}
 \begin{align}\label{Eq_Beweis_Erwarteter_Quadrierter_Abstand}
 \mathbb{E} \left\lbrace \mathcal{D}(\boldsymbol{\hat{\beta}}^{OLS},\boldsymbol{\beta}) \right\rbrace
 &=\mathbb{E} \left\lbrace (\boldsymbol{\hat{\beta}}^{OLS} - \boldsymbol{\beta} )'(\boldsymbol{\hat{\beta}}^{OLS}-\boldsymbol{\beta}) \right\rbrace \notag \\
@@ -707,11 +713,23 @@ Unter Zuhilfenahme von \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwartung_Quadrat
 &\stackrel{\eqref{Eq_Spurgleichheit}}{=}\sigma^2\text{sp}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}] 
 \notag \\
 &=\sigma^2 \text{sp}[(\mathbf{X}'\mathbf{X})^{-1}]. 
-%\tag*{$\square$} \notag
 \end{align}
+\end{proof}
 
 \section{Beweis der Lasso-Schätzerdarstellung für ein orthogonales Design}\label{App_Lasso_Orthogonal}
-Im orthogonalen Design gilt wegen $\mathbf{X}'\mathbf{X}=\mathbf{I}$ für den OLS-Schätzer  $\boldsymbol{\hat{\beta}}^{OLS}=\mathbf{X}'\mathbf{Y}$ und damit $\mathbf{Y}'\mathbf{X}=\boldsymbol{\hat{\beta}}^{OLS}{'}$, wodurch sich $\text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ schreiben lässt als
+\begin{lemma}
+Es seien die Kovariablen in $\mathbf{X}$ standardisiert, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ und $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $1,\dots, p$ gilt, und die Responsevariable $\mathbf{Y}$ zentriert,  d.h. es gilt $\frac{1}{n}\sum_{i}^{n}y_i =0$ für die Realisierungen von $\mathbf{Y}$. Liege darüber hinaus ein orthogonales Design
+\begin{align*}
+\mathbf{X}'\mathbf{X}=\mathbf{I}
+\end{align*}
+vor und bezeichne $\hat{\beta}_j^{OLS}$ den kleinste Quadrat-Schätzer, so gilt für den Lasso-Schätzer
+\begin{align*}
+\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ .
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+Die $\textnormal{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ lässt sich schreiben als
 \begin{align*}
 \text{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)
 &=(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})'(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta})+ \gamma \sum_{j=1}^{p} |\beta_j| \notag \\
@@ -738,9 +756,12 @@ und für $\hat{\beta}_j^{OLS}<0$ als
 \end{align}
 Da in \eqref{Eq_Lasso_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_Lasso_Ortho_Beta_smaller0} kleiner null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
 \begin{align}\label{Eq_Lasso_Orthogonaldarstellung}
-\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ . \\ \tag*{$\square$} \notag
+\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ . 
 \end{align}
-Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$. \citeA{tibshirani96regression} sowie \citeA{friedman2007pathwise} verweisen darauf, dass deswegen \eqref{Eq_Lasso_Orthogonaldarstellung} einem \textit{weichen Schwellenwert} entspricht:
+Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{Lasso}=0$.
+\end{proof}
+
+\citeA{tibshirani96regression} sowie \citeA{friedman2007pathwise} verweisen darauf, dass deswegen \eqref{Eq_Lasso_Orthogonaldarstellung} einem \textit{weichen Schwellenwert} entspricht:
 \begin{align*}
 \hat{\beta}_j^{Lasso} =
 \begin{cases}
@@ -755,7 +776,6 @@ Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $
 
 
 \section{Beweis der der alternativen nEnet-Darstellung}\label{App_Beweis_Naiv_Zou_Darstellung}
-Nachfolgend wird das Lemma \ref{Lemma_Naiv_Enet} von \citeA{zou_regularization_2005} für den naiven Elastic Net-Schätzer und die Äquivalenz zur Darstellung aus \eqref{Eq_Naiv_ENet_Eigene} bewiesen.
 \begin{lemma}\label{Lemma_Naiv_Enet}
 Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikatoren $\gamma_1$ und $\gamma_2$, sei $(\mathbf{X^*}, \mathbf{Y^*})$ ein erweiterter Datensatz mit
 \begin{align}\label{Eq_Erweiterter_Datensatz_ENet}
@@ -779,24 +799,31 @@ Sei zudem
 \boldsymbol{\hat{\beta}^*}=\arg \displaystyle\min_{\boldsymbol{\beta^*}} \textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*}),
 \end{align*}
 so gilt
-\begin{align}
+\begin{align*}
 \boldsymbol{\hat{\beta}}^{nEnet}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
-\end{align}
+\end{align*}
 \end{lemma}
-Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen den nEnet-Schätzer
-\begin{align}\label{Eq_Naiv_Enet_Zou_APPENDIX}
-&& \frac{\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
-&=-2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \notag \\
-&\Rightarrow & 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\sqrt{1+\gamma_2}\boldsymbol{\beta}}{\sqrt{1+\gamma_2}|\boldsymbol{\beta}|} \notag \\
-&\Leftrightarrow &\boldsymbol{\hat{\beta}^*} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
-&\Leftrightarrow &\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
-&\Leftrightarrow & \boldsymbol{\hat{\beta}}^{nEnet} &= \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}. \\ 
-\tag*{$\square$} \notag
-\end{align}
 
-Der Schätzer aus \eqref{Eq_Naiv_Enet_Zou_APPENDIX} lässt sich unter Berücksichtigung von \eqref{Eq_Erweiterter_Datensatz_ENet} umformen zu
-\begin{align}
-\boldsymbol{\hat{\beta}}^{nEnet}&=
+\noindent \textit{Beweis.} Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen den nEnet-Schätzer
+\begin{align*}
+&& \frac{\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})}{\partial \boldsymbol{\beta^*}}
+&=-2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \\
+&\Rightarrow & 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\sqrt{1+\gamma_2}\boldsymbol{\beta}}{\sqrt{1+\gamma_2}|\boldsymbol{\beta}|} \\
+&\Leftrightarrow &\boldsymbol{\hat{\beta}^*} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \\
+&\Leftrightarrow &\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \\
+&\Leftrightarrow & \boldsymbol{\hat{\beta}}^{nEnet} &= \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}. \\ 
+\tag*{$\square$} 
+\end{align*}
+
+\begin{lemma}
+Für die Darstellung des naive Elastic Net-Schätzers nach \citeA{zou_regularization_2005} gilt
+\begin{align*}
+\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
+\end{align*}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}&=
 	\frac{1}{\sqrt{1+\gamma_2}} 
 		\left\lbrace
 			\left[
@@ -818,7 +845,7 @@ Der Schätzer aus \eqref{Eq_Naiv_Enet_Zou_APPENDIX} lässt sich unter Berücksic
 			 \mathbf{Y}\\
 			 \mathbf{0}
 			\end{pmatrix}
-			\right. \notag \\
+			\right.\\
 			& \phantom{{}=1}- \left.
 			\left[
 			 \frac{1}{1+\gamma_2}
@@ -833,7 +860,7 @@ Der Schätzer aus \eqref{Eq_Naiv_Enet_Zou_APPENDIX} lässt sich unter Berücksic
 			\right]^{-1}
 			\frac{\gamma_1/ \sqrt{1+\gamma_2}}{2}
 			\frac{\sqrt{1+\gamma_2} \boldsymbol{\beta}}{|\sqrt{1+\gamma_2} \boldsymbol{\beta}|}
-		\right\rbrace \notag \\
+		\right\rbrace\\
 %
 &=
 \frac{1}{\sqrt{1+\gamma_2}} 
@@ -857,7 +884,7 @@ Der Schätzer aus \eqref{Eq_Naiv_Enet_Zou_APPENDIX} lässt sich unter Berücksic
 			 \mathbf{Y}\\
 			 \mathbf{0}
 			\end{pmatrix}
-			\right. \notag \\
+			\right.\\
 			& \phantom{{}=1}- \left.
 			(1+\gamma_2)
 			\left[
@@ -873,12 +900,12 @@ Der Schätzer aus \eqref{Eq_Naiv_Enet_Zou_APPENDIX} lässt sich unter Berücksic
 			\frac{\gamma_1 / \sqrt{1+\gamma_2}}{2}
 			\frac{ \boldsymbol{\beta}}
 			{|\boldsymbol{\beta}|}
-		\right\rbrace \notag \\
+		\right\rbrace\\
 %
-&=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}) \notag \\
-\tag*{$\square$} \notag
-\end{align}
-was der Darstellung aus \eqref{Eq_Naiv_ENet_Eigene} entspricht.
+&=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
+\end{align*}
+\end{proof}
+
 
 
 
