@@ -937,19 +937,23 @@ Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass für $
 \begin{align}\label{Eq_nEnet_Ortho_Beta_greater0}
 && 0&=\frac{\partial}{\partial \beta_j} \left( \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma_1 \beta_j + \gamma_2 \beta_j^2 \right) \notag \\
 &\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma_1 + 2\gamma_2 \beta_j \notag \\
-&\Rightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}-\frac{\gamma}{2} 
+&\Leftrightarrow& \beta_j + \gamma_2 \beta_j &=\hat{\beta}_j - \frac{\gamma_2}{2} \notag \\
+&\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j - \frac{\gamma_2}{2} \notag \\
+&\Rightarrow& \hat{\beta}_j^{nEnet}&=\frac{\hat{\beta}_j^{OLS}-\gamma_1 /2}{1 + \gamma_2} 
 \end{align}
 und für $\hat{\beta}_j^{OLS}<0$ als
 \begin{align}\label{Eq_nEnet_Ortho_Beta_smaller0}
-&& 0&=\frac{\partial}{\partial \beta_j} \left( \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 - \gamma \beta_j \right) \notag \\
-&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j - \gamma \notag \\
-&\Rightarrow& \hat{\beta}_j^{Lasso}&=\hat{\beta}_j^{OLS}+\frac{\gamma}{2} .
+&& 0&=\frac{\partial}{\partial \beta_j} \left( \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 - \gamma_1 \beta_j + \gamma_2 \beta_j^2 \right) \notag \\
+&\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j - \gamma_1 + 2\gamma_2 \beta_j \notag \\
+&\Leftrightarrow& \beta_j + \gamma_2 \beta_j &=\hat{\beta}_j + \frac{\gamma_2}{2} \notag \\
+&\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j + \frac{\gamma_2}{2} \notag \\
+&\Rightarrow& \hat{\beta}_j^{nEnet}&=\frac{\hat{\beta}_j^{OLS}+\gamma_1 /2}{1 + \gamma_2} .
 \end{align}
 Da in \eqref{Eq_nEnet_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_nEnet_Ortho_Beta_smaller0} kleiner null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
 \begin{align}\label{Eq_nEnet_Orthogonaldarstellung}
-\hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ . 
+\hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\textnormal{sign}(\hat{\beta}_j^{OLS}). 
 \end{align}
-Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{nEnet}=0$.
+Für den Fall, dass $\gamma_1 /2 \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{nEnet}=0$, und für $\gamma_2 = 0$ gilt $\hat{\beta}_j^{nEnet}=\hat{\beta}_j^{Lasso}$ im orthogonalen Design.
 
 \end{proof}
 
