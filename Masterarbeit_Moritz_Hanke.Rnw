@@ -653,7 +653,16 @@ Es sei ein $\gamma > 0$ festgelegt. Für den Fall, dass $\hat{\beta}_i \neq \hat
 \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \qquad &\text{wenn} \ k = i \ \text{oder} \ k = j.\\
 \end{cases}
 \end{align*}
-Da $\hat{\beta}_k^*$ das arithmetische Mittel der ungleichen Schätzwerte $\hat{\beta}_i$ und $\hat{\beta}_j$ ist, muss $\hat{\beta}_i < \hat{\beta}_k^* < \hat{\beta}_j$ oder $\hat{\beta}_j < \hat{\beta}_k^* < \hat{\beta}_i$ gelten. Damit unterscheiden sich die geschätzten Regressionskoeffizientenvektoren $\boldsymbol{\hat{\beta}}$ und $\boldsymbol{\hat{\beta}}^*$ nur für die Kovariablen $i$ und $j$. Wegen $\mathbf{x}_i = \mathbf{x}_j$ muss $\mathbf{X}\boldsymbol{\hat{\beta}}=\mathbf{X}\boldsymbol{\hat{\beta}}^*$ und somit $|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}|^2_2=|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*|^2_2$ gelten.
+Da $\hat{\beta}_k^*$ das arithmetische Mittel der ungleichen Schätzwerte $\hat{\beta}_i$ und $\hat{\beta}_j$ ist, muss $\hat{\beta}_i < \hat{\beta}_k^* < \hat{\beta}_j$ oder $\hat{\beta}_j < \hat{\beta}_k^* < \hat{\beta}_i$ gelten. Damit unterscheiden sich die geschätzten Regressionskoeffizientenvektoren $\boldsymbol{\hat{\beta}}$ und $\boldsymbol{\hat{\beta}}^*$ nur für die Kovariablen $i$ und $j$. Wegen $\mathbf{x}_i = \mathbf{x}_j$ muss $\mathbf{X}\boldsymbol{\hat{\beta}}=\mathbf{X}\boldsymbol{\hat{\beta}}^*$ und somit $|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}|^2_2=|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*|^2_2$ gelten. 
+Unter Berücksichtigung von \textit{Jensenschen Ungleichheit}, nach der für eine \textit{konvexe} Funktion $f$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $\sum_{j=1}^{p}z_j =1$ 
+\begin{align*}
+f \left(\sum_{j=1}^{p} z_j \beta_j \right) \leq \sum_{j=1}^{p} \left( z_j f(\beta_j) \right)
+\end{align*}
+und für eine \textit{strikt konvexe} Funktion und $\exists \beta_j : \beta_j \neq \beta_i \ \text{mit} \ \beta_i \in \{\beta_1,\dots,\beta_{j-1},\beta_{j+1}, \dots, \beta_p\}$
+\begin{align*}
+f \left(\sum_{j=1}^{p} z_j \beta_j \right) < \sum_{j=1}^{p} \left( z_j f(\beta_j) \right)
+\end{align*}
+gilt \cite{Mitroi2010Precision_Jensen}.
 \end{proof}
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
