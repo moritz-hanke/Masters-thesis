@@ -846,19 +846,61 @@ so gilt
 &\Rightarrow & 0 &= -2\mathbf{X^*}'\mathbf{Y^*}+2\mathbf{X^*}'\mathbf{X^*}\boldsymbol{\beta^*} + \omega \frac{\sqrt{1+\gamma_2}\boldsymbol{\beta}}{\sqrt{1+\gamma_2}|\boldsymbol{\beta}|} \\
 &\Leftrightarrow &\boldsymbol{\hat{\beta}^*} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \\
 &\Leftrightarrow &\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}} &= (\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \\
-&\Leftrightarrow & \boldsymbol{\hat{\beta}}^{nEnet} &= \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}. \\ 
+&\Rightarrow & \boldsymbol{\hat{\beta}}^{nEnet} &= \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}. \\ 
 \tag*{$\square$} 
 \end{align*}
 
 \begin{lemma}
-Unter Verwendung des erweiterten Datensatzes \eqref{Eq_Erweiterter_Datensatz_ENet}, $\omega=\gamma_1/\sqrt{1+\gamma_2}$ sowie  aus Lemma \ref{Lemma_Naiv_Enet}, gilt für die Darstellung des naive Elastic Net-Schätzers \eqref{Eq_Naiv_Enet_Zou} nach \citeA{zou_regularization_2005}:
+Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wegen $\gamma_2 \geq 0$ (vgl. dazu Anhang \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, gilt für die Darstellung des naive Elastic Net-Schätzers \eqref{Eq_Naiv_Enet_Zou} nach \citeA{zou_regularization_2005}:
 \begin{align*}
 \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
 \end{align*}
 \end{lemma}
 \begin{proof}
 \begin{align*}
-\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}&=(\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \textnormal{sign}(\boldsymbol{\beta}) \\
+\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}
+&=\frac{1}{\sqrt{1+\gamma_2}} \left\lbrace(\mathbf{X^*}'\mathbf{X^*})^{-1}\mathbf{X^*}'\mathbf{Y^*} - (\mathbf{X^*}'\mathbf{X^*})^{-1} \frac{\omega}{2} \frac{\boldsymbol{\beta^*}}{|\boldsymbol{\beta^*}|} \right\rbrace\\
+%
+&\stackrel{\eqref{Eq_Erweiterter_Datensatz_ENet}}{=}
+	\frac{1}{\sqrt{1+\gamma_2}} 
+		\left\lbrace
+			\left[
+			 \frac{1}{\sqrt{1+\gamma_2}}
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}'
+			 \frac{1}{\sqrt{1+\gamma_2}}
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}
+			\right]^{-1}
+			\frac{1}{\sqrt{1+\gamma_2}}
+			\begin{pmatrix}
+			 \mathbf{X}\\
+			 \sqrt{\gamma_2}\mathbf{I}
+			\end{pmatrix}'
+			\begin{pmatrix}
+			 \mathbf{Y}\\
+			 \mathbf{0}
+			\end{pmatrix}
+			\right.\\
+			& \phantom{{}=1}- \left.
+			\left[
+			 \frac{1}{1+\gamma_2}
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}'
+			 \begin{pmatrix}
+			  \mathbf{X}\\
+			  \sqrt{\gamma_2}\mathbf{I}
+			 \end{pmatrix}
+			\right]^{-1}
+			\frac{\gamma_1/ \sqrt{1+\gamma_2}}{2}
+			\frac{\sqrt{1+\gamma_2} \boldsymbol{\beta}}{|\sqrt{1+\gamma_2} \boldsymbol{\beta}|}
+		\right\rbrace\\
 %
 &=
 	\frac{1}{\sqrt{1+\gamma_2}} 
