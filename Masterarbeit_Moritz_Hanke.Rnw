@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{report}
+i\documentclass[12pt, a4paper]{report}
 \usepackage{ucs}
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
@@ -653,18 +653,18 @@ Es sei ein $\gamma > 0$ festgelegt. Für den Fall, dass $\hat{\beta}_i \neq \hat
 \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \qquad &\text{wenn} \ k = i \ \text{oder} \ k = j.\\
 \end{cases}
 \end{align*}
-Da $\hat{\beta}_k^*$ das arithmetische Mittel der ungleichen Schätzwerte $\hat{\beta}_i$ und $\hat{\beta}_j$ ist, muss $\hat{\beta}_i < \hat{\beta}_k^* < \hat{\beta}_j$ oder $\hat{\beta}_j < \hat{\beta}_k^* < \hat{\beta}_i$ gelten. Damit unterscheiden sich die geschätzten Regressionskoeffizientenvektoren $\boldsymbol{\hat{\beta}}$ und $\boldsymbol{\hat{\beta}}^*$ nur für die Kovariablen $i$ und $j$. Wegen $\mathbf{x}_i = \mathbf{x}_j$ muss $\mathbf{X}\boldsymbol{\hat{\beta}}=\mathbf{X}\boldsymbol{\hat{\beta}}^*$ und somit $|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}|^2_2=|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*|^2_2$ gelten. 
+Die geschätzten Regressionskoeffizientenvektoren $\boldsymbol{\hat{\beta}}$ und $\boldsymbol{\hat{\beta}}^*$ unterscheiden sich nur für die Kovariablen $i$ und $j$. Wegen $\frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j)+\frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) = \hat{\beta}_i + \hat{\beta}_j$ und $\mathbf{x}_i = \mathbf{x}_j$ muss $\mathbf{X}\boldsymbol{\hat{\beta}}=\mathbf{X}\boldsymbol{\hat{\beta}}^*$ und somit $|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}|^2_2=|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*|^2_2$ für die RSS gelten. 
 Unter Berücksichtigung von \textit{Jensenschen Ungleichheit}, nach der für eine \textit{konvexe} Funktion $f$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $\sum_{j=1}^{p}z_j =1$ gilt 
 \begin{align*}
 f \left(\sum_{j=1}^{p} z_j \beta_j \right) \leq \sum_{j=1}^{p} \left( z_j f(\beta_j) \right)
 \end{align*}
-bzw. für eine \textit{strikt konvexe} Funktion und $\exists \beta_j : \beta_j \neq \beta_i \ \text{mit} \ \beta_i \in \{\beta_1,\dots,\beta_{j-1},\beta_{j+1}, \dots, \beta_p\}$ gilt \cite{Mitroi2010Precision_Jensen}
+und für eine \textit{strikt konvexe} Funktion und $\exists \beta_j : \beta_j \neq \beta_i \ \text{mit} \ \beta_i \in \{\beta_1,\dots,\beta_{j-1},\beta_{j+1}, \dots, \beta_p\}$ gilt \cite{Mitroi2010Precision_Jensen}
 \begin{align*}
 f \left(\sum_{j=1}^{p} z_j \beta_j \right) < \sum_{j=1}^{p} \left( z_j f(\beta_j) \right),
 \end{align*}
 muss
 \begin{align*}
-&& J \left( \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \right) &< \frac{1}{2}J(\hat{\beta}_i) + \frac{1}{2}J(\hat{\beta}_j) \\
+&& J \left( \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \right)+ J \left( \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \right) &< \frac{1}{2}J(\hat{\beta}_i) + \frac{1}{2}J(\hat{\beta}_j) + \frac{1}{2}J(\hat{\beta}_i) + \frac{1}{2}J(\hat{\beta}_j) \\
 &\Leftrightarrow& 2J \left( \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \right) &< J(\hat{\beta}_i) + J(\hat{\beta}_j)
 \end{align*}
 \end{proof}
@@ -1024,7 +1024,7 @@ und für $\hat{\beta}_j^{OLS}<0$ als
 &\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j + \frac{\gamma_2}{2} \notag \\
 &\Rightarrow& \hat{\beta}_j^{nEnet}&=\frac{\hat{\beta}_j^{OLS}+\gamma_1 /2}{1 + \gamma_2} .
 \end{align}
-Da in \eqref{Eq_nEnet_Ortho_Beta_greater0} die rechte Seite für den Lasso-Schätzer größer und in \eqref{Eq_nEnet_Ortho_Beta_smaller0} kleiner null sein muss, kann in beiden Fällen der Lasso-Schätzer dargestellt werden als
+Da in \eqref{Eq_nEnet_Ortho_Beta_greater0} die rechte Seite für den nENet-Schätzer größer und in \eqref{Eq_nEnet_Ortho_Beta_smaller0} kleiner null sein muss, kann in beiden Fällen der nENet-Schätzer dargestellt werden als
 \begin{align}\label{Eq_nEnet_Orthogonaldarstellung}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\textnormal{sign}(\hat{\beta}_j^{OLS}). 
 \end{align}
