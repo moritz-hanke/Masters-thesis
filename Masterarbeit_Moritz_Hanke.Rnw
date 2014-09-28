@@ -1,4 +1,4 @@
-i\documentclass[12pt, a4paper]{report}
+\documentclass[12pt, a4paper]{report}
 \usepackage{ucs}
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
@@ -640,34 +640,8 @@ In Analogie zum Lasso-Schätzer ergibt sich für ein orthogonales Design. $\math
 \begin{align}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\text{sign}(\hat{\beta}_j^{OLS}).
 \end{align}
-Für die Schätzung der einzelnen Regressionskoeffizienten ist es wünschenswert, dass Variablen, die hoch miteinander korrelieren, unabhängig vom Vorzeichen ähnliche Schätzwerte erhalten. Für den Fall, dass von identischen Kovariablenspalten in $\mathbf{X}$, sollen die entsprechenden Schätzer den selben Schätzwert haben \cite{zou_regularization_2005}. Diese Eigenschaft eines Schätzers wird \textit{Gruppierungseffekt} genannt.
-\begin{lemma}
-Es sei $\mathbf{x}_i = \mathbf{x_j}$ für $i,j \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2_2 + \gamma J(\boldsymbol{\beta})$. Bezeichnet $|\cdot|^2_2$ die $L_2$-Norm und sei $J(\cdot)$ eine \textnormal{strikt konvexe} Funktion, so gilt $\hat{\beta}_i = \hat{\beta}_j$ für $\forall \gamma > 0$.
-\end{lemma}
-\begin{proof}
-Es sei ein $\gamma > 0$ festgelegt. Für den Fall, dass $\hat{\beta}_i \neq \hat{\beta}_j$ gilt, sei $\boldsymbol{\hat{\beta}}^*$ definiert als
-\begin{align*}
-\hat{\beta}_k^*=
-\begin{cases}
-\hat{\beta}_k \qquad &\text{wenn} \ k \neq i \ \text{und} \ k \neq j,\\
-\frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \qquad &\text{wenn} \ k = i \ \text{oder} \ k = j.\\
-\end{cases}
-\end{align*}
-Die geschätzten Regressionskoeffizientenvektoren $\boldsymbol{\hat{\beta}}$ und $\boldsymbol{\hat{\beta}}^*$ unterscheiden sich nur für die Kovariablen $i$ und $j$. Wegen $\frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j)+\frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) = \hat{\beta}_i + \hat{\beta}_j$ und $\mathbf{x}_i = \mathbf{x}_j$ muss $\mathbf{X}\boldsymbol{\hat{\beta}}=\mathbf{X}\boldsymbol{\hat{\beta}}^*$ und somit $|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}|^2_2=|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*|^2_2$ für die RSS gelten. 
-Unter Berücksichtigung von \textit{Jensenschen Ungleichheit}, nach der für eine \textit{konvexe} Funktion $f$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $\sum_{j=1}^{p}z_j =1$ gilt 
-\begin{align*}
-f \left(\sum_{j=1}^{p} z_j \beta_j \right) \leq \sum_{j=1}^{p} \left( z_j f(\beta_j) \right)
-\end{align*}
-und für eine \textit{strikt konvexe} Funktion und $\exists \beta_j : \beta_j \neq \beta_i \ \text{mit} \ \beta_i \in \{\beta_1,\dots,\beta_{j-1},\beta_{j+1}, \dots, \beta_p\}$ gilt \cite{Mitroi2010Precision_Jensen}
-\begin{align*}
-f \left(\sum_{j=1}^{p} z_j \beta_j \right) < \sum_{j=1}^{p} \left( z_j f(\beta_j) \right),
-\end{align*}
-muss
-\begin{align*}
-&& J \left( \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \right)+ J \left( \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \right) &< \frac{1}{2}J(\hat{\beta}_i) + \frac{1}{2}J(\hat{\beta}_j) + \frac{1}{2}J(\hat{\beta}_i) + \frac{1}{2}J(\hat{\beta}_j) \\
-&\Leftrightarrow& 2J \left( \frac{1}{2}(\hat{\beta}_i+\hat{\beta}_j) \right) &< J(\hat{\beta}_i) + J(\hat{\beta}_j)
-\end{align*}
-\end{proof}
+Bei der Schätzung der einzelnen Regressionskoeffizienten sollten Variablen, die hoch miteinander korrelieren, ähnliche Schätzwerte erhalten. Für den Fall, dass identischen Kovariablenspalten in $\mathbf{X}$ vorliegen, sollten die entsprechenden Schätzer sogar den selben Schätzwert erhalten. Diese Eigenschaft eines Schätzers wird \textit{Gruppierungseffekt} genannt und gilt für alle penalisierten Regressionen, deren Strafterm \textit{strikt konvex} ist (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). 
+
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
 
@@ -888,11 +862,12 @@ Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wege
 			\right.\\
 			& \phantom{{}=1}- \left.
 			\left[
-			 \frac{1}{1+\gamma_2}
+			 \frac{1}{\sqrt{1+\gamma_2}}
 			 \begin{pmatrix}
 			  \mathbf{X}\\
 			  \sqrt{\gamma_2}\mathbf{I}
 			 \end{pmatrix}'
+			 \frac{1}{\sqrt{1+\gamma_2}}
 			 \begin{pmatrix}
 			  \mathbf{X}\\
 			  \sqrt{\gamma_2}\mathbf{I}
@@ -937,13 +912,12 @@ Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wege
 			  \sqrt{\gamma_2}\mathbf{I}
 			 \end{pmatrix}
 			\right]^{-1}
-			\frac{\gamma_1/ \sqrt{1+\gamma_2}}{2}
-			\frac{\sqrt{1+\gamma_2} \boldsymbol{\beta}}{|\sqrt{1+\gamma_2} \boldsymbol{\beta}|}
+			\frac{\gamma_1}{2 \sqrt{1+\gamma_2}}
+			\frac{\boldsymbol{\beta}}{| \boldsymbol{\beta}|}
 		\right\rbrace\\
 %
 &=
-\frac{1}{\sqrt{1+\gamma_2}} 
-		\left\lbrace
+\left.
 			(1+\gamma_2)
 			\left[
 			 \begin{pmatrix}
@@ -954,7 +928,7 @@ Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wege
 			  \sqrt{\gamma_2}\mathbf{I}
 			 \end{pmatrix}
 			\right]^{-1}
-			\frac{1}{\sqrt{1+\gamma_2}}
+			\frac{1}{1+\gamma_2}
 			\begin{pmatrix}
 			 \mathbf{X}\\
 			 \sqrt{\gamma_2}\mathbf{I}
@@ -976,10 +950,10 @@ Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wege
 			  \sqrt{\gamma_2}\mathbf{I}
 			 \end{pmatrix}
 			\right]^{-1}
-			\frac{\gamma_1 / \sqrt{1+\gamma_2}}{2}
+			\frac{\gamma_1}{2 (1+\gamma_2)}
 			\frac{ \boldsymbol{\beta}}
 			{|\boldsymbol{\beta}|}
-		\right\rbrace\\
+\right. \\
 %
 &=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
 \end{align*}
@@ -1024,12 +998,35 @@ und für $\hat{\beta}_j^{OLS}<0$ als
 &\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j + \frac{\gamma_2}{2} \notag \\
 &\Rightarrow& \hat{\beta}_j^{nEnet}&=\frac{\hat{\beta}_j^{OLS}+\gamma_1 /2}{1 + \gamma_2} .
 \end{align}
-Da in \eqref{Eq_nEnet_Ortho_Beta_greater0} die rechte Seite für den nENet-Schätzer größer und in \eqref{Eq_nEnet_Ortho_Beta_smaller0} kleiner null sein muss, kann in beiden Fällen der nENet-Schätzer dargestellt werden als
+Da in \eqref{Eq_nEnet_Ortho_Beta_greater0} die rechte Seite für den nEnet-Schätzer größer und in \eqref{Eq_nEnet_Ortho_Beta_smaller0} kleiner null sein muss, kann in beiden Fällen der nEnet-Schätzer dargestellt werden als
 \begin{align}\label{Eq_nEnet_Orthogonaldarstellung}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\textnormal{sign}(\hat{\beta}_j^{OLS}). 
 \end{align}
 Für den Fall, dass $\gamma_1 /2 \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{nEnet}=0$, und für $\gamma_2 = 0$ gilt $\hat{\beta}_j^{nEnet}=\hat{\beta}_j^{Lasso}$ aus dem orthogonalen Design von \ref{App_Lasso_Orthogonal}.
+\end{proof}
 
+\section{Beweis für Gruppierungseffekt bei strikt konvexen Straftermen}\label{App_GroupEffect_Strict_Conv}
+\begin{lemma}
+Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $|\cdot|^2_2$ die $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
+\end{lemma}
+Der nachfolgende Beweis ist eine ausführlichere Darstellung des Beweises von \citeA{zou_regularization_2005}.
+\begin{proof}
+Es sei ein $\gamma > 0$ festgelegt. Für den Fall, dass $\hat{\beta}_k \neq \hat{\beta}_l$ gilt, sei $\boldsymbol{\hat{\beta}}^*$ definiert als
+\begin{align*}
+\hat{\beta}_j^*=
+\begin{cases}
+\hat{\beta}_j \qquad &\text{wenn} \ j \neq k \ \text{und} \ j \neq l,\\
+\frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l \qquad &\text{wenn} \ j = k \ \text{oder} \ j = l,\\
+\end{cases}
+\end{align*}
+d.h. $\hat{\beta}_k^* = \hat{\beta}_l^* \neq \hat{\beta}_k,\hat{\beta}_l$. Wegen $\hat{\beta}_k^* + \hat{\beta}_l^*=(\frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l) +  (\frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l) = \hat{\beta}_k + \hat{\beta}_l$ und $\mathbf{x}_k = \mathbf{x}_l$ ist $|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}|^2_2=|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*|^2_2$.  
+Unter Berücksichtigung der \textit{Jensenschen Ungleichheit} für strikt konvexe Funktionen (siehe Anhang \ref{App_Jensensche_Ungleichung}), 
+muss wegen $\hat{\beta}_k \neq \hat{\beta}_l$ und $\frac{1}{2} J(\beta_k)+\frac{1}{2} J(\beta_k)= J(\beta_k)$ bzw. $\frac{1}{2} J(\beta_l)+\frac{1}{2} J(\beta_l)= J(\beta_l)$ gelten
+\begin{align*}
+&& J \left( \frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l \right) + J \left( \frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l \right) &< \frac{1}{2}J(\hat{\beta}_k) + \frac{1}{2}J(\hat{\beta}_l) +\frac{1}{2}J(\hat{\beta}_k)+\frac{1}{2}J(\hat{\beta}_l) \\
+&\Leftrightarrow& J (\hat{\beta}_k^*) + J (\hat{\beta}_l^*) &< J(\hat{\beta}_k) + J(\hat{\beta}_l).
+\end{align*}
+Damit gilt $P(\boldsymbol{\hat{\beta}^*}) <  P(\boldsymbol{\hat{\beta}})$, was ein Widerspruch zur Annahme ist, dass $\boldsymbol{\hat{\beta}}$ ein Minimum ist. Folglich muss $\hat{\beta}_k =\hat{\beta}_l$ sein.
 \end{proof}
 
 \chapter{Erläuterungen}
@@ -1164,6 +1161,16 @@ Sind $g$ und $h$ zwei konvexe Funktionen und $p,q \ge 0$, so lässt sich zeigen,
 f=p \cdot g + q \cdot h
 \end{align*}
 ebenfalls eine konvexe Funktion ist \cite{boyd2004convex}.
+
+\section{Jensensche Ungleichung}\label{App_Jensensche_Ungleichung}
+Für eine \textit{konvexe} Funktion $f$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $\sum_{j=1}^{p}z_j =1$ gilt 
+\begin{align*}
+f \left(\sum_{j=1}^{p} z_j x_j \right) \leq \sum_{j=1}^{p} \left( z_j f(x_j) \right).
+\end{align*}
+Handelt es sich um eine \textit{strikt konvexe} Funktion $f$ und $\exists x_k : x_k \neq x_l \ \text{mit} \ x_l \in \{x_1,\dots,x_{k-1},x_{k+1}, \dots, x_p\}$  \cite{Mitroi2010Precision_Jensen}, gilt
+\begin{align*}
+f \left(\sum_{j=1}^{p} z_j x_j \right) < \sum_{j=1}^{p} \left( z_j f(x_j) \right).
+\end{align*}
 
 % Die eidesstattliche Erklärung auf einer neuen Seite
 \newpage
