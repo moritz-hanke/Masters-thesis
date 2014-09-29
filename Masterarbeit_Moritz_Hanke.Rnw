@@ -635,15 +635,27 @@ Wird \eqref{Eq_Enet_Lagrange} in Matrixnotation dargestellt, ergibt sich für de
 \end{align}
 Der Schätzer ist identisch mit dem nEnet-Schätzer von \citeA{zou_regularization_2005}, der durch eine Erweiterung des Datensatzes einem Lasso-Minimierungsproblem entspricht (für den Beweis sowie die ausführliche Darstellung siehe Anhang \ref{App_Beweis_Naiv_Zou_Darstellung}):
 \begin{align}\label{Eq_Naiv_Enet_Zou}
-\boldsymbol{\hat{\beta}}^{nEnet} = \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}
-\end{align} 
-Die Bezeichnung "`naiver Elastic Net-Schätzer"' für \eqref{Eq_Naiv_ENet_Eigene} bzw. \eqref{Eq_Naiv_Enet_Zou} rührt daher, dass eine doppelte Penalisierung vorgenommen wird und es deswegen ohne geeignete Adjustierung zu einer zu starken Schrumpfung der Regressionskoeffizientenschätzer kommt (siehe weiter unten XXXXX).\\
+\boldsymbol{\hat{\beta}}^{nEnet} = \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
+\end{align}
+Für das "`künstlich"' erzeugte Lasso-Minimierungsproblem ist $\boldsymbol{\hat{\beta}^*}$ ist in diesem Zusammenhang der entsprechende Schätzer.\\ 
+Die Bezeichnung "`naiver Elastic Net-Schätzer"' für \eqref{Eq_Naiv_ENet_Eigene} bzw. \eqref{Eq_Naiv_Enet_Zou} rührt daher, dass eine doppelte Penalisierung vorgenommen wird und es deswegen ohne geeignete Adjustierung zu einer zu starken Schrumpfung der Regressionskoeffizientenschätzer kommt (siehe weiter unten).\\
 In Analogie zum Lasso-Schätzer ergibt sich für ein orthogonales Design. $\mathbf{X}'\mathbf{X}=\mathbf{I}$ der nEnet-Schätzer für die $j=1,\dots, p$ Kovariablen als (siehe Anhang \ref{App_nEnet_Orthogonal})
 \begin{align}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\text{sign}(\hat{\beta}_j^{OLS}).
 \end{align}
-Bei der Schätzung der einzelnen Regressionskoeffizienten sollten Variablen, die hoch miteinander korrelieren, ähnliche Schätzwerte erhalten. Für den Fall, dass identischen Kovariablenspalten in $\mathbf{X}$ vorliegen, sollten die entsprechenden Schätzer sogar den selben Schätzwert erhalten. Diese Eigenschaft eines Schätzers wird \textit{Gruppierungseffekt} genannt und gilt für alle penalisierten Regressionen, deren Strafterm \textit{strikt konvex} ist (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). 
-
+Unabhängig davon, ob die RSS eine \textit{konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})< p$) oder eine \textit{strikt konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})= p$) ist, handelt es sich bei der PRSS der nEnet-Methode um eine strikt konvexe Funktion. Grund hierfür ist der Strafterm $P$, der durch $L_2$-Norm selbst strikt konvex ist. Dadurch hat der nEnet-Schätzer eine eindeutige Lösung und Kovariablen mit identischen beobachteten Ausprägungen erhalten die selben Schätzer (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). Darüber hinaus hat der nEnet-Schätzer einen \textit{Gruppierungseffekt}, d.h. Kovariablen, die hoch miteinander korrelieren erhalten ähnliche Schätzwerte \cite{zou_regularization_2005}. Sind $\gamma_1$ und $\gamma_2$ fest, sei zudem $\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)>0$ und beschreibt
+\begin{align*}
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{|\mathbf{Y}|_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)|
+\end{align*}
+die \textit{einheitenlose} Differenz zwischen den geschätzten Regressionskoeffizienten für die Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$, so gilt (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nEnet}):
+\begin{align}\label{Eq_obere_Grenze_Diff_nEnet}
+D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
+\end{align}
+$\rho_{k,l}$ entspricht dabei der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$. Die Darstellung von \eqref{Eq_obere_Grenze_Diff_nEnet} zeigt, dass bei einer hohen Korrelation zwischen $x_k$ und $x_l$ die Differenz der entsprechenden Regressionskoeffizientenschätzer nahe 0 ist. Diese Eigenschaft ist besonders wünschenswert, weil damit eine inhaltliche Ähnlichkeit, die sich in den beobachteten Kovariablenausprägungen äußert, in den geschätzten Regressionskoeffizienten darstellt. Zusätzlich verdeutlicht \eqref{Eq_obere_Grenze_Diff_nEnet}, dass bei einer perfekte Korrelation, d.h. $\rho_{k,l}=1$, die Schätzer identisch sind. Die Autoren der Enet-Methode weisen darauf hin, dass für den Fall $\rho_{k,l}=-1$ einer der beiden Kovariablenvektoren mit $-1$ multipliziert werden soll, um die Darstellung aus \ref{Eq_obere_Grenze_Diff_nEnet} zu gewährleisten. Im Rahmen dieser Arbeit wird eine alternative Darstellung vorgeschlagen, die eine Modifikation der Kovariablen nicht notwendig macht:
+\begin{align}
+D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-|\rho_{k,l}|)}.
+\end{align}
+Beweis, dass das GEHT?????????????????
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
 
@@ -796,7 +808,7 @@ Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikato
 \sqrt{\gamma_2}\mathbf{I}
 \end{pmatrix}, 
 \qquad 
-\mathbf{Y^*_{(n+p) \times 1}}=\begin{pmatrix}
+\mathbf{Y^*}_{(n+p) \times 1}=\begin{pmatrix}
 \mathbf{Y}\\
 \mathbf{0}
 \end{pmatrix}.
@@ -1030,6 +1042,20 @@ muss wegen $\hat{\beta}_k \neq \hat{\beta}_l$ und $\frac{1}{2} J(\beta_k)+\frac{
 \end{align*}
 Damit gilt $P(\boldsymbol{\hat{\beta}^*}) <  P(\boldsymbol{\hat{\beta}})$, was ein Widerspruch zur Annahme ist, dass $\boldsymbol{\hat{\beta}}$ ein Minimum ist. Folglich muss $\hat{\beta}_k =\hat{\beta}_l$ sein.
 \end{proof}
+
+\section{Beweis der oberen Grenze der Differenz zwischen zwei nEnet-Schätzern}\label{App_obere_Grenze_Diff_nEnet}
+\begin{lemma}
+Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
+\begin{align*}
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{|\mathbf{Y}|_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)|,
+\end{align*}
+so gilt
+\begin{align*}
+D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
+\end{align*}
+wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$ entspricht.
+\end{lemma}
+
 
 \chapter{Erläuterungen}
 \section{Verlust- und Risikofunktionen}\label{App_Risikofunktion}
