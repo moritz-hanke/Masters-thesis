@@ -1058,10 +1058,10 @@ wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf
 Der nachfolgende Beweis ist eine ausführliche Darstellung des Beweises von \citeA{zou_regularization_2005}.
 \begin{proof}
 Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
-\begin{align*}
-\frac{\partial\textnormal{PRSS}_{nEnet}(\boldsymbol{\beta},\gamma_1,\gamma_2)}{\partial \beta_j}=0 \qquad \textnormal{mit} \ j=1,\dots,p
-\end{align*}
-erfüllt, ergibt sich für die Kovariable $k$
+\begin{align}\label{Eq_nEnt_Ableitung_beta_j}
+\frac{\partial\textnormal{PRSS}_{nEnet}(\boldsymbol{\beta},\gamma_1,\gamma_2)}{\partial \beta_j}=0 \qquad \textnormal{für} \ \hat{\beta}^{nEnet}_j \neq 0 \qquad \textnormal{mit} \ j=1,\dots,p
+\end{align}
+erfüllt, ergibt sich aus \eqref{Eq_nEnt_Ableitung_beta_j} für die Kovariable $k$
 \begin{align}\label{Eq_Diff_nEnet_Kovariable_K}
 2\mathbf{x}_k{'}\mathbf{Y}-2\mathbf{x}_k{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}(\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)) + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
 \end{align}
@@ -1070,10 +1070,13 @@ und für die Kovariable $l$
 2\mathbf{x}_l{'}\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}(\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)) + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
 \end{align}
 mit $k,l = 1, \dots, p$.\\
-Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}(\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2))=\textnormal{sign}(\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2))$ gelten. Deswegen ergibt Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L}
+Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}(\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2))=\textnormal{sign}(\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2))$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
 \begin{align*}
-()
-\end{align*} 
+&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})(\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2))+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \\
+&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})(\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2))+\gamma_2(\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2))&=0 \\
+&\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet}.
+\end{align*}
+\boldsymbol{\hat{\varepsilon}}^{nEnet} entspricht dabei dem Residuenvektor $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$.
 \end{proof}
 
 \chapter{Erläuterungen}
