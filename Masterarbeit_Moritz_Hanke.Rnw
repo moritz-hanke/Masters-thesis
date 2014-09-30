@@ -815,7 +815,7 @@ Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikato
 \end{align}
 Mit $\omega = \gamma_1 /\sqrt{1+\gamma_2}$, $\boldsymbol{\beta^*}=\sqrt{1+\gamma_2}\boldsymbol{\beta}$ und $|\cdot|^2_2$ die quadrierte $L_2$-Norm, lässt sich die penalisierte Residuenquadratsumme schreiben als 
 \begin{align}\label{Eq_Naiv_Enet_Lassoform}
-\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta})=\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})=|\mathbf{Y^*} -\mathbf{X^*}\boldsymbol{\beta^*}|^2+\omega|\boldsymbol{\beta^*}|.
+\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta})=\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})=|\mathbf{Y^*} -\mathbf{X^*}\boldsymbol{\beta^*}|^2_2+\omega|\boldsymbol{\beta^*}|.
 \end{align}
 Sei zudem
 \begin{align*}
@@ -1063,20 +1063,38 @@ Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
 \end{align}
 erfüllt, ergibt sich aus \eqref{Eq_nEnt_Ableitung_beta_j} für die Kovariable $k$
 \begin{align}\label{Eq_Diff_nEnet_Kovariable_K}
-2\mathbf{x}_k{'}\mathbf{Y}-2\mathbf{x}_k{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}(\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)) + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
+2\mathbf{x}_k{'}\mathbf{Y}-2\mathbf{x}_k{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
 \end{align}
 und für die Kovariable $l$
 \begin{align}\label{Eq_Diff_nEnet_Kovariable_L}
-2\mathbf{x}_l{'}\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}(\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)) + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
+2\mathbf{x}_l{'}\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
 \end{align}
 mit $k,l = 1, \dots, p$.\\
-Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}(\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2))=\textnormal{sign}(\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2))$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
+Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
+\begin{align} 
+&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
+&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
+&\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} \label{Eq_Diff_nEnet_Schätzer_unnormiert},
+\end{align}
+wobei $\boldsymbol{\hat{\varepsilon}}^{nEnet}$ dem Residuenvektor  $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$ entspricht.\\
+Wegen
 \begin{align*}
-&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})(\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2))+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \\
-&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})(\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2))+\gamma_2(\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2))&=0 \\
-&\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet}.
+&& \textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2) &\leq \textnormal{PRSS}_{nEnet}(\boldsymbol{\beta}=0, \gamma_1,\gamma_2) \\
+&\Leftrightarrow& |\boldsymbol{\hat{\varepsilon}}^{nEnet}|^2_2 + \gamma_1 \sum_{1}^{p}|\beta_j^{nEnet}|+\gamma_2 \sum_{1}^{p}(\beta_j^{nEnet})^2 &\leq |\mathbf{Y}-\mathbf{X}\mathbf{0}|^2_2=|\mathbf{Y}|^2_2
 \end{align*}
-\boldsymbol{\hat{\varepsilon}}^{nEnet} entspricht dabei dem Residuenvektor $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$.
+muss $|\boldsymbol{\hat{\varepsilon}}^{nEnet}| \leq |\mathbf{Y}|$, folglich auch $|\boldsymbol{\hat{\varepsilon}}^{nEnet}|_1 \leq |\mathbf{Y}|_1$ und damit $\frac{|\boldsymbol{\hat{\beta}}^{nEnet}|_1}{|\mathbf{Y}|_1} \leq 1$ sein.\\
+Da $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$ gilt, folgt
+\begin{align}\label{Eq_Betrag_Diff_xl_xk}
+&& |\mathbf{x}_k - \mathbf{x}_l|^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
+&\Leftrightarrow& &=1-2\rho_{k,l}+1 \notag \\
+&\Leftrightarrow& &=2(1-\rho_{k,l}) \notag \\
+&\Rightarrow& |\mathbf{x}_k - \mathbf{x}_l|_1 &= \sqrt{2(1-\rho_{k,l})}.
+\end{align}
+Da $(\mathbf{x}_k{'} - \mathbf{x}_l{'})\boldsymbol{\hat{\varepsilon}}^{nEnet}=|\mathbf{x}_k - \mathbf{x}_l|_1 |\boldsymbol{\hat{\varepsilon}}^{nEnet}|$ gilt,
+folgt  
+\begin{align*}
+D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\frac{|\boldsymbol{\hat{\beta}}^{nEnet}|_1}{|\mathbf{Y}|_1} \stackrel{\eqref{Eq_Betrag_Diff_xl_xk}}{=}
+\end{align*}
 \end{proof}
 
 \chapter{Erläuterungen}
