@@ -1021,7 +1021,7 @@ Für den Fall, dass $\gamma_1 /2 \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{
 
 \section{Beweis für Gruppierungseffekt bei strikt konvexen Straftermen}\label{App_GroupEffect_Strict_Conv}
 \begin{lemma}
-Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $|\cdot|^2_2$ die $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
+Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $|\cdot|^2_2$ die quadrierte $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
 \end{lemma}
 Der nachfolgende Beweis ist eine ausführlichere Darstellung des Beweises von \citeA{zou_regularization_2005}.
 \begin{proof}
@@ -1055,7 +1055,26 @@ D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align*}
 wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$ entspricht.
 \end{lemma}
-
+Der nachfolgende Beweis ist eine ausführliche Darstellung des Beweises von \citeA{zou_regularization_2005}.
+\begin{proof}
+Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
+\begin{align*}
+\frac{\partial\textnormal{PRSS}_{nEnet}(\boldsymbol{\beta},\gamma_1,\gamma_2)}{\partial \beta_j}=0 \qquad \textnormal{mit} \ j=1,\dots,p
+\end{align*}
+erfüllt, ergibt sich für die Kovariable $k$
+\begin{align}\label{Eq_Diff_nEnet_Kovariable_K}
+2\mathbf{x}_k{'}\mathbf{Y}-2\mathbf{x}_k{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}(\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)) + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
+\end{align}
+und für die Kovariable $l$
+\begin{align}\label{Eq_Diff_nEnet_Kovariable_L}
+2\mathbf{x}_l{'}\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}(\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)) + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
+\end{align}
+mit $k,l = 1, \dots, p$.\\
+Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}(\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2))=\textnormal{sign}(\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2))$ gelten. Deswegen ergibt Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L}
+\begin{align*}
+()
+\end{align*} 
+\end{proof}
 
 \chapter{Erläuterungen}
 \section{Verlust- und Risikofunktionen}\label{App_Risikofunktion}
