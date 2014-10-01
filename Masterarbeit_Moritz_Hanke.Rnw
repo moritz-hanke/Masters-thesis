@@ -651,7 +651,7 @@ die \textit{einheitenlose} Differenz zwischen den geschätzten Regressionskoeffi
 \begin{align}\label{Eq_obere_Grenze_Diff_nEnet}
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align}
-$\rho_{k,l}$ entspricht dabei der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$. Die Darstellung von \eqref{Eq_obere_Grenze_Diff_nEnet} zeigt, dass bei einer hohen Korrelation zwischen $x_k$ und $x_l$ die Differenz der entsprechenden Regressionskoeffizientenschätzer nahe 0 ist. Diese Eigenschaft ist besonders wünschenswert, weil damit eine inhaltliche Ähnlichkeit, die sich in den beobachteten Kovariablenausprägungen äußert, in den geschätzten Regressionskoeffizienten darstellt. Zusätzlich verdeutlicht \eqref{Eq_obere_Grenze_Diff_nEnet}, dass bei einer perfekte Korrelation, d.h. $\rho_{k,l}=1$, die Schätzer identisch sind. Die Autoren der Enet-Methode weisen darauf hin, dass für den Fall $\rho_{k,l}=-1$ einer der beiden Kovariablenvektoren mit $-1$ multipliziert werden soll, um die Darstellung aus \ref{Eq_obere_Grenze_Diff_nEnet} zu gewährleisten. Im Rahmen dieser Arbeit wird eine alternative Darstellung vorgeschlagen, die eine Modifikation der Kovariablen nicht notwendig macht:
+$\rho_{k,l}$ entspricht dabei der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$. Die Darstellung von \eqref{Eq_obere_Grenze_Diff_nEnet} zeigt, dass bei einer hohen Korrelation zwischen $x_k$ und $x_l$ die Differenz der entsprechenden Regressionskoeffizientenschätzer nahe 0 ist, da $\rho_{k,l} \rightarrow 1$. Diese Eigenschaft ist besonders wünschenswert, weil damit eine inhaltliche Ähnlichkeit, die sich in den beobachteten Kovariablenausprägungen äußert, in den geschätzten Regressionskoeffizienten darstellt. Zusätzlich verdeutlicht \eqref{Eq_obere_Grenze_Diff_nEnet}, dass bei einer perfekte Korrelation, d.h. $\rho_{k,l}=1$, die Schätzer identisch sind. Die Autoren der Enet-Methode weisen darauf hin, dass für den Fall $\rho_{k,l}=-1$ einer der beiden Kovariablenvektoren mit $-1$ multipliziert werden soll, um die Darstellung aus \ref{Eq_obere_Grenze_Diff_nEnet} zu gewährleisten. Im Rahmen dieser Arbeit wird eine alternative Darstellung vorgeschlagen, die eine Modifikation der Kovariablen nicht notwendig macht:
 \begin{align}
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-|\rho_{k,l}|)}.
 \end{align}
@@ -660,8 +660,8 @@ Da durch die weiter oben angesprochene doppelte Schrumpfung die geschätzten Reg
 \begin{align}
 \boldsymbol{\hat{\beta}}^{Enet}=(1+\gamma_2)\boldsymbol{\hat{\beta}}^{nEnet}.
 \end{align}
-Die Wahl des Skalierungsfaktors $(1+\gamma_2)$ kann neben  empirischen begründeten Verbesserungen zum Lasso- bzw. Ridge-Schätzer \cite{zou_regularization_2005} mit einer Dekomposition des Ridge-Schätzers begründet werden. Wegen der Standardisierung der Kovariablen gilt $\mathbf{X}'\mathbf{X}=\boldsymbol{\Sigma}$. Damit lässt sich der Ridge-Schätzer-Teil aus \ref{Eq_Naiv_Enet_Eigene} schreiben als
-\begin{align*}
+Die Wahl des Skalierungsfaktors $(1+\gamma_2)$ kann neben  empirischen begründeten Verbesserungen zum Lasso- bzw. Ridge-Schätzer \cite{zou_regularization_2005} mit einer Dekomposition des Ridge-Schätzers begründet werden. Wegen der Standardisierung der Kovariablen gilt $\mathbf{X}'\mathbf{X}=\boldsymbol{\Sigma}$. Damit lässt sich der Ridge-Schätzer aus \eqref{Eq_Ridge_estimate}, der in  \ref{Eq_Naiv_Enet_Eigene} steckt, schreiben als
+\begin{align}\label{Eq_Decorr_nEnet}
 && \boldsymbol{\hat{\beta}}^{Ridge}&=(\boldsymbol{\Sigma}+\gamma_2\mathbf{I})\mathbf{X}'\mathbf{Y} \\
 &\Leftrightarrow& &=\begin{pmatrix}
 1+\gamma_2 & \rho_{1,2}   & \dots & \rho_{1,p} \\
@@ -680,8 +680,9 @@ Die Wahl des Skalierungsfaktors $(1+\gamma_2)$ kann neben  empirischen begründe
 \frac{\rho_{2,1}}{1+\gamma_2} & 1 &       &            \\
 \vdots     &              & \ddots& \frac{\rho_{p-1,p}}{1+\gamma_2}\\
 \frac{\rho_{p,1}}{1+\gamma_2} &              & \frac{\rho_{p, p-1}}{1+\gamma_2}& 1
-\end{pmatrix}^{-1}\mathbf{X}'\mathbf{Y}
-\end{align*}
+\end{pmatrix}^{-1}\mathbf{X}'\mathbf{Y}.
+\end{align}
+Wegen $\gamma_2 \geq 0$ muss $\frac{\rho_{k,l}}{1+\gamma_2} \leq \rho_{k,l}$ gelten, weswegen der Ridge-Operator $\gamma_2\mathbf{I}$ in \eqref{Eq_Decorr_nEnet} als \textit{Dekorrelation} für den Ausdruck $(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{I})$ sowohl für den Ridge- als auch den Lasso-Summanden in \eqref{Eq_Naiv_Enet_Eigene} interpretiert werden kann. Die Dekorrelation bedeutet, dass die Korrelationsstruktur zwischen den einzelnen Kovariablen "`aufgeweicht"' wird, d.h. wahre Ähnlichkeiten zwischen beobachteten Kovariablen werden ausgedrückt als Korrelation in der Kovarianzmatrix künstlich verringert. Dadurch wird im Ridge-Ausdruck ein Gruppierungseffekt erzeugt. Der Faktor $\frac{1}{1+\gamma_2}$ bewirkt dann die Schrumpfung der einzelnen Regressionskoeffizienten. 
 
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
