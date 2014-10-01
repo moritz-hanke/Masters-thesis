@@ -660,21 +660,21 @@ Da durch die weiter oben angesprochene doppelte Schrumpfung die geschätzten Reg
 \begin{align}
 \boldsymbol{\hat{\beta}}^{Enet}=(1+\gamma_2)\boldsymbol{\hat{\beta}}^{nEnet}.
 \end{align}
-Die Wahl des Skalierungsfaktors $(1+\gamma_2)$ kann neben  empirischen begründeten Verbesserungen zum Lasso- bzw. Ridge-Schätzer \cite{zou_regularization_2005} mit einer Dekomposition des Ridge-Schätzers begründet werden. Wegen der Standardisierung der Kovariablen gilt $\mathbf{X}'\mathbf{X}=\boldsymbol{\Sigma}$. Damit lässt sich der Ridge-Schätzer aus \eqref{Eq_Ridge_estimate}, der in  \ref{Eq_Naiv_Enet_Eigene} steckt, schreiben als
+Die Wahl des Skalierungsfaktors $(1+\gamma_2)$ kann neben  empirischen begründeten Verbesserungen zum Lasso- bzw. Ridge-Schätzer \cite{zou_regularization_2005} mit einer Dekomposition des Ridge-Schätzers begründet werden. Wegen der Standardisierung der Kovariablen gilt $\mathbf{X}'\mathbf{X}=\boldsymbol{\Sigma}$. Damit lässt sich der Ridge-Schätzer aus \eqref{Eq_Ridge_estimate}, der als Summand in \eqref{Eq_Naiv_Enet_Eigene} vorkommt, schreiben als
 \begin{align}\label{Eq_Decorr_nEnet}
-&& \boldsymbol{\hat{\beta}}^{Ridge}&=(\boldsymbol{\Sigma}+\gamma_2\mathbf{I})\mathbf{X}'\mathbf{Y} \\
+&& \boldsymbol{\hat{\beta}}^{Ridge}&=(\boldsymbol{\Sigma}+\gamma_2\mathbf{I})\mathbf{X}'\mathbf{Y} \notag \\
 &\Leftrightarrow& &=\begin{pmatrix}
 1+\gamma_2 & \rho_{1,2}   & \dots & \rho_{1,p} \\
 \rho_{2,1} & 1 + \gamma_2 &       &            \\
 \vdots     &              & \ddots& \rho_{p-1,p}\\
 \rho_{p,1} &              & \rho_{p, p-1}& 1 + \gamma_2
-\end{pmatrix}^{-1}\mathbf{X}'\mathbf{Y}\\
+\end{pmatrix}^{-1}\mathbf{X}'\mathbf{Y} \notag \\
 &\Leftrightarrow& &=\left[ (1+\gamma_2) \begin{pmatrix}
 1 & \frac{\rho_{1,2}}{1+\gamma_2}&\dots&\frac{\rho_{1,p}}{1+\gamma_2} \\
 \frac{\rho_{2,1}}{1+\gamma_2} & 1 &       &            \\
 \vdots     &              & \ddots& \frac{\rho_{p-1,p}}{1+\gamma_2}\\
 \frac{\rho_{p,1}}{1+\gamma_2} &              & \frac{\rho_{p, p-1}}{1+\gamma_2}& 1
-\end{pmatrix} \right]^{-1}\mathbf{X}'\mathbf{Y}\\
+\end{pmatrix} \right]^{-1}\mathbf{X}'\mathbf{Y} \notag \\
 &\Leftrightarrow& &=\frac{1}{1+\gamma_2} \begin{pmatrix}
 1 & \frac{\rho_{1,2}}{1+\gamma_2}&\dots&\frac{\rho_{1,p}}{1+\gamma_2} \\
 \frac{\rho_{2,1}}{1+\gamma_2} & 1 &       &            \\
@@ -682,7 +682,28 @@ Die Wahl des Skalierungsfaktors $(1+\gamma_2)$ kann neben  empirischen begründe
 \frac{\rho_{p,1}}{1+\gamma_2} &              & \frac{\rho_{p, p-1}}{1+\gamma_2}& 1
 \end{pmatrix}^{-1}\mathbf{X}'\mathbf{Y}.
 \end{align}
-Wegen $\gamma_2 \geq 0$ muss $\frac{\rho_{k,l}}{1+\gamma_2} \leq \rho_{k,l}$ gelten, weswegen der Ridge-Operator $\gamma_2\mathbf{I}$ in \eqref{Eq_Decorr_nEnet} als \textit{Dekorrelation} für den Ausdruck $(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{I})$ sowohl für den Ridge- als auch den Lasso-Summanden in \eqref{Eq_Naiv_Enet_Eigene} interpretiert werden kann. Die Dekorrelation bedeutet, dass die Korrelationsstruktur zwischen den einzelnen Kovariablen "`aufgeweicht"' wird, d.h. wahre Ähnlichkeiten zwischen beobachteten Kovariablen werden ausgedrückt als Korrelation in der Kovarianzmatrix künstlich verringert. Dadurch wird im Ridge-Ausdruck ein Gruppierungseffekt erzeugt. Der Faktor $\frac{1}{1+\gamma_2}$ bewirkt dann die Schrumpfung der einzelnen Regressionskoeffizienten. 
+Wegen $\gamma_2 \geq 0$ muss $\frac{\rho_{k,l}}{1+\gamma_2} \leq \rho_{k,l}$ gelten, weswegen der Ridge-Operator $\gamma_2\mathbf{I}$ in \eqref{Eq_Decorr_nEnet} als \textit{Dekorrelation} für den Ausdruck $(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{I})$ sowohl für den Ridge- als auch den Lasso-Summanden in \eqref{Eq_Naiv_Enet_Eigene} interpretiert werden kann. Dekorrelation bedeutet in diesem Zusammenhang, dass die Korrelationsstruktur zwischen den einzelnen Kovariablen "`aufgeweicht"' wird, d.h. beobachtete Ähnlichkeiten zwischen den Kovariablen werden als künstlich verringert Korrelationen in der Kovarianzmatrix ausgedrückt.
+Unter Berücksichtigung von \eqref{Eq_Decorr_nEnet} und mit
+\begin{align*}
+\boldsymbol{\Sigma}^{Decor}=\begin{pmatrix}
+1 & \frac{\rho_{1,2}}{1+\gamma_2}&\dots&\frac{\rho_{1,p}}{1+\gamma_2} \\
+\frac{\rho_{2,1}}{1+\gamma_2} & 1 &       &            \\
+\vdots     &              & \ddots& \frac{\rho_{p-1,p}}{1+\gamma_2}\\
+\frac{\rho_{p,1}}{1+\gamma_2} &              & \frac{\rho_{p, p-1}}{1+\gamma_2}& 1
+\end{pmatrix}^{-1}
+\end{align*}
+lässt sich \eqref{Eq_Naiv_Enet_Eigene} darstellen als
+\begin{align*}
+\boldsymbol{\hat{\beta}}^{nEnet}=
+\frac{1}{1+\gamma_2} \left\lbrace
+\boldsymbol{\Sigma}^{Decor}\mathbf{X}'\mathbf{Y} - 
+\boldsymbol{\Sigma}^{Decor}
+\frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta})
+\right\rbrace,
+\end{align*}
+was die \textit{zusätzlich} zum Lasso-Operator bewirkte Schrumpfung verdeutlicht. 
+kann auch als 
+Der Faktor $\frac{1}{1+\gamma_2}$ bewirkt dann die Schrumpfung der einzelnen Regressionskoeffizienten. 
 
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
