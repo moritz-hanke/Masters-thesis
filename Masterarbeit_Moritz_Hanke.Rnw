@@ -633,12 +633,8 @@ Wird \eqref{Eq_Enet_Lagrange} in Matrixnotation dargestellt, ergibt sich für de
 &\Leftarrow & \boldsymbol{\hat{\beta}}^{nEnet} 
 &=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
 \end{align}
-Der Schätzer ist identisch mit dem nEnet-Schätzer von \citeA{zou_regularization_2005}, der durch eine Erweiterung des Datensatzes einem Lasso-Minimierungsproblem entspricht (für den Beweis sowie die ausführliche Darstellung siehe Anhang \ref{App_Beweis_Naiv_Zou_Darstellung}):
-\begin{align}\label{Eq_Naiv_Enet_Zou}
-\boldsymbol{\hat{\beta}}^{nEnet} = \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
-\end{align}
-Für das "`künstlich"' erzeugte Lasso-Minimierungsproblem ist $\boldsymbol{\hat{\beta}^*}$ ist in diesem Zusammenhang der entsprechende Schätzer.\\ 
-Die Bezeichnung "`naiver Elastic Net-Schätzer"' für \eqref{Eq_Naiv_Enet_Eigene} bzw. \eqref{Eq_Naiv_Enet_Zou} rührt daher, dass eine doppelte Penalisierung vorgenommen wird, indem erst ein optimales $\gamma_2$ wie bei der Ridge-Regression gesucht wird und anschließend die Lasso-Regression angewendet wird. Dadurch kommt es ohne geeignete Adjustierung zu einer zu starken Schrumpfung der Regressionskoeffizientenschätzer (siehe weiter unten).\\
+Der Schätzer ist identisch mit dem nEnet-Schätzer von \citeA{zou_regularization_2005}, der durch eine Erweiterung des Datensatzes einem Lasso-Minimierungsproblem entspricht (für den Beweis sowie die ausführliche Darstellung siehe Anhang \ref{App_Beweis_Naiv_Zou_Darstellung}).\\ 
+Die Bezeichnung "`naiver Elastic Net-Schätzer"' rührt daher, dass eine doppelte Penalisierung vorgenommen wird, indem erst ein optimales $\gamma_2$ wie bei der Ridge-Regression gesucht wird und anschließend die Lasso-Regression angewendet wird. Dadurch kommt es ohne geeignete Adjustierung zu einer zu starken Schrumpfung der Regressionskoeffizientenschätzer (siehe weiter unten).\\
 In Analogie zum Lasso-Schätzer ergibt sich für ein orthogonales Design. $\mathbf{X}'\mathbf{X}=\mathbf{I}$ der nEnet-Schätzer für die $j=1,\dots, p$ Kovariablen als (siehe Anhang \ref{App_nEnet_Orthogonal})
 \begin{align}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\text{sign}(\hat{\beta}_j^{OLS}).
@@ -657,7 +653,7 @@ D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-|\rho_{k,l}|)}.
 \end{align}
 Beweis, dass das GEHT?????????????????\\
 Da durch die weiter oben angesprochene doppelte Schrumpfung die geschätzten Regressionskoeffizienten eine unnötig große Verzerrung bekommen, d.h. der Bias wird größer, ohne dass die Varianz weiter sinken würde, schlagen \cite{zou_regularization_2005} eine Skalierung des nEnet-Schätzers vor, um den eigentlichen Enet-Schätzer zu erhalten:
-\begin{align}
+\begin{align}\label{Eq_Enet-Schaetzer}
 \boldsymbol{\hat{\beta}}^{Enet}=(1+\gamma_2)\boldsymbol{\hat{\beta}}^{nEnet}.
 \end{align}
 Die Wahl des Skalierungsfaktors $(1+\gamma_2)$ kann neben  empirischen begründeten Verbesserungen zum Lasso- bzw. Ridge-Schätzer \cite{zou_regularization_2005} mit einer Dekomposition des Ridge-Schätzers begründet werden. Wegen der Standardisierung der Kovariablen gilt $\mathbf{X}'\mathbf{X}=\boldsymbol{\Sigma}$. Damit lässt sich der Ridge-Schätzer aus \eqref{Eq_Ridge_estimate}, der als Summand in \eqref{Eq_Naiv_Enet_Eigene} vorkommt, schreiben als
@@ -701,9 +697,11 @@ lässt sich \eqref{Eq_Naiv_Enet_Eigene} darstellen als
 \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta})
 \right\rbrace,
 \end{align*}
-was die \textit{zusätzlich} zum Lasso-Operator bewirkte Schrumpfung verdeutlicht. 
-kann auch als 
-Der Faktor $\frac{1}{1+\gamma_2}$ bewirkt dann die Schrumpfung der einzelnen Regressionskoeffizienten. 
+was die \textit{zusätzlich} zum Lasso-Operator bewirkte Schrumpfung verdeutlicht. Ist, wie eingangs in diesem Unterkapitel beschrieben, gewünscht, dass die Vorteile von Ridge- und lasso-Schätzer kombiniert werden, braucht es den zusätzlichen Schrumpfungsfaktor des Ridge-Operators nicht, da bereits eine Schrumpfung und Selektion durch den Lasso-Operator bewirkt wird, die Dekorrelation hingegen eine Stabilisierung der Schätzer gewährleistet.
+Durch die Multiplikation mit $(1+\gamma_2)$ in \eqref{Eq_Enet-Schaetzer} kann der Enet-Schätzer als \textit{stabilisierter} Lasso-Schätzer aufgefasst werden:
+\begin{align}
+\boldsymbol{\hat{\beta}}^{Enet}=\arg \displaystyle\min_{\beta} \boldsymbol{\beta}' \left(\frac{\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I}}{1+\gamma_2}\right)\boldsymbol{\beta}-2\mathbf{Y}'\mathbf{X}\boldsymbol{\beta}+\gamma_1|\boldsymbol{\beta}|_1.
+\end{align}
 
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
@@ -871,9 +869,9 @@ Sei zudem
 \boldsymbol{\hat{\beta}^*}=\arg \displaystyle\min_{\boldsymbol{\beta^*}} \textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*}),
 \end{align*}
 so gilt
-\begin{align*}
+\begin{align}\label{Eq_Naiv_Enet_Zou}
 \boldsymbol{\hat{\beta}}^{nEnet}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
-\end{align*}
+\end{align}
 \end{lemma}
 
 \noindent \textit{Beweis.} Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zu Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu Anhang \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen den nEnet-Schätzer
@@ -888,7 +886,7 @@ so gilt
 \end{align*}
 
 \begin{lemma}
-Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wegen $\gamma_2 \geq 0$ (vgl. dazu Anhang \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, gilt für die Darstellung des naive Elastic Net-Schätzers \eqref{Eq_Naiv_Enet_Zou} nach \citeA{zou_regularization_2005}:
+Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wegen $\gamma_2 \geq 0$ (vgl. dazu Anhang \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, gilt für die Darstellung des naive Elastic Net-Schätzers aus \eqref{Eq_Naiv_Enet_Zou}:
 \begin{align*}
 \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
 \end{align*}
