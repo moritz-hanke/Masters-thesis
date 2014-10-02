@@ -1091,7 +1091,7 @@ Damit gilt $P(\boldsymbol{\hat{\beta}^*}) <  P(\boldsymbol{\hat{\beta}})$, was e
 \begin{lemma}
 Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{|\mathbf{Y}|_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)|,
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{|\mathbf{Y}|_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
 \end{align*}
 so gilt
 \begin{align*}
@@ -1116,8 +1116,8 @@ und für die Kovariable $l$
 mit $k,l = 1, \dots, p$.\\
 Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
 \begin{align} 
-&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
-&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
+&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
+&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
 &\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} \label{Eq_Diff_nEnet_Schätzer_unnormiert},
 \end{align}
 wobei $\boldsymbol{\hat{\varepsilon}}^{nEnet}$ dem Residuenvektor  $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$ entspricht.\\
@@ -1126,14 +1126,29 @@ Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die RSS aus \eqref{Eq_Enet_Constraint} unt
 && \textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2) &\leq \textnormal{PRSS}_{nEnet}(\boldsymbol{\beta}=0, \gamma_1,\gamma_2) \\
 &\Leftrightarrow& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||^2_2 + \gamma_1 \sum_{1}^{p}|\beta_j^{nEnet}|+\gamma_2 \sum_{1}^{p}(\beta_j^{nEnet})^2 &\leq ||\mathbf{Y}-\mathbf{X}\mathbf{0}||^2_2=||\mathbf{Y}||^2_2
 \end{align*}
-und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet, $||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 \leq ||\mathbf{Y}||_2$ und somit auch $\frac{||\boldsymbol{\hat{\beta}}^{nEnet}||_2}{||\mathbf{Y}||_2} \leq 1$ gelten.\\
-Wegen $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$, gilt
+und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet,
+\begin{align}
+&& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 &\leq ||\mathbf{Y}||_2 \notag \\
+&\Rightarrow& \frac{||\boldsymbol{\hat{\beta}}^{nEnet}||_2}{||\mathbf{Y}||_2} &\leq 1
+\end{align}
+gilt, weil in $\textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2)$ alle Summanden $\geq 0$ sein müssen.\\
+Wegen $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$, gilt auch
 \begin{align}\label{Eq_Betrag_Diff_xl_xk}
 && ||\mathbf{x}_k - \mathbf{x}_l||^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
 &\Leftrightarrow& &=1-2\rho_{k,l}+1 \notag \\
 &\Leftrightarrow& &=2(1-\rho_{k,l}) \notag \\
 &\Rightarrow& ||\mathbf{x}_k - \mathbf{x}_l||_2 &= \sqrt{2(1-\rho_{k,l})}.
 \end{align}
+Da für das Verhältnis der $L_1$-Norm zur $L_2$-Norm eines Vektors $\mathbf{x}$ gilt
+\begin{align}
+||\mathbf{x}||_2 = \sqrt{\sum_{j=1}^{p}x_j^2} \leq \sqrt{\sum_{j=1}^{p-1}x_j^2}+\sqrt{x_p^2} \leq \sqrt{\sum_{j=1}^{p-2}x_j^2}+\sqrt{x_{p-1}^2}+\sqrt{x_p^2} \leq \dots \leq \sum_{j=1}^{p}\sqrt{x_j^2}=||\mathbf{x}||_1
+\end{align}
+folgt für die obere Grenze der Differenz zwischen den Kovariablen $k$ und $l$:
+\begin{align*}
+&& D_{\gamma_1,\gamma_2}(k,l)&=\frac{1}{|\mathbf{Y}|_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)| \\
+&\Rightarrow& &\leq \frac{1}{\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2}||\mathbf{x}_k - \mathbf{x}_l||_2 \\
+&\Rightarrow& &\leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}
+\end{align*}
 \end{proof}
 
 \chapter{Erläuterungen}
