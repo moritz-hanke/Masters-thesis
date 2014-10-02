@@ -635,23 +635,20 @@ Wird \eqref{Eq_Enet_Lagrange} in Matrixnotation dargestellt, ergibt sich für de
 \end{align}
 Der Schätzer ist identisch mit dem nEnet-Schätzer von \citeA{zou_regularization_2005}, der durch eine Erweiterung des Datensatzes einem Lasso-Minimierungsproblem entspricht (für den Beweis sowie die ausführliche Darstellung siehe Anhang \ref{App_Beweis_Naiv_Zou_Darstellung}).\\ 
 Die Bezeichnung "`naiver Elastic Net-Schätzer"' rührt daher, dass eine doppelte Penalisierung vorgenommen wird, indem erst ein optimales $\gamma_2$ wie bei der Ridge-Regression gesucht wird und anschließend die Lasso-Regression angewendet wird. Dadurch kommt es ohne geeignete Adjustierung zu einer zu starken Schrumpfung der Regressionskoeffizientenschätzer (siehe weiter unten).\\
-In Analogie zum Lasso-Schätzer ergibt sich für ein orthogonales Design. $\mathbf{X}'\mathbf{X}=\mathbf{I}$ der nEnet-Schätzer für die $j=1,\dots, p$ Kovariablen als (siehe Anhang \ref{App_nEnet_Orthogonal})
+In Analogie zum Lasso-Schätzer ergibt sich für ein orthogonales Design $\mathbf{X}'\mathbf{X}=\mathbf{I}$ der nEnet-Schätzer für die $j=1,\dots, p$ Kovariablen als (siehe Anhang \ref{App_nEnet_Orthogonal})
 \begin{align}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\text{sign}(\hat{\beta}_j^{OLS}).
 \end{align}
 Unabhängig davon, ob die RSS eine \textit{konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})< p$) oder eine \textit{strikt konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})= p$) ist, handelt es sich bei der PRSS der nEnet-Methode um eine strikt konvexe Funktion. Grund hierfür ist der Strafterm $P$, der durch $L_2$-Norm selbst strikt konvex ist. Dadurch hat der nEnet-Schätzer eine eindeutige Lösung und Kovariablen mit identischen beobachteten Ausprägungen erhalten die selben Schätzer (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). Darüber hinaus hat der nEnet-Schätzer einen \textit{Gruppierungseffekt}, d.h. Kovariablen, die hoch miteinander korrelieren erhalten ähnliche Schätzwerte \cite{zou_regularization_2005}. Sind $\gamma_1$ und $\gamma_2$ fest, sei zudem $\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)>0$ und beschreibt
 \begin{align*}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{|\mathbf{Y}|_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)|
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)|
 \end{align*}
 die \textit{einheitenlose} Differenz zwischen den geschätzten Regressionskoeffizienten für die Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$, so gilt (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nEnet}):
 \begin{align}\label{Eq_obere_Grenze_Diff_nEnet}
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align}
-$\rho_{k,l}$ entspricht dabei der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$. Die Darstellung von \eqref{Eq_obere_Grenze_Diff_nEnet} zeigt, dass bei einer hohen Korrelation zwischen $x_k$ und $x_l$ die Differenz der entsprechenden Regressionskoeffizientenschätzer nahe 0 ist, da $\rho_{k,l} \rightarrow 1$. Diese Eigenschaft ist besonders wünschenswert, weil damit eine inhaltliche Ähnlichkeit, die sich in den beobachteten Kovariablenausprägungen äußert, in den geschätzten Regressionskoeffizienten darstellt. Zusätzlich verdeutlicht \eqref{Eq_obere_Grenze_Diff_nEnet}, dass bei einer perfekte Korrelation, d.h. $\rho_{k,l}=1$, die Schätzer identisch sind. Die Autoren der Enet-Methode weisen darauf hin, dass für den Fall $\rho_{k,l}=-1$ einer der beiden Kovariablenvektoren mit $-1$ multipliziert werden soll, um die Darstellung aus \ref{Eq_obere_Grenze_Diff_nEnet} zu gewährleisten. Im Rahmen dieser Arbeit wird eine alternative Darstellung vorgeschlagen, die eine Modifikation der Kovariablen nicht notwendig macht:
-\begin{align}
-D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-|\rho_{k,l}|)}.
-\end{align}
-Beweis, dass das GEHT?????????????????\\
+$\rho_{k,l}$ entspricht dabei der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$. Die Darstellung von \eqref{Eq_obere_Grenze_Diff_nEnet} zeigt, dass bei einer hohen Korrelation zwischen $x_k$ und $x_l$ die Differenz der entsprechenden Regressionskoeffizientenschätzer nahe 0 ist, da $\rho_{k,l} \rightarrow 1$. Diese Eigenschaft ist besonders wünschenswert, weil damit eine inhaltliche Ähnlichkeit, die sich in den beobachteten Kovariablenausprägungen äußert, in den geschätzten Regressionskoeffizienten darstellt. Zusätzlich verdeutlicht \eqref{Eq_obere_Grenze_Diff_nEnet}, dass bei einer perfekte Korrelation, d.h. $\rho_{k,l}=1$, die Schätzer identisch sind. %Die Autoren der Enet-Methode weisen darauf hin, dass für den Fall $\rho_{k,l}=-1$ einer der beiden Kovariablenvektoren mit $-1$ multipliziert werden soll, um die Darstellung aus \ref{Eq_obere_Grenze_Diff_nEnet} für die obere Grenze des Unterschieds nutzen zu können.
+\\
 Da durch die weiter oben angesprochene doppelte Schrumpfung die geschätzten Regressionskoeffizienten eine unnötig große Verzerrung bekommen, d.h. der Bias wird größer, ohne dass die Varianz weiter sinken würde, schlagen \cite{zou_regularization_2005} eine Skalierung des nEnet-Schätzers vor, um den eigentlichen Enet-Schätzer zu erhalten:
 \begin{align}\label{Eq_Enet-Schaetzer}
 \boldsymbol{\hat{\beta}}^{Enet}=(1+\gamma_2)\boldsymbol{\hat{\beta}}^{nEnet}.
@@ -860,9 +857,9 @@ Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikato
 \mathbf{0}
 \end{pmatrix}.
 \end{align}
-Mit $\omega = \gamma_1 /\sqrt{1+\gamma_2}$, $\boldsymbol{\beta^*}=\sqrt{1+\gamma_2}\boldsymbol{\beta}$ und $|\cdot|^2_2$ die quadrierte $L_2$-Norm, lässt sich die penalisierte Residuenquadratsumme schreiben als 
+Mit $\omega = \gamma_1 /\sqrt{1+\gamma_2}$, $\boldsymbol{\beta^*}=\sqrt{1+\gamma_2}\boldsymbol{\beta}$ und $||\cdot||^2_2$ für die quadrierte $L_2$-Norm bzw. $||\cdot||_1$ für die $L_1$-Norm, lässt sich die penalisierte Residuenquadratsumme schreiben als 
 \begin{align}\label{Eq_Naiv_Enet_Lassoform}
-\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta})=\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})=|\mathbf{Y^*} -\mathbf{X^*}\boldsymbol{\beta^*}|^2_2+\omega|\boldsymbol{\beta^*}|.
+\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta})=\textnormal{PRSS}_{nEnet}(\omega, \boldsymbol{\beta^*})=||\mathbf{Y^*} -\mathbf{X^*}\boldsymbol{\beta^*}||^2_2+\omega||\boldsymbol{\beta^*}||_1.
 \end{align}
 Sei zudem
 \begin{align*}
@@ -1068,7 +1065,7 @@ Für den Fall, dass $\gamma_1 /2 \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{
 
 \section{Beweis für Gruppierungseffekt bei strikt konvexen Straftermen}\label{App_GroupEffect_Strict_Conv}
 \begin{lemma}
-Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $|\cdot|^2_2$ die quadrierte $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
+Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $||\cdot||^2_2$ die quadrierte $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
 \end{lemma}
 Der nachfolgende Beweis ist eine ausführlichere Darstellung des Beweises von \citeA{zou_regularization_2005}.
 \begin{proof}
@@ -1080,7 +1077,7 @@ Es sei ein $\gamma > 0$ festgelegt. Für den Fall, dass $\hat{\beta}_k \neq \hat
 \frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l \qquad &\text{wenn} \ j = k \ \text{oder} \ j = l,\\
 \end{cases}
 \end{align*}
-d.h. $\hat{\beta}_k^* = \hat{\beta}_l^* \neq \hat{\beta}_k,\hat{\beta}_l$. Wegen $\hat{\beta}_k^* + \hat{\beta}_l^*=(\frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l) +  (\frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l) = \hat{\beta}_k + \hat{\beta}_l$ und $\mathbf{x}_k = \mathbf{x}_l$ ist $|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}|^2_2=|\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*|^2_2$.  
+d.h. $\hat{\beta}_k^* = \hat{\beta}_l^* \neq \hat{\beta}_k,\hat{\beta}_l$. Wegen $\hat{\beta}_k^* + \hat{\beta}_l^*=(\frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l) +  (\frac{1}{2}\hat{\beta}_k+\frac{1}{2}\hat{\beta}_l) = \hat{\beta}_k + \hat{\beta}_l$ und $\mathbf{x}_k = \mathbf{x}_l$ ist $||\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}||^2_2=||\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^*||^2_2$.  
 Unter Berücksichtigung der \textit{Jensenschen Ungleichheit} für strikt konvexe Funktionen (siehe Anhang \ref{App_Jensensche_Ungleichung}), 
 muss wegen $\hat{\beta}_k \neq \hat{\beta}_l$ und $\frac{1}{2} J(\beta_k)+\frac{1}{2} J(\beta_k)= J(\beta_k)$ bzw. $\frac{1}{2} J(\beta_l)+\frac{1}{2} J(\beta_l)= J(\beta_l)$ gelten
 \begin{align*}
@@ -1092,7 +1089,7 @@ Damit gilt $P(\boldsymbol{\hat{\beta}^*}) <  P(\boldsymbol{\hat{\beta}})$, was e
 
 \section{Beweis der oberen Grenze der Differenz zwischen zwei nEnet-Schätzern}\label{App_obere_Grenze_Diff_nEnet}
 \begin{lemma}
-Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
+Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{|\mathbf{Y}|_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)|,
 \end{align*}
@@ -1124,24 +1121,19 @@ Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(
 &\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} \label{Eq_Diff_nEnet_Schätzer_unnormiert},
 \end{align}
 wobei $\boldsymbol{\hat{\varepsilon}}^{nEnet}$ dem Residuenvektor  $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$ entspricht.\\
-Wegen
+Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die RSS aus \eqref{Eq_Enet_Constraint} unter Berücksichtigung der Enet-Nebenbedingung minimiert, muss 
 \begin{align*}
 && \textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2) &\leq \textnormal{PRSS}_{nEnet}(\boldsymbol{\beta}=0, \gamma_1,\gamma_2) \\
-&\Leftrightarrow& |\boldsymbol{\hat{\varepsilon}}^{nEnet}|^2_2 + \gamma_1 \sum_{1}^{p}|\beta_j^{nEnet}|+\gamma_2 \sum_{1}^{p}(\beta_j^{nEnet})^2 &\leq |\mathbf{Y}-\mathbf{X}\mathbf{0}|^2_2=|\mathbf{Y}|^2_2
+&\Leftrightarrow& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||^2_2 + \gamma_1 \sum_{1}^{p}|\beta_j^{nEnet}|+\gamma_2 \sum_{1}^{p}(\beta_j^{nEnet})^2 &\leq ||\mathbf{Y}-\mathbf{X}\mathbf{0}||^2_2=||\mathbf{Y}||^2_2
 \end{align*}
-muss $|\boldsymbol{\hat{\varepsilon}}^{nEnet}| \leq |\mathbf{Y}|$, folglich auch $|\boldsymbol{\hat{\varepsilon}}^{nEnet}|_1 \leq |\mathbf{Y}|_1$ und damit $\frac{|\boldsymbol{\hat{\beta}}^{nEnet}|_1}{|\mathbf{Y}|_1} \leq 1$ sein.\\
-Da $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$ gilt, folgt
+und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet, $||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 \leq ||\mathbf{Y}||_2$ und somit auch $\frac{||\boldsymbol{\hat{\beta}}^{nEnet}||_2}{||\mathbf{Y}||_2} \leq 1$ gelten.\\
+Wegen $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$, gilt
 \begin{align}\label{Eq_Betrag_Diff_xl_xk}
-&& |\mathbf{x}_k - \mathbf{x}_l|^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
+&& ||\mathbf{x}_k - \mathbf{x}_l||^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
 &\Leftrightarrow& &=1-2\rho_{k,l}+1 \notag \\
 &\Leftrightarrow& &=2(1-\rho_{k,l}) \notag \\
-&\Rightarrow& |\mathbf{x}_k - \mathbf{x}_l|_1 &= \sqrt{2(1-\rho_{k,l})}.
+&\Rightarrow& ||\mathbf{x}_k - \mathbf{x}_l||_2 &= \sqrt{2(1-\rho_{k,l})}.
 \end{align}
-Da $(\mathbf{x}_k{'} - \mathbf{x}_l{'})\boldsymbol{\hat{\varepsilon}}^{nEnet}=|\mathbf{x}_k - \mathbf{x}_l|_1 |\boldsymbol{\hat{\varepsilon}}^{nEnet}|$ gilt,
-folgt  
-\begin{align*}
-D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\frac{|\boldsymbol{\hat{\beta}}^{nEnet}|_1}{|\mathbf{Y}|_1} \stackrel{\eqref{Eq_Betrag_Diff_xl_xk}}{=}
-\end{align*}
 \end{proof}
 
 \chapter{Erläuterungen}
@@ -1290,7 +1282,7 @@ Sei $|\mathbf{x}|_{\infty}=\max_j|x_i|$ für einen Vektor $\mathbf{x}$ und $\Sig
 \begin{align*}
 |\Sigma_{(21)}\Sigma_{(11)}^{-1} \text{sign}(\boldsymbol{\beta}_{(1)})|_{\infty}\leq 1-\eta \qquad \text{mit} \ \eta \in (0,1].
 \end{align*}
-Somit fordert die Irrepresentable Condition, dass die Regressionskoeffizienten die nicht im wahren Modell sind, sich nicht durch die Regressionskoeffizienten, die im wahren Modell sind, darstellen lassen \cite{Zhao2006Lasso_Consistency}.
+Somit fordert die Irrepresentable Condition, dass die Regressionskoeffizienten, die nicht im wahren Modell sind, sich nicht durch die Regressionskoeffizienten darstellen lassen, die im wahren Modell sind \cite{Zhao2006Lasso_Consistency}.
 
 \section{Jensensche Ungleichung}\label{App_Jensensche_Ungleichung}
 Für eine \textit{konvexe} Funktion $f$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $\sum_{j=1}^{p}z_j =1$ gilt 
