@@ -1127,7 +1127,7 @@ Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die RSS aus \eqref{Eq_Enet_Constraint} unt
 &\Leftrightarrow& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||^2_2 + \gamma_1 \sum_{1}^{p}|\beta_j^{nEnet}|+\gamma_2 \sum_{1}^{p}(\beta_j^{nEnet})^2 &\leq ||\mathbf{Y}-\mathbf{X}\mathbf{0}||^2_2=||\mathbf{Y}||^2_2
 \end{align*}
 und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet,
-\begin{align}
+\begin{align}\label{Eq_Verhaeltnis_Enet_Resid_vs_Y2}
 && ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 &\leq ||\mathbf{Y}||_2 \notag \\
 &\Rightarrow& \frac{||\boldsymbol{\hat{\beta}}^{nEnet}||_2}{||\mathbf{Y}||_2} &\leq 1
 \end{align}
@@ -1139,15 +1139,29 @@ Wegen $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$, gilt auch
 &\Leftrightarrow& &=2(1-\rho_{k,l}) \notag \\
 &\Rightarrow& ||\mathbf{x}_k - \mathbf{x}_l||_2 &= \sqrt{2(1-\rho_{k,l})}.
 \end{align}
-Da für das Verhältnis der $L_1$-Norm zur $L_2$-Norm eines Vektors $\mathbf{x}$ gilt
-\begin{align}
-||\mathbf{x}||_2 = \sqrt{\sum_{j=1}^{p}x_j^2} \leq \sqrt{\sum_{j=1}^{p-1}x_j^2}+\sqrt{x_p^2} \leq \sqrt{\sum_{j=1}^{p-2}x_j^2}+\sqrt{x_{p-1}^2}+\sqrt{x_p^2} \leq \dots \leq \sum_{j=1}^{p}\sqrt{x_j^2}=||\mathbf{x}||_1
+Da für das Verhältnis der $L_1$-Norm zur $L_2$-Norm eines Vektors $\mathbf{a}$
+\begin{align}\label{Eq_L1_Norm_greater_L2_Norm} 
+&& ||\mathbf{a}||_2 &= \sqrt{\sum_{j=1}^{p}a_j^2} \notag \\ 
+&& & \leq \sqrt{\sum_{j=1}^{p-1}a_j^2}+\sqrt{a_p^2} \notag \\ 
+&& &\leq \sqrt{\sum_{j=1}^{p-2}a_j^2}+\sqrt{a_{p-1}^2}+\sqrt{a_p^2} \notag \\
+&& &\leq \dots \notag \\ 
+&& &\leq \sum_{j=1}^{p}\sqrt{a_j^2} =||\mathbf{a}||_1 \notag \\
+&\Rightarrow& \frac{1}{||\mathbf{a}||_2} &\geq \frac{1}{||\mathbf{a}||_1}
 \end{align}
-folgt für die obere Grenze der Differenz zwischen den Kovariablen $k$ und $l$:
+und nach der \textit{Cauchy-Schwarz-Ungleichung} für zwei Vektoren $\mathbf{a}$ und $\mathbf{b}$
+\begin{align}\label{Eq_Cauchy-Schwarz-Ungleichung}
+||\mathbf{a}'\mathbf{b}||_2 \leq ||\mathbf{a}||_2 \cdot ||\mathbf{b}||_2
+\end{align}
+gilt, folgt aus
+\eqref{Eq_Diff_nEnet_Schätzer_unnormiert} für die obere Grenze der Differenz $D_{\gamma_1,\gamma_2}(k,l)$:
 \begin{align*}
-&& D_{\gamma_1,\gamma_2}(k,l)&=\frac{1}{|\mathbf{Y}|_1}|\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)| \\
-&\Rightarrow& &\leq \frac{1}{\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2}||\mathbf{x}_k - \mathbf{x}_l||_2 \\
-&\Rightarrow& &\leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}
+\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2 &= \frac{1}{||\mathbf{Y}||_1}|| \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} ||_2\\
+&\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{1}{\gamma_2} {\frac{1}{||\mathbf{Y}||_1}} ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 \cdot ||\mathbf{x}_k - \mathbf{x}_l||_2 \\
+&\stackrel{\eqref{Eq_L1_Norm_greater_L2_Norm}}{\leq} \frac{1}{\gamma_2} {\frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2}}
+||\mathbf{x}_k - \mathbf{x}_l||_2 \\
+&\stackrel{\eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}}{\leq} \frac{1}{\gamma_2}
+||\mathbf{x}_k - \mathbf{x}_l||_2 \\
+&\stackrel{\eqref{Eq_Betrag_Diff_xl_xk}}{=} \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align*}
 \end{proof}
 
