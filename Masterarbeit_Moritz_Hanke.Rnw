@@ -694,11 +694,13 @@ lässt sich \eqref{Eq_Naiv_Enet_Eigene} darstellen als
 \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta})
 \right\rbrace,
 \end{align*}
-was die \textit{zusätzlich} zum Lasso-Operator bewirkte Schrumpfung verdeutlicht. Ist, wie eingangs in diesem Unterkapitel beschrieben, gewünscht, dass die Vorteile von Ridge- und lasso-Schätzer kombiniert werden, braucht es den zusätzlichen Schrumpfungsfaktor des Ridge-Operators nicht, da bereits eine Schrumpfung und Selektion durch den Lasso-Operator bewirkt wird, die Dekorrelation hingegen eine Stabilisierung der Schätzer gewährleistet.
-Durch die Multiplikation mit $(1+\gamma_2)$ in \eqref{Eq_Enet-Schaetzer} kann der Enet-Schätzer als \textit{stabilisierter} Lasso-Schätzer aufgefasst werden:
-\begin{align}
-\boldsymbol{\hat{\beta}}^{Enet}=\arg \displaystyle\min_{\beta} \boldsymbol{\beta}' \left(\frac{\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I}}{1+\gamma_2}\right)\boldsymbol{\beta}-2\mathbf{Y}'\mathbf{X}\boldsymbol{\beta}+\gamma_1|\boldsymbol{\beta}|_1.
-\end{align}
+was die \textit{zusätzlich} zum Lasso-Operator bewirkte Schrumpfung verdeutlicht. Ist, wie eingangs in diesem Unterkapitel beschrieben, gewünscht, dass die Vorteile von Ridge- und lasso-Schätzer kombiniert werden, braucht es den zusätzlichen Schrumpfungsfaktor des Ridge-Operators nicht, da bereits eine Schrumpfung und Selektion durch den Lasso-Operator bewirkt wird, die Dekorrelation hingegen eine Stabilisierung der Schätzer gewährleistet.\\
+Durch den $L_1$-Strafterm-Teil des Enet- bzw. nEnet-Schätzers, ist eine analytische Lösung des Minimierungsproblems aus \eqref{Eq_Enet_Lagrange} nicht möglich. \citeA{zou_regularization_2005} schlagen stattdessen den \textit{LARS-EN}-Algorithmus vor, der eine Erweiterung des \textit{LARS}-Algorithmus zur Lösung des Lasso-Problems ist. Da wie in Anhang \ref{App_Beweis_Naiv_Zou_Darstellung} gezeigt, das nEnet-Problem sich als Lasso-Problem darstellen lässt, kann direkt der LARS-Algorithmus verwendet werden. Durch die Erweiterung des Datensatzes auf $n+p$ Zeilen können dadurch auch mehr als $n$ Kovariablen ungleich null bei der Schätzung gesetzt werden. Allerdings erweist sich dieser Algorithmus bei hochdimensionalen Daten als relativ langsam, wohingegen LARS-EN berücksichtigt, dass der erweiterte Datensatz $\mathbf{X}^*=\frac{1}{1+\gamma_2}\begin{pmatrix}
+\mathbf{X}\\
+\mathbf{I}\sqrt{\gamma_2}
+\end{pmatrix}$ 
+zum großen Teil spärlich besetzt ist und nutzt die \textit{Cholesky-Zerlegung} für eine effizientere Berechnung.\\
+
 
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
@@ -1164,6 +1166,10 @@ gilt, folgt aus
 &\stackrel{\eqref{Eq_Betrag_Diff_xl_xk}}{=} \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align*}
 \end{proof}
+
+
+
+
 
 \chapter{Erläuterungen}
 \section{Verlust- und Risikofunktionen}\label{App_Risikofunktion}
