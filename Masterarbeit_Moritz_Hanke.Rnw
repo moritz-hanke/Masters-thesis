@@ -448,7 +448,7 @@ Als grundlegendes Prinzip wird bei der Penalisierung die zu minimierende Verlust
 \begin{align}\label{Eq_PRSS_allgmein}
 \text{PRSS}(\boldsymbol{\beta},\boldsymbol{\gamma})=\text{RSS}(\boldsymbol{\beta}) + P(\boldsymbol{\beta}, \boldsymbol{\gamma})
 \end{align} mit einem oder mehreren speziell zu wählenden \textit{Tuningparametern} $\boldsymbol{\gamma}$ ergibt. Generell wird gefordert, dass die abhängige Variable $\mathbf{Y}$ zentriert ist, d.h. es muss $\frac{1}{n}\sum_{i}^{n}y_i =0$ für die Realisierungen $y$ gelten, und die Kovariablen $\mathbf{X}$ müssen standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ und $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Dadurch ist die Penalisierung unabhängig von den einzelnen Skalen der Kovariablen bzw. der Responsevariable und das Intercept fällt weg. Für die Notation gilt daher im Folgenden, wenn nicht anders gekennzeichnet, $\boldsymbol{\beta}=(\beta_1,\dots,\beta_p)'$ bzw. $\boldsymbol{\hat{\beta}}=(\hat{\beta}_1,\dots,\hat{\beta}_p)'$ und die Designmatrix $\mathbf{X}$ beinhaltet nur noch die Kovariablenvektoren.\\
-Kapitel \ref{Kap_Ridge-Regression} und \ref{Kap_Lasso-Regression} stellen zunächst die "`klassischen"' Penalisierungsmethoden \textit{Ridge-Regression} und \textit{Lasso-Regression} vor. Auf dieser Grundlage wird in Kapitel \ref{Kap_Elastic-Net} die Methode \textit{Elastic Net} eingeführt, die eine Kombination aus Lasso und Ridge ist. Abschließend werden \textit{netzwerkbasierte Penalisierungen} in Kapitel \ref{Netzwerkbasierte_Penalisierung} näher betrachtet und Möglichkeiten zur Berücksichtigung der in Kapitel \ref{Kap_Zentralitätsstatistiken} eingeführten Zentralitätsmaße aufgezeigt.
+Kapitel \ref{Kap_Ridge-Regression} und \ref{Kap_Lasso-Regression} stellen zunächst die "`klassischen"' Penalisierungsmethoden \textit{Ridge-Regression} und \textit{Lasso-Regression} vor. Auf dieser Grundlage wird in Kapitel \ref{Kap_Elastic-Net} die Methode \textit{Elastic Net} eingeführt, die eine Kombination aus Lasso und Ridge ist. Abschließend werden \textit{netzwerkbasierte penalisierte Regressionen} in Kapitel \ref{Netzwerkbasierte_Penalisierung} näher betrachtet und Möglichkeiten zur Berücksichtigung der in Kapitel \ref{Kap_Zentralitätsstatistiken} eingeführten Zentralitätsmaße aufgezeigt.
 \begin{comment}
 Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
 Ridge wird eingeführt, weil Teil von Elastic Net\\
@@ -710,7 +710,13 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 
-\subsection{Netzwerkbasierte Penalisierung}\label{Netzwerkbasierte_Penalisierung}
+\subsection{Netzwerkbasierte penalisierte Regressionen}\label{Netzwerkbasierte_Penalisierung}
+Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. In der Genetik bspw. sind häufig Zusammenhänge zwischen einzelnen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. Die generelle Idee hinter netzwerkbasierten penalisierten Regressionen ist die Annahme, dass Kovariablen, die gemeinsam variieren und folglich im Netzwerk zusammenhängen (d.h. im entsprechenden Graphen mit einer Kante verbunden sind), ähnlich große Steigungskoeffizienten haben müssen. Je größer die Differenz zwischen zwei zusammenhängenden Steigungskoeffizienten ist, desto stärker wirkt die Bestrafung.\\
+Für die ursprüngliche netzwerkbasierte penalisierte Regression haben \cite{li_network-constrained_2008} den Strafterm als
+\begin{align}\label{Eq_P-Term_Li_2008}
+P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
+\end{align}
+definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} bezeichnet. Diese ist definiert als
 
 \chapter{Fazit}
 \begin{comment}
