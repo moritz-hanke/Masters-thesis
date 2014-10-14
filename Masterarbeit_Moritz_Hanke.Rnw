@@ -701,7 +701,7 @@ Durch den $L_1$-Strafterm-Teil ist eine analytische Lösung des Minimierungsprob
 \end{pmatrix}_{n \times (n+p)}$ 
 zum großen Teil spärlich besetzt ist und durch die \textit{Cholesky-Zerlegung} eine effizientere Berechnung möglich ist.\\
 Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\gamma_1$ und $\gamma_2$, vom Anwender gewählt werden müssen, schlagen \citeA{zou_regularization_2005} eine $k$-fache Kreuzvalidierung auf der sich durch die beiden Tuningparameter ergeben zweidimensionalen Oberfläche vor. Dazu werden zunächst mehrere Werte für $\gamma_2$ vorgegeben und für jeden dieser Werte durch eine $k$-fache Kreuzvalidierung ein optimales $\gamma_1$ bestimmt. Anschließend wird die Kombination aus $\gamma_1$ und $\gamma_2$ gewählt, die den kleinsten Kreuzvalidierungswert liefert.\\
-Ähnlich zum Lasso-Schätzer lässt sich eine Irrepresentable-Condition formulieren, durch die der Enet-Schätzer das wahre Modell auswählen kann (siehe dazu \citeNP{jia_2008Enet_Consistency}). Da diese Bedingung schwächer als die Irrepresentable-Condition der Lasso-Methode ist,kann der Enet-Schätzer noch in Fällen das wahre Modell liefern, wo die Lasso-Methode versagt. Allerdings kann auch die Enet-Regression kein korrektes Modell liefern, wenn ihre Irrepresentable-Condition verletzt ist.
+Ähnlich zum Lasso-Schätzer lässt sich eine Irrepresentable-Condition formulieren, durch die der Enet-Schätzer das wahre Modell auswählen kann (siehe dazu \citeNP{jia_2008Enet_Consistency}). Da diese Bedingung schwächer als die Irrepresentable-Condition der Lasso-Methode ist,kann der Enet-Schätzer noch in Fällen das wahre Modell liefern, wo die Lasso-Methode versagt. Allerdings kann auch die Enet-Regression kein korrektes Modell mehr liefern, wenn ihre Irrepresentable-Condition verletzt ist.
 
 % bei Lasso muss die Langrangefunktion keine strikt konvexe Funktion sein, da für n<p die Matrix X'X (also die Hessian) keinen vollen Rank besitzt und positiv semidefinit ist (alle eigenwerte sind größergleich 0), d.h. die RSS ist konvex und der Penalisierungsterm ist auch konvex (L1-Norm); summe zweier konvexen Funktionen ist wieder eine konvexe Funktion, damit aber ggf. keine eindeutigen lösungen;
 %bei elastic net ist RSS zwar evtl auch nur konvex und der Lasso teil auch, aber der Ridge-Teil ist wegen L2-Norm strikt konvex und summe aus konvex und strikt konvex ist wieder strikt konvex 
@@ -711,12 +711,27 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 \subsection{Netzwerkbasierte penalisierte Regressionen}\label{Netzwerkbasierte_Penalisierung}
-Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. In der Genetik bspw. sind häufig Zusammenhänge zwischen einzelnen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. Die generelle Idee hinter netzwerkbasierten penalisierten Regressionen ist die Annahme, dass Kovariablen, die gemeinsam variieren und folglich im Netzwerk zusammenhängen (d.h. im entsprechenden Graphen mit einer Kante verbunden sind), ähnlich große Steigungskoeffizienten haben müssen. Je größer die Differenz zwischen zwei zusammenhängenden Steigungskoeffizienten ist, desto stärker wirkt die Bestrafung.\\
+Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. In der Genetik bspw. sind häufig Zusammenhänge zwischen einzelnen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. Die generelle Idee hinter netzwerkbasierten penalisierten Regressionen ist die Annahme, dass Kovariablen, die gemeinsam variieren und folglich im Netzwerk zusammenhängen, ähnlich große Steigungskoeffizienten haben müssen. Im entsprechenden Graphen repräsentieren Knoten die Kovariablen, deren Abhängigkeit mit einer Kante dargestellt wird.\\
+
 Für die ursprüngliche netzwerkbasierte penalisierte Regression haben \cite{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
 P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
 \end{align}
-definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} bezeichnet. Diese ist definiert als
+definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{nicht-negative} Matrix, die definiert ist als
+\begin{align*}
+\tilde{l}_{u,v} = \begin{cases}
+1-\frac{w(u,v)}{d(u)}, \qquad &\text{wenn} \ u=v \ \text{und} \ d(u) \neq 0,\\
+-\frac{w(u,v)}{\sqrt{d(u)d(v)}},  \qquad &\text{wenn} \ a_{u,v} = 1,\\
+ 0, \qquad &\text{sonst.}\\
+\end{cases}
+\end{align*}
+Der Knotengrad ist hierbei definiert als $d(u)=\sum_{\forall u: u \in e; e \in E}w(e)$ mit dem Kantengewicht $w(e)$, das die Unsicherheit oder Stärke einer Kante $e={u,v}$ zwischen zwei Knoten $u$ und $v$ angibt.\\
+Als PRSS ergibt sich daraus
+\begin{align*}
+\text{PRSS}_{Net-1}(\boldsymbol{\beta}\gamma_1,\gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
+\end{align*}
+und weil 
+
 
 \chapter{Fazit}
 \begin{comment}
