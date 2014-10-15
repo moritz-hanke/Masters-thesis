@@ -717,20 +717,42 @@ Für die ursprüngliche netzwerkbasierte penalisierte Regression haben \cite{li_
 \begin{align}\label{Eq_P-Term_Li_2008}
 P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
 \end{align}
-definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{nicht-negative} Matrix, die definiert ist als
+definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{positiv semidefinit} Matrix, die definiert ist als
 \begin{align*}
 \tilde{l}_{u,v} = \begin{cases}
-1-\frac{w(u,v)}{d(u)}, \qquad &\text{wenn} \ u=v \ \text{und} \ d(u) \neq 0,\\
--\frac{w(u,v)}{\sqrt{d(u)d(v)}},  \qquad &\text{wenn} \ a_{u,v} = 1,\\
+1-\frac{w(\{u,v\})}{d(u)}, \qquad &\text{wenn} \ u=v \ \text{und} \ d(u) \neq 0,\\
+-\frac{w(\{u,v\})}{\sqrt{d(u)d(v)}},  \qquad &\text{wenn} \ a_{u,v} = 1,\\
  0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align*}
-Der Knotengrad ist hierbei definiert als $d(u)=\sum_{\forall u: u \in e; e \in E}w(e)$ mit dem Kantengewicht $w(e)$, das die Unsicherheit oder Stärke einer Kante $e={u,v}$ zwischen zwei Knoten $u$ und $v$ angibt.\\
+Der Knotengrad ist hierbei definiert als $d(u)=\sum_{\{u,v\}}w(\{u,v\})$ mit dem Kantengewicht $w(\{u,v\})$, das die Unsicherheit oder Stärke einer Kante $e=\{u,v\}$ zwischen zwei Knoten $u$ und $v$ angibt.\\
+Da $\textbf{\~L}$ positiv semidefinit ist, gilt
+\begin{align*}
+\textbf{\~L}&=SS'\\
+&=\begin{pmatrix}
+s_{1,1}  & \dots  & s_{1,N_E}  \\
+\vdots   &        &            \\
+s_{u,1}  &        &            \\
+\vdots   &        & \vdots     \\
+s_{v,1}  &        &            \\
+\vdots   &        &            \\
+s_{N_V,1}& \dots  & s_{N_V,N_E}\\
+\end{pmatrix}_{N_V \times N_E}
+\begin{pmatrix}
+s_{1,1}  & \dots & s_{1,u} & \dots & s_{1,v} & \dots    & s_{1,N_V} \\
+\vdots   &       &         &       &         &
+         &           \\
+s_{N_E,1}&       &         &       &         &
+         & s_{N_E,N_V}
+\end{pmatrix}_{N_E \times N_V}
+,
+\end{align*}
+wobei $S$ eine $N_V \times N_E$-Matrix ist, deren Spalten die Kanten und die Zeilen die Knoten von $G$ sind. Sind zwei Knoten $u$ und $v$ adjazent, hat $S$ in der entsprechenden Spalte für die Kanten in der Zeile $u$ den Eintrag $\sqrt{w(\{u,v\})}/d(u)$ und in Zeile $v$ den Eintrag $-\sqrt{w(\{u,v\})}/d(v)$. Die restlichen Zeilen für die Spalte sind mit Nullen besetzt. Damit hat jede Spalte nur zwei Einträge, jeweils in den Zeilen $u$ und $v$, wenn die beiden Knoten adjazent
 Als PRSS ergibt sich daraus
 \begin{align*}
 \text{PRSS}_{Net-1}(\boldsymbol{\beta}\gamma_1,\gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
 \end{align*}
-und weil 
+
 
 
 \chapter{Fazit}
@@ -1335,9 +1357,9 @@ Sei der Regressionskoeffizientenvektor $\boldsymbol{\beta}=(\beta_1, \dots, \bet
 \boldsymbol{\Sigma}_{(21)} & \boldsymbol{\Sigma}_{(22)}.
 \end{pmatrix}
 \end{align*}
-Sei $|\mathbf{x}|_{\infty}=\max_j|x_i|$ für einen Vektor $\mathbf{x}$ und $\Sigma_{(11)}$ invertierbar, dann ist die \textit{Irrepresentable Condition} definiert als
+Sei $||\mathbf{x}||_{\infty}=\max_j|x_i|$ für einen Vektor $\mathbf{x}$ und $\Sigma_{(11)}$ invertierbar, dann ist die \textit{Irrepresentable Condition} definiert als
 \begin{align*}
-|\Sigma_{(21)}\Sigma_{(11)}^{-1} \text{sign}(\boldsymbol{\beta}_{(1)})|_{\infty}\leq 1-\eta \qquad \text{mit} \ \eta \in (0,1].
+||\Sigma_{(21)}\Sigma_{(11)}^{-1} \text{sign}(\boldsymbol{\beta}_{(1)})||_{\infty}\leq 1-\eta \qquad \text{mit} \ \eta \in (0,1].
 \end{align*}
 Somit fordert die Irrepresentable Condition, dass die Regressionskoeffizienten, die nicht im wahren Modell sind, sich nicht durch die Regressionskoeffizienten darstellen lassen, die im wahren Modell sind \cite{Zhao2006Lasso_Consistency}.
 
@@ -1346,7 +1368,7 @@ Für eine \textit{konvexe} Funktion $f$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $
 \begin{align*}
 f \left(\sum_{j=1}^{p} z_j x_j \right) \leq \sum_{j=1}^{p} \left( z_j f(x_j) \right).
 \end{align*}
-Handelt es sich um eine \textit{strikt konvexe} Funktion $f$ und $\exists x_k : x_k \neq x_l \ \text{mit} \ x_l \in \{x_1,\dots,x_{k-1},x_{k+1}, \dots, x_p\}$  \cite{Mitroi2010Precision_Jensen}, gilt
+Handelt es sich um eine \textit{strikt konvexe} Funktion $f$ und $\exists x_k : x_k \neq x_l$ für $x_k,x_l \in \{x_1, \dots, x_p\}$  \cite{Mitroi2010Precision_Jensen}, gilt
 \begin{align*}
 f \left(\sum_{j=1}^{p} z_j x_j \right) < \sum_{j=1}^{p} \left( z_j f(x_j) \right).
 \end{align*}
