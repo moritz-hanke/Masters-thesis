@@ -194,7 +194,7 @@ In der vorliegenden Arbeit wird eine Weiterentwicklung der netzwerkbasierten Pen
 In den nachfolgenden beiden Unterkapiteln wird eine Auswahl an grundlegenden Begriffen aus der Graphentheorie (Kapitel \ref{Kap_Grundlegende Begriffe der Graphentheorie}) sowie Statistiken für Netzwerkanalysen, insbesondere zur Zentralität und Verbundenheit von einzelnen Knoten (Kapitel \ref{Kap_Zentralitätsstatistiken}), eingeführt, die für diese Arbeit benötigt werden. Für eine ausführliche Erläuterung zur Graphentheorie bzw. zu Netzwerkstatistiken sei auf \citeA{diestel2006graph} sowie \citeA{kolaczyk2009statistical} und \citeA{newman2010networks} verwiesen.\\
 
 \subsection{Grundlegende Begriffe der Graphentheorie}\label{Kap_Grundlegende Begriffe der Graphentheorie}
-Ein Graph ist ein Paar $G=(V,E)$, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|V|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine ungerichtete Kante $e \in E$, ist die Zuordnung zweier Knoten $u,v \in V$, für $u \neq v$, eines Graphen $G=(V,E)$, d.h. es gilt $\{u,v\} = e$. Die Knoten $u$ und $v$ werden in diesem Fall als \textit{inzident} zu der Kante $e$ und \textit{adjazent} zueinander bezeichnet. Für $e=\{u,v\}$ handelt es sich um ein \textit{ungeordnetes} Knotenpaar an Knoten, d.h. $\{u,v\}=\{(u,v),(v,u)\}$. Graphen, die nur ungeordnete Knotenpaare beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e=(u,v) \neq (v,u)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt, wobei die Kante $e$ vom \textit{Anfangsknoten} $u$ auf den \textit{Endknoten} $v$ zeigt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $G_A=(V_A,E_A)$ ist ein \textit{Teilgraph} von $G=(V,E)$ wenn $V_A \subseteq V$ und $E_A \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen sind \textit{schlichte} Graphen, d.h. es gibt weder \textit{Schlingen} noch mehrere Kanten zwischen zwei Knoten. Als Schlinge wird eine Kante bezeichnet, die nur einen Endknoten an beiden Kantenenden besitzen, d.h. $e=\{v,v\}$ bzw. $e=(v,v)$ \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen ($N_V < \infty$) berücksichtigt, die entweder gerichtet oder ungerichtet sind.\\
+Ein Graph ist ein Paar $G=(V,E)$, das aus einer Menge $V=\{v_1,\dots,v_{N_V}\}$ an \textit{Knoten} und einer Menge $E=\{e_1,\dots,e_{N_E}\}$ an \textit{Kanten} besteht \cite{brandes2005graphfunda}. Die Kardinalitäten $N_V =|V|$ und $N_E=|E|$ geben die \textit{Ordnung} und die \textit{Größe} des Graphen an. Eine ungerichtete Kante $e \in E$, ist die Zuordnung zweier Knoten $u,v \in V$, für $u \neq v$, eines Graphen $G=(V,E)$, d.h. es gilt $\{u,v\} = e$. Die Knoten $u$ und $v$ werden in diesem Fall als \textit{inzident} zu der Kante $e$ und \textit{adjazent} zueinander bezeichnet. Für $e=\{u,v\}$ handelt es sich um ein \textit{ungeordnetes} Knotenpaar an Knoten, d.h. $\{u,v\}=\{(u,v),(v,u)\}$. Graphen, die nur ungeordnete Knotenpaare beinhalten, sind \textit{ungerichtet}. Dagegen bezeichnet $e=(u,v) \neq (v,u)$, dass es sich um ein \textit{geordnetes} Paar an Knoten handelt, wobei die Kante $e$ vom \textit{Anfangsknoten} $u$ auf den \textit{Endknoten} $v$ zeigt \cite{kolaczyk2009statistical}. Als \textit{gerichtete} Graphen werden Graphen bezeichnet, die nur geordnete Knotenpaare beinhalten. Der Graph $G_A=(V_A,E_A)$ ist ein \textit{Teilgraph} von $G=(V,E)$ wenn $V_A \subseteq V$ und $E_A \subseteq E$ gilt. Die in dieser Arbeit verwendeten Graphen haben maximal eine Kante zwischen zwei Knoten, wobei es sich dabei auch um eine \textit{Schlinge} handeln kann. Als Schlinge wird eine Kante bezeichnet, die nur einen Endknoten an beiden Kantenenden besitzen, d.h. $e=\{v,v\}$ bzw. $e=(v,v)$ \cite{tittmann2011graphen}. Darüber hinaus werden nur \textit{endliche} Graphen ($N_V < \infty$) berücksichtigt, die entweder gerichtet oder ungerichtet sind.\\
 
 Der Knotengrad $d(v)$ für $v \in V$ gibt die Anzahl der Kanten an, die inzident auf den Knoten $v$ sind. Für einen Graphen $G=(V,E)$ sind der \textit{Minimumknotengrad} $\delta(G)$, der \textit{Maximumknotengrad} $\Delta(G)$ und der \textit{durchschnittliche Knotengrad} $\bar{d}(G)$ definiert \cite{diestel2006graph} als
 \begin{align}
@@ -711,13 +711,12 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 \subsection{Netzwerkbasierte penalisierte Regressionen}\label{Netzwerkbasierte_Penalisierung}
-Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. In der Genetik bspw. sind häufig Zusammenhänge zwischen einzelnen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. Die generelle Idee hinter netzwerkbasierten penalisierten Regressionen ist die Annahme, dass Kovariablen, die gemeinsam variieren und folglich im Netzwerk zusammenhängen, ähnlich große Steigungskoeffizienten haben müssen. Im entsprechenden Graphen repräsentieren Knoten die Kovariablen, deren Abhängigkeit mit einer Kante dargestellt wird.\\
-
-Für die ursprüngliche netzwerkbasierte penalisierte Regression haben \cite{li_network-constrained_2008} den Strafterm als
+Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Bspw. sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. Die generelle Idee hinter netzwerkbasierten penalisierten Regressionen ist die Annahme, dass Kovariablen, die gemeinsam variieren und folglich im Netzwerk zusammenhängen, ähnlich große Steigungskoeffizienten haben müssen. Im entsprechenden Graphen repräsentieren Knoten die Kovariablen, deren Abhängigkeit mit einer Kante dargestellt wird.\\
+Bei der ursprüngliche netzwerkbasierten penalisierten Regression, im Folgenden als \textit{Net1} abgekürzt, haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
 P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
 \end{align}
-definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{positiv semidefinit} Matrix, die definiert ist als
+definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. Jeder Knoten aus $G$ entspricht dabei einer Kovariable $x_j$ mit $j \in \{1, \dots, p\}$, sodass $x_1, \dots, x_p = v_1, \dots,v_{N_V}$ gilt.  $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{positiv semidefinit} Matrix, die definiert ist als
 \begin{align*}
 \tilde{l}_{u,v} = \begin{cases}
 1-\frac{w(\{u,v\})}{d(u)}, \qquad &\text{wenn} \ u=v \ \text{und} \ d(u) \neq 0,\\
@@ -726,33 +725,18 @@ definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspric
 \end{cases}
 \end{align*}
 Der Knotengrad ist hierbei definiert als $d(u)=\sum_{\{u,v\}}w(\{u,v\})$ mit dem Kantengewicht $w(\{u,v\})$, das die Unsicherheit oder Stärke einer Kante $e=\{u,v\}$ zwischen zwei Knoten $u$ und $v$ angibt.\\
-Da $\textbf{\~L}$ positiv semidefinit ist, gilt
-\begin{align*}
-\textbf{\~L}&=SS'\\
-&=\begin{pmatrix}
-s_{1,1}  & \dots  & s_{1,N_E}  \\
-\vdots   &        &            \\
-s_{u,1}  &        &            \\
-\vdots   &        & \vdots     \\
-s_{v,1}  &        &            \\
-\vdots   &        &            \\
-s_{N_V,1}& \dots  & s_{N_V,N_E}\\
-\end{pmatrix}_{N_V \times N_E}
-\begin{pmatrix}
-s_{1,1}  & \dots & s_{1,u} & \dots & s_{1,v} & \dots    & s_{1,N_V} \\
-\vdots   &       &         &       &         &
-         &           \\
-s_{N_E,1}&       &         &       &         &
-         & s_{N_E,N_V}
-\end{pmatrix}_{N_E \times N_V}
-,
-\end{align*}
-wobei $S$ eine $N_V \times N_E$-Matrix ist, deren Spalten die Kanten und die Zeilen die Knoten von $G$ sind. Sind zwei Knoten $u$ und $v$ adjazent, hat $S$ in der entsprechenden Spalte für die Kanten in der Zeile $u$ den Eintrag $\sqrt{w(\{u,v\})}/d(u)$ und in Zeile $v$ den Eintrag $-\sqrt{w(\{u,v\})}/d(v)$. Die restlichen Zeilen für die Spalte sind mit Nullen besetzt. Damit hat jede Spalte nur zwei Einträge, jeweils in den Zeilen $u$ und $v$, wenn die beiden Knoten adjazent
+Da $\textbf{\~L}$ positiv semidefinit ist, gilt $\textbf{\~L}=\textbf{S}\textbf{S}'$ \cite{chung1996spectralgraph}, wobei $\textbf{S}$ einer $N_V \times N_E$-Matrix entspricht, deren Spalten die Kanten und die Zeilen die Knoten von $G$ sind. Sind zwei Knoten $u$ und $v$ adjazent, hat $\textbf{S}$ in der entsprechenden Spalte für die Kanten in der Zeile $u$ den Eintrag $\sqrt{w(\{u,v\})}/d(u)$ und in Zeile $v$ den Eintrag $-\sqrt{w(\{u,v\})}/d(v)$. Die restlichen Zeilen für die Spalte sind mit Nullen besetzt. Damit hat jede Spalte nur zwei Einträge, jeweils in den Zeilen $u$ und $v$, wenn die beiden Knoten adjazent zueinander sind.\\
 Als PRSS ergibt sich daraus
+\begin{align}\label{Eq_PRSS_Net1}
+\text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2)&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta} \notag \\
+&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} \notag \\
+&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2 \left\lbrace \sum_{\{u,v\}} \left(\frac{\beta_u}{\sqrt{d(u)}}-\frac{\beta_v}{\sqrt{d(v)}}\right)^2 w(\{u,v\})\right\rbrace. 
+\end{align}
+Der Strafterm ist ein Anlehnung an den Fused-Lasso-Strafterm (vgl. dazu \citeNP{Tibshirani05fused})
 \begin{align*}
-\text{PRSS}_{Net-1}(\boldsymbol{\beta}\gamma_1,\gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
+\text{PRSS}_{fLasso}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2 \sum_{j=2}^{p}|\beta_j - \beta_{j-1}|,
 \end{align*}
-
+bei dem die Kovariablen zuvor in eine inhaltlich begründete Reihenfolge gebracht werden können. Bei der Fused-Lasso-Regression wird angenommen, dass benachbarte Koeffizienten identische Steigungskoeffizienten haben und für den Fall von unterschiedlichen Steigungskoeffizienten eine Bestrafung vorgenommen. Dadurch kommt es zu einer Glättung des geschätzten Parameters $\hat{\beta}_j$ über seine Nachbarn $\hat{\beta}_{j-1}$ und $\hat{\beta}_{j+1}$. Die Net1-Regression hat dagegen eine abgeschwächte Annahme bzgl. der Regressionskoeffizienten von benachbarten Variablen.  dagegen eine eine abgeschwächte Annahme. Wie anhand von dem $\gamma_2$-Term in 
 
 
 \chapter{Fazit}
