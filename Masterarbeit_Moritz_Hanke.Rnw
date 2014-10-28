@@ -747,7 +747,10 @@ Wird \eqref{Eq_PRSS_Net1} abgeleitet und null gesetzt, ergibt sich
 &\Rightarrow& 0 &= -2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
 &\Rightarrow& \boldsymbol{\hat{\beta}}^{Net1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
 \end{align}
-Anhand dieser Darstellung ist ersichtlich, dass für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ sich der Enet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$, wobei $\mathbf{0}_{p \times p}$ eine Nullmatrix ist, der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt.
+Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ der Enet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$ der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt. In Analogie zur Enet-Regression lässt sich durch eine Erweiterung des Datensatzes zu $\mathbf{X}^*=\frac{1}{\sqrt{1+\gamma_2}}\begin{pmatrix}
+\mathbf{X}\\
+\sqrt{\gamma_2}\mathbf{S}'
+\end{pmatrix}_{n \times (n+p)}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}). Als Lösung ergibt sich wie bei der Enet-Regression $\boldsymbol{\hat{\beta}}^{naiv Net1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ und wegen der auch hier vorliegenden doppelten Schrumpfung schlagen \citeA{li_network-constrained_2008} ebenfalls den Faktor $1+\gamma_2$ vor, sodass sich $\boldsymbol{\hat{\beta}}^{naiv Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ ergibt.
 % magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
 
 \chapter{Fazit}
