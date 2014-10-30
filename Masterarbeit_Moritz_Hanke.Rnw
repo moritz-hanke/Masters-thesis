@@ -697,7 +697,7 @@ lässt sich \eqref{Eq_Naiv_Enet_Eigene} darstellen als
 \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta})
 \right\rbrace,
 \end{align*}
-was die \textit{zusätzlich} zum Lasso-Operator bewirkte Schrumpfung verdeutlicht. Ist, wie eingangs in diesem Unterkapitel beschrieben, gewünscht, dass die Vorteile von Ridge- und lasso-Schätzer kombiniert werden, benötigt man den zusätzlichen Schrumpfungsfaktor des Ridge-Operators nicht, da bereits eine Schrumpfung und Selektion durch den Lasso-Operator bewirkt wird, die Dekorrelation des Ridge-Operators hingegen eine Stabilisierung der Schätzer gewährleistet.\\
+was die \textit{zusätzlich} zum Lasso-Operator bewirkte Schrumpfung verdeutlicht. Ist, wie eingangs in diesem Unterkapitel beschrieben, gewünscht, dass die Vorteile von Ridge- und Lasso-Schätzer kombiniert werden, benötigt man den zusätzlichen Schrumpfungsfaktor des Ridge-Operators nicht, da bereits eine Schrumpfung und Selektion durch den Lasso-Operator bewirkt wird, die Dekorrelation des Ridge-Operators hingegen eine Stabilisierung der Schätzer gewährleistet.\\
 Durch den $L_1$-Strafterm-Teil ist eine analytische Lösung des Minimierungsproblems aus \eqref{Eq_Enet_Lagrange} nicht möglich. Da, wie in Anhang \ref{App_Beweis_Naiv_Zou_Darstellung} gezeigt, das nEnet-Problem sich als Lasso-Problem darstellen lässt, kann direkt der LARS-Algorithmus verwendet werden. Durch die Erweiterung des Datensatzes auf $n+p$ Zeilen können dadurch auch mehr als $n$ Kovariablen ungleich null bei der Schätzung gesetzt werden. Allerdings erweist sich dieser Algorithmus bei hochdimensionalen Daten als relativ langsam. \citeA{zou_regularization_2005} schlagen deswegen den \textit{LARS-EN}-Algorithmus vor, der eine Erweiterung des \textit{LARS}-Algorithmus zur Lösung des Lasso-Problems (siehe \citeNP{Efron04leastangle}) ist. Für den LARS-EN-Algorithmus wird berücksichtigt, dass der erweiterte Datensatz $\mathbf{X}^*$ 
 zum großen Teil spärlich besetzt ist und durch die \textit{Cholesky-Zerlegung} eine effizientere Berechnung möglich ist.\\
 Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\gamma_1$ und $\gamma_2$, vom Anwender gewählt werden müssen, schlagen \citeA{zou_regularization_2005} eine $k$-fache Kreuzvalidierung auf der sich durch die beiden Tuningparameter ergeben zweidimensionalen Oberfläche vor. Dazu werden zunächst mehrere Werte für $\gamma_2$ vorgegeben und für jeden dieser Werte durch eine $k$-fache Kreuzvalidierung ein optimales $\gamma_1$ bestimmt. Anschließend wird die Kombination aus $\gamma_1$ und $\gamma_2$ gewählt, die den kleinsten Kreuzvalidierungswert liefert.\\
@@ -741,16 +741,18 @@ Der Strafterm aus \eqref{Eq_Net1_Constrained} weist eine Ähnlichkeit zu dem Fus
 \text{PRSS}_{fLasso}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2 \sum_{j=2}^{p}|\beta_j - \beta_{j-1}|,
 \end{align*}
 auf \cite{Tibshirani05fused}, für den die Kovariablen zuvor in eine inhaltlich begründete Reihenfolge gebracht werden. Bei der Fused-Lasso-Regression wird angenommen, dass benachbarte Koeffizienten identische Steigungskoeffizienten haben und für den Fall von unterschiedlichen Steigungskoeffizienten eine Bestrafung vorgenommen. Dadurch kommt es zu einer Glättung des geschätzten Parameters $\hat{\beta}_j$ über seine Nachbarn $\hat{\beta}_{j-1}$ und $\hat{\beta}_{j+1}$. Die Net1-Regression hat dagegen eine abgeschwächte Annahme bzgl. der Regressionskoeffizienten von benachbarten Variablen. Diese können auch unterschiedliche große Steigungskoeffizienten haben, ohne dass der Strafterm ansteigt, wenn entsprechend die Knotengrade der jeweiligen Knoten unterschiedlich sind. Inhaltlich lässt sich der Strafterm so interpretieren, dass mit den Knotengraden bei der Differenz zwischen zwei Steigungskoeffizienten berücksichtigt wird, dass jeder Knoten selbst wiederum in einem Zusammenhang mit mehreren anderen Knoten stehen kann und die Abweichung der beiden Regressionskoeffizienten voneinander durch die Nähe zu diesen dritten Kovariablen hervorgerufen wird. Dadurch können Variablen, die mit vielen anderen Variablen "`verbunden"' sind, bei der Schätzung größere Regressionskoeffizienten als ihre Nachbarn erhalten, die weniger Kanten haben. Wird der Knotengrad als Maß für die Bedeutung einer Variable interpretiert, kann sich die Bedeutung von Kovariablen in höheren geschätzten Steigungskoeffizienten als der ggf. weniger bedeutsamen Nachbarn widerspiegeln.\\
-Wird \eqref{Eq_PRSS_Net1} abgeleitet und null gesetzt, ergibt sich
+Wird \eqref{Eq_PRSS_Net1} abgeleitet und null gesetzt, ergibt sich der naive Net1-Schätzer
 \begin{align}\label{Eq_Net1_PRSS_Ableitung}
 &&\frac{\partial \textnormal{PRSS}_{Net1}(\boldsymbol{\beta}, \gamma_1, \gamma_2)}{\partial \boldsymbol{\beta}}&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
 &\Rightarrow& 0 &= -2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
-&\Rightarrow& \boldsymbol{\hat{\beta}}^{Net1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
+&\Rightarrow& \boldsymbol{\hat{\beta}}^{nNet1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
 \end{align}
-Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ der Enet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$ der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt. In Analogie zur Enet-Regression lässt sich durch eine Erweiterung des Datensatzes zu $\mathbf{X}^*=\frac{1}{\sqrt{1+\gamma_2}}\begin{pmatrix}
+Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ der nEnet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$ der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt. In Analogie zur nEnet-Regression lässt sich durch eine Erweiterung des Datensatzes zu $\mathbf{X}^*=\frac{1}{\sqrt{1+\gamma_2}}\begin{pmatrix}
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{S}'
-\end{pmatrix}_{n \times (n+p)}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}). Als Lösung ergibt sich wie bei der Enet-Regression $\boldsymbol{\hat{\beta}}^{naiv Net1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ und wegen der auch hier vorliegenden doppelten Schrumpfung schlagen \citeA{li_network-constrained_2008} ebenfalls den Faktor $1+\gamma_2$ vor, sodass sich $\boldsymbol{\hat{\beta}}^{naiv Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ ergibt.
+\end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nNet1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. wegen der auch hier vorliegenden doppelten Schrumpfungdurch den $L_1$- und $L_2$-Strafterm schlagen \citeA{li_network-constrained_2008} ebenfalls den Faktor $1+\gamma_2$ zur Korrektur des Schätzers vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Net1-Schätzer.
+Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei dem Enet-Schätzer (siehe Abschnitt \ref{Kap_Elastic-Net}).
+
 % magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
 
 \chapter{Fazit}
@@ -782,7 +784,7 @@ aus Hesterberg "Least angle and l1 penalized regression: A review"
 
 
 \begin{appendix}
-\chapter{Selbst geführte Ausführungen und Beweise}
+\chapter{Weitere Ausführungen und Beweise}
 \section{Erwarteter quadrierter Abstand von $\boldsymbol{\hat{\beta}}^{OLS}$ zu $\boldsymbol{\beta}$}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
 Bezeichne $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times n$-Matrix, so gilt
 \begin{align}\label{Eq_Spurgleichheit}
@@ -1088,16 +1090,16 @@ Anhand der Darstellung in \eqref{Eq_Lasso_Einzelbeta} wird deutlich, dass für $
 \begin{align}\label{Eq_nEnet_Ortho_Beta_greater0}
 && 0&=\frac{\partial}{\partial \beta_j} \left( \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 + \gamma_1 \beta_j + \gamma_2 \beta_j^2 \right) \notag \\
 &\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j + \gamma_1 + 2\gamma_2 \beta_j \notag \\
-&\Leftrightarrow& \beta_j + \gamma_2 \beta_j &=\hat{\beta}_j^{OLS} - \frac{\gamma_2}{2} \notag \\
-&\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j^{OLS} - \frac{\gamma_2}{2} \notag \\
+&\Leftrightarrow& \beta_j + \gamma_2 \beta_j &=\hat{\beta}_j^{OLS} - \frac{\gamma_1}{2} \notag \\
+&\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j^{OLS} - \frac{\gamma_1}{2} \notag \\
 &\Rightarrow& \hat{\beta}_j^{nEnet}&=\frac{\hat{\beta}_j^{OLS}-\gamma_1 /2}{1 + \gamma_2} 
 \end{align}
 und für $\hat{\beta}_j^{OLS}<0$ als
 \begin{align}\label{Eq_nEnet_Ortho_Beta_smaller0}
 && 0&=\frac{\partial}{\partial \beta_j} \left( \mathbf{Y}'\mathbf{Y} -2\hat{\beta}_j^{OLS}  \beta_j + \beta_j^2 - \gamma_1 \beta_j + \gamma_2 \beta_j^2 \right) \notag \\
 &\Rightarrow& 0&=-2\hat{\beta}_j^{OLS} + 2\beta_j - \gamma_1 + 2\gamma_2 \beta_j \notag \\
-&\Leftrightarrow& \beta_j + \gamma_2 \beta_j &=\hat{\beta}_j^{OLS} + \frac{\gamma_2}{2} \notag \\
-&\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j^{OLS} + \frac{\gamma_2}{2} \notag \\
+&\Leftrightarrow& \beta_j + \gamma_2 \beta_j &=\hat{\beta}_j^{OLS} + \frac{\gamma_1}{2} \notag \\
+&\Leftrightarrow& (1 + \gamma_2) \beta_j &=\hat{\beta}_j^{OLS} + \frac{\gamma_1}{2} \notag \\
 &\Rightarrow& \hat{\beta}_j^{nEnet}&=\frac{\hat{\beta}_j^{OLS}+\gamma_1 /2}{1 + \gamma_2} .
 \end{align}
 Da in \eqref{Eq_nEnet_Ortho_Beta_greater0} die rechte Seite für den nEnet-Schätzer größer und in \eqref{Eq_nEnet_Ortho_Beta_smaller0} kleiner null sein muss, kann in beiden Fällen der nEnet-Schätzer dargestellt werden als
@@ -1109,7 +1111,7 @@ Für den Fall, dass $\gamma_1 /2 \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{
 
 \section{Beweis für Gruppierungseffekt bei strikt konvexen Straftermen}\label{App_GroupEffect_Strict_Conv}
 \begin{lemma}
-Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} |\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}|^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $||\cdot||^2_2$ die quadrierte $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
+Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} ||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $||\cdot||^2_2$ die quadrierte $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
 \end{lemma}
 Der nachfolgende Beweis ist eine ausführlichere Ausarbeitung des Beweises von \citeA{zou_regularization_2005}.
 \begin{proof}
@@ -1133,9 +1135,9 @@ Damit gilt $P(\boldsymbol{\hat{\beta}^*}) <  P(\boldsymbol{\hat{\beta}})$, was e
 
 \section{Beweis der oberen Grenze der Differenz zwischen zwei nEnet-Schätzern}\label{App_obere_Grenze_Diff_nEnet}
 \begin{lemma}
-Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
+Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{|\mathbf{Y}|_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
 \end{align*}
 so gilt
 \begin{align*}
@@ -1160,8 +1162,8 @@ und für die Kovariable $l$
 mit $k,l = 1, \dots, p$.\\
 Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
 \begin{align} 
-&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
-&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
+&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
+&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
 &\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} \label{Eq_Diff_nEnet_Schätzer_unnormiert},
 \end{align}
 wobei $\boldsymbol{\hat{\varepsilon}}^{nEnet}$ dem Residuenvektor  $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$ entspricht.\\
@@ -1347,7 +1349,7 @@ f=p \cdot g + q \cdot h
 ebenfalls eine konvexe Funktion ist \cite{boyd2004convex}.
 
 \section{Irrepresentable Condition}\label{App_Irrepresentable Condition}
-Sei der Regressionskoeffizientenvektor $\boldsymbol{\beta}=(\beta_1, \dots, \beta_o, \beta_{o+1}, \dots, \beta_p)'$ mit $\beta_j \neq 0$ für $j=1,\dots,o$ und $\beta_j = 0$ für $j=o+1, \dots, p$. Sei darüber hinaus $\boldsymbol{\beta}_{(1)}=(\beta_1, \dots, \beta_o)'$ bzw. $\boldsymbol{\beta}_{(2)}=(\beta_{o+1}, \dots, \beta_p)'$ und bezeichne $\mathbf{X}_{(1)}$ die ersten $o$ Spalten und $\mathbf{X}_{(2)}$ die letzten $p-o$ Spalten von $\mathbf{X}$. Damit ergeben sich die vier Kovarianzmatrizen $\boldsymbol{\Sigma}_{(11)}=\mathbf{X}_{(1)}'\mathbf{X}_{(1)}$, $\boldsymbol{\Sigma}_{(12)}=\mathbf{X}_{(1)}'\mathbf{X}_{(2)}$, $\boldsymbol{\Sigma}_{(21)}=\mathbf{X}_{(2)}'\mathbf{X}_{(1)}$ und $\boldsymbol{\Sigma}_{(22)}=\mathbf{X}_{(2)}'\mathbf{X}_{(2)}$, mit denen sich die Kovarianzmatrix $\boldsymbol{\Sigma}$ von $\mathbf{X}$ darstellen lässt:
+Sei der Regressionskoeffizientenvektor $\boldsymbol{\beta}=(\beta_1, \dots, \beta_k, \beta_{l}, \dots, \beta_p)'$ mit $\beta_j \neq 0$ für $j=1,\dots,k$ und $\beta_j = 0$ für $j=l, \dots, p$. Sei darüber hinaus $\boldsymbol{\beta}_{(1)}=(\beta_1, \dots, \beta_k)'$ bzw. $\boldsymbol{\beta}_{(2)}=(\beta_{l}, \dots, \beta_p)'$ und bezeichne $\mathbf{X}_{(1)}$ die ersten $k$ Spalten und $\mathbf{X}_{(2)}$ die letzten $(p-k)$ Spalten von $\mathbf{X}$. Damit ergeben sich die vier Kovarianzmatrizen $\boldsymbol{\Sigma}_{(11)}=\mathbf{X}_{(1)}'\mathbf{X}_{(1)}$, $\boldsymbol{\Sigma}_{(12)}=\mathbf{X}_{(1)}'\mathbf{X}_{(2)}$, $\boldsymbol{\Sigma}_{(21)}=\mathbf{X}_{(2)}'\mathbf{X}_{(1)}$ und $\boldsymbol{\Sigma}_{(22)}=\mathbf{X}_{(2)}'\mathbf{X}_{(2)}$, mit denen sich die Kovarianzmatrix $\boldsymbol{\Sigma}$ von $\mathbf{X}$ darstellen lässt:
 \begin{align*}
 \boldsymbol{\Sigma} = 
 \begin{pmatrix}
@@ -1355,20 +1357,20 @@ Sei der Regressionskoeffizientenvektor $\boldsymbol{\beta}=(\beta_1, \dots, \bet
 \boldsymbol{\Sigma}_{(21)} & \boldsymbol{\Sigma}_{(22)}.
 \end{pmatrix}
 \end{align*}
-Sei $||\mathbf{x}||_{\infty}=\max_j|x_i|$ für einen Vektor $\mathbf{x}$ und $\Sigma_{(11)}$ invertierbar, dann ist die \textit{Irrepresentable Condition} definiert als
+Sei $||\mathbf{x}||_{\infty}=\max_j|x_i|$ für einen Vektor $\mathbf{x}$ und $\boldsymbol{\Sigma}_{(11)}$ invertierbar, dann ist die \textit{Irrepresentable Condition} definiert als
 \begin{align*}
-||\Sigma_{(21)}\Sigma_{(11)}^{-1} \text{sign}(\boldsymbol{\beta}_{(1)})||_{\infty}\leq 1-\eta \qquad \text{mit} \ \eta \in (0,1].
+||\boldsymbol{\Sigma}_{(21)}\boldsymbol{\Sigma}_{(11)}^{-1} \text{sign}(\boldsymbol{\beta}_{(1)})||_{\infty}\leq 1-\eta \qquad \text{mit} \ \eta \in (0,1].
 \end{align*}
-Somit fordert die Irrepresentable Condition, dass die Regressionskoeffizienten, die nicht im wahren Modell sind, sich nicht durch die Regressionskoeffizienten darstellen lassen, die im wahren Modell sind \cite{Zhao2006Lasso_Consistency}.
+Somit fordert die Irrepresentable Condition, dass die Kovariablen, die nicht im wahren Modell sind, sich nicht durch die Kovariablen aus dem wahren Modell darstellen lassen \cite{Zhao2006Lasso_Consistency}.
 
 \section{Jensensche Ungleichung}\label{App_Jensensche_Ungleichung}
-Für eine \textit{konvexe} Funktion $f$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $\sum_{j=1}^{p}z_j =1$ gilt 
+Für eine \textit{konvexe} Funktion $J$ und $z_1,z_2, \dots,z_p \in (0,1)$ mit $\sum_{j=1}^{p}z_j =1$ gilt 
 \begin{align*}
-f \left(\sum_{j=1}^{p} z_j x_j \right) \leq \sum_{j=1}^{p} \left( z_j f(x_j) \right).
+J \left(\sum_{j=1}^{p} z_j x_j \right) \leq \sum_{j=1}^{p} \left( z_j J(x_j) \right).
 \end{align*}
-Handelt es sich um eine \textit{strikt konvexe} Funktion $f$ und $\exists x_k : x_k \neq x_l$ für $x_k,x_l \in \{x_1, \dots, x_p\}$  \cite{Mitroi2010Precision_Jensen}, gilt
+Handelt es sich um eine \textit{strikt konvexe} Funktion $J$ und $\exists x_k \colon x_k \neq x_l$ für $x_k,x_l \in \{x_1, \dots, x_p\}$  \cite{Mitroi2010Precision_Jensen}, gilt
 \begin{align*}
-f \left(\sum_{j=1}^{p} z_j x_j \right) < \sum_{j=1}^{p} \left( z_j f(x_j) \right).
+J \left(\sum_{j=1}^{p} z_j x_j \right) < \sum_{j=1}^{p} \left( z_j J(x_j) \right).
 \end{align*}
 
 % Die eidesstattliche Erklärung auf einer neuen Seite
