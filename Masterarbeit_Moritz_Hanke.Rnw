@@ -761,8 +761,36 @@ Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autore
 Im nachfolgenden Kapitel wird zunächst in \ref{Kap_Datensimulation} die Methoden zur Datensimulation erläutert und anschließend in Unterkapitel XXXXXX anhand der simulierten Daten die die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
 
 \section{Datensimulation}\label{Kap_Datensimulation}
-Für die in Unterkapitel \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulation gewählt, die \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten haben. Die Knoten- und damit Kovariablenzahl lag für $p \gg n$-Simulationen jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
-Nach Auffassung des Autors dieser Arbeit sind die sternförmigen Subgraphen in dem oben beschriebenen Simulationsablauf im Verhältnis zu wahren biologischen Netzwerken idealisiert bzw. zu sehr vereinfacht, da in der Regel biologische Netzwerke hinsichtlich ihrer Inzidenzmatrix deutlich komplizierter sind. Abbildung \ref{Fig:KEGG_Cancer_PW} zeigt exemplarisch aus der KEGG-Datenbank \cite{Kanehisa2000KEGG} eine Übersicht über das biologische Netzwerk für Krebs. Anhand des daraus erstellten ungerichteten Graphen in Abbildung \ref{fig:Cancer_PW_Graph} wird deutlich, dass die sternförmige Subgraphen keine geeignete Wahl sind, um biologische Netzwerke zu simulieren. 
+Für die in Unterkapitel \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulation gewählt, die \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten haben. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
+Nach Auffassung des Autors dieser Arbeit sind die sternförmigen Subgraphen in dem oben beschriebenen Simulationsablauf im Verhältnis zu wahren biologischen Netzwerken idealisiert bzw. zu sehr vereinfacht, da in der Regel biologische Netzwerke hinsichtlich ihrer Inzidenzmatrix deutlich komplizierter sind. Abbildung \ref{Fig:KEGG_Cancer_PW} zeigt exemplarisch aus der KEGG-Datenbank eine Übersicht über das biologische Netzwerk für Krebs \cite{Kanehisa2000KEGG}. Anhand des daraus erstellten ungerichteten Graphen in Abbildung \ref{fig:Cancer_PW_Graph} wird deutlich, dass die sternförmige Subgraphen keine geeignete Wahl sind, um biologische Netzwerke zu simulieren.\\
+Für die Simulation in dieser Arbeit wurden zunächst alle $290$ verfügbaren Pathways für den Homo Sapiens, die in der KEGG-Datenbank vorhanden sind (Stand 01. November, 2014), als ungerichtete Graphen umgewandelt. Davon wurden $20$ Graphen entfernt, weil sie keine Kante hatten, und zwei weitere Graphen ebenfalls entfernt, weil sie nur aus zwei Knoten bestanden. Anschließend wurden für jeden Graphen der durchschnittliche Knotengrad, der Medianknotengrad sowie das Verhältnis der vorhandenen Kanten zu den theoretisch möglichen $n(n-1)/2$ Kanten bestimmt. Diese Kennzahlen wurden gegen die Ordnung der Graphen, d.h. deren Knotenzahlen, in einem Streudiagramm abgetragen.
+<<echo=FALSE, message=FALSE, Plots_KEGG_Kennzahlen, fig.pos="H", fig.show='hold', fig.align='center', out.width='\\linewidth', fig.lp="fig:", fig.scap="Streudiagramme von deskriptiven Kennzahlen der KEGG-Pathways", fig.cap="Streudiagramme von verschiedenen Kennzahlen der ungerichteten Graphen, die aus den $268$ KEGG-Pathways generiert worden sind.">>=
+load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/KEGG_descriptive.RData")
+par(mfrow=c(2,2))
+
+plot(KEGG.descript$n.vertices, KEGG.descript$n.edges,
+	 main="a",
+     ylab="Anzahl Kanten",
+     xlab="Anzahl Knoten")
+
+plot(KEGG.descript$n.vertices, KEGG.descript$rel.edge, 
+	 main="b",
+     ylab="Relativer Anteil an Kanten",
+     xlab="Anzahl Knoten")
+
+
+plot(KEGG.descript$n.vertices, KEGG.descript$mean.degree,
+	 main="c",
+     ylab="Arith. Mittel des Knotengrads",
+     xlab="Anzahl Knoten")
+
+plot(KEGG.descript$n.vertices, KEGG.descript$median.degree,
+	 main="d",
+     ylab="Median des Knotengrads",
+     xlab="Anzahl Knoten")
+
+@
+
 
 
 \chapter{Fazit}\label{Fazit}
@@ -1391,14 +1419,14 @@ J \left(\sum_{j=1}^{p} z_j x_j \right) < \sum_{j=1}^{p} \left( z_j J(x_j) \right
   \centering
   \setkeys{Gin}{width=0.99\textwidth}
   \includegraphics{CancerPathway.png}
-  \caption[Übersicht über den KEGG Cancer-Pathway]{Übersicht über den Cancer-Pathway aus der KEGG-Datenbank ( \citeNP{Kanehisa2000KEGG}, Stand 03. November 2014).}
+  \caption[Übersicht über den KEGG Cancer-Pathway]{Übersicht über den Cancer-Pathway aus der KEGG-Datenbank (\citeNP{Kanehisa2000KEGG}; Stand 03. November, 2014).}
    \label{Fig:KEGG_Cancer_PW}
 \end{figure} 
 
 \newpage
 \section{KEGG Cancer-Pathway als ungerichteter Graph}
 
-<<echo=FALSE, message=FALSE, Cancer_PW_Graph, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway alsungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung \\ref{Fig:KEGG_Cancer_PW} als ungerichteter Graph.">>=
+<<echo=FALSE, message=FALSE, Cancer_PW_Graph, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway als ungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung \\ref{Fig:KEGG_Cancer_PW} als ungerichteter Graph.">>=
 #setwd("~/Studium/BIOMETRIE/Masterarbeit/R-Code/")
 #g <- parseKGML2Graph("./Pathways/hsa05200")
 #library(igraph)
