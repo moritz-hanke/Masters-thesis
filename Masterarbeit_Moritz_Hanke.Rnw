@@ -77,7 +77,7 @@
 \thispagestyle{empty}
 
 \begin{center}
-\textbf{\LARGE{TITEL DER ARBEIT\\}} 
+\textbf{\LARGE{Der Einfluss von Zentralitätsmaßen bei der netzwerk-basierten penalisierten Regression\\}} 
 \end{center}
 
 \begin{center}
@@ -169,6 +169,7 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{Enet}{Elastic Net}
 \abk{nEnet}{naives Elastic Net}
 \abk{s.d.}{so dass}
+\abk{Net1}{netzwerk-basierte penalisierte Regression nach \cite{li_network-constrained_2008}}
 
 
 % Begin der Arbeit
@@ -448,7 +449,7 @@ Als grundlegendes Prinzip wird bei der Penalisierung die zu minimierende Verlust
 \begin{align}\label{Eq_PRSS_allgmein}
 \text{PRSS}(\boldsymbol{\beta},\boldsymbol{\gamma})=\text{RSS}(\boldsymbol{\beta}) + P(\boldsymbol{\beta}, \boldsymbol{\gamma})
 \end{align} mit einem oder mehreren speziell zu wählenden \textit{Tuningparametern} $\boldsymbol{\gamma}$ ergibt. Generell wird gefordert, dass die abhängige Variable $\mathbf{Y}$ zentriert ist, d.h. es muss $\frac{1}{n}\sum_{i}^{n}y_i =0$ für die Realisierungen $y$ gelten, und die Kovariablen $\mathbf{X}$ müssen standardisiert sein, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ und $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $j=1,\dots,p$ gilt. Dadurch ist die Penalisierung unabhängig von den einzelnen Skalen der Kovariablen bzw. der Responsevariable und das Intercept fällt weg. Für die Notation gilt daher im Folgenden, wenn nicht anders gekennzeichnet, $\boldsymbol{\beta}=(\beta_1,\dots,\beta_p)'$ bzw. $\boldsymbol{\hat{\beta}}=(\hat{\beta}_1,\dots,\hat{\beta}_p)'$ und die Designmatrix $\mathbf{X}$ beinhaltet nur noch die Kovariablenvektoren.\\
-Kapitel \ref{Kap_Ridge-Regression} und \ref{Kap_Lasso-Regression} stellen zunächst die "`klassischen"' Penalisierungsmethoden \textit{Ridge-Regression} und \textit{Lasso-Regression} vor. Auf dieser Grundlage wird in Kapitel \ref{Kap_Elastic-Net} die Methode \textit{Elastic Net} eingeführt, die eine Kombination aus Lasso und Ridge ist. Abschließend werden \textit{netzwerkbasierte penalisierte Regressionen} in Kapitel \ref{Netzwerkbasierte_Penalisierung} näher betrachtet und Möglichkeiten zur Berücksichtigung der in Kapitel \ref{Kap_Zentralitätsstatistiken} eingeführten Zentralitätsmaße aufgezeigt.
+Kapitel \ref{Kap_Ridge-Regression} und \ref{Kap_Lasso-Regression} stellen zunächst die "`klassischen"' Penalisierungsmethoden \textit{Ridge-Regression} und \textit{Lasso-Regression} vor. Auf dieser Grundlage wird in Kapitel \ref{Kap_Elastic-Net} die Methode \textit{Elastic Net} eingeführt, die eine Kombination aus Lasso und Ridge ist. Abschließend werden \textit{netzwerkbasierte penalisierte Regressionen} in Kapitel \ref{Kap_Netzwerkbasierte_Penalisierung} näher betrachtet und Möglichkeiten zur Berücksichtigung der in Kapitel \ref{Kap_Zentralitätsstatistiken} eingeführten Zentralitätsmaße aufgezeigt.
 \begin{comment}
 Unverzerrtheit des $\hat{\beta}$ der Kleinste-Quadratmethode wird geopfert, um den \textit{mittleren quadratischen Fehler} (englisch: mean squared error; \textit{MSE}) zu senken\\
 Ridge wird eingeführt, weil Teil von Elastic Net\\
@@ -710,7 +711,7 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 
-\subsection{Netzwerkbasierte penalisierte Regressionen}\label{Netzwerkbasierte_Penalisierung}
+\subsection{Netzwerkbasierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
 Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Bspw. sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. Die generelle Idee hinter netzwerkbasierten penalisierten Regressionen ist die Annahme, dass Kovariablen, die gemeinsam variieren und im Netzwerk zusammenhängen, ähnlich große Steigungskoeffizienten haben müssen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, deren Abhängigkeit mit einer Kante dargestellt wird, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$\\
 Bei der ursprüngliche netzwerkbasierten penalisierten Regression, im Folgenden als \textit{Net1} abgekürzt, haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
@@ -755,7 +756,16 @@ Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autore
 
 % magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
 
-\chapter{Fazit}
+
+\chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
+Im nachfolgenden Kapitel wird zunächst in \ref{Kap_Datensimulation} die Methoden zur Datensimulation erläutert und anschließend in Unterkapitel XXXXXX anhand der simulierten Daten die die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
+
+\section{Datensimulation}\label{Kap_Datensimulation}
+Für die in Unterkapitel \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulation gewählt, die \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten haben. Die Knoten- und damit Kovariablenzahl lag für $p \gg n$-Simulationen jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
+Nach Auffassung des Autors dieser Arbeit sind die sternförmigen Subgraphen in dem oben beschriebenen Simulationsablauf im Verhältnis zu wahren biologischen Netzwerken idealisiert bzw. zu sehr vereinfacht, da in der Regel biologische Netzwerke hinsichtlich ihrer Inzidenzmatrix deutlich komplizierter sind. Abbildung \ref{Fig:KEGG_Cancer_PW} zeigt exemplarisch aus der KEGG-Datenbank \cite{Kanehisa2000KEGG} eine Übersicht über das biologische Netzwerk für Krebs. Anhand des daraus erstellten ungerichteten Graphen in Abbildung \ref{fig:Cancer_PW_Graph} wird deutlich, dass die sternförmige Subgraphen keine geeignete Wahl sind, um biologische Netzwerke zu simulieren. 
+
+
+\chapter{Fazit}\label{Fazit}
 \begin{comment}
 #######
 ## 1 ##
@@ -1372,6 +1382,36 @@ Handelt es sich um eine \textit{strikt konvexe} Funktion $J$ und $\exists x_k \c
 \begin{align*}
 J \left(\sum_{j=1}^{p} z_j x_j \right) < \sum_{j=1}^{p} \left( z_j J(x_j) \right).
 \end{align*}
+
+
+
+\chapter{Abbildungen und Tabellen}\label{App_Abbildungen_Tabellen}
+\section{KEGG Cancer-Pathway}\label{KEGG-Cancer-Pathway}
+\begin{figure}[htbp]
+  \centering
+  \setkeys{Gin}{width=0.99\textwidth}
+  \includegraphics{CancerPathway.png}
+  \caption[Übersicht über den KEGG Cancer-Pathway]{Übersicht über den Cancer-Pathway aus der KEGG-Datenbank ( \citeNP{Kanehisa2000KEGG}, Stand 03. November 2014).}
+   \label{Fig:KEGG_Cancer_PW}
+\end{figure} 
+
+\newpage
+\section{KEGG Cancer-Pathway als ungerichteter Graph}
+
+<<echo=FALSE, message=FALSE, Cancer_PW_Graph, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway alsungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung \\ref{Fig:KEGG_Cancer_PW} als ungerichteter Graph.">>=
+#setwd("~/Studium/BIOMETRIE/Masterarbeit/R-Code/")
+#g <- parseKGML2Graph("./Pathways/hsa05200")
+#library(igraph)
+#g <- #igraph.to.graphNEL(as.undirected(igraph.from.graphNEL(g)))
+#save(g, file="../R-Code/R-Objekte/CancerPathway.RData")
+
+library(KEGGgraph)
+load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/CancerPathway.RData")
+plot(g, attrs=list(node=list(label=NULL,fillcolor="lightgreen", fontsize="30", 
+                              fixedsize=FALSE, size="60"),
+                    graph=list(fontcolor="transparent")))
+@
+
 
 % Die eidesstattliche Erklärung auf einer neuen Seite
 \newpage
