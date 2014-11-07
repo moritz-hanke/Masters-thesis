@@ -762,9 +762,9 @@ Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autore
 Im nachfolgenden Kapitel wird zunächst in \ref{Kap_Datensimulation} die Methoden zur Datensimulation erläutert und anschließend in Unterkapitel XXXXXX anhand der simulierten Daten die die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
 
 \section{Datensimulation}\label{Kap_Datensimulation}
-Für die in Unterkapitel \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationschema genutzt, das \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten haben. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
+Für die in Unterkapitel \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationschema genutzt, das \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten aufweisen. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
 Nach Auffassung des Autors dieser Arbeit sind die sternförmigen Subgraphen in dem oben beschriebenen Simulationsablauf im Verhältnis zu wahren biologischen Netzwerken idealisiert bzw. zu sehr vereinfacht. Abbildung \ref{Fig:KEGG_Cancer_PW} zeigt exemplarisch aus der KEGG-Datenbank eine Übersicht über das biologische Netzwerk für Krebs \cite{Kanehisa2000KEGG}. Anhand des daraus erstellten ungerichteten Graphen in Abbildung \ref{fig:Cancer_PW_Graph} wird deutlich, dass die sternförmige Subgraphen keine geeignete Wahl sind, um biologische Netzwerke zu simulieren.\\
-Für die Simulation in dieser Arbeit wurden zunächst alle $290$ verfügbaren Pathways für den Homo Sapiens der KEGG-Datenbank (Stand 01. November, 2014) als ungerichtete Graphen umgewandelt. Davon wurden $20$ Graphen, die keine Kanten hatten, und zwei Graphen, die nur aus zwei Knoten bestanden, entfernt. Anschließend wurde für jeden Graphen der durchschnittliche Knotengrad, der Medianknotengrad, die Anzahl an Kanten sowie das Verhältnis der vorhandenen Kanten zu den theoretisch möglichen $N_V(N_V-1)/2$ Kanten bestimmt und gegen die Ordnung der Graphen, d.h. deren Knotenzahlen, in Streudiagrammen abgetragen (siehe Abbildung \ref{fig:Plots_KEGG_Kennzahlen}).
+Für die Simulation in dieser Arbeit wurden zunächst alle $290$ verfügbaren Pathways für den Homo Sapiens der KEGG-Datenbank (Stand 01. November, 2014) als ungerichtete Graphen umgewandelt. Davon wurden $20$ Graphen, die keine Kanten hatten, und zwei Graphen, die nur aus zwei Knoten bestanden, entfernt. Anschließend wurde für jeden Graphen der durchschnittliche Knotengrad, der Medianknotengrad, die Anzahl an Kanten sowie das Verhältnis der vorhandenen Kanten zu den theoretisch möglichen $|N_V|(|N_V|-1)/2$ Kanten bestimmt und gegen die Ordnung der Graphen, d.h. deren Knotenzahlen, in Streudiagrammen abgetragen (siehe Abbildung \ref{fig:Plots_KEGG_Kennzahlen}).
 <<echo=FALSE, message=FALSE, Plots_KEGG_Kennzahlen, fig.pos="H", fig.show='hold', fig.align='center', out.width='\\linewidth', fig.lp="fig:", fig.scap="Streudiagramme von deskriptiven Kennzahlen der KEGG-Pathways", fig.cap="Streudiagramme von verschiedenen Kennzahlen der ungerichteten Graphen, die aus den $268$ KEGG-Pathways generiert worden sind.">>=
 load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/KEGG_descriptive.RData")
 par(mfrow=c(2,2))
@@ -790,7 +790,7 @@ plot(KEGG.descript$n.vertices, KEGG.descript$median.degree,
      ylab="Median des Knotengrads",
      xlab="Anzahl Knoten")
 @
-Anhand der Streudiagramme wurden für die Graphen fünf Ordnungskategorien $O_o$ definiert:
+Anhand der Streudiagramme wurden für die Graphen fünf Ordnungskategorien $O_o$ definiert, die die biologischen Netzwerke relativ simpel klassifizieren sollen:
 \begin{align*}
 O_o =\begin{cases}
 O_1 \qquad \text{für} \ G(V,E) \ mit \ |N_V|<25,\\
@@ -800,12 +800,12 @@ O_4 \qquad \text{für} \ G(V,E) \ mit \ 100 \leq |N_V|<200,\\
 O_5 \qquad \text{für} \ G(V,E) \ mit \ 200 \leq |N_V|.
 \end{cases}
 \end{align*}
-Über alle KEGG-Graphen, die in eine Ordnungskategorie fallen, wurde das arithmetische Mittel bzw. der Median für den Knotengrad, den relativen Anteil an allen möglichen Kanten sowie über die Anzahl an Kanten berechnet (siehe Tabelle \ref{Tab_Uebersicht_Simu_Graphen}). 
+Anschließend wurde für alle KEGG-Graphen, die in eine Ordnungskategorie fallen, das arithmetische Mittel bzw. der Median für den Knotengrad, den relativen Anteil an allen möglichen Kanten sowie über $|N_E|$ berechnet (siehe Tabelle \ref{Tab_Uebersicht_Simu_Graphen}). Um eine möglichst realistische Simulation von biologischen Pathways zu erreichen, wurden mittels dem R-Paket R-Paket \texttt{qpgraph} \cite{castelo2006Rpackage_qpgraph,castelo2009Rpackage_qpgraph,castelo2014Rpackage_qpgraph} Zufallsgraphen nach dem  Erd{\H{o}}s-R{\'e}nyi-Modell modelliert, d.h. für einen Graphen gilt $G(V,\binom{N_V}{2}p)$, wobei $p$ dem relativen Anteil $\frac{|N_E|}{|N_V|(|N_V|-1)/2}$ Kanten an möglichen Kanten entspricht. Entsprechend der Ordnung wurden für die Simulation die Medianwerte aus Tabelle \ref{Tab_Uebersicht_Simu_Graphen} gewählt, da diese unempfindlich gegenüber einzelnen Ausreißern in den Ordnungskategorien sind.
 \begin{table}[h]
 \centering
 \begin{tabular}{lcll}
                             & \multicolumn{3}{c}{\textbf{Arithmetische Mittelwerte}}                                                                 \\ \hline
-\multicolumn{1}{|c|}{}      & \multicolumn{1}{c|}{$d(v)$} & \multicolumn{1}{c|}{$ \frac{|N_E|}{N_V(N_V-1)/2}$} & \multicolumn{1}{c|}{$ |N_E$|}   \\ \hline
+\multicolumn{1}{|c|}{}      & \multicolumn{1}{c|}{$d(v)$} & \multicolumn{1}{c|}{$ \frac{|N_E|}{|N_V|(|N_V|-1)/2}$} & \multicolumn{1}{c|}{$ |N_E$|}   \\ \hline
 \multicolumn{1}{|c|}{$O_1$} & \multicolumn{1}{c|}{$2.141$}      & \multicolumn{1}{c|}{$0.2076$}                      & \multicolumn{1}{c|}{$15.97$}  \\ \hline
 \multicolumn{1}{|c|}{$O_2$} & \multicolumn{1}{c|}{$3.781$}      & \multicolumn{1}{c|}{$0.1135$}                      & \multicolumn{1}{c|}{$68.39$}  \\ \hline
 \multicolumn{1}{|c|}{$O_3$} & \multicolumn{1}{c|}{$5.611$}      & \multicolumn{1}{c|}{$0.0826$}                      & \multicolumn{1}{c|}{$200.64$} \\ \hline
@@ -813,16 +813,22 @@ O_5 \qquad \text{für} \ G(V,E) \ mit \ 200 \leq |N_V|.
 \multicolumn{1}{|c|}{$O_5$} & \multicolumn{1}{c|}{$6.819$}      & \multicolumn{1}{c|}{$0.0283$}                      & \multicolumn{1}{c|}{$869.65$} \\ \hline
                             & \multicolumn{1}{l}{}              &                                                    &                               \\
                             & \multicolumn{3}{c}{\textbf{Mediane}}                                                                                   \\ \hline
-\multicolumn{1}{|l|}{}      & \multicolumn{1}{l|}{$d(v)$}       & \multicolumn{1}{l|}{$ \frac{|N_E|}{N_V(N_V-1)/2}$} & \multicolumn{1}{l|}{$|N_E| $}   \\ \hline
+\multicolumn{1}{|l|}{}      & \multicolumn{1}{l|}{$d(v)$}       & \multicolumn{1}{l|}{$ \frac{|N_E|}{|N_V|(|N_V|-1)/2}$} & \multicolumn{1}{l|}{$|N_E| $}   \\ \hline
 \multicolumn{1}{|l|}{$O_1$} & \multicolumn{1}{l|}{$1$}          & \multicolumn{1}{l|}{$0.1593$}                      & \multicolumn{1}{l|}{$7.5$}    \\ \hline
 \multicolumn{1}{|l|}{$O_2$} & \multicolumn{1}{l|}{$1$}          & \multicolumn{1}{l|}{$0.0654$}                      & \multicolumn{1}{l|}{$42$}     \\ \hline
 \multicolumn{1}{|l|}{$O_3$} & \multicolumn{1}{l|}{$3$}          & \multicolumn{1}{l|}{$0.0566$}                      & \multicolumn{1}{l|}{$134$}    \\ \hline
 \multicolumn{1}{|l|}{$O_4$} & \multicolumn{1}{l|}{$3$}          & \multicolumn{1}{l|}{$0.0388$}                      & \multicolumn{1}{l|}{$337.5$}  \\ \hline
 \multicolumn{1}{|l|}{$O_5$} & \multicolumn{1}{l|}{$4$}          & \multicolumn{1}{l|}{$0.0214$}                      & \multicolumn{1}{l|}{$706$}    \\ \hline
 \end{tabular}
-\caption[Zusammenfassung über simulierte Graphen]{Übersicht über die simulierten Graphen bzgl. des durchschnittlichen Knotengrads $d(v)$, des Anteils an vorhandenen zu theoretisch möglichen Kanten $\frac{|N_E|}{N_V(N_V-1)/2}$ sowie der Anzahl an Kanten $|N_E|$ für die einzelnen Ordnungskategorien. }\label{Tab_Uebersicht_Simu_Graphen}
+\caption[Zusammenfassung über simulierte Graphen]{Übersicht über die simulierten Graphen bzgl. des durchschnittlichen Knotengrads $d(v)$, des Anteils an vorhandenen zu theoretisch möglichen Kanten $\frac{|N_E|}{|N_V|(|N_V|-1)/2}$ sowie der Anzahl an Kanten $|N_E|$ für die einzelnen Ordnungskategorien. }\label{Tab_Uebersicht_Simu_Graphen}
 \end{table}
-Mittels dem R-Paket \texttt{qpgraph} \cite{castelo2006Rpackage_qpgraph,castelo2009Rpackage_qpgraph,castelo2014Rpackage_qpgraph} wurden 
+Nach dem oben entwickelten Schema wurden für die Simulationsstudie insgesamt $1000$ Datensätze mit jeweils $n=100$ Beobachtungen und $p=1000$ Kovariablen simuliert. Als den Datensätzen zugrunde liegenden Graphen wurden mit der R-Funktion \texttt{erGraphParam} jeweils $5$ Graphen mit $20$ und $30$ Knoten, je $2$ Graphen mit $50$ Knoten und $75$ Knoten sowie jeweils ein Graph mit $100$, $150$ und $250$ Knoten pseudozufällig erstellt. Ein Beispiel für einen solchen simulierten Graphen ist in Abbildung \ref{fig:Beispielgraph_Simu} dargestellt.
+ 
+<<echo=FALSE, message=FALSE, Beispielgraph_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='\\linewidth', fig.lp="fig:", fig.scap="Beispielgraph aus der Datensimulation", fig.cap="Ein für die Datensimulation nach dem  Erd{\\H{o}}s-R{\\'e}nyi-Modell pseudozufällig erstellter Graph mit $75$ Knoten und einer Wahrscheinlichkeit für das Aufreteten einer Kante zwischen zwei Knoten von $p=0.0566$.">>=
+library(graph)
+load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/Beispielgraph_Simu.RData")
+plot(Beispielgraph, attrs=list(node=list(label=NULL,fillcolor="lightgreen",fontsize="20",fixedsize=FALSE)))
+@
 
 
 \chapter{Fazit}\label{Fazit}
