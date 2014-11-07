@@ -737,6 +737,7 @@ die für die Schätzung von $\boldsymbol{\hat{\beta}}^{Net1}$ bezüglich $\bolds
 \boldsymbol{\hat{\beta}}^{Net1} &= \arg \displaystyle\min_{\beta} \text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2).
 \end{align}
 Wegen dem Lasso-Operator kann die Net1-Regression wie die Enet-Regression eine Variablenselektion durchführen und da $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta}$ eine strikt konvexe Funktion ist, handelt es sich in \eqref{Eq_Net1_Constrained} für $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} > 0$ um ein strikt konvexes Optimierungsproblem und es kommt zu einem Gruppierungseffekt bei der Schätzung (siehe Anhang \ref{App_GroupEffect_Strict_Conv}).\\
+XXXXXXXXXXX UNSCHÖNER ÜBERGANG XXXXXXXXXXXXX
 Der Strafterm aus \eqref{Eq_Net1_Constrained} weist eine Ähnlichkeit zu dem Fused-Lasso-Strafterm
 \begin{align*}
 \text{PRSS}_{fLasso}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2 \sum_{j=2}^{p}|\beta_j - \beta_{j-1}|,
@@ -751,8 +752,8 @@ Wird \eqref{Eq_PRSS_Net1} abgeleitet und null gesetzt, ergibt sich der naive Net
 Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ der nEnet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$ der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt. In Analogie zur nEnet-Regression lässt sich durch eine Erweiterung des Datensatzes zu $\mathbf{X}^*=\frac{1}{\sqrt{1+\gamma_2}}\begin{pmatrix}
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{S}'
-\end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nNet1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. wegen der auch hier vorliegenden doppelten Schrumpfungdurch den $L_1$- und $L_2$-Strafterm schlagen \citeA{li_network-constrained_2008} ebenfalls den Faktor $1+\gamma_2$ zur Korrektur des Schätzers vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Net1-Schätzer.
-Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei dem Enet-Schätzer (siehe Abschnitt \ref{Kap_Elastic-Net}).
+\end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nNet1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. Wegen der ebenfalls doppelten Schrumpfung durch den $L_1$- und $L_2$-Strafterm, schlagen \citeA{li_network-constrained_2008} wie bei dem Enet-Schätzer $1+\gamma_2$ als Korrekturfaktor vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Net1-Schätzer.
+Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei dem Enet-Schätzer, d.h. ... (siehe Abschnitt \ref{Kap_Elastic-Net}).
 
 % magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
 
@@ -763,18 +764,18 @@ Im nachfolgenden Kapitel wird zunächst in \ref{Kap_Datensimulation} die Methode
 \section{Datensimulation}\label{Kap_Datensimulation}
 Für die in Unterkapitel \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationschema genutzt, das \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten haben. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
 Nach Auffassung des Autors dieser Arbeit sind die sternförmigen Subgraphen in dem oben beschriebenen Simulationsablauf im Verhältnis zu wahren biologischen Netzwerken idealisiert bzw. zu sehr vereinfacht. Abbildung \ref{Fig:KEGG_Cancer_PW} zeigt exemplarisch aus der KEGG-Datenbank eine Übersicht über das biologische Netzwerk für Krebs \cite{Kanehisa2000KEGG}. Anhand des daraus erstellten ungerichteten Graphen in Abbildung \ref{fig:Cancer_PW_Graph} wird deutlich, dass die sternförmige Subgraphen keine geeignete Wahl sind, um biologische Netzwerke zu simulieren.\\
-Für die Simulation in dieser Arbeit wurden zunächst alle $290$ verfügbaren Pathways für den Homo Sapiens der KEGG-Datenbank (Stand 01. November, 2014) als ungerichtete Graphen umgewandelt. Davon wurden $20$ Graphen, die keine Kanten hatten, und zwei weitere Graphen, die nur aus zwei Knoten bestanden, entfernt. Anschließend wurden für jeden Graphen der durchschnittliche Knotengrad, der Medianknotengrad sowie das Verhältnis der vorhandenen Kanten zu den theoretisch möglichen $N_V(N_V-1)/2$ Kanten bestimmt. Diese Kennzahlen wurden gegen die Ordnung der Graphen, d.h. deren Knotenzahlen, in Streudiagrammen abgetragen (siehe Abbildung \ref{fig:Plots_KEGG_Kennzahlen}).
+Für die Simulation in dieser Arbeit wurden zunächst alle $290$ verfügbaren Pathways für den Homo Sapiens der KEGG-Datenbank (Stand 01. November, 2014) als ungerichtete Graphen umgewandelt. Davon wurden $20$ Graphen, die keine Kanten hatten, und zwei Graphen, die nur aus zwei Knoten bestanden, entfernt. Anschließend wurde für jeden Graphen der durchschnittliche Knotengrad, der Medianknotengrad, die Anzahl an Kanten sowie das Verhältnis der vorhandenen Kanten zu den theoretisch möglichen $N_V(N_V-1)/2$ Kanten bestimmt und gegen die Ordnung der Graphen, d.h. deren Knotenzahlen, in Streudiagrammen abgetragen (siehe Abbildung \ref{fig:Plots_KEGG_Kennzahlen}).
 <<echo=FALSE, message=FALSE, Plots_KEGG_Kennzahlen, fig.pos="H", fig.show='hold', fig.align='center', out.width='\\linewidth', fig.lp="fig:", fig.scap="Streudiagramme von deskriptiven Kennzahlen der KEGG-Pathways", fig.cap="Streudiagramme von verschiedenen Kennzahlen der ungerichteten Graphen, die aus den $268$ KEGG-Pathways generiert worden sind.">>=
 load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/KEGG_descriptive.RData")
 par(mfrow=c(2,2))
 
 plot(KEGG.descript$n.vertices, KEGG.descript$n.edges,
-	 main="a",
+     main="a",
      ylab="Anzahl Kanten",
      xlab="Anzahl Knoten")
 
 plot(KEGG.descript$n.vertices, KEGG.descript$rel.edge, 
-	 main="b",
+     main="b",
      ylab="Relativer Anteil an Kanten",
      xlab="Anzahl Knoten")
 
@@ -788,7 +789,6 @@ plot(KEGG.descript$n.vertices, KEGG.descript$median.degree,
 	 main="d",
      ylab="Median des Knotengrads",
      xlab="Anzahl Knoten")
-
 @
 Anhand der Streudiagramme wurden für die Graphen fünf Ordnungskategorien $O_o$ definiert:
 \begin{align*}
@@ -800,11 +800,12 @@ O_4 \qquad \text{für} \ G(V,E) \ mit \ 100 \leq |N_V|<200,\\
 O_5 \qquad \text{für} \ G(V,E) \ mit \ 200 \leq |N_V|.
 \end{cases}
 \end{align*}
-
+Über alle KEGG-Graphen, die in eine Ordnungskategorie fallen, wurde das arithmetische Mittel bzw. der Median für den Knotengrad, den relativen Anteil an allen möglichen Kanten sowie über die Anzahl an Kanten berechnet (siehe Tabelle \ref{Tab_Uebersicht_Simu_Graphen}). 
 \begin{table}[h]
+\centering
 \begin{tabular}{lcll}
                             & \multicolumn{3}{c}{\textbf{Arithmetische Mittelwerte}}                                                                 \\ \hline
-\multicolumn{1}{|c|}{}      & \multicolumn{1}{c|}{$\bar{d}(G)$} & \multicolumn{1}{c|}{$ \frac{|N_E|}{N_V(N_V-1)/2}$} & \multicolumn{1}{c|}{$ N_E$}   \\ \hline
+\multicolumn{1}{|c|}{}      & \multicolumn{1}{c|}{$d(v)$} & \multicolumn{1}{c|}{$ \frac{|N_E|}{N_V(N_V-1)/2}$} & \multicolumn{1}{c|}{$ |N_E$|}   \\ \hline
 \multicolumn{1}{|c|}{$O_1$} & \multicolumn{1}{c|}{$2.141$}      & \multicolumn{1}{c|}{$0.2076$}                      & \multicolumn{1}{c|}{$15.97$}  \\ \hline
 \multicolumn{1}{|c|}{$O_2$} & \multicolumn{1}{c|}{$3.781$}      & \multicolumn{1}{c|}{$0.1135$}                      & \multicolumn{1}{c|}{$68.39$}  \\ \hline
 \multicolumn{1}{|c|}{$O_3$} & \multicolumn{1}{c|}{$5.611$}      & \multicolumn{1}{c|}{$0.0826$}                      & \multicolumn{1}{c|}{$200.64$} \\ \hline
@@ -812,13 +813,14 @@ O_5 \qquad \text{für} \ G(V,E) \ mit \ 200 \leq |N_V|.
 \multicolumn{1}{|c|}{$O_5$} & \multicolumn{1}{c|}{$6.819$}      & \multicolumn{1}{c|}{$0.0283$}                      & \multicolumn{1}{c|}{$869.65$} \\ \hline
                             & \multicolumn{1}{l}{}              &                                                    &                               \\
                             & \multicolumn{3}{c}{\textbf{Mediane}}                                                                                   \\ \hline
-\multicolumn{1}{|l|}{}      & \multicolumn{1}{l|}{$d(G)$}       & \multicolumn{1}{l|}{$ \frac{|N_E|}{N_V(N_V-1)/2}$} & \multicolumn{1}{l|}{$N_E $}   \\ \hline
+\multicolumn{1}{|l|}{}      & \multicolumn{1}{l|}{$d(v)$}       & \multicolumn{1}{l|}{$ \frac{|N_E|}{N_V(N_V-1)/2}$} & \multicolumn{1}{l|}{$|N_E| $}   \\ \hline
 \multicolumn{1}{|l|}{$O_1$} & \multicolumn{1}{l|}{$1$}          & \multicolumn{1}{l|}{$0.1593$}                      & \multicolumn{1}{l|}{$7.5$}    \\ \hline
 \multicolumn{1}{|l|}{$O_2$} & \multicolumn{1}{l|}{$1$}          & \multicolumn{1}{l|}{$0.0654$}                      & \multicolumn{1}{l|}{$42$}     \\ \hline
 \multicolumn{1}{|l|}{$O_3$} & \multicolumn{1}{l|}{$3$}          & \multicolumn{1}{l|}{$0.0566$}                      & \multicolumn{1}{l|}{$134$}    \\ \hline
 \multicolumn{1}{|l|}{$O_4$} & \multicolumn{1}{l|}{$3$}          & \multicolumn{1}{l|}{$0.0388$}                      & \multicolumn{1}{l|}{$337.5$}  \\ \hline
 \multicolumn{1}{|l|}{$O_5$} & \multicolumn{1}{l|}{$4$}          & \multicolumn{1}{l|}{$0.0214$}                      & \multicolumn{1}{l|}{$706$}    \\ \hline
 \end{tabular}
+\caption[Zusammenfassung über simulierte Graphen]{Übersicht über die simulierten Graphen bzgl. des durchschnittlichen Knotengrads $d(v)$, des Anteils an vorhandenen zu theoretisch möglichen Kanten $\frac{|N_E|}{N_V(N_V-1)/2}$ sowie der Anzahl an Kanten $|N_E|$ für die einzelnen Ordnungskategorien. }\label{Tab_Uebersicht_Simu_Graphen}
 \end{table}
 Mittels dem R-Paket \texttt{qpgraph} \cite{castelo2006Rpackage_qpgraph,castelo2009Rpackage_qpgraph,castelo2014Rpackage_qpgraph} wurden 
 
