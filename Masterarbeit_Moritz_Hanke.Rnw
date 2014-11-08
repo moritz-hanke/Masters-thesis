@@ -1342,11 +1342,11 @@ und für Kovariable $l$
 Durch die Annahme, dass die Knoten $k$ und $l$ nur miteinander eine Kante haben, fällt in \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
 Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich alsDifferenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
 \begin{align}
-&& 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1\left( \textnormal{\textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace - sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \right) \notag \\
+&& 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1\left( \textnormal{\textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace - \text{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \right) \notag \\
 &\phantom{{}=1} + \gamma_2\left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right)
  - \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right) \notag \\
 &\Leftrightarrow& 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + 2 \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right)
-&\Rightarrow& 
+&\Rightarrow& ...&=...
 \end{align}
 \end{proof}
 
