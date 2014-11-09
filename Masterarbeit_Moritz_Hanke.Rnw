@@ -1347,12 +1347,19 @@ Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{n
 && &\phantom{{}=1} + \gamma_2\left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\ 
 && &\phantom{{}=1} - \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right) \notag \\
 &\Leftrightarrow& 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
-&& &\phantom{{}=1} + 2 \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right) \notag \\
-&\Leftrightarrow& \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)&=\frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{2\gamma_2} \notag \\
-&\Rightarrow& \frac{\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)}{||\mathbf{Y}||_1} &= \frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
-&\Rightarrow& \frac{||\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &= \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
-&\Rightarrow& \frac{||\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \cdot ||\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
+&& &\phantom{{}=1} + 2 \gamma_2 \left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\
+&\Leftrightarrow& \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)&=\frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{2\gamma_2} \notag \\
+&\Rightarrow& \frac{\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)}{||\mathbf{Y}||_1} &= \frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
+&\Rightarrow& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &= \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
+&\Rightarrow& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \cdot ||\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
 \end{align}
+Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2} und \eqref{Eq_Betrag_Diff_xl_xk} aus dem Beweis für die obere Grenze der Differenz zwischen zwei nEnet-Schätzern (siehe auch \ref{App_obere_Grenze_Diff_nEnet}), gilt für die obere Grenze für zwei nur miteinander verbundenen nNet1-Schätzern:
+\begin{align*}
+&& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nNet1}||_2}{||\mathbf{Y}||_1} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
+&\Rightarrow& &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nNet1}||_2}{||\mathbf{Y}||_2} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
+&\Rightarrow& &\leq \frac{1}{2\gamma_2} ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
+&\Rightarrow& &\leq \frac{1}{2\gamma_2}\sqrt{2(1-\rho_{k,l})}
+\end{align*}
 \end{proof}
 
 
