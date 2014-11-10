@@ -713,6 +713,7 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 \subsection{Netzwerkbasierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
 Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Bspw. sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.\\
+\paragraph{Net1}
 Bei der ursprüngliche netzwerkbasierten penalisierten Regression, im Folgenden als \textit{Net1} abgekürzt, haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
 P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
@@ -763,13 +764,26 @@ für die Differenz
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)- \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2
 \end{align}
 der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nNet1}). Bedingung für diese Darstellung ist, dass die beiden Knoten nur miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nNet1} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$, die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
-Wird $p$ fixiert, gilt für die Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter $\gamma_{1,n}$ und $\gamma_{2,n}$ Funktionen, die abhängig von $n$ sind, so kann nach \citeA{li_network-constrained_2008} folgendes Theorem für die asymptotische Eigenschaft der Net1-Schätzer gegeben werden:
-\begin{theorem}
-Gilt $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ und $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ sowie
-\begin{align}
-C=\lim\limits_{n \rightarrow \infty}
+Wird $p$ fixiert, gilt für die Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter $\gamma_{1,n}$ und $\gamma_{2,n}$ Funktionen, die abhängig von $n$ sind, so zeigen \citeA{Li2007Net1_Workingpaper} folgende asymptotische Eigenschaft des Net1-Schätzers (für den Beweis siehe Anhang XXXXXXX):
+\begin{align*}
+\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V)
+\end{align*}
+mit
+\begin{align}\label{Eq_Vu_asymptotic}
+V(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag \\
+&\phantom{{}=1} + \gamma_{1,0}\sum_{j=1}^{p}\left\lbrace u_j \textnormal{sign}(\beta_j)I(\beta_j \neq 0) + |u_j|I(\beta_j=0) \right\rbrace \notag \\
+&\phantom{{}=1} + 2\gamma_{2,0} \sum_{\{k,l\}} \left\lbrace \left( \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}\right)
+\left( \frac{u_k}{\sqrt{d(k)}} - \frac{u_l}{\sqrt{d(l)}}\right)w(\{k,l\})
+\right\rbrace.
 \end{align}
-\end{theorem}
+Dabei seien
+\begin{align*}
+\mathbf{u}&=(u_1, \dots , u_p) \\
+\mathbf{C}&=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right) \\
+\mathbf{W}&\sim N(0, \sigma^2 \mathbf{C})
+\end{align*}
+und $I(\cdot)$ die Indikatorfunktion.\\
+Anhand von \eqref{Eq_Vu_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmte Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$.
 
 
 % magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
@@ -1370,6 +1384,64 @@ Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2},
 \end{proof}
 
 
+\section{Beweis der asymptotischen Eigenschaft des Net1-Schätzers}
+\begin{lemma}
+Gelte $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$. Sei darüber hinaus
+\begin{align*}
+\mathbf{C}=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right)
+\end{align*}
+nicht singulär, dann gilt
+\begin{align*}
+\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V)
+\end{align*}
+mit
+\begin{align*}
+V(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag \\
+&\phantom{{}=1} + \gamma_{1,0}\sum_{j=1}^{p}\left\lbrace u_j \textnormal{sign}(\beta_j)I(\beta_j \neq 0) + |u_j|I(\beta_j=0) \right\rbrace \notag \\
+&\phantom{{}=1} + 2\gamma_{2,0} \sum_{\{k,l\}} \left\lbrace \left( \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}\right)
+\left( \frac{u_k}{\sqrt{d(k)}} - \frac{u_l}{\sqrt{d(l)}}\right)w(\{k,l\})
+\right\rbrace
+\end{align*}
+und
+\begin{align*}
+\mathbf{W}\sim N(0, \sigma^2 \mathbf{C})
+\end{align*}
+sowie 
+\begin{align*}
+\mathbf{u}=(u_1, \dots, u_p)'
+\end{align*}
+\end{lemma}
+Der nachfolgende Beweis ist eine ausführliche Ausarbeitung des Beweises von \citeA{Li2007Net1_Workingpaper}.
+\begin{proof}
+Es sei $V_n(\mathbf{u})$ definiert als
+\begin{align}
+V_n(\mathbf{u})&=\sum_{i=1}^{n} 
+\left\lbrace 
+\left( 
+\varepsilon_i - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
+\right)^2 - \varepsilon_i^2
+\right\rbrace
++ \gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
+|\beta_j + \frac{u_j}{\sqrt{n}}|-|\beta_j|
+\right\rbrace \notag \\
+&\phantom{{}=1} + \gamma_{2,n}\sum_{\{k,l\}} \left\lbrace
+\left[
+\left( 
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right)
++
+\left( 
+\frac{u_k}{\sqrt{d(k)}} - 
+\frac{u_l}{\sqrt{d(l)}}
+\right)\sqrt{n}
+\right]^2 w(\{k,l\}) \right.\\
+&\phantom{{}=2} \left.
+- \left[
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right]^2 w(\{k,l\})
+\right\rbrace
+\end{align}
+\end{proof}
 
 \chapter{Erläuterungen}
 \section{Verlust- und Risikofunktionen}\label{App_Risikofunktion}
