@@ -44,7 +44,7 @@
 \usepackage{amssymb}
 
 \newtheorem{lemma}{Lemma}
-
+\newtheorem{theorem}{Theorem}
 
 \usepackage{apager}
 
@@ -712,7 +712,7 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 \subsection{Netzwerkbasierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
-Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Bspw. sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. Die generelle Idee hinter netzwerkbasierten penalisierten Regressionen ist die Annahme, dass Kovariablen, die gemeinsam variieren und im Netzwerk zusammenhängen, ähnlich große Steigungskoeffizienten haben müssen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, deren Abhängigkeit mit einer Kante dargestellt wird, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$\\
+Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Bspw. sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.\\
 Bei der ursprüngliche netzwerkbasierten penalisierten Regression, im Folgenden als \textit{Net1} abgekürzt, haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
 P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
@@ -725,7 +725,7 @@ definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspric
  0, \qquad &\text{sonst.}\\
 \end{cases}
 \end{align*}
-Der Knotengrad sei in diesem Fall $d(u)=\sum_{\{u,v\}}w(\{u,v\})$ mit dem Kantengewicht $w(\{u,v\})$, das die Unsicherheit oder Stärke einer Kante $e=\{u,v\}$ zwischen zwei Knoten $u$ und $v$ angibt.\\
+Der Knotengrad sei in diesem Fall $d(u)=\sum_{\{u,v\}}w(\{u,v\})$ mit den Kantengewichten $w(\{u,v\})$, die die Unsicherheit oder Stärke einer Kante $e=\{u,v\}$ zwischen zwei Knoten $u$ und $v$ angeben.\\
 Da $\textbf{\~L}$ positiv semidefinit ist, gilt $\textbf{\~L}=\textbf{S}\textbf{S}'$ \cite{chung1996spectralgraph}, wobei $\textbf{S}$ einer $N_V \times N_E$-Matrix entspricht, deren Spalten die Kanten und die Zeilen die Knoten von $G$ sind. Sind zwei Knoten $u$ und $v$ adjazent, hat $\textbf{S}$ in der entsprechenden Spalte für die Kante $\{u,v\}$ in der Zeile $u$ den Eintrag $\sqrt{w(\{u,v\})}/d(u)$ und in Zeile $v$ den Eintrag $-\sqrt{w(\{u,v\})}/d(v)$. Die restlichen Zeilen sind mit Nullen besetzt.\\
 Somit ergibt sich als PRSS für Net1
 \begin{align}\label{Eq_PRSS_Net1}
@@ -747,22 +747,29 @@ Wird \eqref{Eq_PRSS_Net1} abgeleitet und null gesetzt, ergibt sich der naive Net
 \begin{align}\label{Eq_Net1_PRSS_Ableitung}
 &&\frac{\partial \textnormal{PRSS}_{Net1}(\boldsymbol{\beta}, \gamma_1, \gamma_2)}{\partial \boldsymbol{\beta}}&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
 &\Rightarrow& 0 &= -2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
-&\Rightarrow& \boldsymbol{\hat{\beta}}^{nNet1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
+&\Rightarrow& \boldsymbol{\hat{\beta}}^{nNet1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
 \end{align}
 Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ der nEnet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$ der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt. In Analogie zur nEnet-Regression lässt sich durch eine Erweiterung des Datensatzes zu $\mathbf{X}^*=\frac{1}{\sqrt{1+\gamma_2}}\begin{pmatrix}
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{S}'
-\end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nNet1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. Wegen der ebenfalls doppelten Schrumpfung durch den $L_1$- und $L_2$-Strafterm, schlagen \citeA{li_network-constrained_2008} wie bei dem Enet-Schätzer $1+\gamma_2$ als Korrekturfaktor vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Net1-Schätzer.
-Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei dem Enet-Schätzer, d.h. eine Kreuzvalidierung über zwei Tuningparameter (siehe dazu Abschnitt \ref{Kap_Elastic-Net}).\\
-Wie beim Enet-Schätzer lässt sich für zwei mittels Net1 geschätzte Regressionskoeffizienten $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)$ und $\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)$, deren Kovariablen $k$ und $l$ im Graph von den Knoten $v_k$ und $v_l$ repräsentiert werden, eine obere Grenze
-\begin{align}
+\end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nNet1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. Wegen der ebenfalls doppelten Schrumpfung durch den $L_1$- und $L_2$-Strafterm, schlagen \citeA{li_network-constrained_2008} wie bei dem Enet-Schätzer $(1+\gamma_2)$ als Korrekturfaktor vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Net1-Schätzer.
+Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei dem Enet-Schätzer, d.h. eine Kreuzvalidierung über beide Parameter (siehe dazu Abschnitt \ref{Kap_Elastic-Net}).\\
+Wie beim Enet-Schätzer lässt sich für zwei mittels Net1 geschätzte Regressionskoeffizienten $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)$ und $\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)$ eine obere Grenze
+\begin{align}\label{Eq_Obere_Grenze_nNet1}
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{2\gamma_2}\sqrt{2(1-p)}
 \end{align}
 für die Differenz 
 \begin{align}
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)- \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2
 \end{align}
-der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang XXXXXX). Bedingung dafür ist, dass die beiden Knoten nur miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) > 0$ gilt. 
+der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nNet1}). Bedingung für diese Darstellung ist, dass die beiden Knoten nur miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nNet1} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$, die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
+Wird $p$ fixiert, gilt für die Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter $\gamma_{1,n}$ und $\gamma_{2,n}$ Funktionen, die abhängig von $n$ sind, so kann nach \citeA{li_network-constrained_2008} folgendes Theorem für die asymptotische Eigenschaft der Net1-Schätzer gegeben werden:
+\begin{theorem}
+Gilt $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ und $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ sowie
+\begin{align}
+C=\lim\limits_{n \rightarrow \infty}
+\end{align}
+\end{theorem}
 
 
 % magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
@@ -833,7 +840,6 @@ Unter Berücksichtigung dieser Ordnungskategorien wurde für alle KEGG-Graphen, 
 \caption[Zusammenfassung über simulierte Graphen]{Übersicht über die simulierten Graphen bzgl. des durchschnittlichen Knotengrads $d(v)$, des Anteils an vorhandenen zu theoretisch möglichen Kanten $\frac{|N_E|}{|N_V|(|N_V|-1)/2}$ sowie der Anzahl an Kanten $|N_E|$ für die einzelnen Ordnungskategorien. }\label{Tab_Uebersicht_Simu_Graphen}
 \end{table}
 Nach dem oben entwickelten Schema wurden für die Simulationsstudie insgesamt $1000$ Datensätze mit jeweils $n=100$ Beobachtungen und $p=1000$ Kovariablen simuliert. Als den Datensätzen zugrunde liegenden Graphen wurden mit der R-Funktion \texttt{erGraphParam} jeweils $5$ Graphen mit $20$ und $30$ Knoten, je $2$ Graphen mit $50$ Knoten und $75$ Knoten sowie jeweils ein Graph mit $100$, $150$ und $250$ Knoten pseudozufällig erstellt. 
-\begin{comment}
 <<echo=FALSE, message=FALSE, Beispielgraph_Simu, fig.pos="h", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Beispielgraph aus der Datensimulation", fig.cap="Ein für die Datensimulation nach dem  Erd{\\H{o}}s-R{\\'e}nyi-Modell pseudozufällig erstellter Graph mit $75$ Knoten und einer Wahrscheinlichkeit für das Aufreteten einer Kante zwischen zwei Knoten von $p=0.0566$. Die Knotengrade für den blauen, gelben und roten Knoten entsprechen $0$, $1$ und $8$ und spiegeln die Variabilität wider, die durch das in dieser Arbeit verwendete Schema erzeugt wird.">>=
 library(graph)
 load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/Beispielgraph_Simu.RData")
@@ -844,7 +850,8 @@ nodeattrs$fillcolor <- c(x420 = "red", x395="yellow", x387="blue")
 
 plot(Beispielgraph, attrs = globalattrs, nodeAttrs = nodeattrs)
 @
-\end{comment}
+Auf Grundlage der dabei mitsimulierten Kovarianzmatrizen wurde mit der Funktion \texttt{rmvnorm} normalverteilte Kovariablenausprägungen simuliert, mit deren Hilfe wiederum die Responsevariable als $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$ simuliert wurde. Dabei wurden die XXXXXX ersten Einträge von $\boldsymbol{\beta}$ als $\beta_1=...=\beta_{XXXX}=3$ und die restlichen $p-XXXX$ Kovariablen null gesetzt, wodurch eine spärliche Besetzung von $\boldsymbol{\beta}$ gewährleistet ist. Entsprechend der Normalverteilungsannahme des klassischen linearen Modell wurde der Fehlerterm als $\varepsilon_i \sim N \left(0, \frac{\sum_{j=1}^{p} \beta_j^2}{YYYYY}\right)$ simuliert. Anschließend wurde entsprechend der Voraussetzungen von Kapitel \ref{Kap_Penalisierte Regression} jede Kovariable standardisiert und die Responsevariable zentriert.
+
 
 \chapter{Fazit}\label{Fazit}
 \begin{comment}
@@ -1307,7 +1314,7 @@ gilt, folgt aus
 \begin{lemma}
 Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ für die nNet1-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Zusätzlich gelte für die Knotengrade $d(k)=d(l)=w(\{k,l\})$ und die Knoten seien nur miteinander im Graphen verbunden. Ist die einheitenlose Differenz zwischen $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2,
 \end{align*}
 so gilt
 \begin{align*}
@@ -1339,8 +1346,8 @@ und für Kovariable $l$
 &=\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} - \gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2).
 \end{align}
-Durch die Annahme, dass die Knoten $k$ und $l$ nur miteinander eine Kante haben, fällt in \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
-Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich alsDifferenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
+Durch die Voraussetzung, dass die einzige Kante der Knoten $k$ und $l$ diejenige ist, die sie miteinander verbindet, fällt in \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
+Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich als Differenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
 \begin{align}
 && 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
 && &\phantom{{}=1} + \frac{1}{2}\gamma_1\left( \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace - \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \right) \notag \\
@@ -1353,7 +1360,7 @@ Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{n
 &\Rightarrow& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &= \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
 &\Rightarrow& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \cdot ||\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
 \end{align}
-Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2} und \eqref{Eq_Betrag_Diff_xl_xk} aus dem Beweis für die obere Grenze der Differenz zwischen zwei nEnet-Schätzern (siehe auch \ref{App_obere_Grenze_Diff_nEnet}), gilt für die obere Grenze für zwei nur miteinander verbundenen nNet1-Schätzern:
+Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}, \eqref{Eq_Betrag_Diff_xl_xk} und \eqref{Eq_L1_Norm_greater_L2_Norm} aus dem Beweis für die obere Grenze der Differenz zwischen zwei nEnet-Schätzern (siehe auch \ref{App_obere_Grenze_Diff_nEnet}), gilt für die obere Grenze für zwei nur miteinander verbundenen nNet1-Schätzern:
 \begin{align*}
 && \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nNet1}||_2}{||\mathbf{Y}||_1} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
 &\Rightarrow& &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nNet1}||_2}{||\mathbf{Y}||_2} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
