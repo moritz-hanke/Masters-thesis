@@ -44,7 +44,7 @@
 \usepackage{amssymb}
 
 \newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
+\newtheorem{satz}{Satz}
 
 \usepackage{apager}
 
@@ -170,6 +170,7 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{nEnet}{naives Elastic Net}
 \abk{s.d.}{so dass}
 \abk{Net1}{netzwerk-basierte penalisierte Regression nach \cite{li_network-constrained_2008}}
+\abk{$\xrightarrow{d}$}{konvergiert nach Verteilung}
 
 
 % Begin der Arbeit
@@ -728,7 +729,7 @@ definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspric
 \end{align*}
 Der Knotengrad sei in diesem Fall $d(u)=\sum_{\{u,v\}}w(\{u,v\})$ mit den Kantengewichten $w(\{u,v\})$, die die Unsicherheit oder Stärke einer Kante $e=\{u,v\}$ zwischen zwei Knoten $u$ und $v$ angeben.\\
 Da $\textbf{\~L}$ positiv semidefinit ist, gilt $\textbf{\~L}=\textbf{S}\textbf{S}'$ \cite{chung1996spectralgraph}, wobei $\textbf{S}$ einer $N_V \times N_E$-Matrix entspricht, deren Spalten die Kanten und die Zeilen die Knoten von $G$ sind. Sind zwei Knoten $u$ und $v$ adjazent, hat $\textbf{S}$ in der entsprechenden Spalte für die Kante $\{u,v\}$ in der Zeile $u$ den Eintrag $\sqrt{w(\{u,v\})}/d(u)$ und in Zeile $v$ den Eintrag $-\sqrt{w(\{u,v\})}/d(v)$. Die restlichen Zeilen sind mit Nullen besetzt.\\
-Somit ergibt sich als PRSS für Net1
+Somit ergibt sich als die PRSS für Net1
 \begin{align}\label{Eq_PRSS_Net1}
 \text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2)&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} \notag \\
 &=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2 \left\lbrace \sum_{\{u,v\}} \left(\frac{\beta_u}{\sqrt{d(u)}}-\frac{\beta_v}{\sqrt{d(v)}}\right)^2 w(\{u,v\})\right\rbrace, 
@@ -754,8 +755,8 @@ Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{S}'
 \end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nNet1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. Wegen der ebenfalls doppelten Schrumpfung durch den $L_1$- und $L_2$-Strafterm, schlagen \citeA{li_network-constrained_2008} wie bei dem Enet-Schätzer $(1+\gamma_2)$ als Korrekturfaktor vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Net1-Schätzer.
-Für die Wahl der Tuningparameter $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei dem Enet-Schätzer, d.h. eine Kreuzvalidierung über beide Parameter (siehe dazu Abschnitt \ref{Kap_Elastic-Net}).\\
-Wie beim Enet-Schätzer lässt sich für zwei mittels Net1 geschätzte Regressionskoeffizienten $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)$ und $\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)$ eine obere Grenze
+Für die Wahl von $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei der Enet-Regression, d.h. eine Kreuzvalidierung über beide Tuningparameter (siehe dazu Abschnitt \ref{Kap_Elastic-Net}).\\
+In Analogie zum Enet-Schätzer lässt sich für zwei mittels Net1 geschätzte Regressionskoeffizienten $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)$ und $\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)$ eine obere Grenze
 \begin{align}\label{Eq_Obere_Grenze_nNet1}
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{2\gamma_2}\sqrt{2(1-p)}
 \end{align}
@@ -776,13 +777,13 @@ V(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag 
 \left( \frac{u_k}{\sqrt{d(k)}} - \frac{u_l}{\sqrt{d(l)}}\right)w(\{k,l\})
 \right\rbrace.
 \end{align}
-Dabei seien
+Dabei gelte
 \begin{align*}
 \mathbf{u}&=(u_1, \dots , u_p) \\
 \mathbf{C}&=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right) \\
 \mathbf{W}&\sim N(0, \sigma^2 \mathbf{C})
 \end{align*}
-und $I(\cdot)$ die Indikatorfunktion.\\
+und $I(\cdot)$ sei die Indikatorfunktion.\\
 Anhand von \eqref{Eq_Vu_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmte Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$.
 
 
@@ -897,7 +898,7 @@ aus Hesterberg "Least angle and l1 penalized regression: A review"
 
 \begin{appendix}
 \chapter{Weitere Ausführungen und Beweise}
-\section{Erwarteter quadrierter Abstand von $\boldsymbol{\hat{\beta}}^{OLS}$ zu $\boldsymbol{\beta}$}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
+\section{Beweis für den erwarteten quadrierten Abstand von $\boldsymbol{\hat{\beta}}^{OLS}$ zu $\boldsymbol{\beta}$}\label{App_Beweis_Erwarteter_quadrierter_Abstand}
 Bezeichne $\mathbf{B}$ eine $n \times p$-Matrix und $\mathbf{C}$ eine $p \times n$-Matrix, so gilt
 \begin{align}\label{Eq_Spurgleichheit}
 \text{sp}(\mathbf{BC})=\text{sp}(\mathbf{CB})
@@ -942,7 +943,7 @@ Unter Berücksichtigung der Sätze \eqref{Eq_Spurgleichheit} bis \eqref{Eq_Erwar
 \end{proof}
 
 \section{Beweis der Lasso-Schätzerdarstellung für ein orthogonales Design}\label{App_Lasso_Orthogonal}
-\begin{lemma}\label{Lemma_Lasso_Ortho}
+\begin{satz}\label{Satz_Lasso_Ortho}
 Es seien die Kovariablen in $\mathbf{X}$ standardisiert, sodass $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ und $\frac{1}{n}\sum_{i=1}^{n}x_{ij}^2=1$ für $1,\dots, p$ gilt, und die Responsevariable $\mathbf{Y}$ zentriert,  d.h. es gilt $\frac{1}{n}\sum_{i}^{n}y_i =0$ für die Realisierungen von $\mathbf{Y}$. Liege darüber hinaus ein orthogonales Design
 \begin{align}\label{Eq_Kovarianz_Ortho}
 \mathbf{X}'\mathbf{X}=\mathbf{I}
@@ -951,7 +952,7 @@ vor und bezeichne $\hat{\beta}_j^{OLS}$ den Kleinste-Quadrat-Schätzer, so gilt 
 \begin{align*}
 \hat{\beta}_j^{Lasso}&=\text{sign}(\hat{\beta}_j^{OLS})(|\hat{\beta}_j^{OLS}|-\frac{\gamma}{2})^+ .
 \end{align*}
-\end{lemma}
+\end{satz}
 
 \begin{proof}
 Die $\textnormal{PRSS}_{Lasso}(\boldsymbol{\beta}, \gamma)$ lässt sich schreiben als
@@ -1001,7 +1002,7 @@ Für den Fall, dass $\frac{\gamma}{2} \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $
 
 
 \section{Beweis der der alternativen nEnet-Darstellung}\label{App_Beweis_Naiv_Zou_Darstellung}
-\begin{lemma}\label{Lemma_Naiv_Enet}
+\begin{satz}\label{Satz_Naiv_Enet}
 Gegeben den Datensatz $(\mathbf{X}, \mathbf{Y}$) sowie die Lagrange-Multiplikatoren $\gamma_1$ und $\gamma_2$, sei $(\mathbf{X^*}, \mathbf{Y^*})$ ein erweiterter Datensatz mit
 \begin{align}\label{Eq_Erweiterter_Datensatz_Enet}
 \mathbf{X^*}_{(n+p)\times p} = \frac{1}{\sqrt{1+\gamma_2}}
@@ -1027,7 +1028,7 @@ so gilt
 \begin{align}\label{Eq_Naiv_Enet_Zou}
 \boldsymbol{\hat{\beta}}^{nEnet}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}.
 \end{align}
-\end{lemma}
+\end{satz}
 
 \noindent \textit{Beweis.} Da es sich bei \eqref{Eq_Naiv_Enet_Lassoform} um eine Lagrange-Form handelt, die äquivalent zur Lasso-Form ist, und wegen $\gamma_2 \geq 0$ (vgl. dazu Anhang \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, liefert die Ableitung nach $\boldsymbol{\beta^*}$ und anschließendes Nullsetzen den nEnet-Schätzer
 \begin{align*}
@@ -1041,7 +1042,7 @@ so gilt
 \end{align*}
 
 \begin{lemma}
-Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wegen $\gamma_2 \geq 0$ (vgl. dazu Anhang \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, gilt für die Darstellung des naiven Elastic Net-Schätzers aus \eqref{Eq_Naiv_Enet_Zou}:
+Unter Berücksichtigung der Annahmen aus Satz \ref{Satz_Naiv_Enet} und da wegen $\gamma_2 \geq 0$ (vgl. dazu Anhang \ref{App_Lagrange-Form}) auch $\sqrt{1+\gamma_2} \geq 1$ gelten muss, gilt für die Darstellung des naiven Elastic Net-Schätzers aus \eqref{Eq_Naiv_Enet_Zou}:
 \begin{align*}
 \frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}^*}=(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1}\mathbf{X}'\mathbf{Y}-(\mathbf{X}'\mathbf{X}+\gamma_2 \mathbf{I})^{-1} \frac{\gamma_1}{2} \textnormal{sign}(\boldsymbol{\beta}).
 \end{align*}
@@ -1177,13 +1178,13 @@ Unter Berücksichtigung der Annahmen aus Lemma \ref{Lemma_Naiv_Enet} und da wege
 
 
 \section{Beweis der nEnet-Schätzerdarstellung für ein orthogonales Design}\label{App_nEnet_Orthogonal}
-\begin{lemma}
-Bezeichne $\hat{\beta}_j^{OLS}$ den Kleinste-Quadrat-Schätzer für die $j$-te Kovariable. Unter Berücksichtigung der Annahmen für $\mathbf{Y}$ und $\mathbf{X}$ aus Lemma \ref{Lemma_Lasso_Ortho} gilt für den nEnet-Schätzer
+\begin{satz}
+Bezeichne $\hat{\beta}_j^{OLS}$ den Kleinste-Quadrat-Schätzer für die $j$-te Kovariable. Unter Berücksichtigung der Annahmen für $\mathbf{Y}$ und $\mathbf{X}$ aus Satz \ref{Satz_Lasso_Ortho} gilt für den nEnet-Schätzer
 \begin{align*}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\textnormal{sign}(\hat{\beta}_j^{OLS}),
 \end{align*}
 wobei $(\cdot)^+$ angibt, dass nur der positive Teil der Klammer ausgewertet wird.
-\end{lemma}
+\end{satz}
 \begin{proof}
 Die $\textnormal{PRSS}_{nEnet}(\boldsymbol{\beta}, \gamma_1, \gamma_2)$ lässt sich schreiben als
 \begin{align*}
@@ -1221,10 +1222,10 @@ Da in \eqref{Eq_nEnet_Ortho_Beta_greater0} die rechte Seite für den nEnet-Schä
 Für den Fall, dass $\gamma_1 /2 \geq \hat{\beta}_j^{OLS}$ vorliegt, gilt $\hat{\beta}_j^{nEnet}=0$, und für $\gamma_2 = 0$ gilt $\hat{\beta}_j^{nEnet}=\hat{\beta}_j^{Lasso}$ aus dem orthogonalen Design von \ref{App_Lasso_Orthogonal}.
 \end{proof}
 
-\section{Beweis für Gruppierungseffekt bei strikt konvexen Straftermen}\label{App_GroupEffect_Strict_Conv}
-\begin{lemma}
+\section{Beweis für den Gruppierungseffekt bei strikt konvexen Straftermen}\label{App_GroupEffect_Strict_Conv}
+\begin{satz}
 Es sei $\mathbf{x}_k = \mathbf{x_l}$ für $k,l \in \{1,\dots,p \}$ und für die Schätzung der Regressionskoeffizienten gelte allgemein $\boldsymbol{\hat{\beta}}=\arg \displaystyle\min_{\beta} ||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||^2_2 + \gamma P(\boldsymbol{\beta})$. Bezeichnet $||\cdot||^2_2$ die quadrierte $L_2$-Norm und sei $P(\cdot)$ ein Strafterm, der die Summe der \textit{strikt konvexen} Funktionen $J(\beta_j)$ für $j=1,\dots,p$ ist. Dann muss $\hat{\beta}_k = \hat{\beta}_l$ für $\forall \gamma > 0$ gelten.
-\end{lemma}
+\end{satz}
 Der nachfolgende Beweis ist eine ausführlichere Ausarbeitung des Beweises von \citeA{zou_regularization_2005}.
 \begin{proof}
 Es sei ein $\gamma > 0$ festgelegt. Für den Fall, dass $\hat{\beta}_k \neq \hat{\beta}_l$ gilt, sei $\boldsymbol{\hat{\beta}}^*$ definiert als
@@ -1246,7 +1247,7 @@ Damit gilt $P(\boldsymbol{\hat{\beta}^*}) <  P(\boldsymbol{\hat{\beta}})$, was e
 \end{proof}
 
 \section{Beweis der oberen Grenze der Differenz zwischen zwei nEnet-Schätzern}\label{App_obere_Grenze_Diff_nEnet}
-\begin{lemma}
+\begin{satz}
 Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
@@ -1256,7 +1257,7 @@ so gilt
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align*}
 wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$ entspricht.
-\end{lemma}
+\end{satz}
 Der nachfolgende Beweis ist eine ausführliche Ausarbeitung des Beweises von \citeA{zou_regularization_2005}.
 \begin{proof}
 Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
@@ -1272,7 +1273,7 @@ und für die Kovariable $l$
 2\mathbf{x}_l{'}\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
 \end{align}
 mit $k,l = 1, \dots, p$.\\
-Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
+Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss auch\\ $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
 \begin{align} 
 && 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
 &\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
@@ -1325,7 +1326,7 @@ gilt, folgt aus
 
 
 \section{Beweis der oberen Grenze der Differenz zwischen zwei nNet1-Schätzern}\label{App_obere_Grenze_Diff_nNet1}
-\begin{lemma}
+\begin{satz}
 Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ für die nNet1-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Zusätzlich gelte für die Knotengrade $d(k)=d(l)=w(\{k,l\})$ und die Knoten seien nur miteinander im Graphen verbunden. Ist die einheitenlose Differenz zwischen $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2,
@@ -1335,7 +1336,7 @@ so gilt
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{2\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align*}
 wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$ entspricht.
-\end{lemma}
+\end{satz}
 Der nachfolgende Beweis ist eine ausführliche Ausarbeitung des Beweises von \cite{Li2007Net1_Workingpaper}.
 \begin{proof}
 Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
@@ -1361,10 +1362,11 @@ und für Kovariable $l$
 &\phantom{{}=1} - \gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2).
 \end{align}
 Durch die Voraussetzung, dass die einzige Kante der Knoten $k$ und $l$ diejenige ist, die sie miteinander verbindet, fällt in \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
-Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich als Differenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
+Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt auch\\ $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich als Differenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
 \begin{align}
 && 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
-&& &\phantom{{}=1} + \frac{1}{2}\gamma_1\left( \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace - \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \right) \notag \\
+&& &\phantom{{}=1} + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&& &\phantom{{}=1} - \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 && &\phantom{{}=1} + \gamma_2\left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\ 
 && &\phantom{{}=1} - \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right) \notag \\
 &\Leftrightarrow& 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
@@ -1385,7 +1387,7 @@ Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2},
 
 
 \section{Beweis der asymptotischen Eigenschaft des Net1-Schätzers}
-\begin{lemma}
+\begin{satz}
 Gelte $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$. Sei darüber hinaus
 \begin{align*}
 \mathbf{C}=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right)
@@ -1410,7 +1412,7 @@ sowie
 \begin{align*}
 \mathbf{u}=(u_1, \dots, u_p)'
 \end{align*}
-\end{lemma}
+\end{satz}
 Der nachfolgende Beweis ist eine ausführliche Ausarbeitung des Beweises von \citeA{Li2007Net1_Workingpaper}.
 \begin{proof}
 Es sei $V_n(\mathbf{u})$ definiert als
@@ -1434,7 +1436,7 @@ V_n(\mathbf{u})&=\sum_{i=1}^{n}
 \frac{u_k}{\sqrt{d(k)}} - 
 \frac{u_l}{\sqrt{d(l)}}
 \right)\sqrt{n}
-\right]^2 w(\{k,l\}) \right.\\
+\right]^2 w(\{k,l\}) \right. \notag \\
 &\phantom{{}=2} \left.
 - \left[
 \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
