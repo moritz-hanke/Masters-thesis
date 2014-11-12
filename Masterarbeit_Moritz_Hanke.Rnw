@@ -770,7 +770,7 @@ Wird $p$ fixiert, gilt für die Stichprobengröße $n \rightarrow \infty$ und si
 \sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V)
 \end{align*}
 mit
-\begin{align}\label{Eq_Vu_asymptotic}
+\begin{align}\label{Eq_Vn_asymptotic}
 V(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag \\
 &\phantom{{}=1} + \gamma_{1,0}\sum_{j=1}^{p}\left\lbrace u_j \textnormal{sign}(\beta_j)I(\beta_j \neq 0) + |u_j|I(\beta_j=0) \right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_{2,0} \sum_{\{k,l\}} \left\lbrace \left( \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}\right)
@@ -784,7 +784,7 @@ Dabei gelte
 \mathbf{W}&\sim N(0, \sigma^2 \mathbf{C})
 \end{align*}
 und $I(\cdot)$ sei die Indikatorfunktion.\\
-Anhand von \eqref{Eq_Vu_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmte Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$.
+Anhand von \eqref{Eq_Vn_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmte Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$.
 
 
 % magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
@@ -794,7 +794,7 @@ Anhand von \eqref{Eq_Vu_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\h
 Im nachfolgenden Kapitel wird zunächst die Methode zur Datensimulation erläutert (Unterkapitel \ref{Kap_Datensimulation}) und im anschließenden Unterkapitel XXXXXX anhand der simulierten Daten die die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
 
 \section{Datensimulation}\label{Kap_Datensimulation}
-Für die unter \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationschema genutzt, das \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten aufweisen. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
+Für die unter \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationsschema genutzt, das \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten aufweisen. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von wenigen Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, um so die wahren Regressionskoeffizienten zu simulieren. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Jede Kovariable $x_j$ wurde als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
 Nach Auffassung des Autors dieser Arbeit sind die sternförmigen Subgraphen in dem oben beschriebenen Simulationsablauf im Verhältnis zu wahren biologischen Netzwerken, d.h. den Pathways, idealisiert bzw. zu sehr vereinfacht. Abbildung \ref{Fig:KEGG_Cancer_PW} zeigt exemplarisch aus der KEGG-Datenbank eine Übersicht über den biologischen Pathway für Krebs \cite{Kanehisa2000KEGG}. Anhand des daraus erstellten ungerichteten Graphen in Abbildung \ref{fig:Cancer_PW_Graph} wird deutlich, dass die sternförmige Subgraphen keine geeignete Wahl sind, um biologische Netzwerke zu simulieren.\\
 Deswegen wurde für diese Arbeit versucht ein Simulationsschema zu erstellen, dass ungerichtete Graphen liefert, die eine größere Ähnlichkeit zu biologischen Pathways aufweisen, als die Graphen nach dem Schema von \citeA{li_network-constrained_2008}. Dazu wurden zunächst alle $290$ verfügbaren Pathways für den Homo Sapiens der KEGG-Datenbank (Stand 01. November, 2014) als ungerichtete Graphen umgewandelt. Davon wurden $20$ Graphen, die keine Kanten hatten, und zwei Graphen, die nur aus zwei Knoten bestanden, entfernt. Anschließend wurde für jeden Graphen der durchschnittliche Knotengrad, der Medianknotengrad, die Anzahl an Kanten sowie das Verhältnis der vorhandenen Kanten zu den theoretisch möglichen $|N_V|(|N_V|-1)/2$ Kanten bestimmt und gegen die Ordnung der Graphen, d.h. deren Knotenzahlen, in Streudiagrammen abgetragen (siehe Abbildung \ref{fig:Plots_KEGG_Kennzahlen}).
 <<echo=FALSE, message=FALSE, Plots_KEGG_Kennzahlen, fig.pos="H", fig.show='hold', fig.align='center', out.width='\\linewidth', fig.lp="fig:", fig.scap="Streudiagramme von deskriptiven Kennzahlen der KEGG-Pathways", fig.cap="Streudiagramme von verschiedenen Kennzahlen der ungerichteten Graphen, die aus den $268$ KEGG-Pathways generiert worden sind.">>=
@@ -1389,9 +1389,9 @@ Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2},
 \section{Beweis der asymptotischen Eigenschaft des Net1-Schätzers}
 \begin{satz}
 Gelte $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$. Sei darüber hinaus
-\begin{align*}
+\begin{align}\label{Eq_Asymptotic_C-matrix}
 \mathbf{C}=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right)
-\end{align*}
+\end{align}
 nicht singulär, dann gilt
 \begin{align*}
 \sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V)
@@ -1416,7 +1416,7 @@ sowie
 Der nachfolgende Beweis ist eine ausführliche Ausarbeitung des Beweises von \citeA{Li2007Net1_Workingpaper}.
 \begin{proof}
 Es sei $V_n(\mathbf{u})$ definiert als
-\begin{align}
+\begin{align}\label{Eq_Vn_Net1}
 V_n(\mathbf{u})&=\sum_{i=1}^{n} 
 \left\lbrace 
 \left( 
@@ -1443,6 +1443,30 @@ V_n(\mathbf{u})&=\sum_{i=1}^{n}
 \right]^2 w(\{k,l\})
 \right\rbrace
 \end{align}
+mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{nNet1}-\boldsymbol{\beta})$. Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Net1}
+\begin{align*}
+\sum_{i=1}^{n} 
+\left\lbrace 
+\left( 
+\varepsilon_i - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
+\right)^2 - \varepsilon_i^2
+\right\rbrace = \sum_{i=1}^{n} 
+\left\lbrace  
+\varepsilon_i^2 - 2\frac{\mathbf{u}'\mathbf{x}_i \varepsilon_i}{\sqrt{n}} + \frac{\mathbf{u}'\mathbf{x}_i \mathbf{x}_i'\mathbf{u}}{n} - \varepsilon_i^2
+\right\rbrace \rightarrow -2 \mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u}.
+\end{align*}
+Wegen $\left(\frac{\gamma_{1,n}}{\sqrt{n}}, \frac{\gamma_{2,n}}{\sqrt{n}} \right) \rightarrow (\gamma_{1,0}, \gamma_{2,0}) \geq (0,0)$, d.h. $\gamma_{1,0}$ und $\gamma_{2,0}$, kann für $j$ im zweiten Term aus \eqref{Eq_Vn_Net1} unterschieden werden
+\begin{align*}
+\gamma_{1,n}\left(
+|\beta_j + \frac{u_j}{\sqrt{n}}|-|\beta_j|
+\right)=\begin{cases}
+\gamma_{1,n}\left(\frac{u_j}{\sqrt{n}}\right) \qquad \text{für} \ \beta_j,u_j > 0 \\
+\gamma_{1,n}\left(\frac{u_j}{\sqrt{n}}\right) \qquad \text{für} \ \beta_j,u_j < 0 \\
+\gamma_{1,n}\left(-\frac{u_j}{\sqrt{n}}\right) \qquad \text{für} \ \beta_j >0 \ \text{und} \ u_j < 0 \\
+\gamma_{1,n}\left(-\frac{u_j}{\sqrt{n}}\right) \qquad \text{für} \ \beta_j <0 \ \text{und} \ u_j > 0 \\
+\gamma_{1,n}\left(\frac{u_j}{\sqrt{n}}\right) \qquad \text{für} \ \beta_j =0 \ \text{und} \ u_j \neq 0
+\end{cases}
+\end{align*}
 \end{proof}
 
 \chapter{Erläuterungen}
