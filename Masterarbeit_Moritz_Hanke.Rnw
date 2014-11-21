@@ -854,8 +854,9 @@ Unter Berücksichtigung dieser Ordnungskategorien wurde für alle KEGG-Graphen, 
 \end{tabular}
 \caption[Zusammenfassung über simulierte Graphen]{Übersicht über die simulierten Graphen bzgl. des durchschnittlichen Knotengrads $d(v)$, des Anteils an vorhandenen zu theoretisch möglichen Kanten $\frac{|N_E|}{|N_V|(|N_V|-1)/2}$ sowie der Anzahl an Kanten $|N_E|$ für die einzelnen Ordnungskategorien. }\label{Tab_Uebersicht_Simu_Graphen}
 \end{table}
-Nach dem oben entwickelten Schema wurden für die Simulationsstudie insgesamt $1000$ Datensätze mit jeweils $n=100$ Beobachtungen und $p=1000$ Kovariablen simuliert. Als den Datensätzen zugrunde liegenden Graphen wurden mit der R-Funktion \texttt{erGraphParam} jeweils $5$ Graphen mit $20$ und $30$ Knoten, je $2$ Graphen mit $50$ Knoten und $75$ Knoten sowie jeweils ein Graph mit $100$, $150$ und $250$ Knoten pseudozufällig erstellt. 
-<<echo=FALSE, message=FALSE, Beispielgraph_Simu, fig.pos="h", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Beispielgraph aus der Datensimulation", fig.cap="Ein für die Datensimulation nach dem  Erd{\\H{o}}s-R{\\'e}nyi-Modell pseudozufällig erstellter Graph mit $75$ Knoten und einer Wahrscheinlichkeit für das Aufreteten einer Kante zwischen zwei Knoten von $p=0.0566$. Die Knotengrade für den blauen, gelben und roten Knoten entsprechen $0$, $1$ und $8$ und spiegeln die Variabilität wider, die durch das in dieser Arbeit verwendete Schema erzeugt wird.">>=
+Nach dem oben entwickelten Schema wurden für die Simulationsstudie insgesamt $50$ Datensätze mit jeweils $n=300$ Beobachtungen und $p=500$ Kovariablen simuliert. Als den Datensätzen zugrunde liegenden Graphen wurden mit der R-Funktion \texttt{erGraphParam} $5$ Graphen mit $20$, $30$, $75$, $125$ und $250$ Knoten pseudozufällig erstellt.\\
+Auf Grundlage der dabei mitsimulierten Kovarianzmatrizen wurde mit der Funktion \texttt{rmvnorm} normalverteilte Kovariablenausprägungen simuliert, mit deren Hilfe wiederum die Responsevariable als $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$ simuliert wurde. Dabei wurden die $20$ ersten Einträge von $\boldsymbol{\beta}$ als $\beta_1=...=\beta_{20}=3$, die folgenden $30$ Einträge als $beta_{21}=...=\beta_{50}=5$ und die restlichen $450$ Kovariablen null gesetzt, wodurch eine spärliche Besetzung von $\boldsymbol{\beta}$ gewährleistet ist. Entsprechend der Normalverteilungsannahme des klassischen linearen Modell wurde der Fehlerterm als $\varepsilon_i \sim N(0, 1)$ simuliert. Anschließend wurde entsprechend der Voraussetzungen von Kapitel \ref{Kap_Penalisierte Regression} jede Kovariable standardisiert und die Responsevariable zentriert.
+<<echo=FALSE, message=FALSE, Beispielgraph_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Beispielgraph aus der Datensimulation", fig.cap="Ein für die Datensimulation nach dem  Erd{\\H{o}}s-R{\\'e}nyi-Modell pseudozufällig erstellter Graph mit $75$ Knoten und einer Wahrscheinlichkeit für das Aufreteten einer Kante zwischen zwei Knoten von $p=0.0566$. Die Knotengrade für den blauen, gelben sowie roten Knoten entsprechen $0$, $1$ bzw. $8$ und spiegeln beispielhaft die Variabilität der Knotenzentralität wider, die durch das in dieser Arbeit verwendete Schema erzeugt wird.">>=
 library(graph)
 load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/Beispielgraph_Simu.RData")
 globalattrs = list()
@@ -865,7 +866,19 @@ nodeattrs$fillcolor <- c(x420 = "red", x395="yellow", x387="blue")
 
 plot(Beispielgraph, attrs = globalattrs, nodeAttrs = nodeattrs)
 @
-Auf Grundlage der dabei mitsimulierten Kovarianzmatrizen wurde mit der Funktion \texttt{rmvnorm} normalverteilte Kovariablenausprägungen simuliert, mit deren Hilfe wiederum die Responsevariable als $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$ simuliert wurde. Dabei wurden die XXXXXX ersten Einträge von $\boldsymbol{\beta}$ als $\beta_1=...=\beta_{XXXX}=3$ und die restlichen $p-XXXX$ Kovariablen null gesetzt, wodurch eine spärliche Besetzung von $\boldsymbol{\beta}$ gewährleistet ist. Entsprechend der Normalverteilungsannahme des klassischen linearen Modell wurde der Fehlerterm als $\varepsilon_i \sim N \left(0, \frac{\sum_{j=1}^{p} \beta_j^2}{YYYYY}\right)$ simuliert. Anschließend wurde entsprechend der Voraussetzungen von Kapitel \ref{Kap_Penalisierte Regression} jede Kovariable standardisiert und die Responsevariable zentriert.
+
+\section{Auswertung der Simulationsstudie}
+Sowohl für die Enet-Methode als auch die NetXXXX mit unterschiedlichen Zentralitätsmaßen wurden bei jedem Datensatz die $n=300$ simulierten Beobachtungen in einen Tuningdatensatz mit $n_{tune}=50$ für die Suche der optimalen entsprechenden Tuningparameter, einen Trainingsdatensatz mit $n_{train}=50$ für die Schätzung von $\boldsymbol{\hat{\beta}}$ mit den ausgewählten Tuningparametern sowie einen Testdatensatz mit $n_{test}=200$ für die Überprüfung der Qualität der $\boldsymbol{\hat{\beta}}$ unterteilt.\\
+\subsection{Auswertung mittels Enet}
+Für die Auswertung der simulierten Daten mittels der Enet-Methode wurde das R-Paket \texttt{glmnet} \cite{friedmann2010glmnet} verwendet. Da sich die Lagrangedarstellung der Enet-Regression aus \eqref{Eq_Enet_Lagrange} für $\gamma=\gamma_1+\gamma_2$ und $0 \leq \alpha \leq 1$ auch als 
+\begin{align*}
+\boldsymbol{\hat{\beta}}^{Enet}(\gamma, \alpha)&=\arg \displaystyle\min_{\beta} \textnormal{PRSS}_{Enet}(\boldsymbol{\beta}, \gamma, \alpha) \notag \\
+&=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \alpha \sum_{j=1}^{p}|\beta_j| + \gamma (1-\alpha) \sum_{j=1}^{p}\beta_j^2 \right\rbrace \quad \text{mit} \ \gamma \ge 0.
+\end{align*}
+darstellen lässt, wurde über alle Kombinationen der Sequenzen $\alpha \in \{0.01, 0.03, \dots, 0.99\}$ und $\gamma \in \{0.001, 0.002,\dots, 0.01, 0.025,0.05,\dots,10,25, 50, 100\}$ mit den Beobachtungen $n_{tune}$ das optimale $\alpha$ und $\gamma$ für jeden Datensatz mittels einer zehnfachen Kreuzvalidierung durch die Funktion \texttt{cv.glmnet} ermittelt.
+
+\subsection{NetXXXX}
+Knotengewcihte als Ränge bezogen auf die Zentralitätsmaße\\
 
 
 \chapter{Fazit}\label{Fazit}
