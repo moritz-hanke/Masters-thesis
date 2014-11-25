@@ -295,8 +295,8 @@ Bei der Closeness-Zentralität werden für einen Knoten $u$ alle Distanzen zu de
 \begin{align}\label{Eq_Closeness_Definition}
 \mathscr{C}(u)=\frac{1}{\sum_{v \in V} D(u, v)}.
 \end{align}
-Anhand von Abbildung XXXXX wird deutlich, dass $\mathscr{C}(u)$ nicht allein von der Lage von $u$ innerhalb des Graphen, sondern auch von der Ordnung des Graphen abhängt, weswegen $\mathscr{C}(u)$ mit dem 
-<<echo=FALSE>>=
+Anhand von Abbildung \ref{fig:Closeness_normalized} wird deutlich, dass $\mathscr{C}(u)$ nicht allein von der Lage von $u$ innerhalb des Graphen, sondern auch von der Ordnung des Graphen abhängt, weswegen $\mathscr{C}(u)$ durch die Multiplikation mit dem Faktor $N_V -1$ normiert werden kann, um Knotenzetralitäten über verschiedene Graphen vergleichbar zu machen.
+<<echo=FALSE, Closeness_normalized, fig.pos="H", fig.show='hold', out.width='.49\\linewidth', fig.align='center', fig.scap="Beispiel für die Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit wäre in diesem Fall die Interpredtation, dass der rote Knoten doppelt so zentral ist wie der gelbe Knoten. Nach der Normalisierung mit $(N_V -1)$ haben beide Knoten einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind identisch bedeutsam für ihre jeweiligen Graphen.">>=
 A1 <- matrix(c(
 # 1  2  3  4  5
   0, 1, 1, 1, 1,
@@ -322,8 +322,7 @@ A2 <- matrix(c(
 g2 <- graph.adjacency(A2, "undirected")
 V(g2)$color <- 5
 V(g2)[1]$color <- "yellow"
-@
-<<echo=FALSE, Closeness_normalized, fig.pos="H", out.width='.49\\linewidth', fig.align='center', fig.scap="Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit wäre in diesem Fall die Interpredtation, dass der rote Knoten in Graphen a doppelt so zentral ist wie der gelbe Knoten in seinem Graphen. Nach der Normalisierung mit $(N_V -1)$ haben beide Knoten einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind identisch bedeutsam für ihre jewieligen Graphen.">>=
+
 plot(g1, edge.width=3, main="Graph A")
 plot(g2, edge.width=3, main="Graph B")
 @
