@@ -253,12 +253,8 @@ Ist $G=(V,E)$ gerichtet, so wird dieser als \textit{schwach verbunden} bezeichne
 % Cliquen?
 
 \subsection{Zentralitätsstatistiken}\label{Kap_Zentralitätsstatistiken}
-Um die \textit{Bedeutung} eines Knotens $u \in V$ zu bestimmen, kann seine \textit{Zentralität} innerhalb des Graphen $G=(V,E)$ angegeben werden. In der Literatur finden sich diverse Maße, die Zentralität teilweise sehr unterschiedlich definieren und daher bei der Beurteilung, wie zentral ein Knoten ist, zu unterschiedlichen Ergebnissen kommen können (vgl. dazu bspw. \citeNP{koschuetzki2005centralityindices}). Ein Beispiel für die Mehrdeutigkeit des Begriffs Zentralität sind die Knoten $1$ und $8$ im Graphen in Abbildung \ref{fig:Degree_vs_Path}. Wird die Zentralität schlicht als die Anzahl an benachbarten Knoten aufgefasst, hat Knoten $1$ (gelb) eine relativ zentrale Position ($d(1)=6$), Knoten $8$ (rot) hingegen ist nach dieser Definition weniger zentral gelegen ($d(8)=5$). Wird dagegen die Zentralität als die Anzahl an kürzesten Pfaden zwischen zwei Knoten $u_k$ und $u_m$, auf denen ein Knoten $u_l$ liegt, aufgefasst (die sogenannte Betweenness-Zentralität $\mathcal{B}(u_l)$, siehe Kapitel \ref{Kap_Betweenness-Zentralität}), ist unmittelbar ersichtlich, dass der Knoten $8$ zentraler ($\mathcal{B}(8)=138$) als der Knoten $1$ ($\mathcal{B}(1)=80$) ist.\\
-Neben dem bereits erwähnten Knotengrad sollen die Eigenvektor-Zentralität $\mathcal{E}(u)$, die Closeness-Zentralität $\mathcal{C}(u)$ sowie die
-
-
+Um die \textit{Bedeutung} eines Knotens $u \in V$ zu bestimmen, kann seine \textit{Zentralität} innerhalb des Graphen $G=(V,E)$ angegeben werden. In der Literatur finden sich diverse Maße, die Zentralität teilweise sehr unterschiedlich definieren und daher bei der Beurteilung, wie zentral ein Knoten ist, zu unterschiedlichen Ergebnissen kommen können (vgl. dazu bspw. \citeNP{koschuetzki2005centralityindices}). Ein Beispiel für die Mehrdeutigkeit des Begriffs Zentralität sind die Knoten $1$ und $8$ im Graphen in Abbildung \ref{fig:Degree_vs_Path}. Wird die Zentralität schlicht als die Anzahl an benachbarten Knoten aufgefasst, hat Knoten $1$ (gelb) eine relativ zentrale Position ($d(1)=6$), Knoten $8$ (rot) hingegen ist nach dieser Definition weniger zentral gelegen ($d(8)=5$). Wird dagegen die Zentralität als die Anzahl an kürzesten Pfaden zwischen zwei Knoten $u_k$ und $u_m$, auf denen ein Knoten $u_l$ liegt, aufgefasst (die sogenannte Betweenness-Zentralität $\mathscr{B}(u)$, siehe Kapitel \ref{Kap_Betweenness-Zentralität}), ist unmittelbar ersichtlich, dass der Knoten $8$ zentraler ($\mathscr{B}(8)=138$) als der Knoten $1$ ($\mathscr{B}(1)=80$) ist.\\
 <<echo=FALSE>>=
-
 #             1  2  3  4  5  6 6.5 7  8  9 10 11 12 13 14 15 16 17 18 19 
 A <- matrix(c(0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #1 
               1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  #2
@@ -292,10 +288,51 @@ V(g)[8]$color <- "red"
 <<echo=FALSE, Degree_vs_Path, fig.pos="H", out.width='.6\\linewidth', fig.align='center', fig.scap="Beispielgraph", fig.lp="fig:", fig.cap="Beispiel für einen Graphen, in dem in Abhängigkeit von der Definition von Zentralität, entweder der rote oder der gelbe Knoten die bedeutsamste Position einnimmt.">>=
 plot(g, edge.width=3)
 @
-
+Neben der bereits erwähnten Betweenness-Zentralität $\mathscr{B}(u)$ sollen nachfolgend die Eigenvektor-Zentralität $\mathscr{E}(u)$ sowie die Closeness-Zentralität $\mathscr{C}(u)$ vorgestellt werden, da es sich hierbei um "`Standard"'-Zentralitätsmaße in der Literatur handelt und diese später bei der netzwerk-basierten penalisierten Regression als Gewichtung für die zu schätzenden Regressionskoeffizienten verwendet werden (vgl. dazu Kapitel \ref{Kap_Netzwerkbasierte_Penalisierung}).
 \paragraph*{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
 \paragraph*{Closeness-Zentralität}\label{Kap_Closeness-Zentralität}
+Bei der Closeness-Zentralität werden für einen Knoten $u$ alle Distanzen zu den Knoten $v \in V$ mit $u \neq v$ summiert und davon der reziproke Wert genommen:
+\begin{align}\label{Eq_Closeness_Definition}
+\mathscr{C}(u)=\frac{1}{\sum_{v \in V} D(u, v)}.
+\end{align}
+Anhand von Abbildung XXXXX wird deutlich, dass $\mathscr{C}(u)$ nicht allein von der Lage von $u$ innerhalb des Graphen, sondern auch von der Ordnung des Graphen abhängt, weswegen $\mathscr{C}(u)$ mit dem 
+<<echo=FALSE>>=
+A1 <- matrix(c(
+# 1  2  3  4  5
+  0, 1, 1, 1, 1,
+  1, 0, 0, 0, 0,
+  1, 0, 0, 0, 0,
+  1, 0, 0, 0, 0,
+  1, 0, 0, 0, 0), ncol=5, byrow=T)
+g1 <- graph.adjacency(A1, "undirected")
+V(g1)$color <- 5
+V(g1)[1]$color <- "red" 
+
+A2 <- matrix(c(
+# 1  2  3  4  5  6  7  8  9
+  0, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0), ncol=9, byrow=T)
+g2 <- graph.adjacency(A2, "undirected")
+V(g2)$color <- 5
+V(g2)[1]$color <- "yellow"
+@
+<<echo=FALSE, Closeness_normalized, fig.pos="H", out.width='.49\\linewidth', fig.align='center', fig.scap="Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit wäre in diesem Fall die Interpredtation, dass der rote Knoten in Graphen a doppelt so zentral ist wie der gelbe Knoten in seinem Graphen. Nach der Normalisierung mit $(N_V -1)$ haben beide Knoten einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind identisch bedeutsam für ihre jewieligen Graphen.">>=
+plot(g1, edge.width=3, main="Graph A")
+plot(g2, edge.width=3, main="Graph B")
+@
 \paragraph*{Betweenness-Zentralität}\label{Kap_Betweenness-Zentralität}
+Die Betweenness-Zentralität für einen Knoten $u$ ist definiert als
+\begin{align}\label{Eq_Betweenness_Definition}
+\mathscr{B}(u)=\sum_{u \neq v \neq w \in V} \frac{\varpi(v,w|u)}{\varpi(v,w)}
+\end{align}
+wobei $\varpi(v,w|u)$ die Anzahl an Distanzen $D(v,w)$ zwischen den Knoten $v$ und $w$ ist, auf denen $u$ liegt, und $\varpi(v,w)$ die Gesamtzahl an Distanzen $D(v,w)$ zwischen $v$ und $w$ für alle $u \in V$, d.h. $\varpi(v,w)=\sum_{u \in V} \varpi(v,w|u)$ \cite{kolaczyk2009statistical}. Nach diesem Maß wird die Bedeutung eines Knoten $u$ darüber interpretiert, wie sehr er "`unausweichlich"' ist, wenn in der kleinstmöglichen Anzahl an Kantenschritten von einem Knoten $v$ zu einem Knoten $w$ gelangt werden soll. Dadurch gilt für alle Knoten mit $d(u) \leq 1$ immer $\mathscr{B}(u)=0$.
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
 
