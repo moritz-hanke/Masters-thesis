@@ -48,6 +48,7 @@
 
 \usepackage{apager}
 
+\allowdisplaybreaks
 
 \usepackage{float}
 \restylefloat{figure}
@@ -289,14 +290,20 @@ V(g)[8]$color <- "red"
 plot(g, edge.width=3)
 @
 Neben der bereits erwähnten Betweenness-Zentralität $\mathscr{B}(u)$ sollen nachfolgend die Eigenvektor-Zentralität $\mathscr{E}(u)$ sowie die Closeness-Zentralität $\mathscr{C}(u)$ vorgestellt werden, da es sich hierbei um "`Standard"'-Zentralitätsmaße in der Literatur handelt und diese später bei der netzwerk-basierten penalisierten Regression als Gewichtung für die zu schätzenden Regressionskoeffizienten verwendet werden (vgl. dazu Kapitel \ref{Kap_Netzwerkbasierte_Penalisierung}).
-\paragraph*{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
+\paragraph*{Betweenness-Zentralität}\label{Kap_Betweenness-Zentralität}
+Die Betweenness-Zentralität für einen Knoten $u$ ist definiert als
+\begin{align}\label{Eq_Betweenness_Definition}
+\mathscr{B}(u)=\sum_{u \neq v \neq w \in V} \frac{\varpi(v,w|u)}{\varpi(v,w)}
+\end{align}
+wobei $\varpi(v,w|u)$ die Anzahl an Distanzen $D(v,w)$ zwischen den Knoten $v$ und $w$ ist, auf denen $u$ liegt, und $\varpi(v,w)$ die Gesamtzahl an Distanzen $D(v,w)$ zwischen $v$ und $w$ für alle $u \in V$, d.h. $\varpi(v,w)=\sum_{u \in V} \varpi(v,w|u)$ \cite{kolaczyk2009statistical}. Nach diesem Maß wird die Bedeutung eines Knoten $u$ darüber interpretiert, wie sehr er "`unausweichlich"' ist, wenn in der kleinstmöglichen Anzahl an Kantenschritten von einem Knoten $v$ zu einem Knoten $w$ gelangt werden soll. Dadurch gilt für alle Knoten mit $d(u) \leq 1$ immer $\mathscr{B}(u)=0$.
+
 \paragraph*{Closeness-Zentralität}\label{Kap_Closeness-Zentralität}
 Bei der Closeness-Zentralität werden für einen Knoten $u$ alle Distanzen zu den Knoten $v \in V$ mit $u \neq v$ summiert und davon der reziproke Wert genommen:
 \begin{align}\label{Eq_Closeness_Definition}
 \mathscr{C}(u)=\frac{1}{\sum_{v \in V} D(u, v)}.
 \end{align}
 Anhand von Abbildung \ref{fig:Closeness_normalized} wird deutlich, dass $\mathscr{C}(u)$ nicht allein von der Lage von $u$ innerhalb des Graphen, sondern auch von der Ordnung des Graphen abhängt, weswegen $\mathscr{C}(u)$ durch die Multiplikation mit dem Faktor $N_V -1$ normiert werden kann, um Knotenzetralitäten über verschiedene Graphen vergleichbar zu machen. Allein für den Fall $d(u)=0$ gilt $\mathscr{C}(u)=0$, ansonsten ist die Closeness-Zentralität strikt größer als null.
-<<echo=FALSE, Closeness_normalized, fig.pos="H", fig.show='hold', out.width='.49\\linewidth', fig.align='center', fig.scap="Beispiel für die Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit würde in diesem Fall der rote Knoten als doppelt so bedeutsam für den Graphen A als der gelbe Knoten für den Graphen B interpretiert werden. Nach der Normalisierung mit $(N_V -1)$ haben beide Knoten hingegen einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind identisch bedeutsam für ihre jeweiligen Graphen.">>=
+<<echo=FALSE, Closeness_normalized, fig.pos="h", fig.show='hold', out.width='.49\\linewidth', fig.align='center', fig.scap="Beispiel für die Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit würde in diesem Fall der rote Knoten als doppelt so bedeutsam für den Graphen A als der gelbe Knoten für den Graphen B interpretiert werden. Nach der Normalisierung mit $(N_V -1)$ haben beide Knoten hingegen einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind identisch bedeutsam für ihre jeweiligen Graphen.">>=
 A1 <- matrix(c(
 # 1  2  3  4  5
   0, 1, 1, 1, 1,
@@ -326,12 +333,13 @@ V(g2)[1]$color <- "yellow"
 plot(g1, edge.width=3, main="Graph A")
 plot(g2, edge.width=3, main="Graph B")
 @
-\paragraph*{Betweenness-Zentralität}\label{Kap_Betweenness-Zentralität}
-Die Betweenness-Zentralität für einen Knoten $u$ ist definiert als
-\begin{align}\label{Eq_Betweenness_Definition}
-\mathscr{B}(u)=\sum_{u \neq v \neq w \in V} \frac{\varpi(v,w|u)}{\varpi(v,w)}
+
+\paragraph*{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
+Im Gegensatz zu $d(u)$, $\mathscr{B}(u)$ und $\mathscr{C}(u)$ wird bei $\mathscr{E}(u)$ die Zentralität eines Knotens $u$ durch die Zentralität seiner Nachbarn bestimmt. Deshalb wird in der Literatur dieses ursprünglich in den Sozialwissenschaften entwickelte Maß als Angabe über das "`Prestige"' eines Knotens $u$ interpretiert. Dadurch kann ein Knoten $u$, der zwar auf relativ wenigen Distanzen zwischen den übrigen Knoten $v,w \in V$ liegt oder wenige Kanten aufweist, gleichzeitig aber zu besonders zentralen Knoten adjazent ist, trotzdem eine hohe Zentralität aufweisen. Nach \citeA{Bonacich1987EigenvektorCent} ist die Eigenvektor-Zentralität definiert als
+\begin{align}
+\mathscr{E}_{(\upsilon, \zeta)}(u)=\sum_{\{u,v\}}(\upsilon + \zeta \mathscr{E}_{(\upsilon, \zeta)}(v))a_{u,v}
 \end{align}
-wobei $\varpi(v,w|u)$ die Anzahl an Distanzen $D(v,w)$ zwischen den Knoten $v$ und $w$ ist, auf denen $u$ liegt, und $\varpi(v,w)$ die Gesamtzahl an Distanzen $D(v,w)$ zwischen $v$ und $w$ für alle $u \in V$, d.h. $\varpi(v,w)=\sum_{u \in V} \varpi(v,w|u)$ \cite{kolaczyk2009statistical}. Nach diesem Maß wird die Bedeutung eines Knoten $u$ darüber interpretiert, wie sehr er "`unausweichlich"' ist, wenn in der kleinstmöglichen Anzahl an Kantenschritten von einem Knoten $v$ zu einem Knoten $w$ gelangt werden soll. Dadurch gilt für alle Knoten mit $d(u) \leq 1$ immer $\mathscr{B}(u)=0$.
+
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
 
@@ -802,7 +810,7 @@ für die Differenz
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)- \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2
 \end{align}
 der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nNet1}). Bedingung für diese Darstellung ist, dass die beiden Knoten nur miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nNet1} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$, die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
-Wird $p$ fixiert, gilt für die Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter $\gamma_{1,n}$ und $\gamma_{2,n}$ Funktionen, die abhängig von $n$ sind, so gilt folgende asymptotische Eigenschaft des Net1-Schätzers (für den Beweis siehe Anhang \ref{App_Asymp_Net1_Proof}):
+Wird $p$ fixiert, gilt für die Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter als $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ und $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ von $n$ abhängige Funktionen, so gilt folgende asymptotische Eigenschaft des Net1-Schätzers (für den Beweis siehe Anhang \ref{App_Asymp_Net1_Proof}):
 \begin{align*}
 \sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V)
 \end{align*}
@@ -1333,7 +1341,7 @@ und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet,
 && ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 &\leq ||\mathbf{Y}||_2 \notag \\
 &\Rightarrow& \frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2} &\leq 1
 \end{align}
-gilt, weil in $\textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2)$ alle Summanden $\geq 0$ sein müssen.\\
+gelten, weil in $\textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2)$ alle Summanden $\geq 0$ sein müssen.\\
 Wegen $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$ gilt auch
 \begin{align}\label{Eq_Betrag_Diff_xl_xk}
 && ||\mathbf{x}_k - \mathbf{x}_l||^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
