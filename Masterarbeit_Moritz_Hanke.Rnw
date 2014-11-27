@@ -1388,27 +1388,27 @@ Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
 \end{align}
 erfüllt, ergibt sich wegen der Voraussetzung $d(k)=d(l)=w(\{k,l\})$ für die Kovariable $k$
 \begin{align}\label{Eq_Diff_nNet1_Kovariable_K}
-0&=2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+0&=-2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{u,k\}}w(\{u,k\})\frac{\beta_u^{nNet1}}{\sqrt{d(u)d(k)}} \notag \\
-&=2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&=-2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{u,k\})\frac{\beta_u^{nNet1}}{\sqrt{d(u)d(k)}} \notag \\
-&=\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&=-\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} - \gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)
 \end{align}
 und für Kovariable $l$
 \begin{align}\label{Eq_Diff_nNet1_Kovariable_L}
-0&=2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+0&=-2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{v,l\}}w(\{v,l\})\frac{\beta_v^{nNet1}}{\sqrt{d(v)d(l)}} \notag \\
-&=2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&=-2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{v,l\})\frac{\beta_v^{nNet1}}{\sqrt{d(v)d(l)}} \notag \\
-&=\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&=-\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} - \gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2).
 \end{align}
 Durch die Voraussetzung, dass die einzige Kante der Knoten $k$ und $l$ diejenige ist, die sie miteinander verbindet, fällt in \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
 Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt auch\\ $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich als Differenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
 \begin{align}
 && 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
-&& &\phantom{{}=1} + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&& &\phantom{{}=1} + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 && &\phantom{{}=1} - \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 && &\phantom{{}=1} + \gamma_2\left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\ 
 && &\phantom{{}=1} - \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right) \notag \\
@@ -1486,7 +1486,7 @@ V_n(\mathbf{u})&=\sum_{i=1}^{n}
 \right)^2 w(\{k,l\})
 \right\rbrace
 \end{align}
-mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$. Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Net1}
+mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$. Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Net1}
 \begin{align*}
 \sum_{i=1}^{n} 
 \left\lbrace 
