@@ -335,11 +335,18 @@ plot(g2, edge.width=3, main="Graph B")
 @
 
 \paragraph{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
-Im Gegensatz zu $d(u)$, $\mathscr{B}(u)$ und $\mathscr{C}(u)$ wird bei $\mathscr{E}(u)$ die Zentralität eines Knotens $u$ durch die Zentralität seiner Nachbarn bestimmt. Deshalb wird in der Literatur dieses ursprünglich in den Sozialwissenschaften entwickelte Maß als Angabe über das "`Prestige"' eines Knotens $u$ interpretiert. Dadurch kann ein Knoten $u$, der auf relativ wenigen Distanzen zwischen den übrigen Knoten $v,w \in V$ liegt oder einen niedrigen Knotengrad aufweist, gleichzeitig aber zu besonders zentralen Knoten adjazent ist, trotzdem eine hohe Zentralität aufweisen. Nach \citeA{Bonacich1987EigenvektorCent} ist die Eigenvektor-Zentralität definiert als
-\begin{align}\label{Eq_EVcent_Bonacich}
-\mathscr{E}_{(\upsilon, \zeta)}(u)=\sum_{\{u,v\}}(\upsilon + \zeta \cdot \mathscr{E}_{(\upsilon, \zeta)}(v))a_{u,v},
+Im Gegensatz zu $d(u)$, $\mathscr{B}(u)$ und $\mathscr{C}(u)$ wird bei $\mathscr{E}(u)$ die Zentralität eines Knotens $u$ durch die Zentralität seiner Nachbarn bestimmt. Deshalb wird in der Literatur dieses ursprünglich in den Sozialwissenschaften entwickelte Maß als Angabe über das "`Prestige"' eines Knotens $u$ interpretiert. Dadurch kann ein Knoten $u$, der auf relativ wenigen Distanzen zwischen den übrigen Knoten $v,w \in V$ liegt oder einen niedrigen Knotengrad aufweist, gleichzeitig aber zu besonders zentralen Knoten adjazent ist, trotzdem eine hohe Zentralität aufweisen. 
+Über das Eigenwertproblem
+\begin{align*}
+\mathbf{A}\mathbf{e}=\lambda_{max} \mathbf{e}
+\end{align*}
+mit dem größten Eigenwert $\lambda_{max}$ von $\mathbf{A}$ und dem zugehörigen Eigenvektor $\mathbf{e}=(e_1,\dots, e_{N_V})'$ kann die Zentralität eines Knotens $u$ als
+\begin{align}\label{Eq_EVcent}
+&& \lambda_{max} e_u &= \sum_{v \in V\setminus u} e_v a_{u,v} \notag \\
+&\Leftrightarrow& e_u &=\frac{1}{\lambda_{max}} \sum_{v \in V\setminus u} e_v a_{u,v}
 \end{align}
-wobei $\upsilon$ als der Reziprok des größten Eigenwerts $\lambda$ des Eigenwertproblems $\mathbf{A}\mathbf{e}=\lambda \mathbf{e}$ mit dem Eigenvektor $\mathbf{e}$ von $\mathbf{A}$ gewählt werden soll. $\zeta$ in \eqref{Eq_EVcent_Bonacich} ist ein Abhängigkeitsparameter, der angibt, wie stark die Zentralität von Knoten des gesamten Netzwerks, d.h. auch die Nachbarn der benachbarten Knoten, die Zentralität von $u$ beeinflussen sollen. In dieser Arbeit wird allein $\zeta=1$ betrachtet, d.h. die Zentralität eines Knoten $u$ ist nur von der Zentralität der direkten Nachbarn abhängig.
+angegeben werden \cite{bonacich72factoring}. In der Literatur finden sich diverse Erweiterungen dieses Maßes, durch die beispielsweise mit Hilfe eines "`Einflussgebietsparameters"' bestimmt werden kann, in wie weit auch die Zentralität von nicht direkt benachbarte Knoten die Zentralität von $u$ beeinflussen oder ob sich die Zentralität eines Knotens umgekehrt zur Zentralität der umliegenden Knoten verhält (vgl. dazu \citeNP{Bonacich1987EigenvektorCent}). Im Rahmen dieser Arbeit wird das Maß aus Gleichung \eqref{Eq_EVcent} verwendet, da es keine begründete Annahme gibt, das Einflussgebiet zu erhöhen bzw. zu verringern.
+
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
 
