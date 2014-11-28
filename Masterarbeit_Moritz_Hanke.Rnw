@@ -298,9 +298,9 @@ Die Betweenness-Zentralität für einen Knoten $u$ ist definiert als
 wobei $\varpi(v,w|u)$ die Anzahl an Distanzen $D(v,w)$ zwischen den Knoten $v$ und $w$ ist auf denen $u$ liegt, und $\varpi(v,w)$ die Gesamtzahl an Distanzen $D(v,w)$ zwischen $v$ und $w$ für alle $u \in V$, d.h. $\varpi(v,w)=\sum_{u \in V} \varpi(v,w|u)$ \cite{kolaczyk2009statistical}. Nach diesem Maß wird die Bedeutung eines Knoten $u$ darüber interpretiert, wie sehr er "`unausweichlich"' ist, wenn in der kleinstmöglichen Anzahl an Kantenschritten von einem Knoten $v$ zu einem Knoten $w$ gelangt werden soll. Dadurch gilt für alle Knoten mit $d(u) \leq 1$ immer $\mathscr{B}(u)=0$. Da $\mathscr{B}(u)$ abhängig von der Ordnung eines Graphen ist, kann durch Division mit $\frac{(N_V-1)(N_V-2)}{2}$ eine normierte und damit über verschiedene Graphen vergleichbare Betweenness-Zentralität berechnet werden. 
 
 \paragraph{Closeness-Zentralität}\label{Kap_Closeness-Zentralität}
-Bei der Closeness-Zentralität werden für einen Knoten $u$ alle Distanzen zu den Knoten $v \in V$ mit $u \neq v$ summiert und davon der reziproke Wert genommen:
+Bei der Closeness-Zentralität werden für einen Knoten $u$ alle Distanzen zu den Knoten $v \in V \setminus u$ summiert und davon der reziproke Wert genommen:
 \begin{align}\label{Eq_Closeness_Definition}
-\mathscr{C}(u)=\frac{1}{\sum_{v \in V} D(u, v)}.
+\mathscr{C}(u)=\frac{1}{\sum_{v \in V \setminus u} D(u, v)}.
 \end{align}
 Anhand von Abbildung \ref{fig:Closeness_normalized} wird deutlich, dass $\mathscr{C}(u)$ nicht allein von der Lage von $u$ innerhalb des Graphen, sondern auch von der Ordnung des Graphen abhängt, weswegen $\mathscr{C}(u)$ durch die Multiplikation mit dem Faktor $(N_V -1)$ normiert werden kann, um Knotenzetralitäten über verschiedene Graphen vergleichbar zu machen. Allein für den Fall $d(u)=0$ gilt $\mathscr{C}(u)=0$, ansonsten ist die Closeness-Zentralität strikt größer als null.
 <<echo=FALSE, Closeness_normalized, fig.pos="h", fig.show='hold', out.width='.49\\linewidth', fig.align='center', fig.scap="Beispiel für die Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit würde in diesem Fall der rote Knoten als doppelt so bedeutsam für den Graphen A als der gelbe Knoten für den Graphen B interpretiert werden. Diese naive Bewertung der beiden Knoten ist für die vorliegenden Fälle allerdings ungeeignet, da offensichtlich beide Knoten in ihrem jeweiligen Graphen so zentral sind, dass alle Wege zwischen den übrigen Knoten immer über sie laufen bzw. die Entfernung des roten und gelben Knotens alle Kanten der Graphen aufheben würde. Nach einer Normalisierung mit $(N_V -1)$ haben beide Knoten hingegen einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind identisch bedeutsam für ihre jeweiligen Graphen.">>=
@@ -337,9 +337,9 @@ plot(g2, edge.width=3, main="Graph B")
 \paragraph{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
 Im Gegensatz zu $d(u)$, $\mathscr{B}(u)$ und $\mathscr{C}(u)$ wird bei $\mathscr{E}(u)$ die Zentralität eines Knotens $u$ durch die Zentralität seiner Nachbarn bestimmt. Deshalb wird in der Literatur dieses ursprünglich in den Sozialwissenschaften entwickelte Maß als Angabe über das "`Prestige"' eines Knotens $u$ interpretiert. Dadurch kann ein Knoten $u$, der auf relativ wenigen Distanzen zwischen den übrigen Knoten $v,w \in V$ liegt oder einen niedrigen Knotengrad aufweist, gleichzeitig aber zu besonders zentralen Knoten adjazent ist, trotzdem eine hohe Zentralität aufweisen. Nach \citeA{Bonacich1987EigenvektorCent} ist die Eigenvektor-Zentralität definiert als
 \begin{align}\label{Eq_EVcent_Bonacich}
-\mathscr{E}_{(\lambda_0, \zeta)}(u)=\sum_{\{u,v\}}(\frac{1}{\lambda} + \zeta \cdot \mathscr{E}_{(\lambda_0, \zeta)}(v))a_{u,v},
+\mathscr{E}_{(\upsilon, \zeta)}(u)=\sum_{\{u,v\}}(\upsilon + \zeta \cdot \mathscr{E}_{(\upsilon, \zeta)}(v))a_{u,v},
 \end{align}
-wobei $\lambda_0$ der größte Eigenwert des Eigenwertproblems $\mathbf{A}\mathbf{e}=\lambda_0 \mathbf{e}$ mit dem Eigenvektor $\mathbf{e}$ von $\mathbf{A}$ ist. $\zeta$ in \eqref{Eq_EVcent_Bonacich} ist ein Lokalitätsparameter, der angibt, wie stark der Einfluss von 
+wobei $\upsilon$ als der Reziprok des größten Eigenwerts $\lambda$ des Eigenwertproblems $\mathbf{A}\mathbf{e}=\lambda \mathbf{e}$ mit dem Eigenvektor $\mathbf{e}$ von $\mathbf{A}$ gewählt werden soll. $\zeta$ in \eqref{Eq_EVcent_Bonacich} ist ein Abhängigkeitsparameter, der angibt, wie stark die Zentralität von Knoten des gesamten Netzwerks, d.h. auch die Nachbarn der benachbarten Knoten, die Zentralität von $u$ beeinflussen sollen. In dieser Arbeit wird allein $\zeta=1$ betrachtet, d.h. die Zentralität eines Knoten $u$ ist nur von der Zentralität der direkten Nachbarn abhängig.
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
 
@@ -369,9 +369,9 @@ Ziel bei der linearen Regression ist die Schätzung der unbekannten Parameter $\
 einspaltige Matrizen sowie
 \begin{align*}
 \mathbf{X} = \begin{pmatrix}
-1 & x_{11} & \dots & x_{1p}\\ 
+1 & x_{1,1} & \dots & x_{1,p}\\ 
 \vdots & \vdots & &\vdots\\
-1 & x_{n1} & \dots & x_{np}
+1 & x_{n,1} & \dots & x_{n,p}
 \end{pmatrix}
 \end{align*}
 die \textit{Designmatrix} mit den Realisierungen der Kovariablen, so kann \eqref{Eq_klassisches_modell} in Matrixnotation als
@@ -758,13 +758,13 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 \subsection{Netzwerkbasierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
-Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Bspw. sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.\\
+Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Beispielsweise sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen oder Genprodukten bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.\\
 \paragraph{Net1}
 Bei der ursprüngliche netzwerkbasierten penalisierten Regression, im Folgenden als \textit{Net1} abgekürzt, haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
 P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
 \end{align}
-definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{positiv semidefinit} Matrix, die definiert ist als
+definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{positiv semidefinite} Matrix, die definiert ist als
 \begin{align*}
 \tilde{l}_{u,v} = \begin{cases}
 1-\frac{w(\{u,v\})}{d(u)}, \qquad &\text{wenn} \ u=v \ \text{und} \ d(u) \neq 0,\\
@@ -785,16 +785,16 @@ die für die Schätzung von $\boldsymbol{\hat{\beta}}^{Net1}$ bezüglich $\bolds
 \end{align}
 Wegen dem Lasso-Operator kann die Net1-Regression wie die Enet-Regression eine Variablenselektion durchführen und da $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta}$ eine strikt konvexe Funktion ist, handelt es sich in \eqref{Eq_Net1_Constrained} für $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} > 0$ um ein strikt konvexes Optimierungsproblem und es kommt zu einem Gruppierungseffekt bei der Schätzung (siehe Anhang \ref{App_GroupEffect_Strict_Conv}).\\
 
-Der Strafterm aus \eqref{Eq_Net1_Constrained} weist eine Ähnlichkeit zu dem Fused-Lasso-Strafterm
+Der Strafterm aus \eqref{Eq_PRSS_Net1} weist eine Ähnlichkeit zu dem Fused-Lasso-Strafterm
 \begin{align*}
 \text{PRSS}_{fLasso}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2 \sum_{j=2}^{p}|\beta_j - \beta_{j-1}|,
 \end{align*}
-auf \cite{Tibshirani05fused}, für den die Kovariablen zuvor in eine inhaltlich begründete Reihenfolge gebracht werden. Bei der Fused-Lasso-Regression wird angenommen, dass benachbarte Koeffizienten identische Steigungskoeffizienten haben und für den Fall von unterschiedlichen Steigungskoeffizienten eine Bestrafung vorgenommen. Dadurch kommt es zu einer Glättung des geschätzten Parameters $\hat{\beta}_j$ über seine Nachbarn $\hat{\beta}_{j-1}$ und $\hat{\beta}_{j+1}$. Die Net1-Regression hat dagegen eine abgeschwächte Annahme bzgl. der Regressionskoeffizienten von benachbarten Variablen. Diese können auch unterschiedliche große Steigungskoeffizienten haben, ohne dass der Strafterm ansteigt, wenn entsprechend die Knotengrade der jeweiligen Knoten unterschiedlich sind. Inhaltlich lässt sich der Strafterm so interpretieren, dass mit den Knotengraden bei der Differenz zwischen zwei Steigungskoeffizienten berücksichtigt wird, dass jeder Knoten selbst wiederum in einem Zusammenhang mit mehreren anderen Knoten stehen kann und die Abweichung der beiden Regressionskoeffizienten voneinander durch die Nähe zu diesen dritten Kovariablen hervorgerufen wird. Dadurch können Variablen, die mit vielen anderen Variablen "`verbunden"' sind, bei der Schätzung größere Regressionskoeffizienten als ihre Nachbarn erhalten, die weniger Kanten haben. Wird der Knotengrad als Maß für die Bedeutung einer Variable interpretiert, kann sich die Bedeutung von Kovariablen in höheren geschätzten Steigungskoeffizienten als der ggf. weniger bedeutsamen Nachbarn widerspiegeln.\\
+auf \cite{Tibshirani05fused}, für den die Kovariablen zuvor in eine inhaltlich begründete Reihenfolge gebracht werden. Bei der Fused-Lasso-Regression wird angenommen, dass benachbarte Koeffizienten identische Steigungskoeffizienten haben und für den Fall von unterschiedlichen Steigungskoeffizienten eine Bestrafung vorgenommen. Dadurch kommt es zu einer Glättung des geschätzten Parameters $\hat{\beta}_j$ über seine Nachbarn $\hat{\beta}_{j-1}$ und $\hat{\beta}_{j+1}$. Die Net1-Regression hat dagegen eine abgeschwächte Annahme bzgl. der Regressionskoeffizienten von benachbarten Variablen. Diese können auch unterschiedliche große Steigungskoeffizienten haben, ohne dass der Strafterm ansteigt, wenn entsprechend die Knotengrade der jeweiligen Knoten unterschiedlich sind. Inhaltlich lässt sich der Strafterm so interpretieren, dass mit den Knotengraden bei der Differenz zwischen zwei Steigungskoeffizienten berücksichtigt wird, dass jeder Knoten selbst wiederum in einem Zusammenhang mit mehreren anderen Knoten stehen kann und die Abweichung der beiden Regressionskoeffizienten voneinander durch die Nähe zu weiteren Kovariablen hervorgerufen wird. Dadurch können Variablen, die mit vielen anderen Variablen "`verbunden"' sind, bei der Schätzung größere Regressionskoeffizienten als ihre Nachbarn erhalten, die weniger Kanten haben. Wird der Knotengrad als Maß für die Bedeutung einer Variable interpretiert, kann sich die Bedeutung von Kovariablen in höheren geschätzten Steigungskoeffizienten als der ggf. weniger bedeutsamen Nachbarn widerspiegeln.\\
 Wird \eqref{Eq_PRSS_Net1} abgeleitet und null gesetzt, ergibt sich der naive Net1-Schätzer
 \begin{align}\label{Eq_Net1_PRSS_Ableitung}
 &&\frac{\partial \textnormal{PRSS}_{Net1}(\boldsymbol{\beta}, \gamma_1, \gamma_2)}{\partial \boldsymbol{\beta}}&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
 &\Rightarrow& 0 &= -2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
-&\Rightarrow& \boldsymbol{\hat{\beta}}^{nNet1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
+&\Rightarrow& \boldsymbol{\hat{\beta}}^{nNet1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
 \end{align}
 Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ der nEnet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$ der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt. In Analogie zur nEnet-Regression lässt sich durch eine Erweiterung des Datensatzes zu $\mathbf{X}^*=\frac{1}{\sqrt{1+\gamma_2}}\begin{pmatrix}
 \mathbf{X}\\
@@ -803,20 +803,20 @@ Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\
 Für die Wahl von $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei der Enet-Regression, d.h. eine Kreuzvalidierung über beide Tuningparameter (siehe dazu Abschnitt \ref{Kap_Elastic-Net}).\\
 In Analogie zum Enet-Schätzer lässt sich für zwei mittels Net1 geschätzte Regressionskoeffizienten $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)$ und $\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)$ eine obere Grenze
 \begin{align}\label{Eq_Obere_Grenze_nNet1}
-D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{2\gamma_2}\sqrt{2(1-p)}
+D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{2\gamma_2}\sqrt{2(1-\rho_{k,l})}
 \end{align}
 für die Differenz 
 \begin{align}
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)- \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2
 \end{align}
-der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nNet1}). Bedingung für diese Darstellung ist, dass die beiden Knoten nur miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nNet1} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$, die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
-Wird $p$ fixiert, gilt für die Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter als $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ und $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ von $n$ abhängige Funktionen, so gilt folgende asymptotische Eigenschaft des Net1-Schätzers (für den Beweis siehe Anhang \ref{App_Asymp_Net1_Proof}):
+der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nNet1}). Bedingung für diese Darstellung ist, dass nur die beiden Knoten miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nNet1} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$, die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
+Wird $p$ fest gehalten, gilt mit wachsender Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter als $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ und $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ von $n$ abhängige Funktionen, so gilt folgende asymptotische Eigenschaft des Net1-Schätzers (für den Beweis siehe Anhang \ref{App_Asymp_Net1_Proof}):
 \begin{align*}
-\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V)
+\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
 \end{align*}
 mit
 \begin{align}\label{Eq_Vn_asymptotic}
-V(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag \\
+L(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag \\
 &\phantom{{}=1} + \gamma_{1,0}\sum_{j=1}^{p}\left\lbrace u_j \textnormal{sign}(\beta_j)I(\beta_j \neq 0) + |u_j|I(\beta_j=0) \right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_{2,0} \sum_{\{k,l\}} \left\lbrace \left( \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}\right)
 \left( \frac{u_k}{\sqrt{d(k)}} - \frac{u_l}{\sqrt{d(l)}}\right)w(\{k,l\})
@@ -824,8 +824,8 @@ V(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag 
 \end{align}
 Dabei gelte
 \begin{align*}
-\mathbf{u}&=(u_1, \dots , u_p) \\
-\mathbf{C}&=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right) \\
+\mathbf{u}&=(u_1, \dots , u_p)' \\
+\mathbf{C}&=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'}\right) \qquad \text{mit} \ \mathbf{x}_i=(x_{i,1}, \dots , x_{i,p})' \\
 \mathbf{W}&\sim N(0, \sigma^2 \mathbf{C})
 \end{align*}
 und $I(\cdot)$ sei die Indikatorfunktion.\\
@@ -877,7 +877,7 @@ plot(KEGG.descript$n.vertices, KEGG.descript$median.degree,
      ylab="Median des Knotengrads",
      xlab="Anzahl Knoten")
 @
-Unter Berücksichtigung dieser Ordnungskategorien wurde für alle KEGG-Graphen, die in eine Kategorie fallen, das arithmetische Mittel bzw. der Median für den Knotengrad, den relativen Anteil an allen möglichen Kanten sowie über $N_E$ berechnet (siehe Tabelle \ref{Tab_Uebersicht_Simu_Graphen}). Um eine möglichst realistische Simulation von biologischen Pathways zu erreichen, wurden mittels dem R-Paket \texttt{qpgraph} \cite{castelo2006Rpackage_qpgraph,castelo2009Rpackage_qpgraph,castelo2014Rpackage_qpgraph} Zufallsgraphen nach dem  Erd{\H{o}}s-R{\'e}nyi-Modell modelliert, d.h. für einen Graphen gilt $G(V,E)$ mit $|E|=\llcorner \frac{N_V(N_V-1)}{2} p+ 0.5 \lrcorner$, wobei $p$ der Wahrscheinlichkeit entspricht, dass zwischen zwei Knoten $u$ und $v$ eines Graphen eine Kante existiert. Für die Simulation eines Graphen, der in die Ordnungskategorie $o$ fällt, wurde als $p$ der Median des relative Anteils Kanten an möglichen Kanten von den biologischen Pathways der entsprechenden Ordnung gewählt. Unter Berücksichtigung der Streudiagramme in Abbildung \ref{fig:Plots_KEGG_Kennzahlen} erscheint der Median als robustere Wahl, da er nicht so stark wie das arithmetische Mittel von Ausreißern bzgl. des relativen Anteils an Kanten beeinflusst wird. Der Vergleich der arithmetischen Mittelwerte und Mediane in Tabelle \ref{Tab_Uebersicht_Simu_Graphen} unterstützt dieses Vorgehen, da im Bezug auf den Median die biologischen Graphen im Mittel deutlich weniger dicht sind als im Bezug auf das arithmetische Mittel. Auch der beispielhaft simulierter Graphen mit $75$ Knoten in Abbildung \ref{fig:Beispielgraph_Simu} unterstreicht nach Auffassung des Autors die Entscheidung für den Median. Dadurch variieren die einzelnen Knoten hinsichtlich ihres Knotengrades in diesem Fall von $0$ (türkis) bzw. $1$ (gelb) bis zu $8$(rot), was als eine Analogie zur Knotengradvariabilität bei biologischen Pathways interpretiert werden kann.
+Unter Berücksichtigung dieser Ordnungskategorien wurde für alle KEGG-Graphen, die in eine Kategorie fallen, das arithmetische Mittel bzw. der Median für den Knotengrad, den relativen Anteil an allen möglichen Kanten sowie über $N_E$ berechnet (siehe Tabelle \ref{Tab_Uebersicht_Simu_Graphen}). Um eine möglichst realistische Simulation von biologischen Pathways zu erreichen, wurden mittels dem R-Paket \texttt{qpgraph} \cite{castelo2006Rpackage_qpgraph,castelo2009Rpackage_qpgraph,castelo2014Rpackage_qpgraph} Zufallsgraphen nach dem  Erd{\H{o}}s-R{\'e}nyi-Modell modelliert, d.h. für einen Graphen gilt $G(V,E)$ mit $|E|=\lfloor \frac{N_V(N_V-1)}{2} p+ 0.5 \rfloor$, wobei $p$ der Wahrscheinlichkeit entspricht, dass zwischen zwei Knoten $u$ und $v$ eines Graphen eine Kante existiert. Für die Simulation eines Graphen, der in die Ordnungskategorie $o$ fällt, wurde als $p$ der Median des relative Anteils Kanten an möglichen Kanten von den biologischen Pathways der entsprechenden Ordnung gewählt. Unter Berücksichtigung der Streudiagramme in Abbildung \ref{fig:Plots_KEGG_Kennzahlen} erscheint der Median als robustere Wahl, da er nicht so stark wie das arithmetische Mittel von Ausreißern bzgl. des relativen Anteils an Kanten beeinflusst wird. Der Vergleich der arithmetischen Mittelwerte und Mediane in Tabelle \ref{Tab_Uebersicht_Simu_Graphen} unterstützt dieses Vorgehen, da im Bezug auf den Median die biologischen Graphen im Mittel deutlich weniger dicht sind als im Bezug auf das arithmetische Mittel. Auch der beispielhaft simulierter Graphen mit $75$ Knoten in Abbildung \ref{fig:Beispielgraph_Simu} unterstreicht nach Auffassung des Autors die Entscheidung für den Median. Dadurch variieren die einzelnen Knoten hinsichtlich ihres Knotengrades in diesem Fall von $0$ (türkis) bzw. $1$ (gelb) bis zu $8$(rot), was als eine Analogie zur Knotengradvariabilität bei biologischen Pathways interpretiert werden kann.
 \begin{table}[H]
 \centering
 \begin{tabular}{clccclccc}
@@ -892,7 +892,7 @@ Unter Berücksichtigung dieser Ordnungskategorien wurde für alle KEGG-Graphen, 
 \caption[Zusammenfassung über simulierte Graphen]{Übersicht über die KEGG-Graphen bzgl. des durchschnittlichen Knotengrads $d(v)$, des Anteils an vorhandenen zu theoretisch möglichen Kanten $p=\frac{N_E}{N_V(N_V-1)/2}$ sowie der Anzahl an Kanten $N_E$ für die einzelnen Ordnungskategorien. }\label{Tab_Uebersicht_Simu_Graphen}
 \end{table}
 Nach dem oben entwickelten Schema wurden für die Simulationsstudie insgesamt $100$ Datensätze mit jeweils $n=300$ Beobachtungen und $p=1000$ Kovariablen simuliert. Als den Datensätzen zugrunde liegenden Graphen wurden mit der R-Funktion \texttt{erGraphParam} jeweils drei Graphen mit $20$, $30$ bzw. $50$ Knoten, zwei Graphen mit $75$ Knoten sowie jeweils ein Graph mit $25$, $125$, $175$ und $225$ Knoten pseudozufällig erstellt.\\
-Auf Grundlage der dabei mitsimulierten Kovarianzmatrizen wurden mit der Funktion \texttt{rmvnorm} multivariat normalverteilte Kovariablenausprägungen simuliert, mit deren Hilfe wiederum die Responsevariable als $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$ simuliert wurde. Dabei wurden für einen der drei Graphen mit $20$ Knoten alle Regressionskoeffizienten als $\beta_1^{N_V=20}=...=\beta_{20}^{N_V=20}=2$ und für einen der drei Graphen mit $30$ Knoten alle Regressionskoeffizienten als $\beta_{1}^{N_V=30}=...=\beta_{30}^{N_V=30}=1$ gesetzt. Für die restlichen $950$ Kovariablen gilt $\beta_j=0$, wodurch eine spärliche Besetzung von $\boldsymbol{\beta}$ gewährleistet ist. Entsprechend der Normalverteilungsannahme des klassischen linearen Modell wurde der Fehlerterm als $\varepsilon_i \sim N(0, 8)$ simuliert. Durch die im Vergleich zu den einzelnen Regressionskoeffizienten relativ große Varianz des Fehlerterms soll ein Singal-Rauschen-Verhältnis simuliert werden, das einerseits die Detektion der einzelnen Regressionskoeffizienten erschwert und gleichzeitig an in der Genetik vorkommenden Singal-Rauschen-Verhältnissen angelehnt ist. Anschließend wurde entsprechend der Voraussetzungen von Kapitel \ref{Kap_Penalisierte Regression} jede Kovariable standardisiert und die Responsevariable zentriert.
+Auf Grundlage der dabei mitsimulierten Kovarianzmatrizen wurden mit der Funktion \texttt{rmvnorm} multivariat normalverteilte Kovariablenausprägungen simuliert, mit deren Hilfe wiederum die Responsevariable als $\mathbf{Y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$ simuliert wurde. Dabei wurden für einen der drei Graphen mit $20$ Knoten alle Regressionskoeffizienten als $\beta_1^{N_V=20}=...=\beta_{20}^{N_V=20}=2$ und für einen der drei Graphen mit $30$ Knoten alle Regressionskoeffizienten als $\beta_{1}^{N_V=30}=...=\beta_{30}^{N_V=30}=1$ gesetzt. Für die restlichen $950$ Kovariablen gilt $\beta_j=0$, wodurch eine spärliche Besetzung von $\boldsymbol{\beta}$ gewährleistet ist. Entsprechend der Normalverteilungsannahme des klassischen linearen Modell wurde der Fehlerterm als $\varepsilon_i \sim N(0, 8)$ simuliert. Durch die im Vergleich zu den einzelnen Regressionskoeffizienten relativ große Varianz des Fehlerterms soll ein Signal-Rauschen-Verhältnis simuliert werden, das einerseits die Detektion der einzelnen Regressionskoeffizienten erschwert und gleichzeitig an in der Genetik vorkommenden Signal-Rauschen-Verhältnissen angelehnt ist. Anschließend wurde entsprechend der Voraussetzungen von Kapitel \ref{Kap_Penalisierte Regression} jede Kovariable standardisiert und die Responsevariable zentriert.
 <<echo=FALSE, message=FALSE, Beispielgraph_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Beispielgraph aus der Datensimulation", fig.cap="Ein für die Datensimulation nach dem  Erd{\\H{o}}s-R{\\'e}nyi-Modell pseudozufällig erstellter Graph mit $75$ Knoten und einer Wahrscheinlichkeit für das Aufreteten einer Kante zwischen zwei Knoten von $p=0.0566$. Die Knotengrade für den türkisen, gelben sowie roten Knoten entsprechen $0$, $1$ bzw. $8$ und spiegeln beispielhaft die Variabilität der Knotenzentralität wider, die durch das in dieser Arbeit verwendete Schema erzeugt wird.">>=
 library(graph)
 load("~/Studium/BIOMETRIE/Masterarbeit/R-Code/R-Objekte/Beispielgraph_Simu.RData")
@@ -1400,7 +1400,7 @@ erfüllt, ergibt sich wegen der Voraussetzung $d(k)=d(l)=w(\{k,l\})$ für die Ko
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{u,k\}}w(\{u,k\})\frac{\beta_u^{nNet1}}{\sqrt{d(u)d(k)}} \notag \\
 &=-2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{u,k\})\frac{\beta_u^{nNet1}}{\sqrt{d(u)d(k)}} \notag \\
-&=-\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&=-\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{\gamma_1}{2} \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} - \gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)
 \end{align}
 und für Kovariable $l$
@@ -1409,18 +1409,18 @@ und für Kovariable $l$
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{v,l\}}w(\{v,l\})\frac{\beta_v^{nNet1}}{\sqrt{d(v)d(l)}} \notag \\
 &=-2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{v,l\})\frac{\beta_v^{nNet1}}{\sqrt{d(v)d(l)}} \notag \\
-&=-\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&=-\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{\gamma_1}{2} \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 &\phantom{{}=1} - \gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2).
 \end{align}
 Durch die Voraussetzung, dass die einzige Kante der Knoten $k$ und $l$ diejenige ist, die sie miteinander verbindet, fällt in \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
 Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt auch\\ $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich als Differenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
 \begin{align}
-&& 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
+&& 0&=-(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
 && &\phantom{{}=1} + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 && &\phantom{{}=1} - \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
 && &\phantom{{}=1} + \gamma_2\left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\ 
 && &\phantom{{}=1} - \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right) \notag \\
-&\Leftrightarrow& 0&=(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
+&\Leftrightarrow& 0&=-(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
 && &\phantom{{}=1} + 2 \gamma_2 \left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\
 &\Leftrightarrow& \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)&=\frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{2\gamma_2} \notag \\
 &\Rightarrow& \frac{\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)}{||\mathbf{Y}||_1} &= \frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
@@ -1441,15 +1441,15 @@ Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2},
 \begin{satz}
 Gelte $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ für $n \rightarrow \infty$. Sei darüber hinaus
 \begin{align}\label{Eq_Asymptotic_C-matrix}
-\mathbf{C}=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right)
+\mathbf{C}=\lim\limits_{n \rightarrow \infty} \left( \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{'} \right) ) \qquad \text{mit} \ \mathbf{x}_i=(x_{i,1}, \dots , x_{i,p})'
 \end{align}
 nicht singulär, dann gilt
 \begin{align*}
-\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V)
+\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
 \end{align*}
 mit
 \begin{align*}
-V(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag \\
+L(\mathbf{u})&=-2\mathbf{u}'\mathbf{W} + \mathbf{u}'\mathbf{C}\mathbf{u} \notag \\
 &\phantom{{}=1} + \gamma_{1,0}\sum_{j=1}^{p}\left\lbrace u_j \textnormal{sign}(\beta_j)I(\beta_j \neq 0) + |u_j|I(\beta_j=0) \right\rbrace \notag \\
 &\phantom{{}=1} + 2\gamma_{2,0} \sum_{\{k,l\}} \left\lbrace \left( \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}\right)
 \left( \frac{u_k}{\sqrt{d(k)}} - \frac{u_l}{\sqrt{d(l)}}\right)w(\{k,l\})
@@ -1466,9 +1466,9 @@ sowie
 \end{satz}
 Der nachfolgende Beweis ist eine ausführliche und korrigierte Ausarbeitung des Beweises von \citeA{Li2007Net1_Workingpaper}.
 \begin{proof}
-Es sei $V_n(\mathbf{u})$ definiert als
+Es sei $L_n(\mathbf{u})$ definiert als
 \begin{align}\label{Eq_Vn_Net1}
-V_n(\mathbf{u})&=\sum_{i=1}^{n} 
+L_n(\mathbf{u})&=\sum_{i=1}^{n} 
 \left\lbrace 
 \left( 
 \varepsilon_i - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
@@ -1483,10 +1483,10 @@ V_n(\mathbf{u})&=\sum_{i=1}^{n}
 \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
 \right)
 +
-\left( 
+\frac{\left( 
 \frac{u_k}{\sqrt{d(k)}} - 
 \frac{u_l}{\sqrt{d(l)}}
-\right)\sqrt{n}
+\right)}{\sqrt{n}}
 \right]^2 w(\{k,l\}) \right. \notag \\
 &\phantom{{}=2} \left.
 - \left(
@@ -1592,9 +1592,9 @@ und da für $n \rightarrow \infty$ für den Term $\frac{\left(
 \frac{u_l}{\sqrt{d(l)}}
 \right) w(\{k,l\}) \right\rbrace. \notag \\
 \end{align*}
-Da $V$ eine strikt konvexe Funktion mit einem globalen Minimum ist, gilt
+Da $L$ eine strikt konvexe Funktion mit einem globalen Minimum ist, gilt
 \begin{align*}
-\arg \min (V_n)=\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (V).
+\arg \min (L_n)=\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L).
 \end{align*}
 \end{proof}
 
