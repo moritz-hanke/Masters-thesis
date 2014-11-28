@@ -765,7 +765,8 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 \subsection{Netzwerkbasierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
-Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Beispielsweise sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen oder Genprodukten bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.\\
+Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Beispielsweise sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen oder Genprodukten bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.
+
 \paragraph{Net1}
 Bei der ursprüngliche netzwerkbasierten penalisierten Regression, im Folgenden als \textit{Net1} abgekürzt, haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
@@ -791,7 +792,6 @@ die für die Schätzung von $\boldsymbol{\hat{\beta}}^{Net1}$ bezüglich $\bolds
 \boldsymbol{\hat{\beta}}^{Net1} &= \arg \displaystyle\min_{\beta} \text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2).
 \end{align}
 Wegen dem Lasso-Operator kann die Net1-Regression wie die Enet-Regression eine Variablenselektion durchführen und da $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta}$ eine strikt konvexe Funktion ist, handelt es sich in \eqref{Eq_Net1_Constrained} für $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} > 0$ um ein strikt konvexes Optimierungsproblem und es kommt zu einem Gruppierungseffekt bei der Schätzung (siehe Anhang \ref{App_GroupEffect_Strict_Conv}).\\
-
 Der Strafterm aus \eqref{Eq_PRSS_Net1} weist eine Ähnlichkeit zu dem Fused-Lasso-Strafterm
 \begin{align*}
 \text{PRSS}_{fLasso}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2 \sum_{j=2}^{p}|\beta_j - \beta_{j-1}|,
@@ -919,7 +919,7 @@ Für die Auswertung der simulierten Daten mittels der Enet-Methode wurde das R-P
 \boldsymbol{\hat{\beta}}^{Enet}(\gamma, \alpha)&=\arg \displaystyle\min_{\beta} \textnormal{PRSS}_{Enet}(\boldsymbol{\beta}, \gamma, \alpha) \notag \\
 &=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \alpha \sum_{j=1}^{p}|\beta_j| + \gamma (1-\alpha) \sum_{j=1}^{p}\beta_j^2 \right\rbrace \quad \text{mit} \ \gamma \ge 0.
 \end{align}
-darstellen lässt, wurde über alle Kombinationen der Sequenzen $\alpha \in \{0.01, 0.03, \dots, 0.99\}$ und $\gamma \in \{0.001, 0.002,\dots, 0.01, 0.025,0.05,\dots,10,25, 50, 100\}$ mit den Beobachtungen $n_{tune}$ das optimale $\alpha$ und $\gamma$ für jeden Datensatz mittels einer zehnfachen Kreuzvalidierung durch die Funktion \texttt{cv.glmnet} ermittelt. Anhand von \eqref{Eq_Enet_Alternative_Lagrange} wird deutlich, dass die Wahl $\alpha$ bestimmt, in wie weit die Lasso-Penalisierung im Verhältnis zur Ridge-Penalisierung gewichtet wird, d.h. wie das Verhältnis der Variablenselektion zur Stabilisierung der Schätzung ist.
+darstellen lässt, wurde über alle Kombinationen aus den Sequenzen $\alpha \in \{0.05, 0.1, \dots, 0.95\}$ und $\gamma \in \{0.001, 0.002,\dots, 0.01, 0.025,0.05,\dots,10,25, 50, 100\}$ mit den Beobachtungen $n_{tune}$ das optimale $\alpha$ und $\gamma$ für jeden Datensatz mittels einer zehnfachen Kreuzvalidierung durch die Funktion \texttt{cv.glmnet} ermittelt. Anhand von \eqref{Eq_Enet_Alternative_Lagrange} wird deutlich, dass die Wahl $\alpha$ bestimmt, in wie weit die Lasso-Penalisierung im Verhältnis zur Ridge-Penalisierung gewichtet wird, d.h. wie das Verhältnis der Variablenselektion zur Stabilisierung der Schätzung ist.
 
 \subsection{NetXXXX}
 Knotengewcihte als Ränge bezogen auf die Zentralitätsmaße\\
@@ -1316,7 +1316,7 @@ D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align*}
 wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$ entspricht.
 \end{satz}
-Der nachfolgende Beweis ist eine ausführliche Ausarbeitung des Beweises von \citeA{zou_regularization_2005}.
+Der nachfolgende Beweis ist eine korrigierte und ausführliche Ausarbeitung des Beweises von \citeA{zou_regularization_2005}.
 \begin{proof}
 Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
 \begin{align}\label{Eq_nEnt_Ableitung_beta_j}
@@ -1324,17 +1324,17 @@ Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
 \end{align}
 erfüllt, ergibt sich aus \eqref{Eq_nEnt_Ableitung_beta_j} für die Kovariable $k$
 \begin{align}\label{Eq_Diff_nEnet_Kovariable_K}
-2\mathbf{x}_k{'}\mathbf{Y}-2\mathbf{x}_k{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
+-2\mathbf{x}_k{'} \left\lbrace \mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) \right\rbrace + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
 \end{align}
 und für die Kovariable $l$
 \begin{align}\label{Eq_Diff_nEnet_Kovariable_L}
-2\mathbf{x}_l{'}\mathbf{Y}-2\mathbf{x}_l{'}\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
+-2\mathbf{x}_l{'} \left\lbrace \mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) \right\rbrace + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
 \end{align}
 mit $k,l = 1, \dots, p$.\\
 Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss auch\\ $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
 \begin{align} 
-&& 2(\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
-&\Leftrightarrow& (\mathbf{x}_k{'} - \mathbf{x}_l{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
+&& 2(\mathbf{x}_l{'} - \mathbf{x}_k{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
+&\Leftrightarrow& (\mathbf{x}_l{'} - \mathbf{x}_k{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
 &\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} \label{Eq_Diff_nEnet_Schätzer_unnormiert},
 \end{align}
 wobei $\boldsymbol{\hat{\varepsilon}}^{nEnet}$ dem Residuenvektor  $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$ entspricht.\\
