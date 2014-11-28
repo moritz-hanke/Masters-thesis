@@ -838,8 +838,14 @@ Dabei gelte
 und $I(\cdot)$ sei die Indikatorfunktion.\\
 Anhand von \eqref{Eq_Vn_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmte Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$.
 
-
-% magel an net1, dass diff auch groß sein kann, wenn koeffizienten gleich sind, umgekehrt aber knotengrade sehr unterschiedlich
+\paragraph{Net2}
+Ein wesentlicher Nachteil an der Net1-Regression ist die zusätzliche Abhängigkeit der Höhe des Strafterms vom Vorzeichen der Regressionskoeffizienten. Für den Fall, dass die Regressionskoeffizienten von zwei im Netzwerk adjazente Kovariablen $x_u$ und $x_v$ gegensätzliche Vorzeichen haben, gleichzeitig aber $|\beta_u|=|\beta_v|$ gilt, kommt es in \eqref{Eq_PRSS_Net1} dennoch zu einer Erhöhung des Starfterms und damit unnötigen Schrumpfung der geschätzten Regressionskoeffizienten.\\
+Um diesen Effekt entgegenzuwirken, haben \citeA{li_variable_2010} die PRSS aus \eqref{Eq_PRSS_Net1} modifiziert:
+\begin{align}
+\text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2)&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} \notag \\
+&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2 \left\lbrace \sum_{\{u,v\}} \left(\frac{\text{sign}(\tilde{\beta}_u)\beta_u}{\sqrt{d(u)}}-\frac{\text{sign}(\tilde{\beta}_v)\beta_v}{\sqrt{d(v)}}\right)^2 w(\{u,v\})\right\rbrace.
+\end{align}
+$\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ entsprechen dabei den Vorzeichen von $\beta_u$ bzw. $\beta_v$, die mittels OLS-Regression für $p<n$ und mittels Enet-Regression für $p \geq n$ geschätzt werden.
 
 
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
@@ -921,7 +927,7 @@ Für die Auswertung der simulierten Daten mittels der Enet-Methode wurde das R-P
 \end{align}
 darstellen lässt, wird deutlich, dass die Wahl $\alpha$ bestimmt, in wie weit die Lasso-Penalisierung im Verhältnis zur Ridge-Penalisierung und damit die Variablenselektion zur Stabiliserung der Schätzung gewichtet wird. Auf dieser Grundlage wurde für alle Kombinationen der Sequenz $\alpha={0.05, 0.1, \dots ,0.95}$ und einer Sequenz von $\gamma$, die von der Funktion \texttt{cv.glmnet} gewählt wird (vgl. dazu auch \citeNP{friedmann2010glmnet}), mit $n_{tune}$ der jeweiligen simulierten Datensätze das optimale $\alpha$ und $\gamma$ durch eine zehnfache Kreuzvalidierung ermittelt.
 
-\subsection{NetXXXX}
+\subsection{Auswertung mittels NetXXXX}
 Knotengewcihte als Ränge bezogen auf die Zentralitätsmaße\\
 Kim et al haben square-pos genutzt, warum? ich nutze sum-square, was viel schneller ist
 
