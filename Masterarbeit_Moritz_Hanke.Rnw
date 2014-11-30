@@ -170,7 +170,9 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{Enet}{Elastic Net}
 \abk{nEnet}{naives Elastic Net}
 \abk{s.d.}{so dass}
-\abk{Net1}{netzwerk-basierte penalisierte Regression nach \cite{li_network-constrained_2008}}
+\abk{Grace}{graph constrained regression}
+\abk{nGrace}{naive graph constrained regression}
+\abk{aGrace}{adaptive graph constrained regression}
 \abk{$\xrightarrow{d}$}{konvergiert nach Verteilung}
 
 
@@ -335,7 +337,7 @@ plot(g2, edge.width=3, main="Graph B")
 @
 
 \paragraph{Eigenvektor-Zentralität}\label{Kap_Eigenvektor-Zentralität}
-Im Gegensatz zu $d(u)$, $\mathscr{B}(u)$ und $\mathscr{C}(u)$ wird bei $\mathscr{E}(u)$ die Zentralität eines Knotens $u$ durch die Zentralität seiner Nachbarn bestimmt. Deshalb wird in der Literatur dieses ursprünglich in den Sozialwissenschaften entwickelte Maß als Angabe über das "`Prestige"' eines Knotens $u$ interpretiert. Dadurch kann ein Knoten $u$, der auf relativ wenigen Distanzen zwischen den übrigen Knoten $v,w \in V$ liegt oder einen niedrigen Knotengrad aufweist, gleichzeitig aber zu besonders zentralen Knoten adjazent ist, trotzdem eine hohe Zentralität aufweisen. 
+Im Gegensatz zu $d(u)$, $\mathscr{B}(u)$ und $\mathscr{C}(u)$ wird bei $\mathscr{E}(u)$ die Zentralität eines Knotens $u$ durch die Zentralität seiner Nachbarn bestimmt. Deshalb wird in der Literatur dieses ursprünglich in den Sozialwissenschaften entwickelte Maß als Angabe über das "`Prestige"' eines Knotens $u$ interpretiert. Dadurch kann ein Knoten $u$, der auf relativ wenigen Distanzen zwischen den Knoten $v,w \in V \setminus u$ liegt oder einen niedrigen Knotengrad aufweist, gleichzeitig aber zu besonders zentralen Knoten adjazent ist, eine hohe Zentralität aufweisen. 
 Über das Eigenwertproblem
 \begin{align*}
 \mathbf{A}\mathbf{e}=\lambda_{max} \mathbf{e}
@@ -767,8 +769,8 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 \subsection{Netzwerkbasierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
 Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Beispielsweise sind in der Genetik häufig Zusammenhänge zwischen einzelnen Genen oder Genprodukten bzw. zwischen Genen und Proteinen bekannt, d.h. in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.
 
-\paragraph{Net1}
-Bei der ursprüngliche netzwerkbasierten penalisierten Regression, im Folgenden als \textit{Net1} abgekürzt, haben \citeA{li_network-constrained_2008} den Strafterm als
+\paragraph{Grace}
+Bei der ursprüngliche netzwerkbasierten penalisierten Regression \text{Grace} (graph-bedingte Regression; englisch: graph constrained regression) haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
 P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
 \end{align}
@@ -782,44 +784,44 @@ definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspric
 \end{align*}
 Der Knotengrad sei in diesem Fall $d(u)=\sum_{\{u,v\}}w(\{u,v\})$ mit den Kantengewichten $w(\{u,v\})$, die die Unsicherheit oder Stärke einer Kante $e=\{u,v\}$ zwischen zwei Knoten $u$ und $v$ angeben.\\
 Da $\textbf{\~L}$ positiv semidefinit ist, gilt $\textbf{\~L}=\textbf{S}\textbf{S}'$ \cite{chung1996spectralgraph}, wobei $\textbf{S}$ einer $N_V \times N_E$-Matrix entspricht, deren Spalten die Kanten und die Zeilen die Knoten von $G$ sind. Sind zwei Knoten $u$ und $v$ adjazent, hat $\textbf{S}$ in der entsprechenden Spalte für die Kante $\{u,v\}$ in der Zeile $u$ den Eintrag $\sqrt{w(\{u,v\})}/d(u)$ und in Zeile $v$ den Eintrag $-\sqrt{w(\{u,v\})}/d(v)$. Die restlichen Zeilen sind mit Nullen besetzt.\\
-Somit ergibt sich als die PRSS für Net1
-\begin{align}\label{Eq_PRSS_Net1}
-\text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2)&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} \notag \\
+Somit ergibt sich als die PRSS für Grace
+\begin{align}\label{Eq_PRSS_Grace}
+\text{PRSS}_{Grace}(\boldsymbol{\beta},\gamma_1,\gamma_2)&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} \notag \\
 &=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2 \left\lbrace \sum_{\{u,v\}} \left(\frac{\beta_u}{\sqrt{d(u)}}-\frac{\beta_v}{\sqrt{d(v)}}\right)^2 w(\{u,v\})\right\rbrace, 
 \end{align}
-die für die Schätzung von $\boldsymbol{\hat{\beta}}^{Net1}$ bezüglich $\boldsymbol{\beta}$ minimiert werden muss:
-\begin{align}\label{Eq_Net1_Constrained}
-\boldsymbol{\hat{\beta}}^{Net1} &= \arg \displaystyle\min_{\beta} \text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2).
+die für die Schätzung von $\boldsymbol{\hat{\beta}}^{Grace}$ bezüglich $\boldsymbol{\beta}$ minimiert werden muss:
+\begin{align}\label{Eq_Grace_Constrained}
+\boldsymbol{\hat{\beta}}^{Grace} &= \arg \displaystyle\min_{\beta} \text{PRSS}_{Grace}(\boldsymbol{\beta},\gamma_1,\gamma_2).
 \end{align}
-Wegen dem Lasso-Operator kann die Net1-Regression wie die Enet-Regression eine Variablenselektion durchführen und da $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta}$ eine strikt konvexe Funktion ist, handelt es sich in \eqref{Eq_Net1_Constrained} für $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} > 0$ um ein strikt konvexes Optimierungsproblem und es kommt zu einem Gruppierungseffekt bei der Schätzung (siehe Anhang \ref{App_GroupEffect_Strict_Conv}).\\
-Der Strafterm aus \eqref{Eq_PRSS_Net1} weist eine Ähnlichkeit zu dem Fused-Lasso-Strafterm
+Wegen dem Lasso-Operator kann die Grace-Regression wie die Enet-Regression eine Variablenselektion durchführen und da $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta}$ eine strikt konvexe Funktion ist, handelt es sich in \eqref{Eq_Grace_Constrained} für $\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} > 0$ um ein strikt konvexes Optimierungsproblem und es kommt zu einem Gruppierungseffekt bei der Schätzung (siehe Anhang \ref{App_GroupEffect_Strict_Conv}).\\
+Der Strafterm aus \eqref{Eq_PRSS_Grace} weist eine Ähnlichkeit zu dem Fused-Lasso-Strafterm
 \begin{align*}
 \text{PRSS}_{fLasso}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2 \sum_{j=2}^{p}|\beta_j - \beta_{j-1}|,
 \end{align*}
-auf \cite{Tibshirani05fused}, für den die Kovariablen zuvor in eine inhaltlich begründete Reihenfolge gebracht werden. Bei der Fused-Lasso-Regression wird angenommen, dass benachbarte Koeffizienten identische Steigungskoeffizienten haben und für den Fall von unterschiedlichen Steigungskoeffizienten eine Bestrafung vorgenommen. Dadurch kommt es zu einer Glättung des geschätzten Parameters $\hat{\beta}_j$ über seine Nachbarn $\hat{\beta}_{j-1}$ und $\hat{\beta}_{j+1}$. Die Net1-Regression hat dagegen eine abgeschwächte Annahme bzgl. der Regressionskoeffizienten von benachbarten Variablen. Diese können auch unterschiedliche große Steigungskoeffizienten haben, ohne dass der Strafterm ansteigt, wenn entsprechend die Knotengrade der jeweiligen Knoten unterschiedlich sind. Inhaltlich lässt sich der Strafterm so interpretieren, dass mit den Knotengraden bei der Differenz zwischen zwei Steigungskoeffizienten berücksichtigt wird, dass jeder Knoten selbst wiederum in einem Zusammenhang mit mehreren anderen Knoten stehen kann und die Abweichung der beiden Regressionskoeffizienten voneinander durch die Nähe zu weiteren Kovariablen hervorgerufen wird. Dadurch können Variablen, die mit vielen anderen Variablen "`verbunden"' sind, bei der Schätzung größere Regressionskoeffizienten als ihre Nachbarn erhalten, die weniger Kanten haben. Wird der Knotengrad als Maß für die Bedeutung einer Variable interpretiert, kann sich die Bedeutung von Kovariablen in höheren geschätzten Steigungskoeffizienten als der ggf. weniger bedeutsamen Nachbarn widerspiegeln.\\
-Wird \eqref{Eq_PRSS_Net1} abgeleitet und null gesetzt, ergibt sich der naive Net1-Schätzer
-\begin{align}\label{Eq_Net1_PRSS_Ableitung}
-&&\frac{\partial \textnormal{PRSS}_{Net1}(\boldsymbol{\beta}, \gamma_1, \gamma_2)}{\partial \boldsymbol{\beta}}&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
+auf \cite{Tibshirani05fused}, für den die Kovariablen zuvor in eine inhaltlich begründete Reihenfolge gebracht werden. Bei der Fused-Lasso-Regression wird angenommen, dass benachbarte Koeffizienten identische Steigungskoeffizienten haben und für den Fall von unterschiedlichen Steigungskoeffizienten eine Bestrafung vorgenommen. Dadurch kommt es zu einer Glättung des geschätzten Parameters $\hat{\beta}_j$ über seine Nachbarn $\hat{\beta}_{j-1}$ und $\hat{\beta}_{j+1}$. Die Grace-Regression hat dagegen eine abgeschwächte Annahme bzgl. der Regressionskoeffizienten von benachbarten Variablen. Diese können auch unterschiedliche große Steigungskoeffizienten haben, ohne dass der Strafterm ansteigt, wenn entsprechend die Knotengrade der jeweiligen Knoten unterschiedlich sind. Inhaltlich lässt sich der Strafterm so interpretieren, dass mit den Knotengraden bei der Differenz zwischen zwei Steigungskoeffizienten berücksichtigt wird, dass jeder Knoten selbst wiederum in einem Zusammenhang mit mehreren anderen Knoten stehen kann und die Abweichung der beiden Regressionskoeffizienten voneinander durch die Nähe zu weiteren Kovariablen hervorgerufen wird. Dadurch können Variablen, die mit vielen anderen Variablen "`verbunden"' sind, bei der Schätzung größere Regressionskoeffizienten als ihre Nachbarn erhalten, die weniger Kanten haben. Wird der Knotengrad als Maß für die Bedeutung einer Variable interpretiert, kann sich die Bedeutung von Kovariablen in höheren geschätzten Steigungskoeffizienten als der ggf. weniger bedeutsamen Nachbarn widerspiegeln.\\
+Wird \eqref{Eq_PRSS_Grace} abgeleitet und null gesetzt, ergibt sich der naive Grace-Schätzer
+\begin{align}\label{Eq_Grace_PRSS_Ableitung}
+&&\frac{\partial \textnormal{PRSS}_{Grace}(\boldsymbol{\beta}, \gamma_1, \gamma_2)}{\partial \boldsymbol{\beta}}&=-2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
 &\Rightarrow& 0 &= -2\mathbf{X}'\mathbf{Y} + 2\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + \gamma_1 \textnormal{sign}(\boldsymbol{\beta}) + 2\gamma_2 \mathbf{S}\mathbf{S}'\mathbf{\boldsymbol{\beta}} \notag \\
-&\Rightarrow& \boldsymbol{\hat{\beta}}^{nNet1}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
+&\Rightarrow& \boldsymbol{\hat{\beta}}^{nGrace}&=(\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\mathbf{X}'\mathbf{Y} - (\mathbf{X}'\mathbf{X}+\gamma_2\mathbf{S}\mathbf{S}')^{-1}\frac{\gamma_1}{2}\text{sign}(\boldsymbol{\beta}).
 \end{align}
 Anhand dieser Darstellung wird sichtbar, dass sich für $\mathbf{S}\mathbf{S}'=\mathbf{I}$ der nEnet-Schätzer aus \eqref{Eq_Naiv_Enet_Eigene} und für $\mathbf{S}\mathbf{S}'=\mathbf{0}_{p \times p}$ der Lasso-Schätzer aus \eqref{Eq_Lasso-Schätzer_Allgemein} ergibt. In Analogie zur nEnet-Regression lässt sich durch eine Erweiterung des Datensatzes zu $\mathbf{X}^*=\frac{1}{\sqrt{1+\gamma_2}}\begin{pmatrix}
 \mathbf{X}\\
 \sqrt{\gamma_2}\mathbf{S}'
-\end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Net1_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nNet1}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. Wegen der ebenfalls doppelten Schrumpfung durch den $L_1$- und $L_2$-Strafterm, schlagen \citeA{li_network-constrained_2008} wie bei dem Enet-Schätzer $(1+\gamma_2)$ als Korrekturfaktor vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Net1}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Net1-Schätzer.
+\end{pmatrix}$ das Minimierungsproblem aus \eqref{Eq_Grace_Constrained} als Lasso-Problem darstellen. Als Lösung ergibt sich wie bei der nEnet-Regression $\boldsymbol{\hat{\beta}}^{nGrace}=\frac{1}{\sqrt{1+\gamma_2}}\boldsymbol{\hat{\beta}}^*$ (vgl. dazu \ref{App_Beweis_Naiv_Zou_Darstellung}) und durch den erweiterten Datensatz auf $n+p$ Zeilen kann die Lösung ggf. alle $p$ Regressionskoeffizienten ungleich null setzen. Wegen der ebenfalls doppelten Schrumpfung durch den $L_1$- und $L_2$-Strafterm, schlagen \citeA{li_network-constrained_2008} wie bei dem Enet-Schätzer $(1+\gamma_2)$ als Korrekturfaktor vor. Damit ergibt sich $\boldsymbol{\hat{\beta}}^{Grace}=\sqrt{1+\gamma_2}\boldsymbol{\hat{\beta}}^*$ für den Grace-Schätzer.
 Für die Wahl von $\gamma_1$ und $\gamma_2$ empfehlen die Autoren das selbe Vorgehen wie bei der Enet-Regression, d.h. eine Kreuzvalidierung über beide Tuningparameter (siehe dazu Abschnitt \ref{Kap_Elastic-Net}).\\
-In Analogie zum Enet-Schätzer lässt sich für zwei mittels Net1 geschätzte Regressionskoeffizienten $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)$ und $\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)$ eine obere Grenze
-\begin{align}\label{Eq_Obere_Grenze_nNet1}
+In Analogie zum Enet-Schätzer lässt sich für zwei mittels Grace geschätzte Regressionskoeffizienten $\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2)$ und $\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)$ eine obere Grenze
+\begin{align}\label{Eq_Obere_Grenze_nGrace}
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{2\gamma_2}\sqrt{2(1-\rho_{k,l})}
 \end{align}
 für die Differenz 
 \begin{align}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)- \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2)- \hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)||_2
 \end{align}
-der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nNet1}). Bedingung für diese Darstellung ist, dass nur die beiden Knoten miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nNet1} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$, die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
-Wird $p$ fest gehalten, gilt mit wachsender Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter als $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ und $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ von $n$ abhängige Funktionen, so gilt folgende asymptotische Eigenschaft des Net1-Schätzers (für den Beweis siehe Anhang \ref{App_Asymp_Net1_Proof}):
+der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nGrace}). Bedingung für diese Darstellung ist, dass nur die beiden Knoten miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nGrace} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$, die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
+Wird $p$ fest gehalten, gilt mit wachsender Stichprobengröße $n \rightarrow \infty$ und sind die Tuningparameter als $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ und $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ von $n$ abhängige Funktionen, so gilt folgende asymptotische Eigenschaft des Grace-Schätzers (für den Beweis siehe Anhang \ref{App_Asymp_Grace_Proof}):
 \begin{align*}
-\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
+\sqrt{n}(\boldsymbol{\hat{\beta}}^{Grace}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
 \end{align*}
 mit
 \begin{align}\label{Eq_Vn_asymptotic}
@@ -836,24 +838,33 @@ Dabei gelte
 \mathbf{W}&\sim N(0, \sigma^2 \mathbf{C})
 \end{align*}
 und $I(\cdot)$ sei die Indikatorfunktion.\\
-Anhand von \eqref{Eq_Vn_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmte Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$.
+Anhand von \eqref{Eq_Vn_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmte Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$.
 
-\paragraph{Net2}
-Ein wesentlicher Nachteil an der Net1-Regression ist die zusätzliche Abhängigkeit der Höhe des Strafterms vom Vorzeichen der Regressionskoeffizienten. Für den Fall, dass die Regressionskoeffizienten von zwei im Netzwerk adjazente Kovariablen $x_u$ und $x_v$ gegensätzliche Vorzeichen haben, gleichzeitig aber $|\beta_u|=|\beta_v|$ gilt, kommt es in \eqref{Eq_PRSS_Net1} dennoch zu einer Erhöhung des Starfterms und damit unnötigen Schrumpfung der geschätzten Regressionskoeffizienten.\\
-Um diesen Effekt entgegenzuwirken, haben \citeA{li_variable_2010} die PRSS aus \eqref{Eq_PRSS_Net1} modifiziert:
+\paragraph{aGrace}
+Ein wesentlicher Nachteil an der Grace-Regression ist die zusätzliche Abhängigkeit der Höhe des Strafterms vom Vorzeichen der Regressionskoeffizienten. Für den Fall, dass die Regressionskoeffizienten von zwei im Netzwerk adjazente Kovariablen $x_u$ und $x_v$ gegensätzliche Vorzeichen haben, gleichzeitig aber $|\beta_u|=|\beta_v|$ gilt, kommt es in \eqref{Eq_PRSS_Grace} dennoch zu einer Erhöhung des Starfterms und damit unnötig hohen Schrumpfung der geschätzten Regressionskoeffizienten.\\
+Um diesen Effekt entgegenzuwirken, schlagen \citeA{li_variable_2010} eine modifizierte normierte Laplacian-Matrix $\textbf{\~L}^*=(\tilde{l}^*_{u,v})_{N_V \times N_V}$ vor:
+\begin{align*}
+\tilde{l}^*_{u,v} = \begin{cases}
+1-\frac{w(\{u,v\})}{d(u)}, \qquad &\text{wenn} \ u=v \ \text{und} \ d(u) \neq 0,\\
+-\frac{\text{sign}(\tilde{\beta}_u)\text{sign}(\tilde{\beta}_v)w(\{u,v\})}{\sqrt{d(u)d(v)}},  \qquad &\text{wenn} \ a_{u,v} = 1,\\
+ 0, \qquad &\text{sonst,}\\
+\end{cases}
+\end{align*}
+womit sich als PRSS ergibt:
 \begin{align}
-\text{PRSS}_{Net1}(\boldsymbol{\beta},\gamma_1,\gamma_2)&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2\boldsymbol{\beta}'\textbf{S}\textbf{S}'\boldsymbol{\beta} \notag \\
+\text{PRSS}_{aGrace}(\boldsymbol{\beta},\gamma_1,\gamma_2)&=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 +\gamma_2\boldsymbol{\beta}'\textbf{\~L}^*\boldsymbol{\beta} \notag \\
 &=||\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}||_2^2+\gamma_1||\boldsymbol{\beta}||_1 \notag \\
 &\phantom{{}=1} +\gamma_2 \left\lbrace \sum_{\{u,v\}} \left(\frac{\text{sign}(\tilde{\beta}_u)\beta_u}{\sqrt{d(u)}}-\frac{\text{sign}(\tilde{\beta}_v)\beta_v}{\sqrt{d(v)}}\right)^2 w(\{u,v\})\right\rbrace.
 \end{align}
-$\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ entsprechen dabei den Vorzeichen von $\beta_u$ bzw. $\beta_v$, die mittels OLS-Regression für $p<n$ und mittels Enet-Regression für $p \geq n$ geschätzt werden.
+Die Vorzeichen
+$\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ der Kovariablen werden dabei mittels OLS-Regression für $p<n$ bzw. Enet-Regression für $p \geq n$ geschätzt.
 
 
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
 Um die Bedeutung verschiedener Zentralitätsmaße auf die Schätzung der Regressionskoeffizienten bei der netzwerk-basierten penalisierten Regression untereinander sowie im Vergleich mit der Enet-Regression zu untersuchen, wurde im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Im nachfolgenden Kapitel wird zunächst die Methode zur Datensimulation erläutert (Unterkapitel \ref{Kap_Datensimulation}) und im anschließenden Unterkapitel \ref{Kap_Auswertung_Simu} werden anhand der simulierten Daten die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
 
 \section{Datensimulation}\label{Kap_Datensimulation}
-Für die unter \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationsschema genutzt, das \citeA{li_network-constrained_2008} für ihre Net1-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten aufweisen. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von zwei bis vier Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, sodass nur die dazu entsprechenden Kovariablen in das wahre Modell gehörten. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Bei der Simulation wurde jede Kovariable $x_j$ als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
+Für die unter \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationsschema genutzt, das \citeA{li_network-constrained_2008} für ihre Grace-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegender Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestanden jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten aufweisen. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden von zwei bis vier Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, sodass nur die dazu entsprechenden Kovariablen in das wahre Modell gehörten. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Bei der Simulation wurde jede Kovariable $x_j$ als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
 Nach Auffassung des Autors dieser Arbeit sind die sternförmigen Subgraphen in dem oben beschriebenen Simulationsablauf im Verhältnis zu wahren biologischen Netzwerken, d.h. den Pathways, idealisiert bzw. zu sehr vereinfacht. Abbildung \ref{Fig:KEGG_Cancer_PW} zeigt exemplarisch aus der KEGG-Datenbank eine Übersicht über den biologischen Pathway für Krebs \cite{Kanehisa2000KEGG}. Anhand des daraus erstellten ungerichteten Graphen in Abbildung \ref{fig:Cancer_PW_Graph} wird deutlich, dass die sternförmige Subgraphen keine geeignete Wahl sind, um biologische Netzwerke zu simulieren.\\
 Deswegen wurde für diese Arbeit versucht ein Simulationsschema zu erstellen, dass ungerichtete Graphen liefert, die eine größere Ähnlichkeit zu biologischen Pathways aufweisen, als die Graphen nach dem Schema von \citeA{li_network-constrained_2008}. Dazu wurden zunächst alle $290$ verfügbaren Pathways für den Homo Sapiens der KEGG-Datenbank (Stand 01. November, 2014) als ungerichtete Graphen umgewandelt. Davon wurden $20$ Graphen, die keine Kanten hatten, und zwei Graphen, die nur aus zwei Knoten bestanden, entfernt. Anschließend wurde für jeden Graphen der durchschnittliche Knotengrad, der Medianknotengrad, die Anzahl an Kanten sowie das Verhältnis der vorhandenen Kanten zu den theoretisch möglichen $N_V(N_V-1)/2$ Kanten bestimmt und gegen die Ordnung der Graphen, d.h. deren Knotenanzahlen, in Streudiagrammen abgetragen (siehe Abbildung \ref{fig:Plots_KEGG_Kennzahlen}).
 Auf Grundlage einer visuellen Inspektion der Streudiagramme wurden für die Graphen fünf Ordnungskategorien $O_o$ definiert, die nach Auffassung des Autors dieser Arbeit die biologischen Netzwerke im Hinblick auf das Verhältnis von $N_V$ zu $N_E$ ausreichend detailliert klassifizieren:
@@ -1390,11 +1401,11 @@ gilt, folgt aus
 \end{proof}
 
 
-\section{Beweis der oberen Grenze der Differenz zwischen zwei nNet1-Schätzern}\label{App_obere_Grenze_Diff_nNet1}
+\section{Beweis der oberen Grenze der Differenz zwischen zwei nGrace-Schätzern}\label{App_obere_Grenze_Diff_nGrace}
 \begin{satz}
-Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ für die nNet1-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Zusätzlich gelte für die Knotengrade $d(k)=d(l)=w(\{k,l\})$ und die Knoten seien nur miteinander im Graphen verbunden. Ist die einheitenlose Differenz zwischen $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ definiert als
+Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2) >0$ für die nGrace-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Zusätzlich gelte für die Knotengrade $d(k)=d(l)=w(\{k,l\})$ und die Knoten seien nur miteinander im Graphen verbunden. Ist die einheitenlose Differenz zwischen $\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)||_2,
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)||_2,
 \end{align*}
 so gilt
 \begin{align*}
@@ -1405,53 +1416,53 @@ wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf
 Der nachfolgende Beweis ist eine ausführliche Ausarbeitung des Beweises von \cite{Li2007Net1_Workingpaper}.
 \begin{proof}
 Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
-\begin{align}\label{Eq_nNet1_Ableitung_beta_j}
-\frac{\partial\textnormal{PRSS}_{nNet1}(\boldsymbol{\beta},\gamma_1,\gamma_2)}{\partial \beta_j}=0 \qquad \textnormal{für} \ \hat{\beta}^{nNet1}_j \neq 0 \qquad \textnormal{mit} \ j=1,\dots,p
+\begin{align}\label{Eq_nGrace_Ableitung_beta_j}
+\frac{\partial\textnormal{PRSS}_{nGrace}(\boldsymbol{\beta},\gamma_1,\gamma_2)}{\partial \beta_j}=0 \qquad \textnormal{für} \ \hat{\beta}^{nGrace}_j \neq 0 \qquad \textnormal{mit} \ j=1,\dots,p
 \end{align}
 erfüllt, ergibt sich wegen der Voraussetzung $d(k)=d(l)=w(\{k,l\})$ für die Kovariable $k$
-\begin{align}\label{Eq_Diff_nNet1_Kovariable_K}
-0&=-2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{u,k\}}w(\{u,k\})\frac{\beta_u^{nNet1}}{\sqrt{d(u)d(k)}} \notag \\
-&=-2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{u,k\})\frac{\beta_u^{nNet1}}{\sqrt{d(u)d(k)}} \notag \\
-&=-\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{\gamma_1}{2} \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&\phantom{{}=1} - \gamma_2\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)
+\begin{align}\label{Eq_Diff_nGrace_Kovariable_K}
+0&=-2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{u,k\}}w(\{u,k\})\frac{\beta_u^{nGrace}}{\sqrt{d(u)d(k)}} \notag \\
+&=-2\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&\phantom{{}=1} + 2\gamma_2\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{u,k\})\frac{\beta_u^{nGrace}}{\sqrt{d(u)d(k)}} \notag \\
+&=-\mathbf{x}_k{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) + \frac{\gamma_1}{2} \textnormal{sign}\left\lbrace\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&\phantom{{}=1} - \gamma_2\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)
 \end{align}
 und für Kovariable $l$
-\begin{align}\label{Eq_Diff_nNet1_Kovariable_L}
-0&=-2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{v,l\}}w(\{v,l\})\frac{\beta_v^{nNet1}}{\sqrt{d(v)d(l)}} \notag \\
-&=-2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{v,l\})\frac{\beta_v^{nNet1}}{\sqrt{d(v)d(l)}} \notag \\
-&=-\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) + \frac{\gamma_1}{2} \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&\phantom{{}=1} - \gamma_2\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2).
+\begin{align}\label{Eq_Diff_nGrace_Kovariable_L}
+0&=-2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2) - 2\gamma_2\sum_{\{v,l\}}w(\{v,l\})\frac{\beta_v^{nGrace}}{\sqrt{d(v)d(l)}} \notag \\
+&=-2\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&\phantom{{}=1} + 2\gamma_2\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2) - 2\gamma_2 w(\{v,l\})\frac{\beta_v^{nGrace}}{\sqrt{d(v)d(l)}} \notag \\
+&=-\mathbf{x}_l{'}\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) + \frac{\gamma_1}{2} \textnormal{sign}\left\lbrace\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&\phantom{{}=1} - \gamma_2\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2) - \gamma_2 \hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2).
 \end{align}
-Durch die Voraussetzung, dass die einzige Kante der Knoten $k$ und $l$ diejenige ist, die sie miteinander verbindet, fällt in \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
-Wegen der Annahme $\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) >0$ gilt auch\\ $\text{sign}\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)$ womit sich als Differenz aus \eqref{Eq_Diff_nNet1_Kovariable_K} und \eqref{Eq_Diff_nNet1_Kovariable_L} ergibt:
+Durch die Voraussetzung, dass die einzige Kante der Knoten $k$ und $l$ diejenige ist, die sie miteinander verbindet, fällt in \eqref{Eq_Diff_nGrace_Kovariable_K} und \eqref{Eq_Diff_nGrace_Kovariable_L} das jeweilige Summenzeichen weg und es muss $u=l$ respektive $v=k$ gelten.\\
+Wegen der Annahme $\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2) >0$ gilt auch\\ $\text{sign}\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2)=\text{sign}\hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)$ womit sich als Differenz aus \eqref{Eq_Diff_nGrace_Kovariable_K} und \eqref{Eq_Diff_nGrace_Kovariable_L} ergibt:
 \begin{align}
-&& 0&=-(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
-&& &\phantom{{}=1} + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&& &\phantom{{}=1} - \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nNet1}(\gamma_1,\gamma_2)\right\rbrace \notag \\
-&& &\phantom{{}=1} + \gamma_2\left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\ 
-&& &\phantom{{}=1} - \gamma_2 \left( \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) \right) \notag \\
-&\Leftrightarrow& 0&=-(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right) \notag \\ 
-&& &\phantom{{}=1} + 2 \gamma_2 \left( \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2) \right) \notag \\
-&\Leftrightarrow& \hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)&=\frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{2\gamma_2} \notag \\
-&\Rightarrow& \frac{\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)}{||\mathbf{Y}||_1} &= \frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
-&\Rightarrow& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &= \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
-&\Rightarrow& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \cdot ||\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nNet1}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2}. \notag \\
+&& 0&=-(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) \notag \\ 
+&& &\phantom{{}=1} + \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&& &\phantom{{}=1} - \frac{1}{2}\gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2)\right\rbrace \notag \\
+&& &\phantom{{}=1} + \gamma_2\left( \hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2) \right) \notag \\ 
+&& &\phantom{{}=1} - \gamma_2 \left( \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) \right) \notag \\
+&\Leftrightarrow& 0&=-(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right) \notag \\ 
+&& &\phantom{{}=1} + 2 \gamma_2 \left( \hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2) \right) \notag \\
+&\Leftrightarrow& \hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)&=\frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right)}{2\gamma_2} \notag \\
+&\Rightarrow& \frac{\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)}{||\mathbf{Y}||_1} &= \frac{(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right)}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
+&\Rightarrow& \frac{||\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &= \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
+&\Rightarrow& \frac{||\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \cdot ||\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2}. \notag \\
 \end{align}
-Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}, \eqref{Eq_Betrag_Diff_xl_xk} und \eqref{Eq_L1_Norm_greater_L2_Norm} aus dem Beweis für die obere Grenze der Differenz zwischen zwei nEnet-Schätzern (siehe auch \ref{App_obere_Grenze_Diff_nEnet}), gilt für die obere Grenze für zwei nur miteinander verbundenen nNet1-Schätzern:
+Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}, \eqref{Eq_Betrag_Diff_xl_xk} und \eqref{Eq_L1_Norm_greater_L2_Norm} aus dem Beweis für die obere Grenze der Differenz zwischen zwei nEnet-Schätzern (siehe auch \ref{App_obere_Grenze_Diff_nEnet}), gilt für die obere Grenze für zwei nur miteinander verbundenen nGrace-Schätzern:
 \begin{align*}
-&& \frac{||\hat{\beta}^{nNet1}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nNet1}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nNet1}||_2}{||\mathbf{Y}||_1} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
-&\Rightarrow& &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nNet1}||_2}{||\mathbf{Y}||_2} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
+&& \frac{||\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nGrace}||_2}{||\mathbf{Y}||_1} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
+&\Rightarrow& &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nGrace}||_2}{||\mathbf{Y}||_2} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
 &\Rightarrow& &\leq \frac{1}{2\gamma_2} ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
 &\Rightarrow& &\leq \frac{1}{2\gamma_2}\sqrt{2(1-\rho_{k,l})}.
 \end{align*}
 \end{proof}
 
 
-\section{Beweis der asymptotischen Eigenschaft des Net1-Schätzers}\label{App_Asymp_Net1_Proof}
+\section{Beweis der asymptotischen Eigenschaft des Grace-Schätzers}\label{App_Asymp_Grace_Proof}
 \begin{satz}
 Gelte $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ für $n \rightarrow \infty$. Sei darüber hinaus
 \begin{align}\label{Eq_Asymptotic_C-matrix}
@@ -1459,7 +1470,7 @@ Gelte $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\fr
 \end{align}
 nicht singulär, dann gilt
 \begin{align*}
-\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
+\sqrt{n}(\boldsymbol{\hat{\beta}}^{Grace}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
 \end{align*}
 mit
 \begin{align*}
@@ -1481,7 +1492,7 @@ sowie
 Der nachfolgende Beweis ist eine ausführliche und korrigierte Ausarbeitung des Beweises von \citeA{Li2007Net1_Workingpaper}.
 \begin{proof}
 Es sei $L_n(\mathbf{u})$ definiert als
-\begin{align}\label{Eq_Vn_Net1}
+\begin{align}\label{Eq_Vn_Grace}
 L_n(\mathbf{u})&=\sum_{i=1}^{n} 
 \left\lbrace 
 \left( 
@@ -1508,7 +1519,7 @@ L_n(\mathbf{u})&=\sum_{i=1}^{n}
 \right)^2 w(\{k,l\})
 \right\rbrace
 \end{align}
-mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Net1}-\boldsymbol{\beta})$. Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Net1}
+mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace}-\boldsymbol{\beta})$. Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Grace}
 \begin{align*}
 \sum_{i=1}^{n} 
 \left\lbrace 
@@ -1546,7 +1557,7 @@ u_j \cdot \textnormal{sign}(\beta_j) \cdot I(\beta_j \neq 0) + |u_j| \cdot I(\be
 u_j \cdot \textnormal{sign}(\beta_j) \cdot I(\beta_j \neq 0) + |u_j| \cdot I(\beta_j=0)
 \right\rbrace.
 \end{align*}
-Der dritte Term aus \eqref{Eq_Vn_Net1} lässt sich darstellen als
+Der dritte Term aus \eqref{Eq_Vn_Grace} lässt sich darstellen als
 \begin{align*}
 && &\gamma_{2,n}\sum_{\{k,l\}} \left\lbrace
 \left( 
@@ -1608,7 +1619,7 @@ und da für $n \rightarrow \infty$ für den Term $\frac{\left(
 \end{align*}
 Da $L$ eine strikt konvexe Funktion mit einem globalen Minimum ist, gilt
 \begin{align*}
-\arg \min (L_n)=\sqrt{n}(\boldsymbol{\hat{\beta}}^{Net1}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L).
+\arg \min (L_n)=\sqrt{n}(\boldsymbol{\hat{\beta}}^{Grace}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L).
 \end{align*}
 \end{proof}
 
