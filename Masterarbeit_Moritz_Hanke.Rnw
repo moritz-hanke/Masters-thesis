@@ -1518,7 +1518,87 @@ L_n(\mathbf{u})&=\sum_{i=1}^{n}
 \right)^2 w(\{k,l\})
 \right\rbrace
 \end{align}
-mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace}-\boldsymbol{\beta})$. Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Grace}
+mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace}-\boldsymbol{\beta})$. Um das zu zeigen, kann \eqref{Eq_Vn_Grace} zunächst geschrieben werden als 
+\begin{align*}
+L_n(\mathbf{u})&=\sum_{i=1}^{n} 
+\left\lbrace 
+\left( 
+Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
+\right)^2 - (Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2
+\right\rbrace
++ \gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
+|\beta_j + \frac{u_j}{\sqrt{n}}|-|\beta_j|
+\right\rbrace \notag \\
+&\phantom{{}=1} + \gamma_{2,n}\sum_{\{k,l\}} \left\lbrace
+\left[
+\left( 
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right)
++
+\frac{\left( 
+\frac{u_k}{\sqrt{d(k)}} - 
+\frac{u_l}{\sqrt{d(l)}}
+\right)}{\sqrt{n}}
+\right]^2 w(\{k,l\}) \right. \notag \\
+&\phantom{{}=2} \left.
+- \left(
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right)^2 w(\{k,l\})
+\right\rbrace \notag \\
+%%%%%%%%%%%%
+&=\sum_{i=1}^{n}  
+\left( 
+Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
+\right)^2
++\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
+|\beta_j + \frac{u_j}{\sqrt{n}}|\right\rbrace \notag \\
+&\phantom{{}=2} + \gamma_{2,n}\sum_{\{k,l\}}
+\left[
+\left( 
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right)
++
+\frac{\left( 
+\frac{u_k}{\sqrt{d(k)}} - 
+\frac{u_l}{\sqrt{d(l)}}
+\right)}{\sqrt{n}}
+\right]^2 w(\{k,l\}) \notag \\
+&\phantom{{}=2} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \sum_{j=1}^p \gamma_{1,n}|\beta_j|
++ \gamma_{2,n}\sum_{\{k,l\}}\left(
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right)^2 w(\{k,l\})
+\right\rbrace \notag \\
+%%%%%%%%%%%%%%%%%%%%%%%
+&=\sum_{i=1}^{n}  
+\left( 
+Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
+\right)^2
++\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
+|\beta_j + \frac{u_j}{\sqrt{n}}|\right\rbrace \notag \\
+&\phantom{{}=2} + \gamma_{2,n}\sum_{\{k,l\}}
+\left\lbrace
+2
+\frac{
+\left( 
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right)
+\left( 
+\frac{u_k}{\sqrt{d(k)}} - 
+\frac{u_l}{\sqrt{d(l)}}
+\right)
+}
+{\sqrt{n}} 
++ 
+\frac{\left( 
+\frac{u_k}{\sqrt{d(k)}} - 
+\frac{u_l}{\sqrt{d(l)}}
+\right)^2}{n}
+\right\rbrace w(\{k,l\})
+\notag \\
+&\phantom{{}=2} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \sum_{j=1}^p \gamma_{1,n}|\beta_j|
+\right\rbrace
+\end{align*}
+Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Grace}
 \begin{align*}
 \sum_{i=1}^{n} 
 \left\lbrace 
