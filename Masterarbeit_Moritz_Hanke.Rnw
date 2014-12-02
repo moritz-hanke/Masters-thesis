@@ -820,7 +820,7 @@ D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nGrace}(\g
 der beiden Regressionskoeffizienten angeben (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nGrace}). Bedingung für diese Darstellung ist, dass nur die beiden Knoten miteinander verbunden sind, d.h. $d(k)=d(l)=w(\{k,l\})$, und $\hat{\beta}_k^{nGrace}(\gamma_1,\gamma_2) \cdot \hat{\beta}_l^{nGrace}(\gamma_1,\gamma_2) > 0$ gilt. Im Hinblick auf die Ähnlichkeit von hoch miteinander korrelierenden Kovariablen wird anhand von \eqref{Eq_Obere_Grenze_nGrace} deutlich, dass durch den Einbezug der vorab bekannten \textit{inhaltlichen} Information über den Zusammenhang von $k$ und $l$ die entsprechenden Schätzer noch besser aneinander angeglichen werden als bei der Enet-Schätzung.\\
 Wird $p$ fest gehalten und seien die Tuningparameter als $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\frac{\gamma_{2,n}}{\sqrt{n}} \rightarrow \gamma_{2,0} \geq 0$ von $n$ abhängige Funktionen definiert, gilt mit wachsender Stichprobengröße $n \rightarrow \infty$ folgende asymptotische Eigenschaft des Grace-Schätzers (für den Beweis siehe Anhang \ref{App_Asymp_Grace_Proof}):
 \begin{align*}
-\sqrt{n}(\boldsymbol{\hat{\beta}}^{Grace}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
+\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace} - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
 \end{align*}
 mit
 \begin{align}\label{Eq_Vn_asymptotic}
@@ -837,7 +837,7 @@ Dabei gelte
 \mathbf{W}&\sim N(0, \sigma^2 \mathbf{C})
 \end{align*}
 und $I(\cdot)$ sei die Indikatorfunktion.\\
-Anhand von \eqref{Eq_Vn_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmten Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$, da die Penalisierungsterme in \eqref{Eq_Vn_asymptotic} wegfallen (vlg. dazu \cite{fahrmeir2009regression}).
+Anhand von \eqref{Eq_Vn_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmten Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$, da die Penalisierungsterme in \eqref{Eq_Vn_asymptotic} wegfallen (vlg. dazu \cite{fahrmeir2009regression}).
 
 \paragraph{aGrace}
 Ein wesentlicher Nachteil an der Grace-Regression ist die zusätzliche Abhängigkeit der Höhe des Strafterms vom Vorzeichen der Regressionskoeffizienten. Für den Fall, dass die Regressionskoeffizienten von zwei im Netzwerk adjazente Kovariablen $x_u$ und $x_v$ gegensätzliche Vorzeichen haben, gleichzeitig aber $|\beta_u|=|\beta_v|$ gilt, kommt es in \eqref{Eq_PRSS_Grace} dennoch zu einer Erhöhung des Starfterms und damit unnötig hohen Schrumpfung der geschätzten Regressionskoeffizienten.\\
@@ -1469,7 +1469,7 @@ Gelte $\frac{\gamma_{1,n}}{\sqrt{n}} \rightarrow \gamma_{1,0} \geq 0$ sowie $\fr
 \end{align}
 nicht singulär, dann gilt
 \begin{align*}
-\sqrt{n}(\boldsymbol{\hat{\beta}}^{Grace}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
+\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace} - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L)
 \end{align*}
 mit
 \begin{align*}
@@ -1518,8 +1518,8 @@ L_n(\mathbf{u})&=\sum_{i=1}^{n}
 \right)^2 w(\{k,l\})
 \right\rbrace
 \end{align}
-mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_n^{Grace}-\boldsymbol{\beta})$. Um das zu zeigen, kann \eqref{Eq_Vn_Grace} zunächst geschrieben werden als 
-\begin{align*}
+mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})$. Um das zunächst zu zeigen, kann \eqref{Eq_Vn_Grace} wegen $\varepsilon_i=Y_i - x_i{'}\boldsymbol{\beta}$ zunächst geschrieben werden als 
+\begin{align}\label{Eq_Vn_Grace_Alternative_Dars}
 L_n(\mathbf{u})&=\sum_{i=1}^{n} 
 \left\lbrace 
 \left( 
@@ -1563,7 +1563,7 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \frac{u_l}{\sqrt{d(l)}}
 \right)}{\sqrt{n}}
 \right]^2 w(\{k,l\}) \notag \\
-&\phantom{{}=2} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \sum_{j=1}^p \gamma_{1,n}|\beta_j|
+&\phantom{{}=2} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \gamma_{1,n}\sum_{j=1}^p|\beta_j|
 + \gamma_{2,n}\sum_{\{k,l\}}\left(
 \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
 \right)^2 w(\{k,l\})
@@ -1596,9 +1596,22 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \right\rbrace w(\{k,l\})
 \notag \\
 &\phantom{{}=2} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \sum_{j=1}^p \gamma_{1,n}|\beta_j|
-\right\rbrace
-\end{align*}
-Wegen $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Grace}
+\right\rbrace.
+\end{align}
+Da der letzte Term in \eqref{Eq_Vn_Grace_Alternative_Dars} unabhängig von $u$ ist und bei der Minimierung wegfällt, muss nur für den restlichen Teil gezeigt werden, dass $L_n(u)$ durch $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})$ minimiert wird:
+\begin{align}
+L_n \left( \sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta}) \right) &=
+\sum_{i=1}^{n}  
+\left( 
+Y_i - (\boldsymbol{\beta}+\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})'\mathbf{x_i}
+\right)^2
++\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
+|\beta_j + \hat{\beta}_{(n)}j^{Grace} -\beta_j|\right\rbrace \notag \\
+&\phantom{{}=2}
+\end{align}
+
+
+$\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Grace}
 \begin{align*}
 \sum_{i=1}^{n} 
 \left\lbrace 
@@ -1698,7 +1711,7 @@ und da für $n \rightarrow \infty$ für den Term $\frac{\left(
 \end{align*}
 Da $L$ eine strikt konvexe Funktion mit einem globalen Minimum ist, gilt
 \begin{align*}
-\arg \min (L_n)=\sqrt{n}(\boldsymbol{\hat{\beta}}^{Grace}_n - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L).
+\arg \min (L_n)=\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace} - \boldsymbol{\beta}) \xrightarrow{d} \arg \min (L).
 \end{align*}
 \end{proof}
 
