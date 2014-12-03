@@ -1518,7 +1518,7 @@ L_n(\mathbf{u})&=\sum_{i=1}^{n}
 \right)^2 w(\{k,l\})
 \right\rbrace
 \end{align}
-mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})$. Um das zunächst zu zeigen, kann \eqref{Eq_Vn_Grace} wegen $\varepsilon_i=Y_i - x_i{'}\boldsymbol{\beta}$ zunächst geschrieben werden als 
+mit einem Minimum für $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})$. Um das zu zeigen, kann \eqref{Eq_Vn_Grace} wegen $\varepsilon_i=Y_i - x_i{'}\boldsymbol{\beta}$ zunächst geschrieben werden als 
 \begin{align}\label{Eq_Vn_Grace_Alternative_Dars}
 L_n(\mathbf{u})&=\sum_{i=1}^{n} 
 \left\lbrace 
@@ -1540,7 +1540,7 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \frac{u_l}{\sqrt{d(l)}}
 \right)}{\sqrt{n}}
 \right]^2 w(\{k,l\}) \right. \notag \\
-&\phantom{{}=2} \left.
+&\phantom{{}=1} \left.
 - \left(
 \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
 \right)^2 w(\{k,l\})
@@ -1552,7 +1552,7 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \right)^2
 +\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
 |\beta_j + \frac{u_j}{\sqrt{n}}|\right\rbrace \notag \\
-&\phantom{{}=2} + \gamma_{2,n}\sum_{\{k,l\}}
+&\phantom{{}=1} + \gamma_{2,n}\sum_{\{k,l\}}
 \left[
 \left( 
 \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
@@ -1563,7 +1563,7 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \frac{u_l}{\sqrt{d(l)}}
 \right)}{\sqrt{n}}
 \right]^2 w(\{k,l\}) \notag \\
-&\phantom{{}=2} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \gamma_{1,n}\sum_{j=1}^p|\beta_j|
+&\phantom{{}=1} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \gamma_{1,n}\sum_{j=1}^p|\beta_j|
 + \gamma_{2,n}\sum_{\{k,l\}}\left(
 \frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
 \right)^2 w(\{k,l\})
@@ -1575,7 +1575,7 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \right)^2
 +\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
 |\beta_j + \frac{u_j}{\sqrt{n}}|\right\rbrace \notag \\
-&\phantom{{}=2} + \gamma_{2,n}\sum_{\{k,l\}}
+&\phantom{{}=1} + \gamma_{2,n}\sum_{\{k,l\}}
 \left\lbrace
 2
 \frac{
@@ -1595,21 +1595,78 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \right)^2}{n}
 \right\rbrace w(\{k,l\})
 \notag \\
-&\phantom{{}=2} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \sum_{j=1}^p \gamma_{1,n}|\beta_j|
+&\phantom{{}=1} - \left\lbrace \sum_{i=1}^{n}(Y_i - \mathbf{x_i}'\boldsymbol{\beta})^2 + \sum_{j=1}^p \gamma_{1,n}|\beta_j|
 \right\rbrace.
 \end{align}
-Da der letzte Term in \eqref{Eq_Vn_Grace_Alternative_Dars} unabhängig von $u$ ist und bei der Minimierung wegfällt, muss nur für den restlichen Teil gezeigt werden, dass $L_n(u)$ durch $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})$ minimiert wird:
+Zur Vereinfachung der Notation sei im folgenden Schritt $\boldsymbol{\hat{\beta}}=\boldsymbol{\hat{\beta}}_{(n)}^{Grace}$ bzw. $\hat{\beta}_j=\hat{\beta}_{(n)j}^{Grace}$. Da der letzte Term in \eqref{Eq_Vn_Grace_Alternative_Dars} unabhängig von $u$ ist und bei der Minimierung wegfällt, muss nur für den restlichen Teil gezeigt werden, dass $L_n(u)$ durch $\sqrt{n}(\boldsymbol{\hat{\beta}}-\boldsymbol{\beta})$ minimiert wird:
 \begin{align}
-L_n \left( \sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta}) \right) &=
+L_n \left( \sqrt{n}(\boldsymbol{\hat{\beta}}-\boldsymbol{\beta}) \right) &=
 \sum_{i=1}^{n}  
 \left( 
-Y_i - (\boldsymbol{\beta}+\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})'\mathbf{x_i}
+Y_i - (\boldsymbol{\beta}+\boldsymbol{\hat{\beta}}-\boldsymbol{\beta})'\mathbf{x_i}
 \right)^2
 +\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
-|\beta_j + \hat{\beta}_{(n)}j^{Grace} -\beta_j|\right\rbrace \notag \\
-&\phantom{{}=2}
+|\beta_j + \hat{\beta}_j -\beta_j|\right\rbrace \notag \\
+&\phantom{{}=1} + \gamma_{2,n}\sum_{\{k,l\}}
+\left\lbrace
+2
+\frac{
+\left( 
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right) \sqrt{n}
+\left( 
+\frac{\hat{\beta}_k}{\sqrt{d(k)}} - \frac{\beta_k}{\sqrt{d(k)}} -
+\frac{\hat{\beta}_l}{\sqrt{d(l)}} +
+\frac{\beta_l}{\sqrt{d(l)}}
+\right)
+}
+{\sqrt{n}} \right. \notag \\
+&\phantom{{}=1} \left. +
+\frac{n
+\left( 
+\frac{\hat{\beta}_k}{\sqrt{d(k)}} - \frac{\beta_k}{\sqrt{d(k)}} -
+\frac{\hat{\beta}_l}{\sqrt{d(l)}} +
+\frac{\beta_l}{\sqrt{d(l)}}
+\right)^2}{n}
+\right\rbrace w(\{k,l\}) \notag \\
+&=
+\sum_{i=1}^{n}  
+\left( 
+Y_i - \boldsymbol{\hat{\beta}}'\mathbf{x_i}
+\right)^2
++\gamma_{1,n}\sum_{j=1}^{p}
+|\hat{\beta}j| \notag \\
+&\phantom{{}=1} + \gamma_{2,n}\sum_{\{k,l\}}
+\left\lbrace
+-\frac{\beta_k^2}{d(k)} -\frac{\beta_l^2}{d(l)} + \frac{\hat{\beta}_k^2}{d(k)} +\frac{\hat{\beta}_l^2}{d(l)}-2\frac{\hat{\beta}_k\hat{\beta}_l}{\sqrt{d(k)d(l)}}
+\right\rbrace w(\{k,l\}) \notag \\
+&\leq \sum_{i=1}^{n}  
+\left( 
+Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
+\right)^2
++\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
+|\beta_j + \frac{u_j}{\sqrt{n}}|\right\rbrace \notag \\
+&\phantom{{}=1} + \gamma_{2,n}\sum_{\{k,l\}}
+\left\lbrace
+2
+\frac{
+\left( 
+\frac{\beta_k}{\sqrt{d(k)}} - \frac{\beta_l}{\sqrt{d(l)}}
+\right)
+\left( 
+\frac{u_k}{\sqrt{d(k)}} - 
+\frac{u_l}{\sqrt{d(l)}}
+\right)
+}
+{\sqrt{n}} 
++ 
+\frac{\left( 
+\frac{u_k}{\sqrt{d(k)}} - 
+\frac{u_l}{\sqrt{d(l)}}
+\right)^2}{n}
+\right\rbrace w(\{k,l\})
 \end{align}
-
+Da $\boldsymbol{\hat{\beta}}$ 
 
 $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Grace}
 \begin{align*}
