@@ -840,7 +840,7 @@ und $I(\cdot)$ sei die Indikatorfunktion.\\
 Anhand von \eqref{Eq_Vn_asymptotic} wird deutlich, dass $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace} - \boldsymbol{\beta})$ nur dann nach der durch die netzwerk-basierte Penalisation bestimmten Verteilung konvergiert, wenn $\gamma_{1,n}$ und $\gamma_{2,n}$ mit steigendem $n$ schneller wachsen als $\sqrt{n}$, d.h. es gilt $\gamma_{1,n}, \gamma_{2,n} \in \mathcal{O}(\sqrt{n})$. Für den Fall, dass die Tuningparameter mit steigendem $n$ langsamer wachsen als $\sqrt{n}$, d.h. $\gamma_{1,n}, \gamma_{2,n} \in o(\sqrt{n})$, konvergiert $\sqrt{n}(\boldsymbol{\hat{\beta}}_{(n)}^{Grace}-\boldsymbol{\beta})$ nach Verteilung gegen die Normalverteilung $N(\mathbf{0}, \sigma^2 \mathbf{C}^{-1})$, da die Penalisierungsterme in \eqref{Eq_Vn_asymptotic} wegfallen (vlg. dazu \citeNP{fahrmeir2009regression}).
 
 \paragraph{aGrace}
-Ein wesentlicher Nachteil an der Grace-Regression ist die zusätzliche Abhängigkeit der Höhe des Strafterms vom Vorzeichen der Regressionskoeffizienten. Für den Fall, dass die Regressionskoeffizienten von zwei im Netzwerk adjazente Kovariablen $x_u$ und $x_v$ gegensätzliche Vorzeichen haben, gleichzeitig aber $|\beta_u|=|\beta_v|$ gilt, kommt es in \eqref{Eq_PRSS_Grace} dennoch zu einer Erhöhung des Starfterms und damit unnötig hohen Schrumpfung der geschätzten Regressionskoeffizienten.\\
+Ein wesentlicher Nachteil an der Grace-Regression ist die zusätzliche Abhängigkeit der Höhe des Strafterms vom Vorzeichen der Regressionskoeffizienten. Für den Fall, dass die Regressionskoeffizienten von zwei im Netzwerk adjazente Kovariablen $u$ und $v$ gegensätzliche Vorzeichen haben, gleichzeitig aber $|\beta_u|=|\beta_v|$ gilt, kommt es in \eqref{Eq_PRSS_Grace} dennoch zu einer Erhöhung des Starfterms und damit unnötig hohen Schrumpfung der geschätzten Regressionskoeffizienten.\\
 Um diesen Effekt entgegenzuwirken, schlagen \citeA{li_variable_2010} eine modifizierte normierte Laplacian-Matrix $\textbf{\~L}^*=(\tilde{l}^*_{u,v})_{N_V \times N_V}$ vor:
 \begin{align*}
 \tilde{l}^*_{u,v} = \begin{cases}
@@ -856,7 +856,22 @@ womit sich als PRSS ergibt:
 &\phantom{{}=1} +\gamma_2 \left\lbrace \sum_{\{u,v\}} \left(\frac{\text{sign}(\tilde{\beta}_u)\beta_u}{\sqrt{d(u)}}-\frac{\text{sign}(\tilde{\beta}_v)\beta_v}{\sqrt{d(v)}}\right)^2 w(\{u,v\})\right\rbrace.
 \end{align}
 Die Vorzeichen
-$\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ der Kovariablen werden dabei mittels OLS-Regression für $p<n$ bzw. Enet-Regression für $p \geq n$ geschätzt. Dadurch 
+$\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ der Kovariablen werden dabei mittels OLS-Regression für $p<n$ bzw. Enet-Regression für $p \geq n$ geschätzt. Dadurch wird allerdings jeder Fehler bei der Vorzeichenschätzung, die bei nicht erfüllter Irrepresentable-Condition auftreten können, direkt in den Strafterm übernommen und ggf. der Starfterm der aGrace-Methode fälschlich erhöht.
+
+\paragraph{2Step}
+\citeA{pan_incorporating_2010} schlagen einen Netzwerk-basierter Nebenbedingungsterm
+\begin{align*}\label{Eq_Net_Pen_Upsilon_Norm}
+&\arg \displaystyle\min_{\boldsymbol{\beta}}  \sum_{i=1}^{n} \left( Y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2 \notag \\  
+\text{s.d.} \ &\sum_{\{u,v\}} \left[ \left(\frac{|\beta_u|}{c_u} \right)^\upsilon + \left(\frac{|\beta_v|}{c_v} \right)^\upsilon \right]^{\frac{1}{\upsilon}} \leq t,
+\end{align*}
+mit dem Norm-Parameter $\upsilon$, einem Restriktionsparameter $t$ und den Knotengewichten $c_u$ vor, mit dem für $\upsilon=\infty$ und damit 
+\begin{align}\label{Eq_Net_Pen_Upsilon_Norm_INFTY}
+&\arg \displaystyle\min_{\boldsymbol{\beta}}  \sum_{i=1}^{n} \left( Y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2 \notag \\  
+\text{s.d.} \ &\sum_{\{u,v\}} \max \left[ \frac{|\beta_u|}{c_u}, \frac{|\beta_v|}{c_v} \right] \leq t,
+\end{align}
+\textit{gleichzeitig} ein Gruppierungseffekt und eine Variablenselektion vorgenommen wird. Zwar handelt es sich dabei um beabsichtigte Eigenschaften eines Schätzers, allerdings erweisen sich die einzelnen Schätzer in Simulationen im Vergleich zu anderen Methoden als stärker verzerrt. Eine intuitive Begründung hierfür ist der Umstand, dass \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} bei der Bestrafungterm keine Unterscheidung zwischen Selektion und Glättung über zusammengehörige Parameter vornehmen kann. Dadurch können geschätzte Regressionskoeffizienten auch dann selektiert werden, wenn sie in Wahrheit nur angeglichen werden müssen, und umgekehrt werden sie ggf. bloß geschrumpft, obwohl sie in Wahrheit null sind.\\
+Um für Selektion und Gruppierung getrennt durchzuführen, schlagen
+\citeA{luo_two-step_2012} basierend auf \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} und dem aGrace-Schätzer eine zweistufige Penalisierung vor. Dabei wird im ersten Schritt mit \eqref{Eq_Net_Pen_Upsilon_Norm} $\boldsymbol{\beta}$ als $\boldsymbol{\hat{argument}}^{(1)}$ geschätzt.
 
 
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
@@ -930,6 +945,7 @@ plot(Beispielgraph, attrs = globalattrs, nodeAttrs = nodeattrs)
 
 \section{Auswertung der Simulationsstudie}\label{Kap_Auswertung_Simu}
 Sowohl für die Enet-Methode als auch die NetXXXX mit unterschiedlichen Zentralitätsmaßen wurden bei jedem Datensatz die $n=300$ simulierten Beobachtungen in einen Tuningdatensatz mit $n_{tune}=50$ für die Suche der optimalen entsprechenden Tuningparameter, einen Trainingsdatensatz mit $n_{train}=50$ für die Schätzung von $\boldsymbol{\hat{\beta}}$ mit den ausgewählten Tuningparametern sowie einen Testdatensatz mit $n_{test}=200$ für die Überprüfung der Qualität der $\boldsymbol{\hat{\beta}}$ unterteilt.\\
+
 \subsection{Auswertung mittels Enet}
 Für die Auswertung der simulierten Daten mittels der Enet-Methode wurde das R-Paket \texttt{glmnet} \cite{friedmann2010glmnet} verwendet. Da sich die Lagrangedarstellung der Enet-Regression aus \eqref{Eq_Enet_Lagrange} für $\gamma=\gamma_1+\gamma_2$ und $0 \leq \alpha \leq 1$ auch als 
 \begin{align}\label{Eq_Enet_Alternative_Lagrange}
