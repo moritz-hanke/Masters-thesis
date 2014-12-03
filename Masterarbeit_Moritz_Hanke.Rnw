@@ -871,7 +871,7 @@ mit dem Norm-Parameter $\upsilon$, einem Restriktionsparameter $t$ und den Knote
 \end{align}
 \textit{gleichzeitig} ein Gruppierungseffekt und eine Variablenselektion vorgenommen wird. Zwar handelt es sich dabei um beabsichtigte Eigenschaften eines Schätzers, allerdings erweisen sich die einzelnen Schätzer in Simulationen im Vergleich zu anderen Methoden als stärker verzerrt. Eine intuitive Begründung hierfür ist der Umstand, dass \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} bei der Bestrafungterm keine Unterscheidung zwischen Selektion und Glättung über zusammengehörige Parameter vornehmen kann. Dadurch können geschätzte Regressionskoeffizienten auch dann selektiert werden, wenn sie in Wahrheit nur angeglichen werden müssen, und umgekehrt werden sie ggf. bloß geschrumpft, obwohl sie in Wahrheit null sind.\\
 Um für Selektion und Gruppierung getrennt durchzuführen, schlagen
-\citeA{luo_two-step_2012} basierend auf \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} und dem aGrace-Schätzer eine zweistufige Penalisierung vor. Dabei wird im ersten Schritt mit \eqref{Eq_Net_Pen_Upsilon_Norm} $\boldsymbol{\beta}$ als $\boldsymbol{\hat{argument}}^{(1)}$ geschätzt.
+\citeA{luo_two-step_2012} basierend auf \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} und dem aGrace-Schätzer eine zweistufige Penalisierung vor. Dabei wird im ersten Schritt mit \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} $\boldsymbol{\beta}$ als $\boldsymbol{\hat{\beta}}^{(1)}$ geschätzt.
 
 
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
