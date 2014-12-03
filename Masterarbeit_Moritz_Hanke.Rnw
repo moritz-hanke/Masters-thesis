@@ -1599,7 +1599,7 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \right\rbrace.
 \end{align}
 Zur Vereinfachung der Notation sei im folgenden Schritt $\boldsymbol{\hat{\beta}}=\boldsymbol{\hat{\beta}}_{(n)}^{Grace}$ bzw. $\hat{\beta}_j=\hat{\beta}_{(n)j}^{Grace}$. Da der letzte Term in \eqref{Eq_Vn_Grace_Alternative_Dars} unabhängig von $u$ ist und bei der Minimierung wegfällt, muss nur für den restlichen Teil gezeigt werden, dass $L_n(u)$ durch $\sqrt{n}(\boldsymbol{\hat{\beta}}-\boldsymbol{\beta})$ minimiert wird:
-\begin{align}
+\begin{align}\label{Eq_Ln_Grace_Minimi}
 L_n \left( \sqrt{n}(\boldsymbol{\hat{\beta}}-\boldsymbol{\beta}) \right) &=
 \sum_{i=1}^{n}  
 \left( 
@@ -1667,9 +1667,8 @@ Y_i - (\boldsymbol{\beta} + \frac{1}{\sqrt{n}} \mathbf{u})'\mathbf{x}_i
 \right)^2}{n}
 \right\rbrace w(\{k,l\}), \qquad \text{für alle} \ u.
 \end{align}
-Da $\boldsymbol{\hat{\beta}}$ 
-
-$\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$, gilt für den ersten Term aus \eqref{Eq_Vn_Grace}
+Die Ungleichung in \eqref{Eq_Ln_Grace_Minimi} gilt, weil $\boldsymbol{\hat{\beta}}$ als derjenige Schätzer definiert ist, der die PRSS der Grace-Regression minimiert.\\
+Da $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}(x_i\varepsilon_i) \xrightarrow{d} N(0, \sigma^2 \mathbf{C})$ \cite{Anderson1992AsymptoticDistriRegression} und \eqref{Eq_Asymptotic_C-matrix} für $n \rightarrow \infty$ gilt, folgt für den ersten Term aus \eqref{Eq_Vn_Grace}
 \begin{align*}
 \sum_{i=1}^{n} 
 \left\lbrace 
