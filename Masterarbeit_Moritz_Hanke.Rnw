@@ -860,7 +860,7 @@ $\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ der Kovariabl
 
 \paragraph{2Step}
 \citeA{pan_incorporating_2010} schlagen einen Netzwerk-basierter Nebenbedingungsterm
-\begin{align*}\label{Eq_Net_Pen_Upsilon_Norm}
+\begin{align*}
 &\arg \displaystyle\min_{\boldsymbol{\beta}}  \sum_{i=1}^{n} \left( Y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2 \notag \\  
 \text{s.d.} \ &\sum_{\{u,v\}} \left[ \left(\frac{|\beta_u|}{c_u} \right)^\upsilon + \left(\frac{|\beta_v|}{c_v} \right)^\upsilon \right]^{\frac{1}{\upsilon}} \leq t,
 \end{align*}
