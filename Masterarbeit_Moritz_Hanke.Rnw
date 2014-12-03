@@ -1642,7 +1642,7 @@ Y_i - \boldsymbol{\hat{\beta}}'\mathbf{x_i}
 \right\rbrace w(\{k,l\}) \notag \\
 &\leq \sum_{i=1}^{n}  
 \left( 
-Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
+Y_i - (\boldsymbol{\beta} + \frac{1}{\sqrt{n}} \mathbf{u})'\mathbf{x}_i
 \right)^2
 +\gamma_{1,n}\sum_{j=1}^{p}\left\lbrace
 |\beta_j + \frac{u_j}{\sqrt{n}}|\right\rbrace \notag \\
@@ -1658,13 +1658,14 @@ Y_i - \mathbf{x_i}'\boldsymbol{\beta} - \frac{\mathbf{u}'\mathbf{x}_i}{\sqrt{n}}
 \frac{u_l}{\sqrt{d(l)}}
 \right)
 }
-{\sqrt{n}} 
+{\sqrt{n}} \right. \notag \\
+&\phantom{{}=2} \left. 
 + 
 \frac{\left( 
 \frac{u_k}{\sqrt{d(k)}} - 
 \frac{u_l}{\sqrt{d(l)}}
 \right)^2}{n}
-\right\rbrace w(\{k,l\})
+\right\rbrace w(\{k,l\}), \qquad \text{für alle} \ u.
 \end{align}
 Da $\boldsymbol{\hat{\beta}}$ 
 
