@@ -856,7 +856,7 @@ womit sich als PRSS ergibt:
 &\phantom{{}=1} +\gamma_2 \left\lbrace \sum_{\{u,v\}} \left(\frac{\text{sign}(\tilde{\beta}_u)\beta_u}{\sqrt{d(u)}}-\frac{\text{sign}(\tilde{\beta}_v)\beta_v}{\sqrt{d(v)}}\right)^2 w(\{u,v\})\right\rbrace.
 \end{align}
 Die Vorzeichen
-$\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ der Kovariablen werden dabei mittels OLS-Regression für $p<n$ bzw. Enet-Regression für $p \geq n$ geschätzt. Dadurch wird allerdings jeder Fehler bei der Vorzeichenschätzung, die bei nicht erfüllter Irrepresentable-Condition auftreten können, direkt in den Strafterm übernommen und ggf. der Starfterm der aGrace-Methode fälschlich erhöht.
+$\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ der Kovariablen werden dabei mittels OLS-Regression für $p<n$ bzw. Enet-Regression für $p \geq n$ geschätzt. Dadurch wird allerdings jeder Fehler bei der Vorzeichenschätzung, die bei nicht erfüllter Irrepresentable-Condition auftreten können (siehe \ref{Kap_Lasso-Regression} und \ref{Kap_Elastic-Net}), direkt in den Strafterm übernommen und ggf. der Starfterm der aGrace-Methode fälschlich erhöht.
 
 \paragraph{2Step}
 \citeA{pan_incorporating_2010} schlagen einen Netzwerk-basierter Nebenbedingungsterm
@@ -864,26 +864,30 @@ $\text{sign}(\tilde{\beta}_u)$ und  $\text{sign}(\tilde{\beta}_v)$ der Kovariabl
 &\arg \displaystyle\min_{\boldsymbol{\beta}}  \sum_{i=1}^{n} \left( Y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2 \notag \\  
 \text{s.d.} \ &\sum_{\{u,v\}} \left[ \left(\frac{|\beta_u|}{c_u} \right)^\upsilon + \left(\frac{|\beta_v|}{c_v} \right)^\upsilon \right]^{\frac{1}{\upsilon}} \leq t,
 \end{align*}
-mit dem Norm-Parameter $\upsilon$, einem Restriktionsparameter $t$ und den Knotengewichten $c_u$ vor, mit dem für $\upsilon=\infty$ und damit 
+mit dem Norm-Parameter $\upsilon$, einem Restriktionsparameter $t$ und den Knotengewichten $c_u$ vor. Mit $\upsilon=\infty$ und damit 
 \begin{align}\label{Eq_Net_Pen_Upsilon_Norm_INFTY}
 &\arg \displaystyle\min_{\boldsymbol{\beta}}  \sum_{i=1}^{n} \left( Y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2 \notag \\  
 \text{s.d.} \ &\sum_{\{u,v\}} \max \left( \frac{|\beta_u|}{c_u}, \frac{|\beta_v|}{c_v} \right) \leq t,
 \end{align}
-\textit{gleichzeitig} ein Gruppierungseffekt und eine Variablenselektion vorgenommen wird. Zwar handelt es sich dabei um beabsichtigte Eigenschaften eines Schätzers, allerdings erweisen sich die einzelnen Schätzer in Simulationen im Vergleich zu anderen Methoden als stärker verzerrt. Eine intuitive Begründung hierfür ist der Umstand, dass \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} bei der Bestrafungterm keine Unterscheidung zwischen Selektion und Glättung über zusammengehörige Parameter vornehmen kann. Dadurch können geschätzte Regressionskoeffizienten auch dann selektiert werden, wenn sie in Wahrheit nur angeglichen werden müssen. Umgekehrt werden sie ggf. bloß geschrumpft, obwohl sie in Wahrheit null sind.\\
+wird \textit{gleichzeitig} ein Gruppierungseffekt und eine Variablenselektion vorgenommen. Zwar handelt es sich dabei um beabsichtigte Eigenschaften des Schätzers und die Autoren erhalten in ihrer Simulationsstudie die besten Schätzungen hinsichtlich der Positiv-wahr-Rate verglichen mit Werten $\upsilon < \infty$. Allerdings erweisen sich die einzelnen Schätzer in den Simulationen im Vergleich zu anderen Methoden wie dem Enet als stärker verzerrt. Eine intuitive Begründung hierfür ist der Umstand, dass \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} mit dem Bestrafungterm keine Unterscheidung zwischen Selektion und Glättung über zusammengehörige Parameter vornehmen kann. Dadurch können geschätzte Regressionskoeffizienten auch dann selektiert werden, wenn sie in Wahrheit nur angeglichen werden müssen. Umgekehrt werden sie ggf. bloß geschrumpft, obwohl sie in Wahrheit null sind.\\
 Um die Selektion und Gruppierung getrennt durchzuführen, schlagen
-\citeA{luo_two-step_2012} basierend auf \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} und dem aGrace-Schätzer eine zweistufige Penalisierung vor. Dabei wird im ersten Schritt mit \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} $\boldsymbol{\beta}$ als $\boldsymbol{\hat{\beta}}^{(1)}$ mittels zehnfacher Kreuzvalidierung über $t$ geschätzt. Auf Grundlage dieser Schätzer werden alle Kanten $e=\{u,v\}$ aus $G=(V,E)$, für deren zugehörige Regressionskoeffizienten $\hat{\beta}_u^{1}=\hat{\beta}_v^{1}=0$ gilt, aus dem Graphen entfernt, sodass ein in der Größe reduzierter Graph $G^{neu}=(V,E^{neu})$ bestehen bleibt. Anschließend wird $\forall e \in E^{neu}$
+\citeA{luo_two-step_2012} basierend auf \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} und einer Modifikation des zweiten Starfterms des aGrace-Schätzers
+\begin{align*}
+\sum_{\{u,v\}} \left| \frac{\text{sign}(\tilde{\beta}_u)\beta_u}{\sqrt{d(u)}}-\frac{\text{sign}(\tilde{\beta}_v)\beta_v}{\sqrt{d(v)}}\right|
+\end{align*}
+eine zweistufige Penalisierung vor. Dabei wird im ersten Schritt mit \eqref{Eq_Net_Pen_Upsilon_Norm_INFTY} $\boldsymbol{\beta}$ als $\boldsymbol{\hat{\beta}}^{(1)}$ mittels zehnfacher Kreuzvalidierung über $t$ geschätzt. Auf Grundlage dieser Schätzung werden alle Kanten $e=\{u,v\}$ aus $G=(V,E)$, für deren zugehörige Regressionskoeffizienten $\hat{\beta}_u^{1}=\hat{\beta}_v^{1}=0$ gilt, aus dem Graphen entfernt, sodass ein in der Größe reduzierter Graph $G^{neu}=(V,E^{neu})$ bestehen bleibt. Anschließend wird $\forall e \in E^{neu}$
 \begin{align*}
 s^{(0)}_{\{u,v\}}=\begin{cases}
 1 &\qquad \text{wenn} \ \hat{\beta}_u \cdot \hat{\beta}_v > 0 \\
 -1 &\qquad sonst,
 \end{cases}
 \end{align*} 
-bestimmt. Im zweiten Schritt wird eine zweite Regressionskoeffizientenschätzung mit der aGrace-Nebenbedingung über den Restriktionsparameter $r$ mit einer zehnfachen Kreuzvalidierung durchgeführt:
-\begin{align}
+bestimmt. Im zweiten Schritt wird eine zweite Regressionskoeffizientenschätzung mit der modifizierten aGrace-Nebenbedingung über den Restriktionsparameter $r$ mit einer zehnfachen Kreuzvalidierung durchgeführt:
+\begin{align}\label{Eq_2nd_step_2step}
 &\arg \displaystyle\min_{\boldsymbol{\beta}} \sum_{i=1}^{n} \left( Y_i - \sum_{j=1}^{p} x_{ij} \beta_j \right)^2 \notag \\  
-\text{s.d.} \ &\sum_{\{u,v\} \in E^{neu}} \left( \frac{\beta_u}{c_u} - s^{(0)}_{\{u,v\}} \frac{\beta_v}{c_v} \right)^2 \leq r \notag \\
-&\text{mit} \ \beta_u=0 \ \text{wenn} \ u \in e \in E\setminus E^{neu}.
+\text{s.d.} \ &\sum_{\{u,v\} \in E^{neu}} \left| \frac{\beta_u}{c_u} - s^{(0)}_{\{u,v\}} \frac{\beta_v}{c_v} \right| \leq r
 \end{align}
+mit  $\beta_j=0$ wenn $j \in e \in E\setminus E^{neu}$. Die Autoren der 2Step-Methode geben allerdings nicht an, in wie weit die Qualität ihrer Schätzung von der Modifikation des Netzwerkes abhängt und in wie weit sich dadurch fälschlich entfernte Kanten auf die Genauigkeit bzw. Variablenselektion auswirken.
 
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
 Um die Schätzer der Netzwerk-basierten penalisierten Regressionen mit der Enet-Methode hinsichtlich der Genauigkeit und den Raten an richtig positiven bzw. falsch positiven der Regressionskoeffizienten zu vergleichen, wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der netzwerkbasierten penalisierten Regression auch hinsichtlich verschieden gewählter Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten durchgefüht.\\ Im nachfolgenden Kapitel wird zunächst die Methode zur Datensimulation erläutert (Unterkapitel \ref{Kap_Datensimulation}) und im anschließenden Unterkapitel \ref{Kap_Auswertung_Simu} werden anhand der simulierten Daten die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
