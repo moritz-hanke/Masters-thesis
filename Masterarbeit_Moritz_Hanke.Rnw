@@ -287,16 +287,16 @@ V(g)[1]$color <- "yellow"
 V(g)[8]$color <- "red"
 #V(g)[7]$color <- "green"
 @
-<<echo=FALSE, Degree_vs_Path, fig.pos="H", out.width='.6\\linewidth', fig.align='center', fig.scap="Beispielgraph", fig.lp="fig:", fig.cap="Beispiel für einen Graphen, in dem in Abhängigkeit von der Definition von Zentralität, entweder der rote oder der gelbe Knoten die bedeutsamste Position einnimmt.">>=
+<<echo=FALSE, Degree_vs_Path, fig.pos="H", out.width='.6\\linewidth', fig.align='center', fig.scap="Beispielgraph", fig.lp="fig:", fig.cap="Beispiel für einen Graphen, in dem in Abhängigkeit von der Definition von Zentralität entweder der rote oder der gelbe Knoten die bedeutsamste Position einnimmt.">>=
 plot(g, edge.width=3)
 @
-Neben der bereits erwähnten Betweenness-Zentralität $\mathscr{B}(u)$ sollen nachfolgend die Eigenvektor-Zentralität $\mathscr{E}(u)$ sowie die Closeness-Zentralität $\mathscr{C}(u)$ vorgestellt werden, da es sich hierbei um "`Standard"'-Zentralitätsmaße in der Literatur handelt und diese später bei der netzwerk-basierten penalisierten Regression als Gewichtung für die zu schätzenden Regressionskoeffizienten verwendet werden (vgl. dazu Kapitel \ref{Kap_Netzwerkbasierte_Penalisierung}).
+Neben der bereits erwähnten Betweenness-Zentralität $\mathscr{B}(u)$ sollen nachfolgend die Eigenvektor-Zentralität $\mathscr{E}(u)$ sowie die Closeness-Zentralität $\mathscr{C}(u)$ vorgestellt werden, da es sich hierbei um "`Standard"'-Zentralitätsmaße in der Literatur handelt und diese später bei der Netzwerk-basierten penalisierten Regression als Gewichtung für die zu schätzenden Regressionskoeffizienten verwendet werden (vgl. dazu Kapitel \ref{Kap_Netzwerkbasierte_Penalisierung}).
 \paragraph{Betweenness-Zentralität}\label{Kap_Betweenness-Zentralität}
 Die Betweenness-Zentralität für einen Knoten $u$ ist definiert als
 \begin{align}\label{Eq_Betweenness_Definition}
 \mathscr{B}(u)=\sum_{u \neq v \neq w \in V} \frac{\varpi(v,w|u)}{\varpi(v,w)}
 \end{align}
-wobei $\varpi(v,w|u)$ die Anzahl an Distanzen $D(v,w)$ zwischen den Knoten $v$ und $w$ ist auf denen $u$ liegt, und $\varpi(v,w)$ die Gesamtzahl an Distanzen $D(v,w)$ zwischen $v$ und $w$ für alle $u \in V$, d.h. $\varpi(v,w)=\sum_{u \in V} \varpi(v,w|u)$ \cite{kolaczyk2009statistical}. Nach diesem Maß wird die Bedeutung eines Knoten $u$ darüber interpretiert, wie sehr er "`unausweichlich"' ist, wenn in der kleinstmöglichen Anzahl an Kantenschritten von einem Knoten $v$ zu einem Knoten $w$ gelangt werden soll. Dadurch gilt für alle Knoten mit $d(u) \leq 1$ immer $\mathscr{B}(u)=0$. Da $\mathscr{B}(u)$ abhängig von der Ordnung eines Graphen ist, kann durch Division mit $\frac{(N_V-1)(N_V-2)}{2}$ eine normierte und damit über verschiedene Graphen vergleichbare Betweenness-Zentralität berechnet werden. 
+wobei $\varpi(v,w|u)$ die Anzahl an Distanzen $D(v,w)$ zwischen den Knoten $v$ und $w$ ist auf denen $u$ liegt, und $\varpi(v,w)$ die Gesamtzahl an Distanzen $D(v,w)$ zwischen $v$ und $w$ für alle $u \in V$, d.h. $\varpi(v,w)=\sum_{u \in V} \varpi(v,w|u)$ \cite{kolaczyk2009statistical}. Nach diesem Maß wird die Bedeutung eines Knoten $u$ darüber interpretiert, wie sehr er "`unausweichlich"' ist, wenn in der kleinstmöglichen Anzahl an Kantenschritten von einem Knoten $v$ zu einem Knoten $w$ gelangt werden soll. Dadurch gilt für alle Knoten mit $d(u) \leq 1$ immer $\mathscr{B}(u)=0$. Da $\mathscr{B}(u)$ abhängig von der Ordnung eines Graphen ist, kann durch Division durch $\frac{(N_V-1)(N_V-2)}{2}$ eine normierte und damit über verschiedene Graphen vergleichbare Betweenness-Zentralität berechnet werden. 
 
 \paragraph{Closeness-Zentralität}\label{Kap_Closeness-Zentralität}
 Bei der Closeness-Zentralität werden für einen Knoten $u$ alle Distanzen zu den Knoten $v \in V \setminus u$ summiert und davon der reziproke Wert genommen:
@@ -304,7 +304,7 @@ Bei der Closeness-Zentralität werden für einen Knoten $u$ alle Distanzen zu de
 \mathscr{C}(u)=\frac{1}{\sum_{v \in V \setminus u} D(u, v)}.
 \end{align}
 Anhand von Abbildung \ref{fig:Closeness_normalized} wird deutlich, dass $\mathscr{C}(u)$ nicht allein von der Lage von $u$ innerhalb des Graphen, sondern auch von der Ordnung des Graphen abhängt, weswegen $\mathscr{C}(u)$ durch die Multiplikation mit dem Faktor $(N_V -1)$ normiert werden kann, um Knotenzetralitäten über verschiedene Graphen vergleichbar zu machen. Allein für den Fall $d(u)=0$ gilt $\mathscr{C}(u)=0$, ansonsten ist die Closeness-Zentralität strikt größer als null.
-<<echo=FALSE, Closeness_normalized, fig.pos="h", fig.show='hold', out.width='.49\\linewidth', fig.align='center', fig.scap="Beispiel für die Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit würde in diesem Fall der rote Knoten als doppelt so bedeutsam für den Graphen A als der gelbe Knoten für den Graphen B interpretiert werden. Diese naive Bewertung der beiden Knoten ist für die vorliegenden Fälle allerdings ungeeignet, da offensichtlich beide Knoten in ihrem jeweiligen Graphen so zentral sind, dass alle Wege zwischen den übrigen Knoten immer über sie laufen bzw. die Entfernung des roten und gelben Knotens alle Kanten der Graphen aufheben würde. Nach einer Normalisierung mit $(N_V -1)$ haben beide Knoten hingegen einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind identisch bedeutsam für ihre jeweiligen Graphen.">>=
+<<echo=FALSE, Closeness_normalized, fig.pos="h", fig.show='hold', out.width='.49\\linewidth', fig.align='center', fig.scap="Beispiel für die Normalisierung der Closeness", fig.lp="fig:", fig.cap="Beispiel für den Einfluss der Normalisierung der Closeness. Ohne eine Normalisierung mit dem Faktor $(N_V -1)$ hat der rote Knoten in Graph A eine Closeness-Zentralität von $\\mathscr{C}(1)=0.25$ und der gelbe Knoten in Graph B eine Closeness-Zentralität von $\\mathscr{C}(1)=0.125$. Somit würde in diesem Fall der rote Knoten als doppelt so bedeutsam für den Graphen A als der gelbe Knoten für den Graphen B interpretiert werden. Diese naive Bewertung der beiden Knoten ist für die vorliegenden Fälle allerdings ungeeignet, da offensichtlich beide Knoten in ihrem jeweiligen Graphen so zentral sind, dass alle Wege zwischen den übrigen Knoten immer über sie laufen bzw. die Entfernung des roten und gelben Knotens alle Kanten der Graphen aufheben würde. Nach einer Normalisierung mit $(N_V -1)$ haben beide Knoten hingegen einen Closeness-Zentralitätswert von $\\mathscr{C}(1)=1$ und sind gleich bedeutsam für ihre jeweiligen Graphen.">>=
 A1 <- matrix(c(
 # 1  2  3  4  5
   0, 1, 1, 1, 1,
@@ -346,7 +346,7 @@ mit dem größten Eigenwert $\lambda_{max}$ von $\mathbf{A}$ und dem zugehörige
 && \lambda_{max} e_u &= \sum_{v \in V\setminus u} e_v a_{u,v} \notag \\
 &\Leftrightarrow& e_u &=\frac{1}{\lambda_{max}} \sum_{v \in V\setminus u} e_v a_{u,v}
 \end{align}
-angegeben werden \cite{bonacich72factoring}. In der Literatur finden sich diverse Erweiterungen dieses Maßes, durch die beispielsweise mit Hilfe eines "`Einflussgebietsparameters"' bestimmt werden kann, in wie weit auch die Zentralität von nicht direkt benachbarte Knoten die Zentralität von $u$ beeinflussen oder ob sich die Zentralität eines Knotens umgekehrt zur Zentralität der umliegenden Knoten verhält (vgl. dazu \citeNP{Bonacich1987EigenvektorCent}). Im Rahmen dieser Arbeit wird das Maß aus Gleichung \eqref{Eq_EVcent} verwendet, da es keine begründete Annahme gibt, das Einflussgebiet zu erhöhen bzw. zu verringern.
+angegeben werden \cite{bonacich72factoring}. In der Literatur finden sich diverse Erweiterungen dieses Maßes, durch die beispielsweise mit Hilfe eines "`Einflussgebietsparameters"' bestimmt werden kann, in wie weit auch die Zentralität von nicht direkt benachbarten Knoten die Zentralität von $u$ beeinflussen oder ob sich die Zentralität eines Knotens umgekehrt zur Zentralität der umliegenden Knoten verhält (vgl. dazu \citeNP{Bonacich1987EigenvektorCent}). Im Rahmen dieser Arbeit wird neben $\mathscr{B}(u)$ und $\mathscr{C}(u)$ die Definition der Eigenwert-Zentralität aus Gleichung \eqref{Eq_EVcent} verwendet, da es keine begründete Annahme gibt, das Einflussgebiet zu erhöhen bzw. zu verringern.
 
 % gibt es Statistik d(v_i)/\kappa(G)? würde die was taugen?
 % statt d(v_i) sowas wie nachbran von nachbarn?
@@ -765,13 +765,13 @@ Da im Gegensatz zur Ridge- und Lasso-Methode \textit{zwei} Tuningparameter, $\ga
 
 
 
-\subsection{Netzwerkbasierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
+\subsection{Netzwerk-basierte penalisierte Regressionen}\label{Kap_Netzwerkbasierte_Penalisierung}
 Netzwerkbasierte penalisierte Regressionen unterscheiden sich zu den Ansätzen aus Kapitel \ref{Kap_Ridge-Regression} bis \ref{Kap_Elastic-Net} darin, dass \textit{vorab bekannte} Informationen über den Zusammenhang von Kovariablen untereinander in den Strafterm $P(\boldsymbol{\beta},\boldsymbol{\gamma})$ aufgenommen werden. Beispielsweise liegen in der Genetik häufig Informationen über die Zusammenhänge zwischen einzelnen Genen oder Genprodukten bzw. zwischen Genen und Proteinen \textit{a priori} vor, d.h. es ist bekannt, in wie weit sie sich gegenseitig beeinflussen. Diese Abhängigkeiten können als Netzwerke beschrieben werden, die sich wiederum als Graphen darstellen lassen. In dem entsprechenden Graphen repräsentieren Knoten die Kovariablen, d.h. es gilt $x_1, \dots, x_p = v_1, \dots,v_{N_V}$, deren ggf. vorhandene Abhängigkeit durch eine Kante repräsentiert wird.
 
 \paragraph{Grace}
 Bei der ursprüngliche netzwerkbasierten penalisierten Regression \text{Grace} (graph-bedingte Regression; englisch: graph constrained regression) haben \citeA{li_network-constrained_2008} den Strafterm als
 \begin{align}\label{Eq_P-Term_Li_2008}
-P(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
+P_{Grace}(\boldsymbol{\beta},\boldsymbol{\gamma})=\gamma_1||\boldsymbol{\beta}||_1 + \gamma_2\boldsymbol{\beta}'\textbf{\~L}\boldsymbol{\beta}
 \end{align}
 definiert, wobei $\gamma_1||\boldsymbol{\beta}||_1$ dem Lasso Strafterm entspricht und $\textbf{\~L}$ die \textit{normalisierte Laplace-Matrix} eines ungerichteten Graphen $G=(V,E)$ bezeichnet. $\textbf{\~L}=(\tilde{l}_{u,v})_{N_V \times N_V}$ für $u,v \in V$ ist eine \textit{positiv semidefinite} Matrix, die definiert ist als
 \begin{align*}
@@ -889,6 +889,45 @@ eine Vorzeichenvariable $s^{(0)}$ bestimmt. Im zweiten Schritt wird eine erneute
 \end{align}
 mit  $\beta_j=0$ wenn $j \in e \in E\setminus E^{neu}$. Die Autoren der 2Step-Methode geben allerdings nicht an, in wie weit sich die fälschliche Entfernung von Kanten aus dem Graphen im ersten Schritt auf die Genauigkeit bzw. Variablenselektion im zweiten Schritt auswirkt. Insbesondere die Bedingung, dass alle Koeffizienten $\beta_j=0$ gesetzt werden wenn $j \in e \in E\setminus E^{neu}$ gilt, könnte zu streng sein, weil danach "`isolierten"' Kovariablen keinen Einfluss auf die Responsevariable haben.
 
+\paragraph{NBPR} Die Annahme der Grace-, aGrace- sowie 2Step-Regression, dass mit einer Knotengewichtung $c$ für zwei adjazente Kovariablen $\beta_u/c_u=\beta_v/c_v$ bzw. $|\beta_u|/c_u=|\beta_v|/c_v$  gilt und andernfalls bei der Schätzung eine Erhöhung des Starfterms vorgenommen werden muss, ist dahingehend idealisiert, dass allen Kovariablen unter Berücksichtigung ihrer Bedeutung im Netzwerk der selbe Einfluss auf die Responsevariable unterstellt wird. Allerdings gibt es keine begründete Annahme, warum beispielsweise in biologischen Netzwerken zwei benachbarte Gene, die gleich zentral im Netzwerk sind, den selben Einfluss auf die Responsevariable haben sollen. \citeA{kim_network-based_2013} schlagen daher eine abgeschwächte Annahme $I(\beta_u \neq 0)=I(\beta_v \neq 0)$ vor, bei der lediglich unterstellt ist, dass wenn Kovariable $u$ einen Einfluss hat, auch ihre im Netzwerk benachbarte Kovariable einen Einfluss hat. Als \textit{idealen} Strafterm schlagen die Autoren vor
+\begin{align}\label{Eq_NBPR_idealer_Strafterm}
+P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=\gamma_1 \sum_{j=1}^{p}I(|\beta_j|\neq 0) + \gamma_2 \sum_{\{u,v\}}\left| I\left( \frac{|\beta_u|}{c_u} \neq 0 \right) - I\left( \frac{|\beta_v|}{c_v} \neq 0 \right) \right|.
+\end{align}
+Da es sich bei der Indikatorfunktion $I(\cdot)$ um eine nicht-kontinuierliche Funktion handelt, ist die Minimierung von \eqref{Eq_NBPR_idealer_Strafterm} nicht in Polynomialzeit, d.h. $\mathcal{O}(p^r)$ mit konstantem Faktor $r$, lösbar. Allein die Anzahl an möglich Lösungen für den ersten Term wächst exponentiell mit $p$, sodass $2^p$ mögliche Lösungen berechnet werden müssen und damit bei hochdimensionalen Daten praktisch nicht berechenbar ist.\\
+Als Alternative für eine Indikatorfunktion $I(|z| \neq 0)$ mit einer Variable $z$ kann die kontinuierliche Funktion $J_\tau(|z|)=\min (|z|/\tau, 1)$ mit Tuningparameter $\tau > 0$ genutzt werden, da diese sich für $\tau \rightarrow 0$ der Indikatorfunktion annähert. $P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)$ lässt sich damit schreiben als
+\begin{align}\label{Eq_NBPR_tau_Strafterm}
+P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2, \tau)=\gamma_1 \sum_{j=1}^{p}J_\tau(|\beta_j|) + \gamma_2 \sum_{\{u,v\}}\left| J_\tau\left( \frac{|\beta_u|}{c_u}\right) - J\tau\left( \frac{|\beta_v|}{c_v}\right) \right|.
+\end{align}
+Während die Knotengewichtung $c$ in \eqref{Eq_NBPR_idealer_Strafterm} vernachlässigt werden kann, muss sie in \eqref{Eq_NBPR_tau_Strafterm} berücksichtigt werden, weil darüber wie bei den weiter oben beschrieben Netzwerk-basierten penalisierten Regressionen eine Relativierung der Regressionskoeffizienten über die Bedeutung im Netzwerk erreicht und die Auswertung von $J_\tau$ bestimmt wird. Durch die Verwendung der nicht-konvexen Funktion $J_\tau$ ist auch  \eqref{Eq_NBPR_tau_Strafterm} eine nicht-konvexe Funktion, für die es demnach kein eindeutiges Minimum gibt. \citeA{kim_network-based_2013} schlagen daher einen \text{difference convex programming-algorithm} (\text{DCPA}) vor, bei dem eine nicht-konvexe Funktion sich als die Differenz zweier konvexer Funktionen darstellen lässt, wodurch es ein Minimum gewährleistet ist.
+Die DCPA-Darstellung von $J_\tau(|z|)=\min (|z|/\tau, 1)$ ist die um den Faktor $1/\tau$ multiplizierte Differenz der konvexen Funktionen $|z|$ und $\max(|z|-\tau,0)$, und somit für $|z|=|\beta_j|$ für die einzelnen Summanden $P_{1,NBPR}^{(j)}$ des ersten Terms:
+\begin{align*}
+P_{1,NBPR}^{(j)}=\frac{1}{\tau}\left(|\beta_j|-\max(|\beta_j|-\tau, 0)\right)=\begin{cases}
+1 &\qquad \text{für} \ \tau \leq |\beta_j| \\
+\frac{|\beta_j|}{\tau} &\qquad \text{für} \ \tau > |\beta_j|
+\end{cases}.
+\end{align*}
+Mit $c>0$ ergibt sich für den zweiten Term aus \eqref{Eq_NBPR_tau_Strafterm} unter Verwendung des DCPA für die einzelnen Summanden $P_{2,NBPR}^{(\{u,v\})}$:
+\begin{align}
+P_{2,NBPR}^{(\{u,v\})}&=\left| \frac{1}{\tau}\left(\frac{|\beta_u|}{c_u}-\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right)\right) -  \frac{1}{\tau}\left(\frac{|\beta_v|}{c_v}-\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right)\right) \right| \notag \\
+&=\frac{1}{\tau}\left|
+\left(\frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right)\right) -  \left(\frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right)\right)
+\right| \notag \\
+&= \frac{1}{\tau} \left[
+2\max \left\lbrace\frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right), \frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right)\right\rbrace \right. \notag \\
+&\phantom{{}=1} \left. 
+- \left(\frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right)\right) +  \frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right)
+\right] 
+\end{align}
+und damit
+\begin{align*}
+P_{2,NBPR}^{(\{u,v\})}=\begin{cases}
+\frac{|\beta_u|}{c_u}-\frac{|\beta_v|}{c_v} &\qquad \text{für} \ \tau \geq \frac{\beta_u}{c_u} > \frac{\beta_v}{c_v} \notag \\
+\frac{|\beta_v|}{c_v}-\frac{|\beta_u|}{c_u} 
+&\qquad \text{für} \ \tau \geq \frac{\beta_v}{c_v} > \frac{\beta_u}{c_u} \notag \\
+0 &\qquad \text{für} \ \tau \geq \frac{\beta_v}{c_v} = \frac{\beta_u}{c_u} \notag \\
+0 &\qquad \text{für} \ \tau < \frac{\beta_v}{c_v} = \frac{\beta_u}{c_u} \notag \\
+\end{cases}
+\end{align*}
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
 Um die Schätzer der Netzwerk-basierten penalisierten Regressionen mit der Enet-Methode hinsichtlich der Genauigkeit und den Raten an richtig positiven bzw. falsch positiven der Regressionskoeffizienten zu vergleichen, wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der netzwerkbasierten penalisierten Regression auch hinsichtlich verschieden gewählter Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten durchgefüht.\\ Im nachfolgenden Kapitel wird zunächst die Methode zur Datensimulation erläutert (Unterkapitel \ref{Kap_Datensimulation}) und im anschließenden Unterkapitel \ref{Kap_Auswertung_Simu} werden anhand der simulierten Daten die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
 
