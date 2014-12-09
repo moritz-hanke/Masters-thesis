@@ -992,15 +992,15 @@ sowie
 \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})\left[1+I\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}>\tau \right) \right]
 \right\rbrace
 \end{align*}
-gilt, ergibt sich als PRSS:
+gilt, ergibt sich als PRSS für den Schätzdurchlauf $t$:
 \begin{align}
-P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)&=\sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2 + \frac{\gamma_1}{\tau} \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|<\tau)\right) \notag \\
+PRSS_{NBPR}^{(t)}(\boldsymbol{\beta}, \gamma_1, \gamma_2,\tau)&=\sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2 + \frac{\gamma_1}{\tau} \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|<\tau)\right) \notag \\
 &\phantom{{}=0} + \gamma_2 \sum_{\{u,v\}} 2\max \left[\frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right), \frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right)\right] \notag \\
 &\phantom{{}=0} - \frac{\gamma_2}{\tau} \sum_{\{u,v\}} \left\lbrace
-\frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)}) \left[1+I\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}>\tau \right) \right] \right. \\
+\frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)}) \left[1+I\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}>\tau \right) \right] \right. \notag \\
 &\phantom{{}=1111} \left. + 
 \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})\left[1+I\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}>\tau \right) \right]
-\right\rbrace
+\right\rbrace.
 \end{align}
 
 
