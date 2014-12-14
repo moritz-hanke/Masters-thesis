@@ -697,8 +697,8 @@ In Analogie zum Lasso-Schätzer ergibt sich für ein orthogonales Design $\mathb
 \begin{align}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\text{sign}(\hat{\beta}_j^{OLS}).
 \end{align}
-Unabhängig davon, ob die RSS eine \textit{konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})< p$) oder eine \textit{strikt konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})= p$) ist, handelt es sich bei der PRSS der nEnet-Methode um eine strikt konvexe Funktion. Grund hierfür ist der Strafterm $P$, der durch $L_2$-Norm selbst strikt konvex ist. Dadurch hat der nEnet-Schätzer eine eindeutige Lösung und Kovariablen mit identischen beobachteten Ausprägungen erhalten die selben Schätzer (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). Darüber hinaus hat der nEnet-Schätzer einen \textit{Gruppierungseffekt}, d.h. Kovariablen, die hoch miteinander korrelieren erhalten ähnliche Schätzwerte: \begin{satz}\label{Satz_obere_Grenze_Diff_nEnet}
-Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
+Unabhängig davon, ob die RSS eine \textit{konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})< p$) oder eine \textit{strikt konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})= p$) ist, handelt es sich bei der PRSS der nEnet-Methode um eine strikt konvexe Funktion. Grund hierfür ist der Strafterm $P$, der durch die $L_2$-Norm selbst strikt konvex ist. Dadurch hat der nEnet-Schätzer eine eindeutige Lösung und Kovariablen mit identischen beobachteten Ausprägungen erhalten die selben Schätzer (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). Darüber hinaus hat der nEnet-Schätzer einen \textit{Gruppierungseffekt}, d.h. Kovariablen, die hoch miteinander korrelieren erhalten ähnliche Schätzwerte: \begin{satz}\label{Satz_obere_Grenze_Diff_nEnet}
+Es seien die Kovariablen in $\mathbf{X}$ standardisiert, die Responsevariable $\mathbf{Y}$ zentriert und die Tuningparameter $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_q$ die $L_q$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
 D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
 \end{align*}
@@ -741,7 +741,7 @@ und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet,
 &\Rightarrow& \frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2} &\leq 1
 \end{align}
 gelten, weil in $\textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2)$ alle Summanden $\geq 0$ sein müssen.\\
-Wegen der Definition des Korrelationskoeffizienten $\rho_{k,l}$ als $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$ gilt auch
+Wegen $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$ gilt auch
 \begin{align}\label{Eq_Betrag_Diff_xl_xk}
 && ||\mathbf{x}_k - \mathbf{x}_l||^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
 &\Leftrightarrow& &=1-2\rho_{k,l}+1 \notag \\
