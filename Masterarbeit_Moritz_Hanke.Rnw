@@ -1078,6 +1078,8 @@ Stoppe, falls $PRSS_{NBPR_c}^{(t-1)}(\boldsymbol{\hat{\beta}}) - PRSS_{NBPR_c}^{
 \end{algorithm*}
 Zur Bestimmung der Tuningparameter $\gamma_1$, $\gamma_2$ und $\tau$ schlagen die Autoren der $\text{NBPR}_c$-Methode eine Suche über vorgegebene Kombinationen aus festgelegten Tuningparametern vor. Dabei wird diejenige Kombination gewählt, für die $\sum_{i=1}^{n}(\hat{Y}_i-Y_i)^2$ am geringsten ist.
 
+WAHLVON TUNINGPARAMETERN MUSS ANDERS GEMACHT WERDEN BEI MEINER SIMU
+
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
 Die Schätzer der $\text{Net}_c$-Methode sollen im nachfolgenden Kapiel mit der Enet-Methode hinsichtlich der richtig-positiven (RP) Rate bzw. falsch-positiven (FP) Rate an geschätzten Regressionskoeffizienten sowie bezüglich dem als Modelfehler definierten Maß 
 \begin{align*}
