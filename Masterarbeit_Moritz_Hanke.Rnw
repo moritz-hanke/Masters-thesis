@@ -918,7 +918,7 @@ P_{2,NBPR}^{(\{u,v\})}&=\left| \frac{1}{\tau}\left(\frac{|\beta_u|}{c_u}-\max\le
 - \left[ \frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right) +  \frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right)
 \right] \right\rbrace
 \end{align}
-und damit as zu unterscheidende Fälle:
+und damit als zu unterscheidende Fälle:
 \begin{align}
 P_{2,NBPR}^{(\{u,v\})}=\begin{cases}
 \frac{1}{\tau}\left(\frac{|\beta_u|}{c_u}-\frac{|\beta_v|}{c_v}\right) 
@@ -1005,7 +1005,17 @@ PRSS_{NBPR}^{(t)}(\boldsymbol{\beta}, \gamma_1, \gamma_2,\tau)&=\sum_{i=1}^{n} (
 
 
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
-Um die Schätzer der Netzwerk-basierten penalisierten Regressionen mit der Enet-Methode hinsichtlich der Genauigkeit und den Raten an richtig positiven bzw. falsch positiven der Regressionskoeffizienten zu vergleichen, wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der netzwerkbasierten penalisierten Regression auch hinsichtlich verschieden gewählter Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten durchgefüht.\\ Im nachfolgenden Kapitel wird zunächst die Methode zur Datensimulation erläutert (Unterkapitel \ref{Kap_Datensimulation}) und im anschließenden Unterkapitel \ref{Kap_Auswertung_Simu} werden anhand der simulierten Daten die Methoden XXXXX, XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
+Die Schätzer der NBPR-Methode sollen im nachfolgenden Kapiel mit der Enet-Methode hinsichtlich der richtig-positiven (RP) Rate bzw. falsch-positiven (FP) Rate an geschätzten Regressionskoeffizienten sowie bezüglich dem als Modelfehler definierten Maß 
+\begin{align*}
+MF=(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})'\mathbb{C}\text{ov}(\mathbf{X})(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})
+\end{align*}
+und dem Vorhersagefehler
+\begin{align*}
+PE=(\mathbf{\hat{\text{Y}}}- \mathbf{Y})'(\mathbf{\hat{\text{Y}}}- \mathbf{Y})
+\end{align*}
+verglichen werden.\\
+Dazu wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der NBPR-Regression auch hinsichtlich verschieden gewählter Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten im zweiten Teil des Starfterms durchgefüht.\\ 
+Zunächst wird die Methode zur Datensimulation erläutert (Unterkapitel \ref{Kap_Datensimulation}) und anschließend in Unterkapitel \ref{Kap_Auswertung_Simu} werden anhand der simulierten Daten die Methoden die , XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
 
 \section{Datensimulation}\label{Kap_Datensimulation}
 Für die unter \ref{Kap_Netzwerkbasierte_Penalisierung} vorgestellten Methoden wurde von den jeweiligen Autoren stets eine Datensimulationsschema genutzt, das \citeA{li_network-constrained_2008} für ihre Grace-Regression verwendet haben. Dabei wurde als der den Daten zugrunde liegende Graph ein unzusammenhängender Graph gewählt. Dessen Subgraphen bestehen jeweils aus einem zentralen Knoten, der mit zehn anderen Knoten verbunden ist, die untereinander wiederum keine Kanten aufweisen. Die Knoten- und damit Kovariablenzahl lag bei den Simulationen für $p \gg n$ jeweils zwischen $1100$ und $2200$ (vgl. \citeNP{li_network-constrained_2008} und \citeNP{kim_network-based_2013}). Anschließend wurden bei zwei bis vier Subgraphen alle Regressionskoeffizienten ungleich null gesetzt, sodass nur die dazu entsprechenden Kovariablen in das wahre Modell gehörten. Die restlichen Regressionskoeffizienten des Graphen wurden gleich null gesetzt und gehörten damit nicht in das wahre Modell. Bei den Simulation wurden jede Kovariable $X_j$ als normal verteilte Pseudozufallsvariable $X \sim \text{N}(0,1)$ und der Fehler $\varepsilon$ als $\varepsilon \sim \text{N}(0,\sigma^2)$ mit $\sigma^2=\sum_{j=1}^{p}\beta_j/b$ und $b \in \mathbb{N}_+$ generiert. Anschließend wurde damit die Responsevariable als $\text{Y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\varepsilon}$ simuliert.\\
@@ -1077,12 +1087,13 @@ plot(Beispielgraph, attrs = globalattrs, nodeAttrs = nodeattrs)
 Sowohl für die Enet-Methode als auch die NetXXXX mit unterschiedlichen Zentralitätsmaßen wurden bei jedem Datensatz die $n=300$ simulierten Beobachtungen in einen Tuningdatensatz mit $n_{tune}=50$ für die Suche der optimalen entsprechenden Tuningparameter, einen Trainingsdatensatz mit $n_{train}=50$ für die Schätzung von $\boldsymbol{\hat{\beta}}$ mit den ausgewählten Tuningparametern sowie einen Testdatensatz mit $n_{test}=200$ für die Überprüfung der Qualität der $\boldsymbol{\hat{\beta}}$ unterteilt.\\
 
 \subsection{Auswertung mittels Enet}
-Für die Auswertung der simulierten Daten mittels der Enet-Methode wurde das R-Paket \texttt{glmnet} \cite{friedmann2010glmnet} verwendet. Da sich die Lagrangedarstellung der Enet-Regression aus \eqref{Eq_Enet_Lagrange} für $\gamma=\gamma_1+\gamma_2$ und $0 \leq \alpha \leq 1$ auch als 
+Für die Auswertung der simulierten Daten mittels der Enet-Methode wurde das R-Paket \texttt{glmnet} \cite{friedmann2010glmnet} verwendet. Die Lagrangedarstellung der Enet-Regression aus \eqref{Eq_Enet_Lagrange} für $\gamma=\gamma_1+\gamma_2$ und $0 \leq \alpha \leq 1$ lässt sich mit $\gamma \ge 0$ und $0 \leq \alpha \leq 1$ darstellen als:  
 \begin{align}\label{Eq_Enet_Alternative_Lagrange}
 \boldsymbol{\hat{\beta}}^{Enet}(\gamma, \alpha)&=\arg \displaystyle\min_{\beta} \textnormal{PRSS}_{Enet}(\boldsymbol{\beta}, \gamma, \alpha) \notag \\
-&=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \alpha \sum_{j=1}^{p}|\beta_j| + \gamma (1-\alpha) \sum_{j=1}^{p}\beta_j^2 \right\rbrace \quad \text{mit} \ \gamma \ge 0.
+&=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \alpha \sum_{j=1}^{p}|\beta_j| + \gamma (1-\alpha) \sum_{j=1}^{p}\beta_j^2 \right\rbrace
 \end{align}
-darstellen lässt, wird deutlich, dass die Wahl $\alpha$ bestimmt, in wie weit die Lasso-Penalisierung im Verhältnis zur Ridge-Penalisierung und damit die Variablenselektion zur Stabiliserung der Schätzung gewichtet wird. Auf dieser Grundlage wurde für alle Kombinationen der Sequenz $\alpha={0.05, 0.1, \dots ,0.95}$ und einer Sequenz von $\gamma$, die von der Funktion \texttt{cv.glmnet} gewählt wird (vgl. dazu auch \citeNP{friedmann2010glmnet}), mit $n_{tune}$ der jeweiligen simulierten Datensätze das optimale $\alpha$ und $\gamma$ durch eine zehnfache Kreuzvalidierung ermittelt.
+Die Wahl von $\alpha$ bestimmt dann, in wie weit die Lasso-Penalisierung im Verhältnis zur Ridge-Penalisierung und damit die Variablenselektion zur Stabiliserung der Schätzung gewichtet wird. Auf dieser Grundlage wurde für alle Kombinationen der Sequenz $\alpha={0.05, 0.1, \dots ,0.95}$ und einer Sequenz von $\gamma$, die von der Funktion \texttt{cv.glmnet} gewählt wird (vgl. dazu auch \citeNP{friedmann2010glmnet}), mit $n_{tune}$ der jeweiligen simulierten Datensätze das optimale $\alpha$ und $\gamma$ durch eine zehnfache Kreuzvalidierung ermittelt. Mit den erhaltenen Tuningparametern wurden für die Beobachtungen $n_train$ die Regressionskoeffizienten geschätzt.\\
+Von 
 
 \subsection{Auswertung mittels NetXXXX}
 Knotengewcihte als Ränge bezogen auf die Zentralitätsmaße\\
