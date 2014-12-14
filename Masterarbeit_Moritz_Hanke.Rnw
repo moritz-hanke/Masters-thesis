@@ -697,15 +697,83 @@ In Analogie zum Lasso-Schätzer ergibt sich für ein orthogonales Design $\mathb
 \begin{align}
 \hat{\beta}_j^{nEnet}=\frac{(|\hat{\beta}_j^{OLS}|- \gamma_1 /2)^+}{1+\gamma_2}\text{sign}(\hat{\beta}_j^{OLS}).
 \end{align}
-Unabhängig davon, ob die RSS eine \textit{konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})< p$) oder eine \textit{strikt konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})= p$) ist, handelt es sich bei der PRSS der nEnet-Methode um eine strikt konvexe Funktion. Grund hierfür ist der Strafterm $P$, der durch $L_2$-Norm selbst strikt konvex ist. Dadurch hat der nEnet-Schätzer eine eindeutige Lösung und Kovariablen mit identischen beobachteten Ausprägungen erhalten die selben Schätzer (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). Darüber hinaus hat der nEnet-Schätzer einen \textit{Gruppierungseffekt}, d.h. Kovariablen, die hoch miteinander korrelieren erhalten ähnliche Schätzwerte \cite{zou_regularization_2005}. Sind $\gamma_1$ und $\gamma_2$ fest, sei zudem $\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)>0$ und beschreibt
+Unabhängig davon, ob die RSS eine \textit{konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})< p$) oder eine \textit{strikt konvexe} Funktion (für den Fall $\text{rang}(\mathbf{X})= p$) ist, handelt es sich bei der PRSS der nEnet-Methode um eine strikt konvexe Funktion. Grund hierfür ist der Strafterm $P$, der durch $L_2$-Norm selbst strikt konvex ist. Dadurch hat der nEnet-Schätzer eine eindeutige Lösung und Kovariablen mit identischen beobachteten Ausprägungen erhalten die selben Schätzer (für den Beweis siehe Anhang \ref{App_GroupEffect_Strict_Conv}). Darüber hinaus hat der nEnet-Schätzer einen \textit{Gruppierungseffekt}, d.h. Kovariablen, die hoch miteinander korrelieren erhalten ähnliche Schätzwerte: \begin{satz}\label{Satz_obere_Grenze_Diff_nEnet}
+Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
 \begin{align*}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2
+D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
 \end{align*}
-die \textit{einheitenlose} Differenz zwischen den geschätzten Regressionskoeffizienten für die Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$, so gilt (für den Beweis siehe Anhang \ref{App_obere_Grenze_Diff_nEnet}):
-\begin{align}\label{Eq_obere_Grenze_Diff_nEnet}
+so gilt
+\begin{align*}
 D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
+\end{align*}
+wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$ entspricht.
+\end{satz}
+Der nachfolgende Beweis ist eine korrigierte und ausführliche Ausarbeitung des Beweises von \citeA{zou_regularization_2005}.
+\begin{proof}
+Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
+\begin{align}\label{Eq_nEnt_Ableitung_beta_j}
+\frac{\partial\textnormal{PRSS}_{nEnet}(\boldsymbol{\beta},\gamma_1,\gamma_2)}{\partial \beta_j}=0 \qquad \textnormal{für} \ \hat{\beta}^{nEnet}_j \neq 0 \qquad \textnormal{mit} \ j=1,\dots,p
 \end{align}
-$\rho_{k,l}$ entspricht dabei der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$. Die Darstellung von \eqref{Eq_obere_Grenze_Diff_nEnet} zeigt, dass bei einer hohen Korrelation zwischen $x_k$ und $x_l$ die Differenz der entsprechenden Regressionskoeffizientenschätzer nahe 0 ist, da $\rho_{k,l} \rightarrow 1$. Diese Eigenschaft ist besonders wünschenswert, weil sich damit eine inhaltliche Ähnlichkeit, die sich in den beobachteten Kovariablenausprägungen äußert, in den geschätzten Regressionskoeffizienten darstellt. Zusätzlich verdeutlicht \eqref{Eq_obere_Grenze_Diff_nEnet}, dass bei einer perfekte Korrelation, d.h. $\rho_{k,l}=1$, die Schätzer identisch sind, weil in diesem Fall $D_{\gamma_1,\gamma_2}(k,l)=0$ gilt. %Die Autoren der Enet-Methode weisen darauf hin, dass für den Fall $\rho_{k,l}=-1$ einer der beiden Kovariablenvektoren mit $-1$ multipliziert werden soll, um die Darstellung aus \ref{Eq_obere_Grenze_Diff_nEnet} für die obere Grenze des Unterschieds nutzen zu können.
+erfüllt, ergibt sich aus \eqref{Eq_nEnt_Ableitung_beta_j} für die Kovariable $k$
+\begin{align}\label{Eq_Diff_nEnet_Kovariable_K}
+-2\mathbf{x}_k{'} \left\lbrace \mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) \right\rbrace + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
+\end{align}
+und für die Kovariable $l$
+\begin{align}\label{Eq_Diff_nEnet_Kovariable_L}
+-2\mathbf{x}_l{'} \left\lbrace \mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) \right\rbrace + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
+\end{align}
+mit $k,l = 1, \dots, p$.\\
+Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss auch\\ $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
+\begin{align} 
+&& 2(\mathbf{x}_l{'} - \mathbf{x}_k{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
+&\Leftrightarrow& (\mathbf{x}_l{'} - \mathbf{x}_k{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
+&\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} \label{Eq_Diff_nEnet_Schätzer_unnormiert},
+\end{align}
+wobei $\boldsymbol{\hat{\varepsilon}}^{nEnet}$ dem Residuenvektor  $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$ entspricht.\\
+Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die RSS aus \eqref{Eq_Enet_Constraint} unter Berücksichtigung der Enet-Nebenbedingung minimiert, muss 
+\begin{align*}
+&& \textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2) &\leq \textnormal{PRSS}_{nEnet}(\boldsymbol{\beta}=0, \gamma_1,\gamma_2) \\
+&\Leftrightarrow& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||^2_2 + \gamma_1 \sum_{1}^{p}|\beta_j^{nEnet}|+\gamma_2 \sum_{1}^{p}(\beta_j^{nEnet})^2 &\leq ||\mathbf{Y}-\mathbf{X}\mathbf{0}||^2_2=||\mathbf{Y}||^2_2
+\end{align*}
+und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet,
+\begin{align}\label{Eq_Verhaeltnis_Enet_Resid_vs_Y2}
+&& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 &\leq ||\mathbf{Y}||_2 \notag \\
+&\Rightarrow& \frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2} &\leq 1
+\end{align}
+gelten, weil in $\textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2)$ alle Summanden $\geq 0$ sein müssen.\\
+Wegen der Definition des Korrelationskoeffizienten $\rho_{k,l}$ als $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$ gilt auch
+\begin{align}\label{Eq_Betrag_Diff_xl_xk}
+&& ||\mathbf{x}_k - \mathbf{x}_l||^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
+&\Leftrightarrow& &=1-2\rho_{k,l}+1 \notag \\
+&\Leftrightarrow& &=2(1-\rho_{k,l}) \notag \\
+&\Rightarrow& ||\mathbf{x}_k - \mathbf{x}_l||_2 &= \sqrt{2(1-\rho_{k,l})}.
+\end{align}
+Da für das Verhältnis der $L_1$-Norm zur $L_2$-Norm eines Vektors $\mathbf{a}$
+\begin{align}\label{Eq_L1_Norm_greater_L2_Norm} 
+&& ||\mathbf{a}||_2 &= \sqrt{\sum_{j=1}^{p}a_j^2} \notag \\ 
+&& & \leq \sqrt{\sum_{j=1}^{p-1}a_j^2}+\sqrt{a_p^2} \notag \\ 
+&& &\leq \sqrt{\sum_{j=1}^{p-2}a_j^2}+\sqrt{a_{p-1}^2}+\sqrt{a_p^2} \notag \\
+&& &\leq \dots \notag \\ 
+&& &\leq \sum_{j=1}^{p}\sqrt{a_j^2} =||\mathbf{a}||_1 \notag \\
+&\Rightarrow& \frac{1}{||\mathbf{a}||_2} &\geq \frac{1}{||\mathbf{a}||_1}
+\end{align}
+und nach der \textit{Cauchy-Schwarz-Ungleichung} für zwei Vektoren $\mathbf{a}$ und $\mathbf{b}$
+\begin{align}\label{Eq_Cauchy-Schwarz-Ungleichung}
+||\mathbf{a}'\mathbf{b}||_2 \leq ||\mathbf{a}||_2 \cdot ||\mathbf{b}||_2
+\end{align}
+gilt, folgt aus
+\eqref{Eq_Diff_nEnet_Schätzer_unnormiert} für die obere Grenze der Differenz $D_{\gamma_1,\gamma_2}(k,l)$:
+\begin{align*}
+\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2 &= \frac{1}{||\mathbf{Y}||_1}|| \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} ||_2\\
+&\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{1}{\gamma_2} {\frac{1}{||\mathbf{Y}||_1}} ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 \cdot ||\mathbf{x}_k - \mathbf{x}_l||_2 \\
+&\stackrel{\eqref{Eq_L1_Norm_greater_L2_Norm}}{\leq} \frac{1}{\gamma_2} {\frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2}}
+||\mathbf{x}_k - \mathbf{x}_l||_2 \\
+&\stackrel{\eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}}{\leq} \frac{1}{\gamma_2}
+||\mathbf{x}_k - \mathbf{x}_l||_2 \\
+&\stackrel{\eqref{Eq_Betrag_Diff_xl_xk}}{=} \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
+\end{align*}
+\end{proof} 
+Satz \ref{Satz_obere_Grenze_Diff_nEnet} verdeutlichtm, dass bei einer hohen Korrelation zwischen $x_k$ und $x_l$ die Differenz der entsprechenden Regressionskoeffizientenschätzer nahe 0 ist, da $\rho_{k,l} \rightarrow 1$. Diese Eigenschaft ist besonders wünschenswert, weil sich damit eine inhaltliche Ähnlichkeit, die sich in den beobachteten Kovariablenausprägungen äußert, in den geschätzten Regressionskoeffizienten darstellt. Zusätzlich verdeutlicht Satz \ref{Satz_obere_Grenze_Diff_nEnet}, dass bei einer perfekte Korrelation, d.h. $\rho_{k,l}=1$, die Schätzer identisch sind, weil in diesem Fall $D_{\gamma_1,\gamma_2}(k,l)=0$ gilt. %Die Autoren der Enet-Methode weisen darauf hin, dass für den Fall $\rho_{k,l}=-1$ einer der beiden Kovariablenvektoren mit $-1$ multipliziert werden soll, um die Darstellung aus \ref{Eq_obere_Grenze_Diff_nEnet} für die obere Grenze des Unterschieds nutzen zu können.
 \\
 Da durch die weiter oben angesprochene doppelte Schrumpfung die geschätzten Regressionskoeffizienten unnötig stark --- im Verhältnis zur Verringerung der Varianz --- verzerrt werden, d.h. der MSE der einzelnen $\hat{\beta}$ ansteigt, schlagen \citeA{zou_regularization_2005} eine Skalierung des nEnet-Schätzers vor, um den eigentlichen Enet-Schätzer zu erhalten:
 \begin{align}\label{Eq_Enet-Schaetzer}
@@ -1007,11 +1075,11 @@ PRSS_{NBPR}^{(t)}(\boldsymbol{\beta}, \gamma_1, \gamma_2,\tau)&=\sum_{i=1}^{n} (
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
 Die Schätzer der NBPR-Methode sollen im nachfolgenden Kapiel mit der Enet-Methode hinsichtlich der richtig-positiven (RP) Rate bzw. falsch-positiven (FP) Rate an geschätzten Regressionskoeffizienten sowie bezüglich dem als Modelfehler definierten Maß 
 \begin{align*}
-MF=(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})'\mathbb{C}\text{ov}(\mathbf{X})(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})
+\text{MF}=(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})'\mathbb{C}\text{ov}(\mathbf{X})(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})
 \end{align*}
 und dem Vorhersagefehler
 \begin{align*}
-PE=(\mathbf{\hat{\text{Y}}}- \mathbf{Y})'(\mathbf{\hat{\text{Y}}}- \mathbf{Y})
+\text{PE}=(\mathbf{\hat{\text{Y}}}- \mathbf{Y})'(\mathbf{\hat{\text{Y}}}- \mathbf{Y})
 \end{align*}
 verglichen werden.\\
 Dazu wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der NBPR-Regression auch hinsichtlich verschieden gewählter Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten im zweiten Teil des Starfterms durchgefüht.\\ 
@@ -1104,6 +1172,7 @@ Kim et al haben square-pos genutzt, warum? ich nutze sum-square, was viel schnel
 % Übersicht über Zentralitätsmaße (Median Closeness etc) über die Graphen
 
 \chapter{Fazit}\label{Fazit}
+
 \begin{comment}
 #######
 ## 1 ##
@@ -1481,83 +1550,6 @@ muss wegen $\hat{\beta}_k \neq \hat{\beta}_l$ und $\frac{1}{2} J(\beta_k)+\frac{
 Damit gilt $P(\boldsymbol{\hat{\beta}^*}) <  P(\boldsymbol{\hat{\beta}})$, was ein Widerspruch zur Annahme ist, dass $\boldsymbol{\hat{\beta}}$ ein Minimum ist. Folglich muss $\hat{\beta}_k =\hat{\beta}_l$ sein.
 \end{proof}
 
-\section{Beweis der oberen Grenze der Differenz zwischen zwei nEnet-Schätzern}\label{App_obere_Grenze_Diff_nEnet}
-\begin{satz}
-Es seien die Kovariablen in $\mathbf{X}$ standardisiert, $\mathbf{Y}$ zentriert und $\gamma_1$ bzw. $\gamma_2$ fest. Darüber hinaus gelte $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ für die nEnet-Schätzer der Kovariablen $k$ und $l$ mit $k,l \in \{1,\dots,p\}$. Bezeichne $||\cdot||_1$ die $L_1$-Norm und wird die einheitenlose Differenz zwischen $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)$ und $\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)$ definiert als
-\begin{align*}
-D_{\gamma_1,\gamma_2}(k,l)=\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2,
-\end{align*}
-so gilt
-\begin{align*}
-D_{\gamma_1,\gamma_2}(k,l) \leq \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
-\end{align*}
-wobei $\rho_{k,l}$ der Stichprobenkorrelation $\rho_{k,l}=\mathbf{x}_k{'}\mathbf{x}_l$ entspricht.
-\end{satz}
-Der nachfolgende Beweis ist eine korrigierte und ausführliche Ausarbeitung des Beweises von \citeA{zou_regularization_2005}.
-\begin{proof}
-Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die Gleichung
-\begin{align}\label{Eq_nEnt_Ableitung_beta_j}
-\frac{\partial\textnormal{PRSS}_{nEnet}(\boldsymbol{\beta},\gamma_1,\gamma_2)}{\partial \beta_j}=0 \qquad \textnormal{für} \ \hat{\beta}^{nEnet}_j \neq 0 \qquad \textnormal{mit} \ j=1,\dots,p
-\end{align}
-erfüllt, ergibt sich aus \eqref{Eq_nEnt_Ableitung_beta_j} für die Kovariable $k$
-\begin{align}\label{Eq_Diff_nEnet_Kovariable_K}
--2\mathbf{x}_k{'} \left\lbrace \mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) \right\rbrace + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)=0
-\end{align}
-und für die Kovariable $l$
-\begin{align}\label{Eq_Diff_nEnet_Kovariable_L}
--2\mathbf{x}_l{'} \left\lbrace \mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2) \right\rbrace + \gamma_1 \textnormal{sign}\left\lbrace\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace + 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)=0
-\end{align}
-mit $k,l = 1, \dots, p$.\\
-Wegen der Annahme $\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2) \hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2) >0$ muss auch\\ $\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_k(\gamma_1,\gamma_2)\right\rbrace=\textnormal{sign}\left\lbrace\hat{\beta}^{nEnt}_l(\gamma_1,\gamma_2)\right\rbrace$ gelten, woraus für die Differenz zwischen \eqref{Eq_Diff_nEnet_Kovariable_K} und \eqref{Eq_Diff_nEnet_Kovariable_L} folgt:
-\begin{align} 
-&& 2(\mathbf{x}_l{'} - \mathbf{x}_k{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+2\gamma_2\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - 2\gamma_2\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)&=0 \notag \\
-&\Leftrightarrow& (\mathbf{x}_l{'} - \mathbf{x}_k{'})\left\lbrace\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}(\gamma_1,\gamma_2)\right\rbrace+\gamma_2\left\lbrace\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)\right\rbrace&=0 \notag \\
-&\Leftrightarrow& \hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2) - \hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2) = \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} \label{Eq_Diff_nEnet_Schätzer_unnormiert},
-\end{align}
-wobei $\boldsymbol{\hat{\varepsilon}}^{nEnet}$ dem Residuenvektor  $\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nEnet}$ entspricht.\\
-Da $\boldsymbol{\hat{\beta}}^{nEnet}$ die RSS aus \eqref{Eq_Enet_Constraint} unter Berücksichtigung der Enet-Nebenbedingung minimiert, muss 
-\begin{align*}
-&& \textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2) &\leq \textnormal{PRSS}_{nEnet}(\boldsymbol{\beta}=0, \gamma_1,\gamma_2) \\
-&\Leftrightarrow& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||^2_2 + \gamma_1 \sum_{1}^{p}|\beta_j^{nEnet}|+\gamma_2 \sum_{1}^{p}(\beta_j^{nEnet})^2 &\leq ||\mathbf{Y}-\mathbf{X}\mathbf{0}||^2_2=||\mathbf{Y}||^2_2
-\end{align*}
-und folglich, wenn $||\cdot||_2$ die $L_2$-Norm bezeichnet,
-\begin{align}\label{Eq_Verhaeltnis_Enet_Resid_vs_Y2}
-&& ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 &\leq ||\mathbf{Y}||_2 \notag \\
-&\Rightarrow& \frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2} &\leq 1
-\end{align}
-gelten, weil in $\textnormal{PRSS}_{nEnet}(\boldsymbol{\hat{\beta}}^{nEnet}, \gamma_1,\gamma_2)$ alle Summanden $\geq 0$ sein müssen.\\
-Wegen $\rho_{k,l} = \mathbf{x}_k{'}\mathbf{x}_l$ gilt auch
-\begin{align}\label{Eq_Betrag_Diff_xl_xk}
-&& ||\mathbf{x}_k - \mathbf{x}_l||^2_2&=\mathbf{x}_k{'}\mathbf{x}_k - 2\mathbf{x}_k{'}\mathbf{x}_l +\mathbf{x}_l{'}\mathbf{x}_l \notag \\
-&\Leftrightarrow& &=1-2\rho_{k,l}+1 \notag \\
-&\Leftrightarrow& &=2(1-\rho_{k,l}) \notag \\
-&\Rightarrow& ||\mathbf{x}_k - \mathbf{x}_l||_2 &= \sqrt{2(1-\rho_{k,l})}.
-\end{align}
-Da für das Verhältnis der $L_1$-Norm zur $L_2$-Norm eines Vektors $\mathbf{a}$
-\begin{align}\label{Eq_L1_Norm_greater_L2_Norm} 
-&& ||\mathbf{a}||_2 &= \sqrt{\sum_{j=1}^{p}a_j^2} \notag \\ 
-&& & \leq \sqrt{\sum_{j=1}^{p-1}a_j^2}+\sqrt{a_p^2} \notag \\ 
-&& &\leq \sqrt{\sum_{j=1}^{p-2}a_j^2}+\sqrt{a_{p-1}^2}+\sqrt{a_p^2} \notag \\
-&& &\leq \dots \notag \\ 
-&& &\leq \sum_{j=1}^{p}\sqrt{a_j^2} =||\mathbf{a}||_1 \notag \\
-&\Rightarrow& \frac{1}{||\mathbf{a}||_2} &\geq \frac{1}{||\mathbf{a}||_1}
-\end{align}
-und nach der \textit{Cauchy-Schwarz-Ungleichung} für zwei Vektoren $\mathbf{a}$ und $\mathbf{b}$
-\begin{align}\label{Eq_Cauchy-Schwarz-Ungleichung}
-||\mathbf{a}'\mathbf{b}||_2 \leq ||\mathbf{a}||_2 \cdot ||\mathbf{b}||_2
-\end{align}
-gilt, folgt aus
-\eqref{Eq_Diff_nEnet_Schätzer_unnormiert} für die obere Grenze der Differenz $D_{\gamma_1,\gamma_2}(k,l)$:
-\begin{align*}
-\frac{1}{||\mathbf{Y}||_1}||\hat{\beta}_k^{nEnet}(\gamma_1,\gamma_2)-\hat{\beta}_l^{nEnet}(\gamma_1,\gamma_2)||_2 &= \frac{1}{||\mathbf{Y}||_1}|| \frac{1}{\gamma_2} (\mathbf{x}_k{'} - \mathbf{x}_l{'}) \boldsymbol{\hat{\varepsilon}}^{nEnet} ||_2\\
-&\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{1}{\gamma_2} {\frac{1}{||\mathbf{Y}||_1}} ||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2 \cdot ||\mathbf{x}_k - \mathbf{x}_l||_2 \\
-&\stackrel{\eqref{Eq_L1_Norm_greater_L2_Norm}}{\leq} \frac{1}{\gamma_2} {\frac{||\boldsymbol{\hat{\varepsilon}}^{nEnet}||_2}{||\mathbf{Y}||_2}}
-||\mathbf{x}_k - \mathbf{x}_l||_2 \\
-&\stackrel{\eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}}{\leq} \frac{1}{\gamma_2}
-||\mathbf{x}_k - \mathbf{x}_l||_2 \\
-&\stackrel{\eqref{Eq_Betrag_Diff_xl_xk}}{=} \frac{1}{\gamma_2}\sqrt{2(1-\rho_{k,l})}.
-\end{align*}
-\end{proof}
 
 
 \section{Beweis der oberen Grenze der Differenz zwischen zwei nGrace-Schätzern}\label{App_obere_Grenze_Diff_nGrace}
@@ -1611,7 +1603,7 @@ Wegen der Annahme $\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) \cdot \hat{\beta}^{
 &\Rightarrow& \frac{||\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &= \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2} \notag \\
 &\Rightarrow& \frac{||\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\stackrel{\eqref{Eq_Cauchy-Schwarz-Ungleichung}}{\leq} \frac{||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \cdot ||\left(\mathbf{Y}-\mathbf{X}\boldsymbol{\hat{\beta}}^{nGrace}(\gamma_1,\gamma_2)\right)||_2}{||\mathbf{Y}||_1 \cdot 2\gamma_2}. \notag \\
 \end{align}
-Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}, \eqref{Eq_Betrag_Diff_xl_xk} und \eqref{Eq_L1_Norm_greater_L2_Norm} aus dem Beweis für die obere Grenze der Differenz zwischen zwei nEnet-Schätzern (siehe auch \ref{App_obere_Grenze_Diff_nEnet}) gilt für die obere Grenze für zwei nur miteinander verbundene nGrace-Schätzer:
+Unter Berücksichtigung der Gleichungen \eqref{Eq_Verhaeltnis_Enet_Resid_vs_Y2}, \eqref{Eq_Betrag_Diff_xl_xk} und \eqref{Eq_L1_Norm_greater_L2_Norm} aus dem Beweis für Satz \ref{Satz_obere_Grenze_Diff_nEnet} gilt für die obere Grenze für zwei nur miteinander verbundene nGrace-Schätzer:
 \begin{align*}
 && \frac{||\hat{\beta}^{nGrace}_k(\gamma_1,\gamma_2) - \hat{\beta}^{nGrace}_l(\gamma_1,\gamma_2)||_2}{||\mathbf{Y}||_1} &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nGrace}||_2}{||\mathbf{Y}||_1} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
 &\Rightarrow& &\leq \frac{1}{2\gamma_2} \frac{||\boldsymbol{\hat{\varepsilon}}^{nGrace}||_2}{||\mathbf{Y}||_2} \cdot ||(\mathbf{x}_k{'}- \mathbf{x}_l{'})||_2 \notag \\
