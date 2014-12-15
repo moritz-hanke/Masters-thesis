@@ -16,7 +16,6 @@
 \usepackage{rotating}
 
 
-
 %für die Kopfzeile
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -957,16 +956,16 @@ eine Vorzeichenvariable $s^{(0)}$ bestimmt. Im zweiten Schritt wird eine erneute
 \end{align}
 mit  $\beta_j=0$ wenn $j \in e \in E\setminus E^{neu}$. Die Autoren der 2Step-Methode geben allerdings nicht an, in wie weit sich die fälschliche Entfernung von Kanten aus dem Graphen im ersten Schritt auf die Genauigkeit bzw. Variablenselektion im zweiten Schritt auswirkt. Insbesondere die Bedingung, dass alle Koeffizienten $\beta_j=0$ gesetzt werden wenn $j \in e \in E\setminus E^{neu}$ gilt, könnte zu streng sein, weil danach "`isolierten"' Kovariablen keinen Einfluss auf die Responsevariable haben.
 
-\paragraph{$\text{NBPR}_c$} Die Annahme der Grace-, aGrace- sowie 2Step-Regression, dass mit einer Knotengewichtung $c$ für zwei adjazente Kovariablen $\beta_u/c_u=\beta_v/c_v$ bzw. $|\beta_u|/c_u=|\beta_v|/c_v$  gilt und andernfalls bei der Schätzung eine Erhöhung des Starfterms vorgenommen werden muss, ist dahingehend idealisiert, dass allen Kovariablen unter Berücksichtigung ihrer Bedeutung im Netzwerk der selbe Einfluss auf die Responsevariable unterstellt wird. Beispielsweise gibt es keine begründete Annahme, warum in biologischen Netzwerken zwei benachbarte und gleich zentrale Gene den selben Einfluss auf die Responsevariable haben sollen. \citeA{kim_network-based_2013} schlagen daher die abgeschwächte Annahme $I(\beta_u \neq 0)=I(\beta_v \neq 0)$ vor, bei der lediglich unterstellt wird, dass wenn Kovariable $u$ einen Einfluss hat, auch ihre im Netzwerk benachbarte Kovariable $v$ einen Einfluss hat. Als \textit{idealen} Strafterm definieren die Autoren 
+\paragraph{$\text{NBPR}_c$} Die Annahme der Grace-, aGrace- sowie 2Step-Regression, dass mit einer Knotengewichtung $c$ für zwei adjazente Kovariablen $u$ und $v$ $\beta_u/c_u=\beta_v/c_v$ bzw. $|\beta_u|/c_u=|\beta_v|/c_v$  gilt und andernfalls bei der Schätzung eine Erhöhung des Starfterms vorgenommen werden muss, ist dahingehend idealisiert, dass allen Kovariablen unter Berücksichtigung ihrer Bedeutung im Netzwerk der selbe Einfluss auf die Responsevariable unterstellt wird. Beispielsweise gibt es keine begründete Annahme, warum in biologischen Netzwerken zwei benachbarte und gleich zentrale Gene den selben Einfluss auf die Responsevariable haben sollen. \citeA{kim_network-based_2013} schlagen daher die abgeschwächte Annahme $I(\beta_u \neq 0)=I(\beta_v \neq 0)$ vor, bei der lediglich unterstellt wird, dass, wenn Kovariable $u$ einen Einfluss hat, auch ihre im Netzwerk benachbarte Kovariable $v$ einen Einfluss hat. Als \textit{idealen} Strafterm definieren die Autoren 
 \begin{align}\label{Eq_NBPR_idealer_Strafterm}
 P_{iNBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=\gamma_1 \sum_{j=1}^{p}I(|\beta_j|\neq 0) + \gamma_2 \sum_{\{u,v\}}\left| I\left( \frac{|\beta_u|}{c_u} \neq 0 \right) - I\left( \frac{|\beta_v|}{c_v} \neq 0 \right) \right|.
 \end{align}
-Da es sich bei der Indikatorfunktion $I(\cdot)$ um eine nicht-kontinuierliche Funktion handelt, ist die Minimierung von \eqref{Eq_NBPR_idealer_Strafterm} nicht in Polynomialzeit, d.h. $\mathcal{O}(p^r)$ mit konstantem Faktor $r$, lösbar. Allein die Anzahl an möglich Lösungen für den ersten Term wächst exponentiell mit $p$, sodass $2^p$ mögliche Lösungen berechnet werden müssen und damit bei hochdimensionalen Daten \textit{praktisch} das Minimierungsproblem nicht berechenbar ist.\\
-Als Alternative für eine Indikatorfunktion $I(|z| \neq 0)$ mit einer Variable $z$ kann die kontinuierliche Funktion $J_\tau(|z|)=\min (\frac{|z|}{\tau}, 1)$ mit Tuningparameter $\tau > 0$ genutzt werden, da diese sich für $\tau \rightarrow 0$ der Indikatorfunktion annähert. $P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)$ lässt sich damit schreiben als
+Da es sich bei der Indikatorfunktion $I(\cdot)$ um eine nicht-stetige Funktion handelt, ist die Minimierung von \eqref{Eq_NBPR_idealer_Strafterm} nicht in Polynomialzeit, d.h. $\mathcal{O}(p^r)$ mit konstantem Faktor $r$, lösbar. Allein die Anzahl an möglichen Lösungen für den ersten Term wächst exponentiell mit $p$, so dass $2^p$ mögliche Lösungen berechnet werden müssen und damit bei hochdimensionalen Daten \textit{praktisch} das Minimierungsproblem nicht lösbar ist.\\
+Als Alternative für eine Indikatorfunktion $I(|z| \neq 0)$ mit einer Variable $z$ kann die stetige Funktion $J_\tau(|z|)=\min (\frac{|z|}{\tau}, 1)$ mit Tuningparameter $\tau > 0$ genutzt werden, da diese sich für $\tau \rightarrow 0$ der Indikatorfunktion annähert. $P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)$ lässt sich damit schreiben als
 \begin{align}\label{Eq_NBPR_tau_Strafterm}
 P_{NBPR_c}(\boldsymbol{\beta}, \gamma_1, \gamma_2, \tau)=\gamma_1 \sum_{j=1}^{p}J_\tau(|\beta_j|) + \gamma_2 \sum_{\{u,v\}}\left| J_\tau\left( \frac{|\beta_u|}{c_u}\right) - J_\tau\left( \frac{|\beta_v|}{c_v}\right) \right|.
 \end{align}
-Während die Knotengewichtung $c$ in \eqref{Eq_NBPR_idealer_Strafterm} vernachlässigt werden kann, muss sie in \eqref{Eq_NBPR_tau_Strafterm} berücksichtigt werden, weil darüber eine Relativierung der Regressionskoeffizientengröße durch deren Bedeutung im Netzwerk erreicht und die Auswertung von $J_\tau$ bestimmt wird. Durch die Verwendung der nicht-konvexen Funktion $J_\tau$ ist auch  \eqref{Eq_NBPR_tau_Strafterm} eine nicht-konvexe Funktion, für die es demnach kein eindeutiges Minimum gibt. Die Autoren verwenden deswegen einen \textit{difference convex programming-algorithm} (\textit{DCPA}), bei dem eine nicht-konvexe Funktion sich als die Differenz zweier konvexer Funktionen darstellen lässt. Die DCPA-Darstellung von $J_\tau(|z|)=\min (\frac{|z|}{\tau}, 1)$ ist die um den Faktor $\frac{1}{\tau}$ multiplizierte Differenz der konvexen Funktionen $|z|$ und $\max(|z|-\tau,0)$. Mit $|z|=|\beta_j|$ können für die einzelnen Summanden $P_{1,NBPR_c}^{(j)}$ des ersten Teils des Strafterms folgende Fälle unterschieden werden:
+Während die Knotengewichtung $c$ in \eqref{Eq_NBPR_idealer_Strafterm} vernachlässigt werden kann, muss sie in \eqref{Eq_NBPR_tau_Strafterm} berücksichtigt werden, weil darüber eine Relativierung der Regressionskoeffizientengröße durch deren Bedeutung im Netzwerk erreicht und die Auswertung von $J_\tau$ bestimmt wird. Durch die Verwendung der nicht-konvexen Funktion $J_\tau$ ist auch  \eqref{Eq_NBPR_tau_Strafterm} eine nicht-konvexe Funktion, für die es demnach kein eindeutiges Minimum gibt. Die Autoren verwenden deswegen einen \textit{difference convex programming-algorithm} (\textit{DCPA}), bei dem eine nicht-konvexe Funktion sich als Differenz zweier konvexer Funktionen darstellen lässt. Die DCPA-Darstellung von $J_\tau(|z|)=\min (\frac{|z|}{\tau}, 1)$ ist die um den Faktor $\frac{1}{\tau}$ multiplizierte Differenz der konvexen Funktionen $|z|$ und $\max(|z|-\tau,0)$. Mit $|z|=|\beta_j|$ können für die einzelnen Summanden $P_{1,NBPR_c}^{(j)}$ des ersten Teils des Strafterms folgende Fälle unterschieden werden:
 \begin{align*}
 P_{1,NBPR_c}^{(j)}=\frac{1}{\tau}\left(|\beta_j|-\max(|\beta_j|-\tau, 0)\right)=\begin{cases}
 1 &\qquad \text{für} \ \tau \leq |\beta_j| \\
@@ -990,17 +989,17 @@ und damit als zu unterscheidende Fälle:
 \begin{align}
 P_{2,NBPR_c}^{(\{u,v\})}=\begin{cases}
 \frac{1}{\tau}\left(\frac{|\beta_u|}{c_u}-\frac{|\beta_v|}{c_v}\right) 
-&\qquad \text{für} \ \tau \geq \frac{\beta_u}{c_u} > \frac{\beta_v}{c_v} \notag \\
+&\qquad \text{für} \ \tau \geq \frac{|\beta_u|}{c_u} > \frac{|\beta_v|}{c_v} \notag \\
 \frac{1}{\tau}\left(\frac{|\beta_v|}{c_v}-\frac{|\beta_u|}{c_u}\right) 
-&\qquad \text{für} \ \tau \geq \frac{\beta_v}{c_v} > \frac{\beta_u}{c_u} \notag \\
+&\qquad \text{für} \ \tau \geq \frac{|\beta_v|}{c_v} > \frac{|\beta_u|}{c_u} \notag \\
 0 
-&\qquad \text{für} \ \tau \geq \frac{\beta_v}{c_v} = \frac{\beta_u}{c_u} \notag \\
+&\qquad \text{für} \ \tau \geq \frac{|\beta_v|}{c_v} = \frac{|\beta_u|}{c_u} \notag \\
 0 
-&\qquad \text{für} \ \tau < \frac{\beta_v}{c_v} = \frac{\beta_u}{c_u} \notag \\
-1-\frac{\beta_v}{\tau \cdot c_v} 
-&\qquad \text{für} \ \frac{\beta_u}{c_u} > \tau > \frac{\beta_v}{c_v} \notag \\
-1-\frac{\beta_u}{\tau \cdot c_u} 
-&\qquad \text{für} \ \frac{\beta_v}{c_v} > \tau > \frac{\beta_u}{c_u}.
+&\qquad \text{für} \ \tau < \frac{|\beta_v|}{c_v} = \frac{|\beta_u|}{c_u} \notag \\
+1-\frac{|\beta_v|}{\tau \cdot c_v} 
+&\qquad \text{für} \ \frac{|\beta_u|}{c_u} > \tau > \frac{|\beta_v|}{c_v} \notag \\
+1-\frac{|\beta_u|}{\tau \cdot c_u} 
+&\qquad \text{für} \ \frac{|\beta_v|}{c_v} > \tau > \frac{|\beta_u|}{c_u}.
 \end{cases}
 \end{align}
 Die Fallunterscheidung macht deutlich, dass sich für $\tau \rightarrow 0$ die Differenz des zweiten Strafterms in \eqref{Eq_NBPR_tau_Strafterm} der Differenz der Indikatorfunktionen in \eqref{Eq_NBPR_idealer_Strafterm} annähert.\\
@@ -1029,20 +1028,19 @@ P_{NBPR_c}(\boldsymbol{\beta},\gamma_1, \gamma_2, \tau)
 	+ \gamma_2 \sum_{\{u,v\}} \left[ \frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right) +  \frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right) \right]
 	\right\rbrace
 \end{align}
-Wird die zweite konvexe Funktion aus \eqref{Eq_NBPR_Diff_Konvexe_Funktionen} durch einen zuvor erhaltenen Schätzer $\hat{\beta}^{(t-1)}$ linearisiert, sodass
+Wird die zweite konvexe Funktion aus \eqref{Eq_NBPR_Diff_Konvexe_Funktionen} durch einen zuvor erhaltenen Schätzer $\hat{\beta}^{(t-1)}$ angenähert, sodass für den ersten Teil
 \begin{align*}
-\max(|\beta_j|-\tau, 0) \Rightarrow \max(|\hat{\beta}_j^{(t-1)}|-\tau, 0)
+\max(|\hat{\beta}_j^{(t-1)}|-\tau, 0)
 \end{align*}
-sowie
+und für den zweiten Teil
 \begin{align*}
-&& &\frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right) +  \frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right) \\
-&\Rightarrow& &\frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)})+\max\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}-\tau, 0\right) +  \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})+\max\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}-\tau, 0\right)
+\frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)})+\max\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}-\tau, 0\right) +  \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})+\max\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}-\tau, 0\right)
 \end{align*}
 und damit für $\tau \rightarrow 0$ 
 \begin{align*}
 &\frac{\gamma_1}{\tau} \sum_{j=1}^{p}|\beta_j| - \frac{\gamma_1}{\tau} \sum_{j=1}^{p}\max(|\hat{\beta}_j^{(t-1)}|-\tau, 0) \\ 
-\rightarrow & \frac{\gamma_1}{\tau} \sum_{j=1}^{p}|\beta_j| - \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|>\tau)\right)\\
-=&\frac{\gamma_1}{\tau} \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|<\tau)\right)
+= & \frac{\gamma_1}{\tau} \sum_{j=1}^{p}|\beta_j| - \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|>\tau)\right)\\
+=&\frac{\gamma_1}{\tau} \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}| \leq \tau)\right)
 \end{align*}
 sowie
 \begin{align*}
@@ -1050,7 +1048,7 @@ sowie
 \frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)})+\max\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}-\tau, 0\right) \right. \\
 &\phantom{{}=111} \left. +  \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})+\max\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}-\tau, 0\right)
 \right\rbrace \\
-\rightarrow &\frac{\gamma_2}{\tau} \sum_{\{u,v\}} \left\lbrace
+= &\frac{\gamma_2}{\tau} \sum_{\{u,v\}} \left\lbrace
 \frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)})+I\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}>\tau \right) \right. \\
 &\phantom{{}=111} \left.+  \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})+I\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}>\tau \right)
 \right\rbrace \\
@@ -1062,7 +1060,7 @@ sowie
 \end{align*}
 gilt, ergibt sich als PRSS für den Schätzdurchlauf $t$:
 \begin{align}\label{Eq_NBPR_round_t}
-PRSS_{NBPR_c}^{(t)}(\boldsymbol{\beta}, \gamma_1, \gamma_2,\tau)&=\sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2 + \frac{\gamma_1}{\tau} \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|<\tau)\right) \notag \\
+PRSS_{NBPR_c}^{(t)}(\boldsymbol{\beta}, \gamma_1, \gamma_2,\tau)&=\sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j )^2 + \frac{\gamma_1}{\tau} \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}| \leq \tau)\right) \notag \\
 &\phantom{{}=0} + \gamma_2 \sum_{\{u,v\}} 2\max \left[\frac{|\beta_u|}{c_u}+\max\left(\frac{|\beta_v|}{c_v}-\tau, 0\right), \frac{|\beta_v|}{c_v}+\max\left(\frac{|\beta_u|}{c_u}-\tau, 0\right)\right] \notag \\
 &\phantom{{}=0} - \frac{\gamma_2}{\tau} \sum_{\{u,v\}} \left\lbrace
 \frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)}) \left[1+I\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}>\tau \right) \right] \right. \notag \\
@@ -1071,17 +1069,17 @@ PRSS_{NBPR_c}^{(t)}(\boldsymbol{\beta}, \gamma_1, \gamma_2,\tau)&=\sum_{i=1}^{n}
 \right\rbrace.
 \end{align}
 Für fest vorgegebene Tuningparameter $\gamma_1$, $\gamma_2$, $\tau$, einer Toleranzgrenze $\epsilon$ sowie dem Knotenzentralitätsmaß $c$ ergibt sich als Lösungsalgorithmus zur Bestimmung von $\boldsymbol{\hat{\beta}}^{NBPR_c}$:
-\begin{algorithm*}
-Minimiere $PRSS_{NBPR_c}^{(t)}(\boldsymbol{\beta})$ für $t=1$ und einem vorgegeben Startschätzer $\boldsymbol{\hat{\beta}}^{(0)}$//
-Berechne $\boldsymbol{\hat{\beta}}^{(t)}$, das $PRSS_{NBPR_c}^{(t)}(\boldsymbol{\beta})$ für Iteration $t$ mit $t > 1$ minimiert.\\
-Stoppe, falls $PRSS_{NBPR_c}^{(t-1)}(\boldsymbol{\hat{\beta}}) - PRSS_{NBPR_c}^{(t)}(\boldsymbol{\hat{\beta}}) \leq \epsilon$, andernfalls gehe zu Punkt 2.
-\end{algorithm*}
+\begin{algorithm}[H]
+$1.$ Minimiere $PRSS_{NBPR_c}^{(t)}(\boldsymbol{\beta})$ für $t=1$ und einem vorgegeben Startschätzer $\boldsymbol{\hat{\beta}}^{(0)}$ \\ 
+$2.$ Berechne $\boldsymbol{\hat{\beta}}^{(t)}$, das $PRSS_{NBPR_c}^{(t)}(\boldsymbol{\beta})$ für Iteration $t$ mit $t > 1$ minimiert.\\
+$3.$ Stoppe, falls $PRSS_{NBPR_c}^{(t-1)}(\boldsymbol{\hat{\beta}}) - PRSS_{NBPR_c}^{(t)}(\boldsymbol{\hat{\beta}}) \leq \epsilon$, sonst gehe zu Punkt 2.
+\end{algorithm}
 Zur Bestimmung der Tuningparameter $\gamma_1$, $\gamma_2$ und $\tau$ schlagen die Autoren der $\text{NBPR}_c$-Methode eine Suche über vorgegebene Kombinationen aus festgelegten Tuningparametern vor. Dabei wird diejenige Kombination gewählt, für die $\sum_{i=1}^{n}(\hat{Y}_i-Y_i)^2$ am geringsten ist.
 
 WAHLVON TUNINGPARAMETERN MUSS ANDERS GEMACHT WERDEN BEI MEINER SIMU
 
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
-Die Schätzer der $\text{Net}_c$-Methode sollen im nachfolgenden Kapiel mit der Enet-Methode hinsichtlich der richtig-positiven (RP) Rate bzw. falsch-positiven (FP) Rate an geschätzten Regressionskoeffizienten sowie bezüglich dem als Modelfehler definierten Maß 
+Die Regressionskoeffizientenschätzer der $\text{NBPR}_c$-Methode sollen im nachfolgenden Kapitel mit der Enet-Methode hinsichtlich der richtig-positiven Rate (RP-Rate) bzw. falsch-positiven Rate (FP-Rate) sowie bezüglich dem als Modelfehler definierten Maß 
 \begin{align*}
 \text{MF}=(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})'\mathbb{C}\text{ov}(\mathbf{X})(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})
 \end{align*}
@@ -1090,7 +1088,7 @@ und dem Vorhersagefehler
 \text{PE}=(\mathbf{\hat{\text{Y}}}- \mathbf{Y})'(\mathbf{\hat{\text{Y}}}- \mathbf{Y})
 \end{align*}
 verglichen werden.\\
-Dazu wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der $\text{Net}_c$-Regression auch hinsichtlich verschieden gewählter Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten im zweiten Teil des Starfterms durchgefüht.\\ 
+Dazu wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der $\text{NBPR}_c$-Regression auch hinsichtlich verschieden gewählter Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten im zweiten Teil des Starfterms durchgefüht.\\ 
 Zunächst wird die Methode zur Datensimulation erläutert (Unterkapitel \ref{Kap_Datensimulation}) und anschließend in Unterkapitel \ref{Kap_Auswertung_Simu} werden anhand der simulierten Daten die Methoden die , XXXXX, XXXXX bzgl. ihrer YYYYYYYYY miteinander verglichen.
 
 \section{Datensimulation}\label{Kap_Datensimulation}
