@@ -1078,6 +1078,7 @@ Zur Bestimmung der Tuningparameter $\gamma_1$, $\gamma_2$ und $\tau$ schlagen di
 
 WAHLVON TUNINGPARAMETERN MUSS ANDERS GEMACHT WERDEN BEI MEINER SIMU
 
+
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
 Die Regressionskoeffizientenschätzer der $\text{NBPR}_c$-Methode sollen im nachfolgenden Kapitel mit der Enet-Methode hinsichtlich der richtig-positiven Rate (RP-Rate) bzw. falsch-positiven Rate (FP-Rate) sowie bezüglich dem als Modelfehler definierten Maß 
 \begin{align*}
@@ -1173,7 +1174,43 @@ Von
 Knotengewcihte als Ränge bezogen auf die Zentralitätsmaße\\
 Kim et al haben square-pos genutzt, warum? ich nutze sum-square, was viel schneller ist
 
+\begin{table}[H]
+\centering
+\begin{tabular}{cccccccc}
+\multicolumn{1}{l}{}                   & \multicolumn{3}{c}{\textbf{RP-Rate}} & \multicolumn{1}{l}{} & \multicolumn{3}{c}{\textbf{FP-Rate}} \\ \cline{2-4} \cline{6-8} 
+\multicolumn{1}{l}{}                   & arith. Mittel   & s        & Median  & \multicolumn{1}{l}{} & arith. Mittel  & s        & Median   \\ \cline{2-4} \cline{6-8} 
+$\text{Enet}^{(1.0)}$                  & $0.436$         & $0.146$  & $0.42$  &                      & $0.052$        & $0.035$  & $0.042$  \\
+                                       &                 &          &         &                      &                &          &          \\
+$\text{NBPR}_{\mathscr{B},R}^{(0.71)}$ & $0.465$         & $0.142$  & $0.46$  &                      & $0.059$        & $0.043$  & $0.048$  \\
+$\text{NBPR}_{\mathscr{C},R}^{(0.74)}$ & $0.461$         & $0.132$  & $0.46$  &                      & $0.066$        & $0.076$  & $0.047$  \\
+$\text{NBPR}_{d,R}^{(0.66)}$           & $0.458$         & $0.152$  & $0.44$  &                      & $0.073$        & $0.107$  & $0.048$  \\
+$\text{NBPR}_{\mathscr{E},R}^{(0.64)}$ & $0.46$          & $0.124$  & $0.45$  &                      & $0.056$        & $0.043$  & $0.045$  \\
+                                       &                 &          &         &                      &                &          &          \\
+$\text{NBPR}_{\sqrt{d}}^{(0.42)}$      & $0.494$         & $0.195$  & $0.5$   &                      & $0.094$        & $0.150$  & $0.073$  \\
+$\text{NBPR}_{\mathscr{C}}^{(0.56)}$   & $0.440$         & $0.175$  & $0.44$  &                      & $0.048$        & $0.047$  & $0.032$  \\
+                                       &                 &          &         &                      &                &          &          \\
+$\text{NBPR}_{1}^{(0.38)}$             & $0.483$         & $0.164$  & $0.52$  &                      & $0.067$        & $0.041$  & $0.067$ 
+\end{tabular}
+\end{table}
 
+\begin{table}[H]
+\centering
+\begin{tabular}{cccccccc}
+\multicolumn{1}{l}{}                   & \multicolumn{3}{c}{\textbf{ME}}     & \multicolumn{1}{l}{} & \multicolumn{3}{c}{\textbf{PE}}      \\ \cline{2-4} \cline{6-8} 
+\multicolumn{1}{l}{}                   & arith. Mittel & s        & Median   & \multicolumn{1}{l}{} & arith. Mittel & s        & Median    \\ \cline{2-4} \cline{6-8} 
+$\text{Enet}^{(1.0)}$                  & $155.56$      & $44.75$  & $147.12$ &                      & $238.2$       & $52.92$  & $230.0$   \\
+                                       &               &          &          &                      &               &          &           \\
+$\text{NBPR}_{\mathscr{B},R}^{(0.71)}$ & $195.78$      & $85.44$  & $175.46$ &                      & $1044.30$     & $285.73$ & $1024.21$ \\
+$\text{NBPR}_{\mathscr{C},R}^{(0.74)}$ & $201.27$      & $101.75$ & $173.65$ &                      & $973.02$      & $307.96$ & $954.30$  \\
+$\text{NBPR}_{d,R}^{(0.66)}$           & $207.43$      & $138.74$ & $168.54$ &                      & $972.36$      & $300.24$ & $971.32$  \\
+$\text{NBPR}_{\mathscr{E},R}^{(0.64)}$ & $182.71$      & $73.85$  & $164.84$ &                      & $1042.27$     & $247.08$ & $1021.01$ \\
+                                       &               &          &          &                      &               &          &           \\
+$\text{NBPR}_{\sqrt{d}}^{(0.42)}$      & $236.30$      & $177.07$ & $209.66$ &                      & $886.66$      & $280.03$ & $917.39$  \\
+$\text{NBPR}_{\mathscr{C}}^{(0.56)}$   & $194.03$      & $73.82$  & $172.53$ &                      & $998.38$      & $253.03$ & $1021.23$ \\
+                                       &               &          &          &                      &               &          &           \\
+$\text{NBPR}_{1}^{(0.38)}$             & $204.95$      & $83.60$  & $197.76$ &                      & $1004.30$     & $267.51$ & $1017.60$
+\end{tabular}
+\end{table}
 %%%%%%%%%%%%
 % Übersicht über Zentralitätsmaße (Median Closeness etc) über die Graphen
 
