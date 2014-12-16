@@ -1158,61 +1158,69 @@ nodeattrs$fillcolor <- c(x420 = "red", x395="yellow", x387="cyan")
 plot(Beispielgraph, attrs = globalattrs, nodeAttrs = nodeattrs)
 @
 
-\section{Auswertung der Simulationsstudie}\label{Kap_Auswertung_Simu}
-Sowohl für die Enet-Methode als auch die $\text{NBPR}_c$-Methoden wurden bei jedem Datensatz die $n=300$ simulierten Beobachtungen in einen Tuningdatensatz mit $n_{tune}=50$ für die Suche der optimalen entsprechenden Tuningparameter, einen Trainingsdatensatz mit $n_{train}=50$ für die Schätzung von $\boldsymbol{\hat{\beta}}$ mit den ausgewählten Tuningparametern sowie einen Testdatensatz mit $n_{test}=200$ für die Überprüfung der Qualität der $\boldsymbol{\hat{\beta}}$ unterteilt.\\
+\section{Schätzung der Regressionskoeffizienten in der Simulationsstudie}\label{Kap_Auswertung_Simu}
+Sowohl für die Enet-Methode als auch die $\text{NBPR}_c$-Methoden wurden bei jedem Datensatz die $n=300$ simulierten Beobachtungen in einen Tuningdatensatz mit $n_{tune}=50$ für die Suche der optimalen entsprechenden Tuningparameter, einen Trainingsdatensatz mit $n_{train}=50$ für die Schätzung von $\boldsymbol{\hat{\beta}}$ mit den ausgewählten Tuningparametern sowie einen Testdatensatz mit $n_{test}=200$ für die Überprüfung der Qualität der $\boldsymbol{\hat{\beta}}$ unterteilt. Für die Bestimmung der TP- bzw- FP-Rate wurden alle $|\hat{\beta_j}| < 0.00001$ als $|\hat{\beta_j}| = 0$ gesetzt.\\
 
-\subsection{Auswertung mittels Enet}
-Für die Auswertung der simulierten Daten mittels der Enet-Methode wurde das R-Paket \texttt{glmnet} \cite{friedmann2010glmnet} verwendet. Die Lagrangedarstellung der Enet-Regression aus \eqref{Eq_Enet_Lagrange} lässt sich für $\gamma=\gamma_1+\gamma_2$ und $0 \leq \alpha \leq 1$ mit $\gamma \ge 0$ und $0 \leq \alpha \leq 1$ darstellen als:  
+\subsection{Schätzung mittels Enet}
+Die Schätzung von $\boldsymbol{\beta}$ mittels der Enet-Methode wurde mit Hilfe des R-Pakets \texttt{glmnet} \cite{friedmann2010glmnet} durchgeführt. Dabei wurde unter Definition von $\gamma=\gamma_1+\gamma_2$, mit $\gamma \ge 0$, und $0 \leq \alpha \leq 1$ eine alternative Lagrangeform der PRSS aus Gleichung \eqref{Eq_Enet_Lagrange} gewählt:  
 \begin{align}\label{Eq_Enet_Alternative_Lagrange}
 \boldsymbol{\hat{\beta}}^{Enet}(\gamma, \alpha)&=\arg \displaystyle\min_{\beta} \textnormal{PRSS}_{Enet}(\boldsymbol{\beta}, \gamma, \alpha) \notag \\
 &=\arg \displaystyle\min_{\beta} \left\lbrace \sum_{i=1}^{n} (Y_i - \sum_{j=1}^{p} x_{ij} \beta_j)^2  + \gamma \alpha \sum_{j=1}^{p}|\beta_j| + \gamma (1-\alpha) \sum_{j=1}^{p}\beta_j^2 \right\rbrace
 \end{align}
-Die Wahl von $\alpha$ bestimmt dann, in wie weit die Lasso-Penalisierung im Verhältnis zur Ridge-Penalisierung und damit die Variablenselektion zur Stabiliserung der Schätzung gewichtet wird. Auf dieser Grundlage wurde für alle Kombinationen der Sequenz $\alpha={0.05, 0.1, \dots ,0.95}$ und einer Sequenz von $\gamma$, die von der Funktion \texttt{cv.glmnet} gewählt wird (vgl. dazu auch \citeNP{friedmann2010glmnet}), mit $n_{tune}$ der jeweiligen simulierten Datensätze das optimale $\alpha$ und $\gamma$ durch eine zehnfache Kreuzvalidierung ermittelt. Mit den erhaltenen Tuningparametern wurden für die Beobachtungen $n_train$ die Regressionskoeffizienten geschätzt.\\
-Von 
+Die Wahl von $\alpha$ bestimmt dabei, in wie weit die Lasso-Penalisierung im Verhältnis zur Ridge-Penalisierung und damit die Variablenselektion zur Stabiliserung der Schätzung gewichtet wird. Auf dieser Grundlage wurde für alle Kombinationen der Sequenz $\alpha={0.05, 0.1, \dots ,0.95}$ und einer Sequenz von $\gamma$, die von der Funktion \texttt{cv.glmnet} gewählt wird (vgl. dazu auch \citeNP{friedmann2010glmnet}), mit $n_{tune}$ der jeweiligen simulierten Datensätze das optimale $\alpha$ und $\gamma$ durch eine zehnfache Kreuzvalidierung ermittelt. Mit den so erhaltenen Tuningparametern wurden unter Verwendung der Beobachtungen $n_{train}$ die Regressionskoeffizienten mit der Funktion \texttt{glmnet} geschätzt. Anschließend wurden mit den Beobachtungen $n_{test}$ die Model- bzw. Vorhersagefehler bestimmt.\\
 
-\subsection{Auswertung mittels NetXXXX}
-Knotengewcihte als Ränge bezogen auf die Zentralitätsmaße\\
-Kim et al haben square-pos genutzt, warum? ich nutze sum-square, was viel schneller ist
 
-\begin{table}[H]
+\subsection{Schätzung mittels $\text{NBPR}_c$}
+Da es sich bei \eqref{Eq_NBPR_round_t} um eine konvexe Funktion handelt, kann die Matlab-Erweiterung \texttt{CVX} zur Lösung des Optimierungsproblems verwendet werden \cite{gb08cvx,cvx}. Während die Autoren der $\text{NBPR}_c$-Methode die Zielfunktion über die \texttt{CVX}-Funktion \texttt{square\_pos(norm(\dots,2))} minimieren, wurde in dieser Arbeit als Alternative die \texttt{CVX}-Funktion \texttt{sum\_square(\dots)} gewählt. Die Änderung liefert eine um den Faktor $14$ beschleunigte Lösung von \eqref{Eq_NBPR_round_t} und soll nach Angaben der Autoren der \texttt{CVX}-Toolbox} nur geringe numerische Unterschiede zu \texttt{square\_pos(norm(\dots,2))} aufweisen. Für die Bestimmung der verschiedenen Zentralitätsmaße wurde auf das \texttt{R}-Paket \texttt{igraph} zurückgegriffen. Da die Betweenness- und die Eigenvektor-Zentralität auch Werte gleich null annehmen kann, obwohl die entsprechenden Knoten mindestens zu einem Knoten adjazent sind, können diese Maße wegen der Gewichtung im Nenner in \eqref{Eq_NBPR_round_t} nicht direkt verwendet werden. Deswegen wurden stattdessen Rangplätze für die einzelnen Knoten, basierend auf diesen beiden Zentralitätsstatistiken sowie dem Knotengrad und der Closeness-Zentalität, vergeben und diese als Gewichtung verwendet.
+
+\begin{sidewaystable}[h]
 \centering
-\begin{tabular}{cccccccc}
-\multicolumn{1}{l}{}                   & \multicolumn{3}{c}{\textbf{RP-Rate}} & \multicolumn{1}{l}{} & \multicolumn{3}{c}{\textbf{FP-Rate}} \\ \cline{2-4} \cline{6-8} 
-\multicolumn{1}{l}{}                   & arith. Mittel   & s        & Median  & \multicolumn{1}{l}{} & arith. Mittel  & s        & Median   \\ \cline{2-4} \cline{6-8} 
-$\text{Enet}^{(1.0)}$                  & $0.436$         & $0.146$  & $0.42$  &                      & $0.052$        & $0.035$  & $0.042$  \\
-                                       &                 &          &         &                      &                &          &          \\
-$\text{NBPR}_{\mathscr{B},R}^{(0.71)}$ & $0.465$         & $0.142$  & $0.46$  &                      & $0.059$        & $0.043$  & $0.048$  \\
-$\text{NBPR}_{\mathscr{C},R}^{(0.74)}$ & $0.461$         & $0.132$  & $0.46$  &                      & $0.066$        & $0.076$  & $0.047$  \\
-$\text{NBPR}_{d,R}^{(0.66)}$           & $0.458$         & $0.152$  & $0.44$  &                      & $0.073$        & $0.107$  & $0.048$  \\
-$\text{NBPR}_{\mathscr{E},R}^{(0.64)}$ & $0.46$          & $0.124$  & $0.45$  &                      & $0.056$        & $0.043$  & $0.045$  \\
-                                       &                 &          &         &                      &                &          &          \\
-$\text{NBPR}_{\sqrt{d}}^{(0.42)}$      & $0.494$         & $0.195$  & $0.5$   &                      & $0.094$        & $0.150$  & $0.073$  \\
-$\text{NBPR}_{\mathscr{C}}^{(0.56)}$   & $0.440$         & $0.175$  & $0.44$  &                      & $0.048$        & $0.047$  & $0.032$  \\
-                                       &                 &          &         &                      &                &          &          \\
-$\text{NBPR}_{1}^{(0.38)}$             & $0.483$         & $0.164$  & $0.52$  &                      & $0.067$        & $0.041$  & $0.067$ 
+\begin{tabular}{clccccclccccc}
+\multicolumn{1}{l}{}                   &  & \multicolumn{5}{c}{\textbf{RP-Rate}}                       &  & \multicolumn{5}{c}{\textbf{FP-Rate}}                        \\ \cline{3-7} \cline{9-13} 
+\multicolumn{1}{l}{}                   &  & arith. Mittel & s       & Median & $Q_{0.25}$ & $Q_{0.75}$ &  & arith. Mittel & s       & Median  & $Q_{0.25}$ & $Q_{0.75}$ \\ \cline{3-7} \cline{9-13} 
+$\text{Enet}^{(1.0)}$                  &  & $0.436$       & $0.146$ & $0.42$ & $0.34$     & $0.54$     &  & $0.052$       & $0.035$ & $0.042$ & $0.027$    & $0.070$    \\
+                                       &  &               &         &        &            &            &  &               &         &         &            &            \\
+$\text{NBPR}_{\mathscr{B},R}^{(0.71)}$ &  & $0.465$       & $0.142$ & $0.46$ & $0.36$     & $0.58$     &  & $0.059$       & $0.043$ & $0.048$ & $0.036$    & $0.074$    \\
+$\text{NBPR}_{\mathscr{C},R}^{(0.74)}$ &  & $0.461$       & $0.132$ & $0.46$ & $0.365$    & $0.54$     &  & $0.066$       & $0.076$ & $0.047$ & $0.033$    & $0.076$    \\
+$\text{NBPR}_{d,R}^{(0.66)}$           &  & $0.458$       & $0.152$ & $0.44$ & $0.36$     & $0.555$    &  & $0.073$       & $0.107$ & $0.048$ & $0.03$     & $0.074$    \\
+$\text{NBPR}_{\mathscr{E},R}^{(0.64)}$ &  & $0.46$        & $0.124$ & $0.45$ & $0.38$     & $0.54$     &  & $0.056$       & $0.043$ & $0.045$ & $0.032$    & $0.074$    \\
+                                       &  &               &         &        &            &            &  &               &         &         &            &            \\
+$\text{NBPR}_{\sqrt{d}}^{(0.42)}$      &  & $0.494$       & $0.195$ & $0.5$  & $0.37$     & $0.635$    &  & $0.094$       & $0.150$ & $0.073$ & $0.033$    & $0.098$    \\
+$\text{NBPR}_{\mathscr{C}}^{(0.56)}$   &  & $0.440$       & $0.175$ & $0.44$ & $0.3$      & $0.55$     &  & $0.048$       & $0.047$ & $0.032$ & $0.024$    & $0.057$    \\
+                                       &  &               &         &        &            &            &  &               &         &         &            &            \\
+$\text{NBPR}_{1}^{(0.38)}$             &  & $0.483$       & $0.164$ & $0.52$ & $0.365$    & $0.6$      &  & $0.067$       & $0.041$ & $0.067$ & $0.030$    & $0.091$   
 \end{tabular}
-\end{table}
+\caption[Übersicht über RP- und FP-Raten der verschiedenen Schätzmethoden]{Übersicht für das arithmetische Mittel, die empirische Standardabweichung, den Median sowie das $25\%$- bzw. $75\%$-Quantil für die RP- und FP-Raten der einzelnen Schätzmethoden. $\text{NBPR}_{\mathscr{B},R}$, $\text{NBPR}_{\mathscr{C},R}$,
+$\text{NBPR}_{d,R}$ und $\text{NBPR}_{\mathscr{E},R}$ bezeichnen die $\text{NBPR}_{c}$-Methode, bei der jeweils die einzelnen Knotengewichte als Rangplätzen über die Betweenness-, Closeness-, einfache Knotengrad- bzw. Eigenvektor-Zentralitäten gewählt wurden. Bei $\text{NBPR}_{\mathscr{C}}$ und $\text{NBPR}_{\sqrt{d}}}$ wurden als Knotengewichte die Closeness-Zentralität bzw. die Wurzel aus dem Knotengrad verwendet. $\text{NBPR}_1$ bezeichnet die Netzwerk-basierten penalisierten Regression ohne Knotengewichtung. Der hochgestellte Index gibt den jeweiligen Anteil an den $100$ Simulationen an, auf deren Grundlage die Maße berechnet wurden. Bis auf die Enet-Methode gab es bei allen Methoden numerische Instabilitäten, die für die Auswertung an dieser Stelle nicht berücksichtigt wurden.}\label{Tab_Uebersicht_RP_FP_Raten}
+\end{sidewaystable}
 
-\begin{table}[H]
+\begin{sidewaystable}[h]
 \centering
-\begin{tabular}{cccccccc}
-\multicolumn{1}{l}{}                   & \multicolumn{3}{c}{\textbf{ME}}     & \multicolumn{1}{l}{} & \multicolumn{3}{c}{\textbf{PE}}      \\ \cline{2-4} \cline{6-8} 
-\multicolumn{1}{l}{}                   & arith. Mittel & s        & Median   & \multicolumn{1}{l}{} & arith. Mittel & s        & Median    \\ \cline{2-4} \cline{6-8} 
-$\text{Enet}^{(1.0)}$                  & $155.56$      & $44.75$  & $147.12$ &                      & $238.2$       & $52.92$  & $230.0$   \\
-                                       &               &          &          &                      &               &          &           \\
-$\text{NBPR}_{\mathscr{B},R}^{(0.71)}$ & $195.78$      & $85.44$  & $175.46$ &                      & $1044.30$     & $285.73$ & $1024.21$ \\
-$\text{NBPR}_{\mathscr{C},R}^{(0.74)}$ & $201.27$      & $101.75$ & $173.65$ &                      & $973.02$      & $307.96$ & $954.30$  \\
-$\text{NBPR}_{d,R}^{(0.66)}$           & $207.43$      & $138.74$ & $168.54$ &                      & $972.36$      & $300.24$ & $971.32$  \\
-$\text{NBPR}_{\mathscr{E},R}^{(0.64)}$ & $182.71$      & $73.85$  & $164.84$ &                      & $1042.27$     & $247.08$ & $1021.01$ \\
-                                       &               &          &          &                      &               &          &           \\
-$\text{NBPR}_{\sqrt{d}}^{(0.42)}$      & $236.30$      & $177.07$ & $209.66$ &                      & $886.66$      & $280.03$ & $917.39$  \\
-$\text{NBPR}_{\mathscr{C}}^{(0.56)}$   & $194.03$      & $73.82$  & $172.53$ &                      & $998.38$      & $253.03$ & $1021.23$ \\
-                                       &               &          &          &                      &               &          &           \\
-$\text{NBPR}_{1}^{(0.38)}$             & $204.95$      & $83.60$  & $197.76$ &                      & $1004.30$     & $267.51$ & $1017.60$
+\begin{tabular}{clccccclccccc}
+\multicolumn{1}{l}{}                   &  & \multicolumn{5}{c}{\textbf{ME}}                               &  & \multicolumn{5}{c}{\textbf{PE}}                                \\ \cline{3-7} \cline{9-13} 
+\multicolumn{1}{l}{}                   &  & arith. Mittel & s        & Median   & $Q_{0.25}$ & $Q_{0.75}$ &  & arith. Mittel & s        & Median    & $Q_{0.25}$ & $Q_{0.75}$ \\ \cline{3-7} \cline{9-13} 
+$\text{Enet}^{(1.0)}$                  &  & $155.56$      & $44.75$  & $147.12$ & $123.05$   & $187$      &  & $238.2$       & $52.92$  & $230.0$   & $198.1$    & $272.42$   \\
+                                       &  &               &          &          &            &            &  &               &          &           &            &            \\
+$\text{NBPR}_{\mathscr{B},R}^{(0.71)}$ &  & $195.78$      & $85.44$  & $175.46$ & $146.72$   & $215.07$   &  & $1044.30$     & $285.73$ & $1024.21$ & $868.64$   & $1212.9$   \\
+$\text{NBPR}_{\mathscr{C},R}^{(0.74)}$ &  & $201.27$      & $101.75$ & $173.65$ & $148.63$   & $225.51$   &  & $973.02$      & $307.96$ & $954.30$  & $847.13$   & $1148.3$   \\
+$\text{NBPR}_{d,R}^{(0.66)}$           &  & $207.43$      & $138.74$ & $168.54$ & $148.66$   & $211.22$   &  & $972.36$      & $300.24$ & $971.32$  & $809.3$    & $1090.82$  \\
+$\text{NBPR}_{\mathscr{E},R}^{(0.64)}$ &  & $182.71$      & $73.85$  & $164.84$ & $149.39$   & $205.18$   &  & $1042.27$     & $247.08$ & $1021.01$ & $843.46$   & $1202.14$  \\
+                                       &  &               &          &          &            &            &  &               &          &           &            &            \\
+$\text{NBPR}_{\sqrt{d}}^{(0.42)}$      &  & $236.30$      & $177.07$ & $209.66$ & $161.71$   & $241.56$   &  & $886.66$      & $280.03$ & $917.39$  & $749.35$   & $1053.0$   \\
+$\text{NBPR}_{\mathscr{C}}^{(0.56)}$   &  & $194.03$      & $73.82$  & $172.53$ & $153.8$    & $221.25$   &  & $998.38$      & $253.03$ & $1021.23$ & $826.73$   & $1205.05$  \\
+                                       &  &               &          &          &            &            &  &               &          &           &            &            \\
+$\text{NBPR}_{1}^{(0.38)}$             &  & $204.95$      & $83.60$  & $197.76$ & $156.98$   & $223.98$   &  & $1004.30$     & $267.51$ & $1017.60$ & $818.13$   & $1148.13$ 
 \end{tabular}
-\end{table}
+\caption[Übersicht über Model- und Vorhersagefehler der verschiedenen Schätzmethoden]{Übersicht für das arithmetische Mittel, die empirische Standardabweichung, den Median sowie das $25\%$- bzw. $75\%$-Quantil für den Model- bzw Vorhersagefehler der einzelnen Schätzmethoden. $\text{NBPR}_{\mathscr{B},R}$, $\text{NBPR}_{\mathscr{C},R}$,
+$\text{NBPR}_{d,R}$ und $\text{NBPR}_{\mathscr{E},R}$ bezeichnen die $\text{NBPR}_{c}$-Methode, bei der jeweils die einzelnen Knotengewichte als Rangplätzen über die Betweenness-, Closeness-, einfache Knotengrad- bzw. Eigenvektor-Zentralitäten gewählt wurden. Bei $\text{NBPR}_{\mathscr{C}}$ und
+$\text{NBPR}_{d}$ wurden als Knotengewichte die Closeness-Zentralität bzw. die Wurzel aus dem Knotengrad verwendet. $\text{NBPR}_1$ bezeichnet die Netzwerk-basierten penalisierten Regression ohne Knotengewichtung. Der hochgestellte Index gibt den jeweiligen Anteil an den $100$ Simulationen an, auf deren Grundlage die Maße berechnet wurden. Bis auf die Enet-Methode gab es bei allen Methoden numerische Instabilitäten, die für die Auswertung an dieser Stelle nicht berücksichtigt wurden.}\label{Tab_Uebersicht_ME_PE}
+\end{sidewaystable}
 %%%%%%%%%%%%
 % Übersicht über Zentralitätsmaße (Median Closeness etc) über die Graphen
+
+\section{Ergebnisse der Regressionsschätzungen}
+Die durchschnittliche TP-Rate liegt dabei bei $0.436$ (siehe dazu auch Tabelle \ref{Tab_Uebersicht_RP_FP_Raten}), was circa $22$ Regressionskoeffizienten im Setting entspricht. Somit werden in dieser Simulationsstudie von den wahren Regressionskoeffizienten, die ungleich null sind, weniger als die Hälfte mit der Enet-Methode aufgedeckt. Gleichzeitig liegt die durchschnittliche FP-Rate bei $0.052$, was circa $49$ Regressionskoeffizienten entspricht. Somit ist das Verhältnis der korrekt ungleich null gesetzten zu den fälschlich ungleich null gesetzten Regressionskoeffizienten ungefähr $1:2.2$.\\
+Der mit den $n_{test}$ Beobachtungen bestimmten durchschnittliche Modelfehler (siehe Tabelle \ref{Tab_Uebersicht_ME_PE}) für die Enet-Methode liegt bei $155.56$ 
 
 \chapter{Fazit}\label{Fazit}
 
