@@ -1191,25 +1191,25 @@ Zur Bestimmung der RP- bzw- FP-Rate  werden sowohl für die Enet-Methode als auc
 mit den ausgewählten Tuningparametern sowie einen Testdatensatz mit $n_{test}=200$ für die Überprüfung der Qualität der $\boldsymbol{\hat{\beta}}$ unterteilt. 
 
 
-Die durchschnittliche TP-Rate liegt dabei bei $0.436$ (siehe dazu auch Tabelle \ref{Tab_Uebersicht_RP_FP_Raten}), was circa $22$ Regressionskoeffizienten im Setting entspricht. Somit werden in dieser Simulationsstudie von den wahren Regressionskoeffizienten, die ungleich null sind, weniger als die Hälfte mit der Enet-Methode aufgedeckt. Gleichzeitig liegt die durchschnittliche FP-Rate bei $0.052$, was circa $49$ Regressionskoeffizienten entspricht. Somit ist das Verhältnis der korrekt ungleich null gesetzten zu den fälschlich ungleich null gesetzten Regressionskoeffizienten ungefähr $1:2.2$.\\
+Die durchschnittliche RP-Rate liegt dabei bei $0.436$ (siehe dazu auch Tabelle \ref{Tab_Uebersicht_RP_FP_Raten}), was circa $22$ Regressionskoeffizienten im Setting entspricht. Somit werden in dieser Simulationsstudie von den wahren Regressionskoeffizienten, die ungleich null sind, weniger als die Hälfte mit der Enet-Methode aufgedeckt. Gleichzeitig liegt die durchschnittliche FP-Rate bei $0.052$, was circa $49$ Regressionskoeffizienten entspricht. Somit ist das Verhältnis der korrekt ungleich null gesetzten zu den fälschlich ungleich null gesetzten Regressionskoeffizienten ungefähr $1:2.2$.\\
 Der mit den $n_{test}$ Beobachtungen bestimmten durchschnittliche Modelfehler (siehe Tabelle \ref{Tab_Uebersicht_ME_PE}) für die Enet-Methode liegt bei $155.56$ \\
 \end{comment}
 \begin{sidewaystable}[h]
 \centering
 \begin{tabular}{clclccccclccccc}
-\multicolumn{1}{l}{}          &  & \multicolumn{1}{l}{}                                  &  & \textbf{RP-Rate} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} &  & \multicolumn{5}{c}{\textbf{FP-Rate}}                        \\ \cline{3-3} \cline{5-5} \cline{11-15} 
-\multicolumn{1}{l}{}          &  & \multicolumn{1}{c}{$\pi$} &  & arith. Mittel    & s                    & Median               & $Q_{0.25}$           & $Q_{0.75}$           &  & arith. Mittel & s       & Median  & $Q_{0.25}$ & $Q_{0.75}$ \\ \cline{3-3} \cline{5-9} \cline{11-15} 
-$\text{Enet}$                 &  & 1.0                                                   &  & $0.436$          & $0.146$              & $0.42$               & $0.34$               & $0.54$               &  & $0.052$       & $0.035$ & $0.042$ & $0.027$    & $0.070$    \\
-                              &  &                                                       &  &                  &                      &                      &                      &                      &  &               &         &         &            &            \\
-$\text{NBPR}_{\mathscr{B},R}$ &  & 0.71                                                  &  & $0.465$          & $0.142$              & $0.46$               & $0.36$               & $0.58$               &  & $0.059$       & $0.043$ & $0.048$ & $0.036$    & $0.074$    \\
-$\text{NBPR}_{\mathscr{C},R}$ &  & 0.74                                                  &  & $0.461$          & $0.132$              & $0.46$               & $0.365$              & $0.54$               &  & $0.066$       & $0.076$ & $0.047$ & $0.033$    & $0.076$    \\
-$\text{NBPR}_{d,R}$           &  & 0.66                                                  &  & $0.458$          & $0.152$              & $0.44$               & $0.36$               & $0.555$              &  & $0.073$       & $0.107$ & $0.048$ & $0.03$     & $0.074$    \\
-$\text{NBPR}_{\mathscr{E},R}$ &  & 0.64                                                  &  & $0.46$           & $0.124$              & $0.45$               & $0.38$               & $0.54$               &  & $0.056$       & $0.043$ & $0.045$ & $0.032$    & $0.074$    \\
-                              &  &                                                       &  &                  &                      &                      &                      &                      &  &               &         &         &            &            \\
-$\text{NBPR}_{\sqrt{d}}$      &  & 0.42                                                  &  & $0.494$          & $0.195$              & $0.5$                & $0.37$               & $0.635$              &  & $0.094$       & $0.150$ & $0.073$ & $0.033$    & $0.098$    \\
-$\text{NBPR}_{\mathscr{C}}$   &  & 0.56                                                  &  & $0.440$          & $0.175$              & $0.44$               & $0.3$                & $0.55$               &  & $0.048$       & $0.047$ & $0.032$ & $0.024$    & $0.057$    \\
-                              &  &                                                       &  &                  &                      &                      &                      &                      &  &               &         &         &            &            \\
-$\text{NBPR}_{1}$             &  & 0.38                                                  &  & $0.483$          & $0.164$              & $0.52$               & $0.365$              & $0.6$                &  & $0.067$       & $0.041$ & $0.067$ & $0.030$    & $0.091$   
+\multicolumn{1}{l}{}          &  & \multicolumn{1}{l}{} &  & \multicolumn{5}{c}{\textbf{RP-Rate}}                       &  & \multicolumn{5}{c}{\textbf{FP-Rate}}                        \\ \cline{3-3} \cline{5-9} \cline{11-15} 
+\multicolumn{1}{l}{}          &  & $\pi$                &  & arith. Mittel & s       & Median & $Q_{0.25}$ & $Q_{0.75}$ &  & arith. Mittel & s       & Median  & $Q_{0.25}$ & $Q_{0.75}$ \\ \cline{3-3} \cline{5-9} \cline{11-15} 
+$\text{Enet}$                 &  & 1.0                  &  & $0.436$       & $0.146$ & $0.42$ & $0.34$     & $0.54$     &  & $0.052$       & $0.035$ & $0.042$ & $0.027$    & $0.070$    \\
+                              &  &                      &  &               &         &        &            &            &  &               &         &         &            &            \\
+$\text{NBPR}_{\mathscr{B},R}$ &  & 0.71                 &  & $0.465$       & $0.142$ & $0.46$ & $0.36$     & $0.58$     &  & $0.059$       & $0.043$ & $0.048$ & $0.036$    & $0.074$    \\
+$\text{NBPR}_{\mathscr{C},R}$ &  & 0.74                 &  & $0.461$       & $0.132$ & $0.46$ & $0.365$    & $0.54$     &  & $0.066$       & $0.076$ & $0.047$ & $0.033$    & $0.076$    \\
+$\text{NBPR}_{d,R}$           &  & 0.66                 &  & $0.458$       & $0.152$ & $0.44$ & $0.36$     & $0.555$    &  & $0.073$       & $0.107$ & $0.048$ & $0.03$     & $0.074$    \\
+$\text{NBPR}_{\mathscr{E},R}$ &  & 0.64                 &  & $0.46$        & $0.124$ & $0.45$ & $0.38$     & $0.54$     &  & $0.056$       & $0.043$ & $0.045$ & $0.032$    & $0.074$    \\
+                              &  &                      &  &               &         &        &            &            &  &               &         &         &            &            \\
+$\text{NBPR}_{\sqrt{d}}$      &  & 0.42                 &  & $0.494$       & $0.195$ & $0.5$  & $0.37$     & $0.635$    &  & $0.094$       & $0.150$ & $0.073$ & $0.033$    & $0.098$    \\
+$\text{NBPR}_{\mathscr{C}}$   &  & 0.56                 &  & $0.440$       & $0.175$ & $0.44$ & $0.3$      & $0.55$     &  & $0.048$       & $0.047$ & $0.032$ & $0.024$    & $0.057$    \\
+                              &  &                      &  &               &         &        &            &            &  &               &         &         &            &            \\
+$\text{NBPR}_{1}$             &  & 0.38                 &  & $0.483$       & $0.164$ & $0.52$ & $0.365$    & $0.6$      &  & $0.067$       & $0.041$ & $0.067$ & $0.030$    & $0.091$   
 \end{tabular}
 \caption[Übersicht über RP- und FP-Raten der verschiedenen Schätzmethoden]{Übersicht für das arithmetische Mittel, die empirische Standardabweichung (s), den Median, das $25\%$- bzw. $75\%$-Quantil ($Q_{0.25}$;$Q_{0.75}$) für die RP- und FP-Raten der einzelnen Schätzmethoden sowie den Anteil an numerisch stabilen Simulationen ($\pi$). $\text{NBPR}_{\mathscr{B},R}$, $\text{NBPR}_{\mathscr{C},R}$,
 $\text{NBPR}_{d,R}$ und $\text{NBPR}_{\mathscr{E},R}$ bezeichnen die $\text{NBPR}_{c}$-Methode, bei der jeweils die einzelnen Knotengewichte als Rangplätzen über die Betweenness-, Closeness-, einfache Knotengrad- bzw. Eigenvektor-Zentralitäten gewählt wurden. Bei $\text{NBPR}_{\mathscr{C}}$ und $\text{NBPR}_{\sqrt{d}}$ wurden als Knotengewichte die Closeness-Zentralität bzw. die Wurzel aus dem Knotengrad verwendet. $\text{NBPR}_1$ bezeichnet die Netzwerk-basierten penalisierten Regression ohne Knotengewichtung.}\label{Tab_Uebersicht_RP_FP_Raten}
@@ -1236,6 +1236,24 @@ $\text{NBPR}_{1}$             &  & 0.38                                         
 $\text{NBPR}_{d,R}$ und $\text{NBPR}_{\mathscr{E},R}$ bezeichnen die $\text{NBPR}_{c}$-Methode, bei der jeweils die einzelnen Knotengewichte als Rangplätzen über die Betweenness-, Closeness-, einfache Knotengrad- bzw. Eigenvektor-Zentralitäten gewählt wurden. Bei $\text{NBPR}_{\mathscr{C}}$ und
 $\text{NBPR}_{\sqrt{d}}$ wurden als Knotengewichte die Closeness-Zentralität bzw. die Wurzel aus dem Knotengrad verwendet. $\text{NBPR}_1$ bezeichnet die Netzwerk-basierten penalisierten Regression ohne Knotengewichtung.}\label{Tab_Uebersicht_ME_PE}
 \end{sidewaystable}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ccccclclc}
+                              &  & $\pi$ &  & $\mathbf{I}^{NBPR_c}=\mathbf{I}^{Enet}$ &  & $\mathbf{I}^{NBPR_c}_{\beta_j \neq 0}=\mathbf{I}^{Enet}_{\beta_j \neq 0}$ &  & $\mathbf{I}^{NBPR_c}_{\beta_j= 0}=\mathbf{I}^{Enet}_{\beta_j= 0}$ \\ \cline{3-3} \cline{5-5} \cline{7-7} \cline{9-9} 
+$\text{NBPR}_{\mathscr{B},R}$ &  & 0.71  &  & $0.38$                                  &  & $0.69$                                                                    &  & $0.44$                                                            \\
+$\text{NBPR}_{\mathscr{C},R}$ &  & 0.74  &  & $0.39$                                  &  & $0.77$                                                                    &  & $0.47$                                                            \\
+$\text{NBPR}_{d,R}$           &  & 0.66  &  & $0.46$                                  &  & $0.83$                                                                    &  & $0.48$                                                            \\
+$\text{NBPR}_{\mathscr{E},R}$ &  & 0.64  &  & $0.36$                                  &  & $0.81$                                                                    &  & $0.38$                                                            \\
+                              &  &       &  &                                         &  &                                                                           &  &                                                                   \\
+$\text{NBPR}_{\sqrt{d}}$      &  & 0.42  &  & $0.38$                                  &  & $0.81$                                                                    &  & $0.38$                                                            \\
+$\text{NBPR}_{\mathscr{C}}$   &  & 0.56  &  & $0.45$                                  &  & $0.73$                                                                    &  & $0.45$                                                            \\
+                              &  &       &  &                                         &  &                                                                           &  &                                                                   \\
+$\text{NBPR}_{1}$             &  & 0.38  &  & $0.29$                                  &  & $0.79$                                                                    &  & $0.29$                                                           
+\end{tabular}
+\caption[Anteil an Simulationen mit identischer Besetzung Regressionskoeffizientenauswahl für Enet und $\text{NBPR}_c$-Versionen]{Übersicht über den Anteil an Simulationen, bei denen die Besetzung von $\boldsymbol{\hat{\beta}}$, für den $\beta_j\neq 0$ mit $j=1,\dots,p$ gilt, für den Enet-Schätzer identisch mit den $\text{NBPR}_c$-Versionen ist. $\mathbf{I}^{NBPR_c}$ bzw. $\mathbf{I}^{Enet}$  entsprechen dabei Spaltenvektoren, die für $\hat{\beta}_j \neq 0$ in der Zeile $j$ eine eins und ansonsten eine null stehen haben. $\mathbf{I}^{NBPR_c}_{\beta_j \neq 0}$ bzw. $\mathbf{I}^{Enet}_{\beta_j= 0}$ sind entsprechende Vektoren, wobei diese nur über $j$ laufen, für die im wahren Modell $\beta_j \neq 0$ bzw. $\beta_j = 0$ gilt. Zusätzlich wird der Anteil an numerisch stabilen Schätzungen für die einzelnen Schätzmethoden angegeben ($\pi$).}\label{Tab_Diff_betas_Enet_Nets}
+\end{table}
+
 %%%%%%%%%%%%
 % Übersicht über Zentralitätsmaße (Median Closeness etc) über die Graphen
 
@@ -2183,42 +2201,42 @@ plot(g, attrs=list(node=list(label=NULL,fillcolor="lightgreen", fontsize="30",
 @
 
 \newpage
-\section{Histogramme für die TP-Raten der Simulationsstudie}
+\section{Histogramme für die RP- und FP-Raten sowie Modell- und Vorhersagefehler der einzelnen Schätzmethoden in der Simulationsstudie}
 
-<<echo=FALSE, message=FALSE, Histo_TP_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway als ungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung.">>=
+<<echo=FALSE, message=FALSE, Histo_TP_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="Histogramme für die RP-Raten", fig.cap="Histogramme für die RP-Raten der einzelnen Schätzmethoden in der Simulationsstudie.">>=
 load("/home/momo/Studium/BIOMETRIE/Masterarbeit/Daten_BackUp/Ergebnisse/Auswertung_beta_hats.RData")
 par(mfrow=c(1,1))
 par(mfrow=c(3,3))
 hist(TP.Enet, main="Enet",
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 hist(TP.Betweenness.Rank, main="Betweenness-Zentralität (Ränge)",
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 hist(TP.closeness.Rank, main="Closeness-Zentralität (Ränge)",
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 hist(TP.DegreeRank, main="Knotengrad-Zentralität (Ränge)", 
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 hist(TP.evcent.Rank, main="Eigenvektor-Zentralität (Ränge)", 
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 hist(TP.closenessNORank, main="Closeness-Zentralität", 
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 hist(TP.sqrtdegree.NORank, main=expression(sqrt(d(u))-Zentralität),
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 hist(TP.noweight, main="ohne Gewichtung",
-     breaks=seq(0,1,0.05),xlab="TP-Rate",ylab="absolute Häufigkeit")
+     breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit")
 
 @
 
 \newpage
-\section{Histogramme für die FP-Raten der Simulationsstudie}
 
-<<echo=FALSE, message=FALSE, Histo_FP_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway als ungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung.">>=
+
+<<echo=FALSE, message=FALSE, Histo_FP_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="Histogramme für die FP-Raten", fig.cap="Histogramme für die FP-Raten der einzelnen Schätzmethoden in der Simulationsstudie.">>=
 load("/home/momo/Studium/BIOMETRIE/Masterarbeit/Daten_BackUp/Ergebnisse/Auswertung_beta_hats.RData")
 par(mfrow=c(1,1))
 par(mfrow=c(3,3))
@@ -2251,9 +2269,8 @@ hist(FP.noweight, main="ohne Gewichtung",
 
 
 \newpage
-\section{Histogramme für die Modellfehler der Simulationsstudie}
 
-<<echo=FALSE, message=FALSE, Histo_ME_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway als ungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung.">>=
+<<echo=FALSE, message=FALSE, Histo_ME_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="Histogramme für die Modellfehler", fig.cap="Histogramme für die Modellfehler der einzelnen Schätzmethoden in der Simulationsstudie.">>=
 load("/home/momo/Studium/BIOMETRIE/Masterarbeit/Daten_BackUp/Ergebnisse/Auswertung_beta_hats.RData")
 par(mfrow=c(1,1))
 par(mfrow=c(3,3))
@@ -2286,9 +2303,8 @@ hist(ME.noweight, main="ohne Gewichtung",
 
 
 \newpage
-\section{Histogramme für die Vorhersagefehler der Simulationsstudie}
 
-<<echo=FALSE, message=FALSE, Histo_PE_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway als ungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung.">>=
+<<echo=FALSE, message=FALSE, Histo_PE_Simu, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.99\\linewidth', fig.lp="fig:", fig.scap="Histogramme für die Vorhersagefehler", fig.cap="Histogramme für die Vorhersagefehler der einzelnen Schätzmethoden in der Simulationsstudie.">>=
 load("/home/momo/Studium/BIOMETRIE/Masterarbeit/Daten_BackUp/Ergebnisse/Auswertung_beta_hats.RData")
 par(mfrow=c(1,1))
 par(mfrow=c(3,3))
