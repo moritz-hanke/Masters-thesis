@@ -166,9 +166,10 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{Grace}{graph constrained regression}
 \abk{nGrace}{naive graph constrained regression}
 \abk{aGrace}{adaptive graph constrained regression}
-\abk{$\xrightarrow{d}$}{konvergiert nach Verteilung}
 \abk{fLasso}{fused Least absolute shrinkage and selection operator}
 \end{comment}
+\abk{$\xrightarrow{d}$}{konvergiert nach Verteilung}
+\abk{$\rightarrow$}{geht gegen}
 \abk{$p$}{Anzahl Kovariablen}
 \abk{$n$}{Anzahl Beobachtungen}
 \abk{$\mathbf{Y}$}{Spaltenvektor der Responsevariable der Länge $n$}
@@ -193,13 +194,14 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{$\textbf{\~B}$}{Adjazenzmatrix von einem gerichteten Graphen $G$}
 \abk{$\tilde{b}$}{Eintrag in $\textbf{\~B}$}
 \abk{$\mathbf{L}$}{Laplace-Matrix von $G$}
-\abk{$\mathbf{L}^*$}{normierte Laplace-Matrix von $G$}
-\abk{$\lambda_j$}{$j$-te Eigenwert zum Eigenvektor $\mathbf{E}_j$}
+\abk{$\textbf{\~L}$}{normierte Laplace-Matrix von $G$}
+\abk{$\textbf{\~L}^*$}{modifizierte normierte Laplace-Matrix von $G$}
+\abk{$\lambda_j$}{$j$-te Eigenwert zum Eigenvektor $\mathbf{e}_j$}
 \abk{$\mathcal{W}$}{Weg auf $G$}
 \abk{$\mathcal{S}$}{Spur auf $G$}
 \abk{$\mathcal{P}$}{Pfad auf $G$}
 \abk{$\mathcal{D}$}{Distanz auf $G$}
-\abk{$\phi{G}$}{Durchmesser von $G$}
+\abk{$\phi(G)$}{Durchmesser von $G$}
 \abk{$\kappa(G)$}{$\kappa$-Verbundenheit von $G$}
 \abk{$\mathscr{B}(u)$}{Betweenness-Zentralität des Knotens $u$}
 \abk{$\mathscr{C}(u)$}{Closeness-Zentralität des Knotens $u$}
@@ -217,7 +219,29 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{$(\cdot)^{-1}$}{Inverse einer Matrix}
 \abk{$(\cdot)'$}{Transponierte einer Matrix}
 \abk{$\boldsymbol{\hat{\beta}}$}{Schätzung von $\boldsymbol{\beta}$}
-
+\abk{$R^2$}{(multipler) Determinationskoeffizient}
+\abk{$P(\cdot)$}{Strafterm für eine Zielfunktion}
+\abk{$\boldsymbol{\gamma}$}{Tuningparametervektor}
+\abk{$\mathbf{I}$}{Einheitsmatrix}
+\abk{$t$}{Iterationsschritt $t$ oder Restriktionsparamter einer Nebenbedingung}
+\abk{$\mathbb{R}^p$}{Euklidischer Vektorraum mit Dimension $p$}
+\abk{$||\cdot||_p$}{$p$-Norm eines Vektors}
+\abk{$D(\cdot)$}{Differenz zwischen zwei Regressionskoeffizientenschätzern}
+\abk{$\text{sign}(\cdot)$}{Vorzeichen der Einträge eines Vektors}
+\abk{$|\cdot|$}{Betrag von den Einträgen eines Vektors}
+\abk{$\rho_{k,l}$}{Korrelation zwischen zwei Variablen $k$ und $l$}
+\abk{$I(\cdot)$}{Indikatorfunktion}
+\abk{$\tau$}{Tuningparameter}
+\abk{$c_u$}{Gewichtung eines Knotens}
+\abk{ME}{Modellfehler}
+\abk{RP}{Richtig-positiv}
+\abk{FP}{Falsch-positiv}
+\abk{PE}{Vorhersagefehler}
+\abk{$N(\mu,\sigma^2)$}{normalverteilt mit Erwartungswert $\mu$ und Varianz $\sigma^2$}
+\abk{$\alpha$}{Verhältnisparameter zwischen Ridge- und Lasso-Strafterm bei der Enet-Regression}
+\abk{$||\mathbf{x}||_{\infty}$}{definiert als $\max (|x_1|,\dots,|x_p|)$}
+\abk{$\mathcal{I}$}{Spaltenvektor, der an den Stelle $j$ für $\hat{\beta}_j \neq 0$ eine eins und sonst eine null hat}
+\abk{$\overset{a}{\sim}$}{approximativ verteilt wie}
 
 
 
@@ -1008,7 +1032,7 @@ mit  $\beta_j=0$, falls $j \in e \in E\setminus E^{neu}$. Die Autoren der 2Step-
 P_{iNBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)=\gamma_1 \sum_{j=1}^{p}I(|\beta_j|\neq 0) + \gamma_2 \sum_{\{u,v\}}\left| I\left( \frac{|\beta_u|}{c_u} \neq 0 \right) - I\left( \frac{|\beta_v|}{c_v} \neq 0 \right) \right|.
 \end{align}
 Da es sich bei der Indikatorfunktion $I(\cdot)$ um eine nicht-stetige Funktion handelt, ist die Minimierung von \eqref{Eq_NBPR_idealer_Strafterm} nicht in Polynomialzeit, d.h. $\mathcal{O}(p^r)$ mit konstantem Faktor $r$, lösbar. Allein die Anzahl an möglichen Lösungen für den ersten Term wächst exponentiell mit $p$, so dass $2^p$ mögliche Lösungen berechnet werden müssen und damit bei hochdimensionalen Daten \textit{praktisch} das Minimierungsproblem nicht lösbar ist.\\
-Als Alternative für eine Indikatorfunktion $I(|z| \neq 0)$ mit einer Variable $z$ kann die stetige Funktion $J_\tau(|z|)=\min (\frac{|z|}{\tau}, 1)$ mit Tuningparameter $\tau > 0$ genutzt werden, da diese sich für $\tau \rightarrow 0$ der Indikatorfunktion annähert. $P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)$ lässt sich damit schreiben als
+Als Alternative für eine Indikatorfunktion $I(|z| \neq 0)$ mit einer Variable $z$ kann die stetige Funktion $J_\tau(|z|)=\min (\frac{|z|}{\tau}, 1)$ mit Tuningparameter $\tau > 0$ genutzt werden, da diese für $\tau \rightarrow 0$ die Indikatorfunktion approximiert. $P_{NBPR}(\boldsymbol{\beta}, \gamma_1, \gamma_2)$ lässt sich damit schreiben als
 \begin{align}\label{Eq_NBPR_tau_Strafterm}
 P_{NBPR_c}(\boldsymbol{\beta}, \gamma_1, \gamma_2, \tau)=\gamma_1 \sum_{j=1}^{p}J_\tau(|\beta_j|) + \gamma_2 \sum_{\{u,v\}}\left| J_\tau\left( \frac{|\beta_u|}{c_u}\right) - J_\tau\left( \frac{|\beta_v|}{c_v}\right) \right|.
 \end{align}
@@ -1086,7 +1110,7 @@ und für den zweiten Teil
 und damit für $\tau \rightarrow 0$ 
 \begin{align*}
 &\frac{\gamma_1}{\tau} \sum_{j=1}^{p}|\beta_j| - \frac{\gamma_1}{\tau} \sum_{j=1}^{p}\max(|\hat{\beta}_j^{(t-1)}|-\tau, 0) \\ 
-= & \frac{\gamma_1}{\tau} \sum_{j=1}^{p}|\beta_j| - \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|>\tau)\right)\\
+\overset{a}{\sim} & \frac{\gamma_1}{\tau} \sum_{j=1}^{p}|\beta_j| - \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}|>\tau)\right)\\
 =&\frac{\gamma_1}{\tau} \sum_{j=1}^{p}\left(|\beta_j|\cdot I(|\hat{\beta}_j^{(t-1)}| \leq \tau)\right)
 \end{align*}
 sowie
@@ -1095,11 +1119,7 @@ sowie
 \frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)})+\max\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}-\tau, 0\right) \right. \\
 &\phantom{{}=111} \left. +  \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})+\max\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}-\tau, 0\right)
 \right\rbrace \\
-= &\frac{\gamma_2}{\tau} \sum_{\{u,v\}} \left\lbrace
-\frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)})+I\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}>\tau \right) \right. \\
-&\phantom{{}=111} \left.+  \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})+I\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}>\tau \right)
-\right\rbrace \\
-=&\frac{\gamma_2}{\tau} \sum_{\{u,v\}} \left\lbrace
+\overset{a}{\sim}&\frac{\gamma_2}{\tau} \sum_{\{u,v\}} \left\lbrace
 \frac{\beta_u}{c_u}\text{sign}(\hat{\beta}_u^{(t-1)}) \left[1+I\left(\frac{|\hat{\beta}_u^{(t-1)}|}{c_u}>\tau \right) \right] \right. \\
 &\phantom{{}=111} \left. + 
 \frac{\beta_v}{c_v}\text{sign}(\hat{\beta}_v^{(t-1)})\left[1+I\left(\frac{|\hat{\beta}_v^{(t-1)}|}{c_v}>\tau \right) \right]
@@ -1287,7 +1307,7 @@ $\text{NBPR}_{\sqrt{d}}$ wurden als Knotengewichte die Closeness-Zentralität bz
 \begin{table}[h]
 \centering
 \begin{tabular}{ccccclclc}
-                              &  & $\pi$ &  & $\mathbf{I}^{NBPR_c}=\mathbf{I}^{Enet}$ &  & $\mathbf{I}^{NBPR_c}_{\beta_j \neq 0}=\mathbf{I}^{Enet}_{\beta_j \neq 0}$ &  & $\mathbf{I}^{NBPR_c}_{\beta_j= 0}=\mathbf{I}^{Enet}_{\beta_j= 0}$ \\ \cline{3-3} \cline{5-5} \cline{7-7} \cline{9-9} 
+                              &  & $\pi$ &  & $\mathcal{I}^{NBPR_c}=\mathcal{I}^{Enet}$ &  & $\mathcal{I}^{NBPR_c}_{\beta_j \neq 0}=\mathcal{I}^{Enet}_{\beta_j \neq 0}$ &  & $\mathcal{I}^{NBPR_c}_{\beta_j= 0}=\mathcal{I}^{Enet}_{\beta_j= 0}$ \\ \cline{3-3} \cline{5-5} \cline{7-7} \cline{9-9} 
 $\text{NBPR}_{\mathscr{B},R}$ &  & 0.71  &  & $0.38$                                  &  & $0.69$                                                                    &  & $0.44$                                                            \\
 $\text{NBPR}_{\mathscr{C},R}$ &  & 0.74  &  & $0.39$                                  &  & $0.77$                                                                    &  & $0.47$                                                            \\
 $\text{NBPR}_{d,R}$           &  & 0.66  &  & $0.46$                                  &  & $0.83$                                                                    &  & $0.48$                                                            \\
@@ -1298,7 +1318,7 @@ $\text{NBPR}_{\mathscr{C}}$   &  & 0.56  &  & $0.45$                            
                               &  &       &  &                                         &  &                                                                           &  &                                                                   \\
 $\text{NBPR}_{1}$             &  & 0.38  &  & $0.29$                                  &  & $0.79$                                                                    &  & $0.29$                                                           
 \end{tabular}
-\caption[Anteil an Simulationen mit identischer Besetzung Regressionskoeffizientenauswahl für Enet und $\text{NBPR}_c$-Versionen]{Übersicht über den Anteil an Simulationen, bei denen die Besetzung von $\boldsymbol{\hat{\beta}}$, für den $\beta_j\neq 0$ mit $j=1,\dots,p$ gilt, für den Enet-Schätzer identisch mit den $\text{NBPR}_c$-Versionen ist. $\mathbf{I}^{NBPR_c}$ bzw. $\mathbf{I}^{Enet}$  entsprechen dabei Spaltenvektoren, die für $\hat{\beta}_j \neq 0$ in der Zeile $j$ eine eins und ansonsten eine null stehen haben. $\mathbf{I}^{NBPR_c}_{\beta_j \neq 0}$ bzw. $\mathbf{I}^{Enet}_{\beta_j= 0}$ sind entsprechende Vektoren, wobei diese nur über $j$ laufen, für die im wahren Modell $\beta_j \neq 0$ bzw. $\beta_j = 0$ gilt. Zusätzlich wird der Anteil an numerisch stabilen Schätzungen für die einzelnen Schätzmethoden angegeben ($\pi$).}\label{Tab_Diff_betas_Enet_Nets}
+\caption[Anteil an Simulationen mit identischer Besetzung Regressionskoeffizientenauswahl für Enet und $\text{NBPR}_c$-Versionen]{Übersicht über den Anteil an Simulationen, bei denen die Besetzung von $\boldsymbol{\hat{\beta}}$, für den $\beta_j\neq 0$ mit $j=1,\dots,p$ gilt, für den Enet-Schätzer identisch mit den $\text{NBPR}_c$-Versionen ist. $\mathcal{I}^{NBPR_c}$ bzw. $\mathcal{I}^{Enet}$  entsprechen dabei Spaltenvektoren, die für $\hat{\beta}_j \neq 0$ in der Zeile $j$ eine eins und ansonsten eine null stehen haben. $\mathcal{I}^{NBPR_c}_{\beta_j \neq 0}$ bzw. $\mathcal{I}^{Enet}_{\beta_j= 0}$ sind entsprechende Vektoren, wobei diese nur über $j$ laufen, für die im wahren Modell $\beta_j \neq 0$ bzw. $\beta_j = 0$ gilt. Zusätzlich wird der Anteil an numerisch stabilen Schätzungen für die einzelnen Schätzmethoden angegeben ($\pi$).}\label{Tab_Diff_betas_Enet_Nets}
 \end{table}
 
 %%%%%%%%%%%%
