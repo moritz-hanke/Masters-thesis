@@ -59,7 +59,7 @@
 % Fürs Abkürzungsverzeichnis folgenden Befehl im Terminal ausführen: makeindex Masterarbeit_Moritz_Hanke.nlo -s nomencl.ist -o Masterarbeit_Moritz_Hanke.nls
 \usepackage{nomencl}
 \let\abk\nomenclature
-\renewcommand{\nomname}{Abkürzungsverzeichnis}
+\renewcommand{\nomname}{Liste mathematischer Symbole}
 \setlength{\nomlabelwidth}{.20\hsize}
 \renewcommand{\nomlabel}[1]{#1 \dotfill}
 \setlength{\nomitemsep}{-\parsep}
@@ -156,12 +156,8 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \listoftables
 
 \printnomenclature 
-
+\begin{comment}
 \abk{Lasso}{Least absolute shrinkage and selection operator}
-\abk{DAG}{Directed acyclic graph}
-\abk{OLS}{Ordinary least squares}
-\abk{MSE}{Mean squared error}
-\abk{RSS}{Residual sum of squares}
 \abk{PRSS}{Penalized residual sum of squares}
 \abk{KEGG}{Kyoto Encyclopedia of Genes and Genomes}
 \abk{Enet}{Elastic Net}
@@ -172,6 +168,57 @@ Studiengang: Medical Biometry/Biostatistics (M.Sc.)\\}
 \abk{aGrace}{adaptive graph constrained regression}
 \abk{$\xrightarrow{d}$}{konvergiert nach Verteilung}
 \abk{fLasso}{fused Least absolute shrinkage and selection operator}
+\end{comment}
+\abk{$p$}{Anzahl Kovariablen}
+\abk{$n$}{Anzahl Beobachtungen}
+\abk{$\mathbf{Y}$}{Spaltenvektor der Responsevariable der Länge $n$}
+\abk{$\mathbf{X}$}{Designmatrix}
+\abk{$\boldsymbol{\beta}$}{Regressionskoeffizientenvektor der Länge $p$}
+\abk{$\varepsilon$}{Fehlerterm des klassischen linearen Modells}
+\abk{$G$}{ein Graph}
+\abk{$V$}{Menge Knoten in $G$}
+\abk{$E$}{Menge Kanten in $G$}
+\abk{$N_V$}{Anzahl an Knoten in $G$}
+\abk{$E_V$}{Anzahl an Knoten in $G$}
+\abk{$e$}{Kante, für die $e \in E$ gilt}
+\abk{$G_A$}{Teilgraph von $G$}
+\abk{$d(u)$}{Knotengrad des Knotens $u$}
+\abk{$\Delta(G)$}{Maximaler Knotengrad von $G$}
+\abk{$\delta(G)$}{Minimaler Knotengrad von $G$}
+\abk{$\bar{d}(G)$}{Durchschnittlicher Knotengrad von $G$}
+\abk{$\mathbf{A}$}{Adjazenzmatrix von $G$}
+\abk{$a$}{Eintrag in $\mathbf{A}$}
+\abk{$\mathbf{B}$}{Inzidenzmatrix von $G$}
+\abk{$b$}{Eintrag in $\mathbf{B}$}
+\abk{$\textbf{\~B}$}{Adjazenzmatrix von einem gerichteten Graphen $G$}
+\abk{$\tilde{b}$}{Eintrag in $\textbf{\~B}$}
+\abk{$\mathbf{L}$}{Laplace-Matrix von $G$}
+\abk{$\mathbf{L}^*$}{normierte Laplace-Matrix von $G$}
+\abk{$\lambda_j$}{$j$-te Eigenwert zum Eigenvektor $\mathbf{E}_j$}
+\abk{$\mathcal{W}$}{Weg auf $G$}
+\abk{$\mathcal{S}$}{Spur auf $G$}
+\abk{$\mathcal{P}$}{Pfad auf $G$}
+\abk{$\mathcal{D}$}{Distanz auf $G$}
+\abk{$\phi{G}$}{Durchmesser von $G$}
+\abk{$\kappa(G)$}{$\kappa$-Verbundenheit von $G$}
+\abk{$\mathscr{B}(u)$}{Betweenness-Zentralität des Knotens $u$}
+\abk{$\mathscr{C}(u)$}{Closeness-Zentralität des Knotens $u$}
+\abk{$\mathscr{E}(u)$}{Eigenvektor-Zentralität des Knotens $u$}
+\abk{$\mathbf{e}_j$}{Eigenvektor zu Eigenwert $\lambda_j$}
+\abk{$\sim$}{verteilt wie}
+\abk{s.d.}{so dass (Nebenbedingung)}
+\abk{$\sigma^2$}{Varianz}
+\abk{DAG}{Directed acyclic graph}
+\abk{MSE}{Mean squared error}
+\abk{RSS}{Residual sum of squares}
+\abk{$\mathbb{E}(\cdot)$}{Erwartungswert}
+\abk{$\mathbb{C}\text{ov}(\cdot)$}{Kovarianz}
+\abk{$\mathbb{V}\text{ar}(\cdot)$}{Varianz}
+\abk{$(\cdot)^{-1}$}{Inverse einer Matrix}
+\abk{$(\cdot)'$}{Transponierte einer Matrix}
+\abk{$\boldsymbol{\hat{\beta}}$}{Schätzung von $\boldsymbol{\beta}$}
+
+
 
 
 % Begin der Arbeit
@@ -1259,7 +1306,7 @@ $\text{NBPR}_{1}$             &  & 0.38  &  & $0.29$                            
 
 
 
-\chapter{Fazit}\label{Fazit}
+\chapter{Diskussion und Ausblick}\label{Diskussion und Ausblick}
 Da auch unter Verwendung der \texttt{CVX}-Funktion 
 \texttt{square\_pos(norm(\dots,2))} numerische Instabilitäten auftreten, kann die Verwendung der Funktion \texttt{sum\_square(\dots)} als Ursache ausgeschlossen werden. 
 \begin{comment}
