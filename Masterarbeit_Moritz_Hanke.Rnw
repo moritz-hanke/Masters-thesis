@@ -1148,11 +1148,11 @@ Zur Bestimmung der Tuningparameter $\gamma_1$, $\gamma_2$ und $\tau$ schlagen di
 \chapter{Simulationsstudie}\label{Kap_Simulationsstudie}
 Die Regressionskoeffizientenschätzer basierend auf der $\text{NBPR}_c$-Methode werden im nachfolgenden Kapitel mit der Enet-Methode hinsichtlich der richtig-positiven-Rate (RP-Rate) bzw. falsch-positiven-Rate (FP-Rate) sowie bezüglich dem als Modellfehler definierten Maß 
 \begin{align*}
-\text{MF}=(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})'\mathbb{C}\text{ov}(\mathbf{X})(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})
+\text{ME}=(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})'\mathbb{C}\text{ov}(\mathbf{X})(\boldsymbol{\hat{\beta}}- \boldsymbol{\beta})
 \end{align*}
 und dem Vorhersagefehler
 \begin{align*}
-\text{PE}=(\mathbf{\hat{Y}}- \mathbf{Y})'(\mathbf{\hat{Y}}- \mathbf{Y})
+\text{PE}=\frac{1}{n}(\mathbf{\hat{Y}}- \mathbf{Y})'(\mathbf{\hat{Y}}- \mathbf{Y})
 \end{align*}
 verglichen.\\
 Dazu wird im Rahmen dieser Arbeit eine Simulationsstudie mit $100$ pseudozufällig generierten Datensätzen durchgeführt. Neben dem Vergleich zur Enet-Methode, die der Standard-Ansatz für hochdimensionale Daten ist, wird die Güte der Schätzer der $\text{NBPR}_c$-Regression auch hinsichtlich unterschiedlicher Zentralitätsmaße bei der Gewichtung der einzelnen Regressionskoeffizienten des $\text{NBPR}_c$-Strafterms untereinander verglichen.\\ 
@@ -1247,7 +1247,7 @@ Für den Startschätzer $\boldsymbol{\hat{\beta}}^{(0)}$ in Algorithmus \ref{Alg
 
 
 \section{Ergebnisse}\label{Kap_Ergebnisse_Schaetzung}
-Während die Enet-Methode für alle $100$ simulierten Datensätze numerisch stabile Ergebnisse liefert, schwankt der Anteil an Simulationen mit stabilen Schätzern über die einzelnen $\text{NBPR}_c$-Versionen zwischen $0.74$ bei $\text{NBPR}_{\mathscr{C},R}$ und $0.38$ bei $\text{NBPR}_1$ (siehe dazu auch Tabelle \ref{Tab_Uebersicht_RP_FP_Raten}). Die Instabilität einzelner Simulationen äußert sich in mehreren hundert geschätzten Regressionskoeffizienten, die jeweils im Bereich $[-2000000,-1000]$ bzw. $[1000,8000000]$ liegen, während die restlichen Regressionskoeffizienten eines Datensatzes als  $\hat{\beta}_j=0$ geschätzt werden. Für die nachfolgende deskriptive Auswertung werden nur diejenigen Datensätze berücksichtigt, die eine numerisch stabile Schätzung liefern.\\
+Während die Enet-Methode für alle $100$ simulierten Datensätze numerisch stabile Ergebnisse liefert, schwankt der Anteil an Simulationen mit stabilen Schätzern über die einzelnen $\text{NBPR}_c$-Versionen zwischen $74\%$ bei $\text{NBPR}_{\mathscr{C},R}$ und $38\%$ bei $\text{NBPR}_1$ (vgl. Tabelle \ref{Tab_Uebersicht_RP_FP_Raten}). Die Instabilität einzelner Simulationen äußert sich in mehreren hundert geschätzten Regressionskoeffizienten, die jeweils im Bereich $[-2000000,-1000]$ bzw. $[1000,8000000]$ liegen, während die restlichen Regressionskoeffizienten eines Datensatzes als  $\hat{\beta}_j=0$ geschätzt werden. Für die nachfolgende deskriptive Auswertung werden nur diejenigen Simulationsläufe berücksichtigt, die eine numerisch stabile Schätzung liefern.\\
 \begin{comment}, da eine abschließende Erklärung für die instabilen Ergebnisse den Rahmen dieser Arbeit übersteigen würde.\\
 \end{comment}
  
@@ -1257,14 +1257,18 @@ Im Hinblick auf die empirische Häufigkeitsverteilung der RP-Rate ähneln sich d
 Für die FP-Rate sind sich bis auf $\text{NBPR}_{\mathscr{C}}$ alle Schätzer ähnlich und im Schnitt schlechter als die Enet-Schätzer. Dadurch relativiert sich auch der weiter oben erwähnte Vorteil der $\text{NBPR}_{\sqrt{d}}$-Version gegenüber der Enet-Regression bezüglich der RP-Rate. Erstgenannte wählt mit einer FP-Rate von $0.094$ fast doppelt so viele falsche Koeffizienten als die Enet-Methode aus. Dies entspricht bei $950$ Regressionskoeffizienten, die im wahren Modell keinen Einfluss auf die Responsevariable haben, ca. $89$ fälschlich ausgewählten Kovariablen für $\text{NBPR}_{\sqrt{d}}$. Somit kommen in der Simulationsstudie für $\text{NBPR}_{\sqrt{d}}$ auf jedes korrekt gesetzte $\hat{\beta}_j \neq 0$ circa $3.6$ fälschlich gesetzte $\hat{\beta}_j \neq 0$. Für die Enet-Methode beträgt das Verhältnis circa $1:2.2$, die Verhältnisse der übrigen Schätzungen liegen dazwischen.\\ 
 Im Bezug auf die empirischen Häufigkeitsverteilungen der FP-Rate in Abbildung \ref{fig:Histo_FP_Simu} sind die Enet-Methode und die $\text{NBPR}_c$-Versionen mit Gewichtungen über die Ränge sowie mit der Closeness-Zentralität fast identisch und dabei rechtsschräg. Zwar weisen auch die $\text{NBPR}_{\sqrt{d}}$- und $\text{NBPR}_{1}$-Version eine rechtsschräge Häufigkeitsverteilung auf, diese sind jedoch deutlich weniger steil. Allerdings müssen auch hierbei die abweichenden Ergebnisse wegen der geringen Anzahl an numerisch stabilen und somit berücksichtigten Simulationen unter Vorbehalt betrachtet werden.\\
 
+Die in Anhang \ref{App_Plots} abgebildeten Plots beinhalten für die einzelnen Simulation die Anzahl der von den $\text{NBPR}_c$-Versionen Enet-Methode gewählten Kovariablen, unterschieden nach nach dem gesamten Vektor $\boldsymbol{\beta}$ sowie nach $\boldsymbol{\beta} \neq 0$ und $\boldsymbol{\beta} = 0$. Dabei wurde $\hat{\beta}_j=0$ gesetzt, wenn $|\hat{\beta}_j| < 0.00001$ gilt. Inhaltlich entsprechen die Plots den bereist oben erwähnten Ergebnisse hinsichtlich der RP- und FP-Rate. Bezogen auf korrekt ausgewählte Kovariablen sind die $\text{NBPR}_c$-Versionen in den meisten Fällen ein wenig besser als die Enet-Methode. Bei den fälschlich ausgewählten Kovariablen liefern die $\text{NBPR}_c$-Versionen ähnliche Ergebnisse wie die Enet-Methode. Allerdings machen die Plots auch deutlich, dass es bei den $\text{NBPR}_c$-Versionen in mehreren Simulationsdurchläufen zu einer erhöhten Auswahl kommt und in Einzelfällen Anzahlen erreicht werden, die gegebenenfalls als statistische Ausreißer interpretiert werden müssen.\\
+
 Zur Bestimmung des Modell- bzw. Vorhersagefehlers werden die nach der Bestimmung der Tuningparameter sowie Schätzung der Regressionskoeffizienten verbliebenen $n_{test}=200$ Beobachtungen pro simulierten Datensatz verwendet. Dabei liegt der Modellfehler der Enet-Methode mit $\text{ME}=155.56$ deutlich unter denen der übrigen Schätzmethoden, von denen wiederum die Gewichtung mit der Eigenvektor-Zentralität ($\text{ME}=182.71$) das beste Ergebnis liefert (siehe Tabelle \ref{Tab_Uebersicht_ME_PE}). Auffällig ist die relativ große empirische Standardabweichung der $\text{NBPR}_{\sqrt{d}}$-Version ($\text{s}=177.07$) im Verhältnis zu den übrigen Schätzungen. Grund dafür ist die im entsprechenden Histogramm in Abbildung \ref{fig:Histo_ME_Simu} abgebildete Simulation mit einem ME-Wert über $1200$, bei der es sich um einen Ausreißer handeln kann. Allgemein weisen die Histogramme für alle $\text{NBPR}_c$-Version einzelne ME-Werte über $400$ auf, die die hohen empirischen Standardabweichungen erklären. Werden die Werte als zufällige Ausreißer behandelt und nicht berücksichtigt, ist auf Grundlage der Histogramme zu erkennen, dass sich die durchschnittlichen ME-Werte weiter an den der Enet-Methode annähern. Ob es sich dabei wirklich um zufällige Ausreißer oder systematische Abweichungen handelt, kann an dieser Stelle nicht abschließend geklärt werden.\\
 
 Wird der durchschnittliche Vorhersagefehler als Gütekriterium für die Qualität der Schätzungen herangezogen, ist die Enet-Methode ($\text{PE}=238.2$) den $\text{NBPR}_c$-Versionen ($\text{PE}=886.66.2$ bis $\text{PE}=1044.30$) deutlich überlegen. Auch im Hinblick auf die Variabilität der Vorhersagefehler liefert der Enet-Schätzer mit $\text{s}=52.92$ bessere Ergebnisse als die übrigen Methoden. Diese streuen relativ breit um ihren jeweiligen Mittelwert (siehe Abbildung \ref{fig:Histo_PE_Simu}), was als hohe Sensibilität gegenüber geringen numerischen Veränderungen innerhalb der Daten interpretiert werden kann.\\
 
-Da der Algorithmus der $\text{NBPR}_c$-Methode einen Startschätzer braucht (vgl. dazu Abschnitt \ref{Kap_Netzwerkbasierte_Penalisierung}) und dafür der Enet-Schätzer aus Abschnitt \ref{Kap_Schätzung_mittels_Enet} verwendet wird, ist von Interesse, inwieweit sich die einzelnen $\text{NBPR}_c$-Versionen vom Enet-Schätzer hinsichtlich der Selektion der einzelnen $\beta_j$ unterscheiden. Tabelle \ref{Tab_Diff_betas_Enet_Nets} gibt dazu das Verhältnis zwischen der Anzahl an Simulationen, in denen die jeweilige $\text{NBPR}_c$-Version mehr $\hat{\beta}_j \neq 0$ setzt als die Enet-Methode, und den umgekehrten Fall, in dem die Enet-Methode mehr $\hat{\beta}_j \neq 0$ setzt als die jeweilige $\text{NBPR}_c$-Version. Dabei wird für alle Kovariablen,d.h. $\boldsymbol{\beta}$ ($\mathcal{I}^{NBPR_c}/\mathcal{I}^{Enet}$), sowie nur die im wahren Modell vorhandenen bzw. nicht vorhandenen Kovariablen ($\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ und $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$) unterschieden. Je näher der Wert an $1$ reicht, desto weniger unterscheidet sich die Kovariablenselektion zwischen Enet- und $\text{NBPR}_c$-Methode über alle Simulationen. Ein Wert von $1$ bedeutet, dass die beiden Methoden für die jeweils betrachteten Teil von $\boldsymbol{\beta}$ immer die selben Kovariablen wählen. Werte $<1$ sind so zu interpretieren, dass es mehr Simulationen gibt, in denen die Enet-Methode mehr Kovariablen auswählt als die $\text{NBPR}_c$. Umgekehrtes gilt für einen Wert $>1$.\\
-Für die Betrachtung des gesamten Vektors $\boldsymbol{\beta}$ wählt $\text{NBPR}_{\mathscr{B},R}$ in fast allen Simulationen die selben Kovariablen aus wie die Enet-Methode. Dagegen wählen alle anderen $\text{NBPR}_c$-Versionen in deutlich weniger Simulationen mehr Kovariablen als die Enet-Methode aus. Den niedrigsten Wert hat dabei $\text{NBPR}_{1}$, die nur circa einem Drittel der Simulationen mehr Kovariablen auswählt. Wird die Unterscheidung für $\boldsymbol{\beta} \neq 0$ bzw. $\boldsymbol{\beta} = 0$ berücksichtigt, fällt das Selektionsergebnis für die $\text{NBPR}_{c}$-Methode in allen Fällen schlechter aus als für die Enet-Methode. $\text{NBPR}_{\mathscr{B},R}$ selektiert zwar in allen Simulationen die selben wahren Kovariablen, gleichzeitg aber in mehr Simulationen auch mehr falsche Kovariablen. $\text{NBPR}_{\mathscr{B},R}$ schneidet noch schlechter ab, da in weniger Simulationen mehr richtige Kovariablen und in mehr Simulationen mehr falsche Kovariablen ausgewählt werden. Zwar wählen die übrigen $\text{NBPR}_c$-Versionen sowohl für den "`wahren Teil"' als auch den "'falschen Teil"' von $\boldsymbol{\beta}$ in weniger Simulationen mehr Kovariablen als die Enet-Methode aus, allerdings sind bei allen Versionen die Werte für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ niedriger als für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$. Das bedeutet, dass es durchschnittlich mehr Simulationen gibt, in denen die jeweilige $\text{NBPR}_c$-Version mehr falsche Kovariablen ungleich null setzt \textit{ohne} auch mehr richtige Kovariablen ungleich null zu setzen, als es diesen Fall für die Enet-Methode gibt.\\
+Tabelle \ref{Tab_Quality_beta_hats} 
+\begin{comment}
+Da der Algorithmus der $\text{NBPR}_c$-Methode einen Startschätzer braucht (vgl. dazu Abschnitt \ref{Kap_Netzwerkbasierte_Penalisierung}) und dafür der Enet-Schätzer aus Abschnitt \ref{Kap_Schätzung_mittels_Enet} verwendet wird, ist von Interesse, inwieweit sich die einzelnen $\text{NBPR}_c$-Versionen vom Enet-Schätzer hinsichtlich der Selektion der einzelnen $\beta_j$ unterscheiden. Tabelle \ref{Tab_Diff_betas_Enet_Nets} gibt dazu das Verhältnis zwischen der Anzahl an Simulationen, in denen die jeweilige $\text{NBPR}_c$-Version mehr $\hat{\beta}_j \neq 0$ setzt als die Enet-Methode, und den umgekehrten Fall, in dem die Enet-Methode mehr $\hat{\beta}_j \neq 0$ setzt als die jeweilige $\text{NBPR}_c$-Version. Dabei wird für alle Kovariablen  $\boldsymbol{\beta}$ (Spalte $\mathcal{I}^{NBPR_c}/\mathcal{I}^{Enet}$), sowie nur die im wahren Modell vorhandenen Kovariablen $\boldsymbol{\beta} \neq 0$ bzw. nicht vorhandenen Kovariablen $\boldsymbol{\beta} = }$ (Spalte $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ und Spalte $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$) unterschieden. Je näher der Wert an $1$ reicht, desto weniger unterscheidet sich die Kovariablenselektion zwischen Enet- und $\text{NBPR}_c$-Methode über alle Simulationen. Ein Wert von $1$ bedeutet, dass genauso viele Simulationen gibt, in denen eine $\text{NBPR}_c$-Version mehr Kovariablen als die Enet-Methode  beiden Methoden für die jeweils betrachteten Teil von $\boldsymbol{\beta}$ immer die selben Kovariablen wählen. Werte $<1$ sind so zu interpretieren, dass es mehr Simulationen gibt, in denen die Enet-Methode mehr Kovariablen auswählt als die $\text{NBPR}_c$. Umgekehrtes gilt für einen Wert $>1$.\\
+Wenn der gesamten Vektors $\boldsymbol{\beta}$ betrachtet wird, wählt $\text{NBPR}_{\mathscr{B},R}$ in fast allen Simulationen die selben Kovariablen aus wie die Enet-Methode. Dagegen wählen alle anderen $\text{NBPR}_c$-Versionen in deutlich weniger Simulationen mehr Kovariablen als die Enet-Methode aus. Den niedrigsten Wert hat dabei $\text{NBPR}_{\sqrt{d}}$, die in weniger als $40\%$ der Simulationen mehr Kovariablen auswählt als die Enet-Methode. Wird die Unterscheidung für $\boldsymbol{\beta} \neq 0$ bzw. $\boldsymbol{\beta} = 0$ berücksichtigt, fällt das Selektionsergebnis für die $\text{NBPR}_{c}$-Methode in allen Fällen schlechter aus als für die Enet-Methode. $\text{NBPR}_{\mathscr{B},R}$ selektiert zwar in allen Simulationen die selben $\boldsymbol{\beta} \new 0$ wie die Enet-Methode, gleichzeitg werden in mehr Simulationen fäl Kovariablen. $\text{NBPR}_{\mathscr{B},R}$ schneidet noch schlechter ab, da in weniger Simulationen mehr richtige Kovariablen und in mehr Simulationen mehr falsche Kovariablen ausgewählt werden. Zwar wählen die übrigen $\text{NBPR}_c$-Versionen sowohl für den "`wahren Teil"' als auch den "'falschen Teil"' von $\boldsymbol{\beta}$ in weniger Simulationen mehr Kovariablen als die Enet-Methode aus, allerdings sind bei allen Versionen die Werte für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ niedriger als für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$. Das bedeutet, dass es durchschnittlich mehr Simulationen gibt, in denen die jeweilige $\text{NBPR}_c$-Version mehr falsche Kovariablen ungleich null setzt \textit{ohne} auch mehr richtige Kovariablen ungleich null zu setzen, als es diesen Fall für die Enet-Methode gibt.\\
+\end{comment}
 
-Die Plots in Anhang \ref{App_Plots} zeigen für die einzelnen Simulation, unterschieden nach den dem gesamten Vektor $\boldsymbol{\beta}$ sowie den Einträgen für die im wahren Modell enthaltenden bzw. nicht enthaltenden Kovariablen, die Anzahl der von den $\text{NBPR}_c$-Versionen Enet-Methode gewählten Kovariablen. Dabei werden die bereist oben erwähnten Ergebnisse hinsichtlich der RP- und FP-Rate noch einmal deutlich. Bezogen auf korrekt ausgewählte Kovariablen liegen die $\text{NBPR}_c$-Versionen in den meisten Fällen ein wenig über der Enet-Methode. Im Gegensatz dazu liegen die Versionen bei den fälschlich ausgewählten Kovariablen relativ häufig gleich auf mit der Enet-Methode, allerdings kommt es bei mehren Simulationen zu einer erhöhten Auswahl und in Einzelfällen zu Werten, die gegebenenfalls statistische Ausreißer sind.
 
 
 
@@ -1280,7 +1284,7 @@ $\text{NBPR}_{\mathscr{C},R}$ &  & 0.74                 &  & $0.461$       & $0.
 $\text{NBPR}_{d,R}$           &  & 0.66                 &  & $0.458$       & $0.152$ & $0.44$ & $0.36$     & $0.56$    &  & $0.073$       & $0.107$ & $0.048$ & $0.030$     & $0.074$    \\
 $\text{NBPR}_{\mathscr{E},R}$ &  & 0.64                 &  & $0.460$        & $0.124$ & $0.45$ & $0.38$     & $0.54$     &  & $0.056$       & $0.043$ & $0.045$ & $0.032$    & $0.074$    \\
                               &  &                      &  &               &         &        &            &            &  &               &         &         &            &            \\
-$\text{NBPR}_{\sqrt{d}}$      &  & 0.42                 &  & $0.494$       & $0.195$ & $0.5$  & $0.37$     & $0.64$    &  & $0.094$       & $0.150$ & $0.073$ & $0.033$    & $0.098$    \\
+$\text{NBPR}_{\sqrt{d}}$      &  & 0.42                 &  & $0.494$       & $0.195$ & $0.50$  & $0.37$     & $0.64$    &  & $0.094$       & $0.150$ & $0.073$ & $0.033$    & $0.098$    \\
 $\text{NBPR}_{\mathscr{C}}$   &  & 0.56                 &  & $0.440$       & $0.175$ & $0.44$ & $0.30$      & $0.55$     &  & $0.048$       & $0.047$ & $0.032$ & $0.024$    & $0.057$    \\
                               &  &                      &  &               &         &        &            &            &  &               &         &         &            &            \\
 $\text{NBPR}_{1}$             &  & 0.38                 &  & $0.483$       & $0.164$ & $0.52$ & $0.37$    & $0.60$      &  & $0.067$       & $0.041$ & $0.067$ & $0.030$    & $0.091$   
@@ -1311,22 +1315,25 @@ $\text{NBPR}_{d,R}$ und $\text{NBPR}_{\mathscr{E},R}$ bezeichnen die $\text{NBPR
 $\text{NBPR}_{\sqrt{d}}$ wurden als Knotengewichte die Closeness-Zentralität bzw. die Wurzel aus dem Knotengrad verwendet. $\text{NBPR}_1$ bezeichnet die Netzwerk-basierten penalisierten Regression ohne Knotengewichtung.}\label{Tab_Uebersicht_ME_PE}
 \end{sidewaystable}
 
-\begin{table}[h]
+\begin{sidewaystable}[h]
 \centering
-\begin{tabular}{ccccclclc}
-                              &  & $\pi$ &  & $\mathcal{I}^{NBPR_c}/\mathcal{I}^{Enet}$ &  & $\mathcal{I}^{NBPR_c}_{\beta_j \neq 0}/\mathcal{I}^{Enet}_{\beta_j \neq 0}$ &  & $\mathcal{I}^{NBPR_c}_{\beta_j= 0}/\mathcal{I}^{Enet}_{\beta_j= 0}$ \\ \cline{3-3} \cline{5-5} \cline{7-7} \cline{9-9} 
-$\text{NBPR}_{\mathscr{B},R}$ &  & 0.71  &  & $0.97$                                    &  & $1.00$                                                                      &  & $1.14$                                                              \\
-$\text{NBPR}_{\mathscr{C},R}$ &  & 0.74  &  & $0.84$                                    &  & $0.65$                                                                      &  & $1.08$                                                              \\
-$\text{NBPR}_{d,R}$           &  & 0.66  &  & $0.68$                                    &  & $0.37$                                                                      &  & $0.80$                                                              \\
-$\text{NBPR}_{\mathscr{E},R}$ &  & 0.64  &  & $0.73$                                    &  & $0.55$                                                                      &  & $0.91$                                                              \\
-                              &  &       &  &                                           &  &                                                                             &  &                                                                     \\
-$\text{NBPR}_{\sqrt{d}}$      &  & 0.42  &  & $0.38$                                    &  & $0.21$                                                                      &  & $0.57$                                                              \\
-$\text{NBPR}_{\mathscr{C}}$   &  & 0.56  &  & $0.53$                                    &  & $0.50$                                                                      &  & $0.50$                                                              \\
-                              &  &       &  &                                           &  &                                                                             &  &                                                                     \\
-$\text{NBPR}_{1}$             &  & 0.38  &  & $0.50$                                    &  & $0.21$                                                                      &  & $0.63$                                                             
+\begin{tabular}{clclcclcclcc}
+\multicolumn{1}{l}{}          &  & \multicolumn{1}{l}{} &  & \multicolumn{2}{c}{$\boldsymbol{\beta}=2$} &  & \multicolumn{2}{c}{$\boldsymbol{\beta}=1$} &  & \multicolumn{2}{c}{$\boldsymbol{\beta}=0$} \\ \cline{5-6} \cline{8-9} \cline{11-12} 
+\multicolumn{1}{l}{}          &  & $\pi$                &  & arith. Mittel           & SE               &  & arith. Mittel           & SE               &  & arith. Mittel           & SE               \\ \cline{3-3} \cline{5-6} \cline{8-9} \cline{11-12} 
+$\text{Enet}$                 &  & 1.0                  &  & $1.740$                 & $0.054$          &  & $1.010$                 & $0.044$          &  & $0.553$                 & $0.023$          \\
+                              &  &                      &  &                         &                  &  &                         &                  &  &                         &                  \\
+$\text{NBPR}_{\mathscr{B},R}$ &  & 0.71                 &  & $1.889$                 & $0.070$          &  & $1.239$                 & $0.082$          &  & $0.914$                 & $0.064$          \\
+$\text{NBPR}_{\mathscr{C},R}$ &  & 0.74                 &  & $1.876$                 & $0.087$          &  & $1.250$                 & $0.080$          &  & $0.873$                 & $0.055$          \\
+$\text{NBPR}_{d,R}$           &  & 0.66                 &  & $1.823$                 & $0.080$          &  & $1.360$                 & $0.095$          &  & $0.856$                 & $0.049$          \\
+$\text{NBPR}_{\mathscr{E},R}$ &  & 0.64                 &  & $1.862$                 & $0.074$          &  & $1.313$                 & $0.102$          &  & $0.870$                 & $0.056$          \\
+                              &  &                      &  &                         &                  &  &                         &                  &  &                         &                  \\
+$\text{NBPR}_{\sqrt{d}}$      &  & 0.42                 &  & $1.714$                 & $0.182$          &  & $1.175$                 & $0.211$          &  & $1.033$                 & $0.170$          \\
+$\text{NBPR}_{\mathscr{C}}$   &  & 0.56                 &  & $2.127$                 & $0.119$          &  & $1.418$                 & $0.111$          &  & $1.161$                 & $0.117$          \\
+                              &  &                      &  &                         &                  &  &                         &                  &  &                         &                  \\
+$\text{NBPR}_{1}$             &  & 0.38                 &  & $1.919$                 & $0.212$          &  & $1.419$                 & $0.192$          &  & $0.942$                 & $0.142$                   
 \end{tabular}
-\caption[Verhältnis zwischen der Anzahl an Simulationen, in der die jeweiligen $\text{NBPR}_c$-Versionen mehr $\hat{\beta}_j \neq 0$ setzen als die Enet-Methode, und dem umgekehrten Fall.]{Verhältnis zwischen der Anzahl an Simulationen, in der die jeweiligen $\text{NBPR}_c$-Versionen mehr $\hat{\beta}_j \neq 0$ setzen als die Enet-Methode. $\mathcal{I}^{NBPR_c}$ bzw. $\mathcal{I}^{Enet}$ entsprechen dabei den Anzahl an Simulationen, in denen über alle Kovariablen die jeweilige $\text{NBPR}_c$-Methode mehr $\hat{\beta}_j \neq 0$ setzt als die Enet-Methode bzw. umgekehrt die Enet-Methode mehr $\hat{\beta}_j \neq 0$ setzt hat als die jeweilige $\text{NBPR}_c$-Methode. Analoges gilt für $\mathcal{I}^{NBPR_c}_{\beta_j \neq 0}$ und $\mathcal{I}^{Enet}_{\beta_j \neq 0}$ bzw. $\mathcal{I}^{NBPR_c}_{\beta_j= 0}$ und $\mathcal{I}^{Enet}_{\beta_j= 0}$ mit dem Unterschied, dass dabei nur diejenigen $\beta_j$ betrachtet werden, für die im wahren Modell $\beta_j \neq 0$ respektive $\beta_j = 0$ gilt. Zusätzlich wird der Anteil an numerisch stabilen Schätzungen für die einzelnen Schätzmethoden angegeben ($\pi$).}\label{Tab_Diff_betas_Enet_Nets}
-\end{table}
+\caption[Übersicht über die Schätzgenauigkeit der verschiedenen $\boldsymbol{\hat{\beta}}$ für $\boldsymbol{\beta}$]{Übersicht über die Genauigkeit der durch die $\text{NBPR}_c$- bzw. Enet-Methode geschätzten $\boldsymbol{\beta}$, differenziert nach den Einträgen von $\boldsymbol{\beta}$ für die $\beta_j=2$, $\beta_j=1$ bzw. $\beta_j=0$ gilt. SE gibt dabei den Standardfehler des Mittelwerts an. Zusätzlich ist der den Maßen zugrunde liegende Anteil an erfolgreichen Simulationsdurchläufen angegeben ($\pi$).}\label{Tab_Quality_beta_hats}
+\end{sidewaystable}
 
 %%%%%%%%%%%%
 % Übersicht über Zentralitätsmaße (Median Closeness etc) über die Graphen
@@ -2411,8 +2418,11 @@ hist(PE.noweight, main="ohne Gewichtung",
 
 \newpage
 \section{Plots der Kovariablenauswahl pro Simulation für Enet vs. $\text{NBPR}_c$}\label{App_Plots}
+Die Plots in Anhang \ref{App_Plots} zeigen für die einzelnen Simulation die Anzahl der von den $\text{NBPR}_c$-Versionen Enet-Methode gewählten Kovariablen, unterschieden nach dem gesamten Vektor $\boldsymbol{\beta}$ sowie nach $\boldsymbol{\beta} \neq 0$ und $\boldsymbol{\beta} = 0$. Dabei wird $\hat{\beta}_j = 0$ für $|\hat{\beta}_j| < 0.00001$ gesetzt.
+
 %, fig.cap="Plots für die jeweiligen $\text{NBPR}_c$-Versionen und Enet-Methode im Hinblick auf die Auswahl an Kovariablen für jede Simulation. Dabei wird für jede Version der Fall für alle Kovariablen sowie nur für die im wahren Modell enthaltenen bzw. nicht enthaltenen Kovariablen dargestellt."
-<<echo=FALSE, message=FALSE, Lineplots, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plots der Kovariablenauswahl der verschiedenen $\text{NBPR}_c$-Versionen vs. der Enet-Regression">>=
+
+<<echo=FALSE, message=FALSE, Plot_BR1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{B},R}$ und Enet-Regression für $\\boldsymbol{\\beta}$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{B},R}$ und Enet-Regression für $\\boldsymbol{\\beta}$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 library(ggplot2)
@@ -2440,8 +2450,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Betweenness-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_BR2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{B},R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{B},R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 ### Nur Betas, die im Modell sind
 a <- choosen.TRUEbetas(betas.net=beta.hats.betweenness.rank, 
@@ -2463,8 +2475,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Betweenness-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_BR3, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{B},R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{B},R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2488,10 +2502,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Betweenness-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
 
-
+<<echo=FALSE, message=FALSE, Plot_CR1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{C},R}$ und Enet-Regression für $\\boldsymbol{\\beta}$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{C},R}$ und Enet-Regression für $\\boldsymbol{\\beta}$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 ######## CLOSENESS RANK
@@ -2515,8 +2529,11 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+  
+@
+
+<<echo=FALSE, message=FALSE, Plot_CR2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{C},R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{C},R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 ### Nur Betas, die im Modell sind
 a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.rank, 
@@ -2538,8 +2555,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_CR3, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{C},R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{C},R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2563,8 +2582,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_DR1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{d,R}$ und Enet-Regression für $\\boldsymbol{\\beta}$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{d,R}$ und Enet-Regression für $\\boldsymbol{\\beta}$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2590,8 +2611,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Knotengrad-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_DR2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{d,R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{d,R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 ### Nur Betas, die im Modell sind
 a <- choosen.TRUEbetas(betas.net=beta.hats.degree.rank, 
@@ -2613,8 +2636,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Knotengrad-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_DR3, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{d,R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{d,R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2638,8 +2663,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Knotengrad-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_ER1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{E},R}$ und Enet-Regression für $\\boldsymbol{\\beta}$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{E},R}$ und Enet-Regression für $\\boldsymbol{\\beta}$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2665,8 +2692,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Eigenvektor-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_ER2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{E},R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{E},R}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 ### Nur Betas, die im Modell sind
 a <- choosen.TRUEbetas(betas.net=beta.hats.evcent.rank, 
@@ -2688,8 +2717,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Eigenvektor-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_ER3, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{E},R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{E},R}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2713,8 +2744,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Eigenvektor-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_D1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\sqrt{d}}$ und Enet-Regression für $\\boldsymbol{\\beta}$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\sqrt{d}}$ und Enet-Regression für $\\boldsymbol{\\beta}$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2742,8 +2775,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit", phantom(x), sqrt(d),"-Gewichtung für" ,phantom(x), bold(beta))))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_D2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\sqrt{d}}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\sqrt{d}}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 ### Nur Betas, die im Modell sind
 a <- choosen.TRUEbetas(betas.net=beta.hats.sqrtdegree.NOrank, 
@@ -2765,8 +2800,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit", phantom(x), sqrt(d),"-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_D3, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\sqrt{d}}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\sqrt{d}}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2790,8 +2827,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit", phantom(x), sqrt(d),"-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_C1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{C}}$ und Enet-Regression für $\\boldsymbol{\\beta}$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{C}}$ und Enet-Regression für $\\boldsymbol{\\beta}$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2818,8 +2857,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Gewichtung für" ,phantom(x), bold(beta))))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_C2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{C}}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{C}}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 ### Nur Betas, die im Modell sind
 a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.NOrank, 
@@ -2841,8 +2882,11 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+  
+@
+
+<<echo=FALSE, message=FALSE, Plot_C3, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{\\mathscr{C}}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{\\mathscr{C}}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2866,8 +2910,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_NW1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{1}$ und Enet-Regression für $\\boldsymbol{\\beta}$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{1}$ und Enet-Regression für $\\boldsymbol{\\beta}$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2894,8 +2940,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR ohne Gewichtung für" ,phantom(x), bold(beta))))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_NW2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{1}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{1}$ und Enet-Regression für $\\boldsymbol{\\beta} \\neq 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 ### Nur Betas, die im Modell sind
 a <- choosen.TRUEbetas(betas.net=beta.hats.noweight, 
@@ -2917,8 +2965,10 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
-  ggtitle(expression(paste("Enet vs. NBPR ohne Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen")))
+@
+
+<<echo=FALSE, message=FALSE, Plot_NW3, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plot für die Auswahl von $\\text{NBPR}_{1}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$", fig.cap="Kovariablenauswahl von $\\text{NBPR}_{1}$ und Enet-Regression für $\\boldsymbol{\\beta} = 0$ für die einzelnen Simulationsdurchläufe.">>=
 
 
 
@@ -2958,7 +3008,7 @@ ggplot(data=b,
 % Aber trotzdem ins Inhaltsverzeichnis aufnehmen
 \addcontentsline{toc}{chapter}{Eigenständigkeitserklärung}
 % Hier der offizielle Text der eidesstattlichen Erklärung
-Hiermit versichere ich, dass ich die vorliegende Arbeit "`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX"' selbstständig und ohne Benutzung anderer als der angegebenen 
+Hiermit versichere ich, dass ich die vorliegende Arbeit "`Der Einfluss von Zentralitätsmaßen bei der Netzwerk-basierten penalisierten Regression"' selbstständig und ohne Benutzung anderer als der angegebenen 
 Hilfsmittel angefertigt habe; die aus fremden Quellen direkt oder indirekt übernommenen Gedanken sind als solche kenntlich gemacht. 
 Die Arbeit wurde bisher in gleicher oder ähnlicher Form keiner anderen Prüfungskommission vorgelegt und auch nicht veröffentlicht.
 % Etwas Abstand für die Unterschrift
