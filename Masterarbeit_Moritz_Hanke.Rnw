@@ -1261,21 +1261,13 @@ Zur Bestimmung des Modell- bzw. Vorhersagefehlers werden die nach der Bestimmung
 
 Wird der durchschnittliche Vorhersagefehler als Gütekriterium für die Qualität der Schätzungen herangezogen, ist die Enet-Methode ($\text{PE}=238.2$) den $\text{NBPR}_c$-Versionen ($\text{PE}=886.66.2$ bis $\text{PE}=1044.30$) deutlich überlegen. Auch im Hinblick auf die Variabilität der Vorhersagefehler liefert der Enet-Schätzer mit $\text{s}=52.92$ bessere Ergebnisse als die übrigen Methoden. Diese streuen relativ breit um ihren jeweiligen Mittelwert (siehe Abbildung \ref{fig:Histo_PE_Simu}), was als hohe Sensibilität gegenüber geringen numerischen Veränderungen innerhalb der Daten interpretiert werden kann.\\
 
-Da der Algorithmus der $\text{NBPR}_c$-Methode einen Startschätzer braucht (vgl. dazu Abschnitt \ref{Kap_Netzwerkbasierte_Penalisierung}) und dafür der Enet-Schätzer aus Abschnitt \ref{Kap_Schätzung_mittels_Enet} verwendet wird, ist von Interesse, inwieweit sich die einzelnen $\text{NBPR}_c$-Versionen vom Enet-Schätzer hinsichtlich der Selektion der einzelnen $\beta_j$ unterscheiden. Tabelle \ref{Tab_Diff_betas_Enet_Nets} gibt dazu Verhältnis zwischen der Anzahl an Simulationen, in denen die jeweilige $\text{NBPR}_c$-Version mehr $\hat{\beta}_j \neq 0$ setzt als die Enet-Methode, und den umgekehrten Fall, in dem die Enet-Methode mehr $\hat{\beta}_j \neq 0$ setzt als die jeweilige $\text{NBPR}_c$-Version. Dabei wird für alle Kovariablen,d.h. $\boldsymbol{\beta}$ ($\mathcal{I}^{NBPR_c}/\mathcal{I}^{Enet}$), sowie nur die im wahren Modell vorhandenen bzw. nicht vorhandenen Kovariablen ($\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ und $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$) unterschieden. Je näher der Wert an $1$ reicht, desto weniger unterscheidet sich die Kovariablenselektion zwischen Enet- und $\text{NBPR}_c$-Methode über alle Simulationen. Ein Wert von $1$ bedeutet, dass die beiden Methoden für die jeweils betrachteten Teil von $\boldsymbol{\beta}$ immer die selben Kovariablen wählen. Werte $<1$ sind so zu interpretieren, dass es mehr Simulationen gibt, in denen die Enet-Methode mehr Kovariablen auswählt als die $\text{NBPR}_c$. Umgekehrtes gilt für einen Wert $>1$.\\
+Da der Algorithmus der $\text{NBPR}_c$-Methode einen Startschätzer braucht (vgl. dazu Abschnitt \ref{Kap_Netzwerkbasierte_Penalisierung}) und dafür der Enet-Schätzer aus Abschnitt \ref{Kap_Schätzung_mittels_Enet} verwendet wird, ist von Interesse, inwieweit sich die einzelnen $\text{NBPR}_c$-Versionen vom Enet-Schätzer hinsichtlich der Selektion der einzelnen $\beta_j$ unterscheiden. Tabelle \ref{Tab_Diff_betas_Enet_Nets} gibt dazu das Verhältnis zwischen der Anzahl an Simulationen, in denen die jeweilige $\text{NBPR}_c$-Version mehr $\hat{\beta}_j \neq 0$ setzt als die Enet-Methode, und den umgekehrten Fall, in dem die Enet-Methode mehr $\hat{\beta}_j \neq 0$ setzt als die jeweilige $\text{NBPR}_c$-Version. Dabei wird für alle Kovariablen,d.h. $\boldsymbol{\beta}$ ($\mathcal{I}^{NBPR_c}/\mathcal{I}^{Enet}$), sowie nur die im wahren Modell vorhandenen bzw. nicht vorhandenen Kovariablen ($\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ und $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$) unterschieden. Je näher der Wert an $1$ reicht, desto weniger unterscheidet sich die Kovariablenselektion zwischen Enet- und $\text{NBPR}_c$-Methode über alle Simulationen. Ein Wert von $1$ bedeutet, dass die beiden Methoden für die jeweils betrachteten Teil von $\boldsymbol{\beta}$ immer die selben Kovariablen wählen. Werte $<1$ sind so zu interpretieren, dass es mehr Simulationen gibt, in denen die Enet-Methode mehr Kovariablen auswählt als die $\text{NBPR}_c$. Umgekehrtes gilt für einen Wert $>1$.\\
 Für die Betrachtung des gesamten Vektors $\boldsymbol{\beta}$ wählt $\text{NBPR}_{\mathscr{B},R}$ in fast allen Simulationen die selben Kovariablen aus wie die Enet-Methode. Dagegen wählen alle anderen $\text{NBPR}_c$-Versionen in deutlich weniger Simulationen mehr Kovariablen als die Enet-Methode aus. Den niedrigsten Wert hat dabei $\text{NBPR}_{1}$, die nur circa einem Drittel der Simulationen mehr Kovariablen auswählt. Wird die Unterscheidung für $\boldsymbol{\beta} \neq 0$ bzw. $\boldsymbol{\beta} = 0$ berücksichtigt, fällt das Selektionsergebnis für die $\text{NBPR}_{c}$-Methode in allen Fällen schlechter aus als für die Enet-Methode. $\text{NBPR}_{\mathscr{B},R}$ selektiert zwar in allen Simulationen die selben wahren Kovariablen, gleichzeitg aber in mehr Simulationen auch mehr falsche Kovariablen. $\text{NBPR}_{\mathscr{B},R}$ schneidet noch schlechter ab, da in weniger Simulationen mehr richtige Kovariablen und in mehr Simulationen mehr falsche Kovariablen ausgewählt werden. Zwar wählen die übrigen $\text{NBPR}_c$-Versionen sowohl für den "`wahren Teil"' als auch den "'falschen Teil"' von $\boldsymbol{\beta}$ in weniger Simulationen mehr Kovariablen als die Enet-Methode aus, allerdings sind bei allen Versionen die Werte für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ niedriger als für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$. Das bedeutet, dass es durchschnittlich mehr Simulationen gibt, in denen die jeweilige $\text{NBPR}_c$-Version mehr falsche Kovariablen ungleich null setzt \textit{ohne} auch mehr richtige Kovariablen ungleich null zu setzen, als es diesen Fall für die Enet-Methode gibt.\\
 
-Während Tabelle \ref{Tab_Diff_betas_Enet_Nets} keine Aussage über die gesamte Anzahl an ausgewählten Kovariablen über alle Simulationen macht, ist  ...
+Die Plots in Anhang \ref{App_Plots} zeigen für die einzelnen Simulation, unterschieden nach den dem gesamten Vektor $\boldsymbol{\beta}$ sowie den Einträgen für die im wahren Modell enthaltenden bzw. nicht enthaltenden Kovariablen, die Anzahl der von den $\text{NBPR}_c$-Versionen Enet-Methode gewählten Kovariablen. Dabei werden die bereist oben erwähnten Ergebnisse hinsichtlich der RP- und FP-Rate noch einmal deutlich. Bezogen auf korrekt ausgewählte Kovariablen liegen die $\text{NBPR}_c$-Versionen in den meisten Fällen ein wenig über der Enet-Methode. Im Gegensatz dazu liegen die Versionen bei den fälschlich ausgewählten Kovariablen relativ häufig gleich auf mit der Enet-Methode, allerdings kommt es bei mehren Simulationen zu einer erhöhten Auswahl und in Einzelfällen zu Werten, die gegebenenfalls statistische Ausreißer sind.
 
 
 
-\begin{comment}
-!!!!!! Bis hier lesen!
-mit den ausgewählten Tuningparametern sowie einen Testdatensatz mit $n_{test}=200$ für die Überprüfung der Qualität der $\boldsymbol{\hat{\beta}}$ unterteilt. 
-
-
-Die durchschnittliche RP-Rate liegt dabei bei $0.436$ (siehe dazu auch Tabelle \ref{Tab_Uebersicht_RP_FP_Raten}), was circa $22$ Regressionskoeffizienten im Setting entspricht. Somit werden in dieser Simulationsstudie von den wahren Regressionskoeffizienten, die ungleich null sind, weniger als die Hälfte mit der Enet-Methode aufgedeckt. Gleichzeitig liegt die durchschnittliche FP-Rate bei $0.052$, was circa $49$ Regressionskoeffizienten entspricht. Somit ist das Verhältnis der korrekt ungleich null gesetzten zu den fälschlich ungleich null gesetzten Regressionskoeffizienten ungefähr $1:2.2$.\\
-Der mit den $n_{test}$ Beobachtungen bestimmten durchschnittliche Modelfehler (siehe Tabelle \ref{Tab_Uebersicht_ME_PE}) für die Enet-Methode liegt bei $155.56$ \\
-\end{comment}
 \begin{sidewaystable}[h]
 \centering
 \begin{tabular}{clclccccclccccc}
@@ -1338,20 +1330,7 @@ $\text{NBPR}_{1}$             &  & 0.38  &  & $0.50$                            
 
 %%%%%%%%%%%%
 % Übersicht über Zentralitätsmaße (Median Closeness etc) über die Graphen
-\begin{table}[h]
-\begin{tabular}{llllllllll}
-                                                                               & \multicolumn{1}{c}{$\boldsymbol{\beta}$} & \multicolumn{1}{c}{$\boldsymbol{\beta} \neq 0$} & \multicolumn{1}{c}{$\boldsymbol{\beta} \neq 0$} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &  &  \\
-$\sum_{s=1}^{100} \frac{\text{NBPR}_{\mathscr{B},R}^{(s)}}{\text{Enet}^{(s)}}$ &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-$\sum_{s=1}^{100} \frac{\text{NBPR}_{\mathscr{C},R}^{(s)}}{\text{Enet}^{(s)}}$ &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-$\sum_{s=1}^{100} \frac{\text{NBPR}_{d,R}^{(s)}}{\text{Enet}^{(s)}}$           &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-$\sum_{s=1}^{100} \frac{\text{NBPR}_{\mathscr{E},R}^{(s)}}{\text{Enet}^{(s)}}$ &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-$\sum_{s=1}^{100} \frac{\text{NBPR}_{\sqrt{d}}^{(s)}}{\text{Enet}^{(s)}}$      &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-$\sum_{s=1}^{100} \frac{\text{NBPR}_{\mathscr{C}}^{(s)}}{\text{Enet}^{(s)}}$   &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-$\sum_{s=1}^{100} \frac{\text{NBPR}_{1}}{\text{Enet}^{(s)}}$                   &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-                                                                               &                                          &                                                 &                                                 &                      &                      &                      &                      &  &  \\
-                                                                               &                                          &                                                 &                                                 &                      &                      &                      &                      &  & 
-\end{tabular}
-\end{table}
+
 
 
 \chapter{Diskussion und Ausblick}\label{Diskussion und Ausblick}
@@ -2430,9 +2409,11 @@ hist(PE.noweight, main="ohne Gewichtung",
      breaks=seq(0,2000,100),xlab="PE",ylab="absolute Häufigkeit", ylim=c(0,70))
 @
 
-\section{TEST}
+\newpage
+\section{Plots der Kovariablenauswahl pro Simulation für Enet vs. $\text{NBPR}_c$}\label{App_Plots}
+%, fig.cap="Plots für die jeweiligen $\text{NBPR}_c$-Versionen und Enet-Methode im Hinblick auf die Auswahl an Kovariablen für jede Simulation. Dabei wird für jede Version der Fall für alle Kovariablen sowie nur für die im wahren Modell enthaltenen bzw. nicht enthaltenen Kovariablen dargestellt."
+<<echo=FALSE, message=FALSE, Lineplots, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Plots der Kovariablenauswahl der verschiedenen $\text{NBPR}_c$-Versionen vs. der Enet-Regression">>=
 
-<<echo=FALSE, message=FALSE, Lineplots, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="KEGG Cancer-Pathway als ungerichteter Graph", fig.cap="Darstellung des KEGG Cancer-Pathways aus Abbildung.">>=
 
 library(ggplot2)
 library(reshape2)
@@ -2459,8 +2440,510 @@ ggplot(data=b,
        aes(x=Simulation, y=value, colour=Methode)) +
   geom_line(position=pd,aes(group=Methode)) + 
   xlab("Simulationsnummer") +
-  ylab(expression(paste("Anzahl", phantom(x), hat(beta), "\u2260 0"))) +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
   ggtitle(expression(paste("Enet vs. NBPR mit Betweenness-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+
+### Nur Betas, die im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.betweenness.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.betweenness,
+                       true.betas=1:50,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Betweenness-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+
+
+
+### Nur Betas, die nicht im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.betweenness.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.betweenness,
+                       true.betas=51:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Betweenness-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+
+
+
+
+######## CLOSENESS RANK
+### Alle Betas
+a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.closenessRank,
+                       true.betas=1:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+
+### Nur Betas, die im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.closenessRank,
+                       true.betas=1:50,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+
+
+
+### Nur Betas, die nicht im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.closenessRank,
+                       true.betas=51:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+
+
+
+
+######## DEGREE RANK
+### Alle Betas
+a <- choosen.TRUEbetas(betas.net=beta.hats.degree.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.DegreeRank,
+                       true.betas=1:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Knotengrad-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+
+### Nur Betas, die im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.degree.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.DegreeRank,
+                       true.betas=1:50,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Knotengrad-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+
+
+
+### Nur Betas, die nicht im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.degree.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.DegreeRank,
+                       true.betas=51:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Knotengrad-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+
+
+
+
+######## EVcent RANK
+### Alle Betas
+a <- choosen.TRUEbetas(betas.net=beta.hats.evcent.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.evcent,
+                       true.betas=1:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Eigenvektor-Rang-Gewichtung für" ,phantom(x), bold(beta))))
+
+### Nur Betas, die im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.evcent.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.evcent,
+                       true.betas=1:50,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Eigenvektor-Rang-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+
+
+
+### Nur Betas, die nicht im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.evcent.rank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.evcent,
+                       true.betas=51:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Eigenvektor-Rang-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+
+
+
+
+
+
+######## SQRT DEGREE
+### Alle Betas
+a <- choosen.TRUEbetas(betas.net=beta.hats.sqrtdegree.NOrank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.sqrtdegree,
+                       true.betas=1:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit", phantom(x), sqrt(d),"-Gewichtung für" ,phantom(x), bold(beta))))
+
+### Nur Betas, die im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.sqrtdegree.NOrank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.sqrtdegree,
+                       true.betas=1:50,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit", phantom(x), sqrt(d),"-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+
+
+
+### Nur Betas, die nicht im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.sqrtdegree.NOrank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.sqrtdegree,
+                       true.betas=51:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit", phantom(x), sqrt(d),"-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+
+
+
+
+
+######## CLOSENESS
+### Alle Betas
+a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.NOrank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.closenessNORank,
+                       true.betas=1:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Gewichtung für" ,phantom(x), bold(beta))))
+
+### Nur Betas, die im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.NOrank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.closenessNORank,
+                       true.betas=1:50,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+
+
+
+### Nur Betas, die nicht im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.closeness.NOrank, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.closenessNORank,
+                       true.betas=51:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR mit Closeness-Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+
+
+
+
+
+######## NO WEIGHT
+### Alle Betas
+a <- choosen.TRUEbetas(betas.net=beta.hats.noweight, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.noweight,
+                       true.betas=1:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR ohne Gewichtung für" ,phantom(x), bold(beta))))
+
+### Nur Betas, die im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.noweight, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.noweight,
+                       true.betas=1:50,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR ohne Gewichtung für" ,phantom(x), bold(beta), phantom(x),"ungleich",phantom(x),0)))
+
+
+
+### Nur Betas, die nicht im Modell sind
+a <- choosen.TRUEbetas(betas.net=beta.hats.noweight, 
+                       betas.ENET=beta_hats.enet,
+                       unbrauchbar.Net=unbrauchbar.noweight,
+                       true.betas=51:1000,
+                       schwellwert=0.00001)
+
+
+colnames(a) <- c("Enet", "NBPR")
+a <- as.data.frame(a)
+a$Simulation <- rownames(a)
+b <- melt(a, id="Simulation")
+b$Simulation <- as.integer(b$Simulation)
+names(b)[2] <- "Methode"
+
+pd <- position_dodge(.1)
+ggplot(data=b,
+       aes(x=Simulation, y=value, colour=Methode)) +
+  geom_line(position=pd,aes(group=Methode)) + 
+  xlab("Simulationsnummer") +
+  ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
+  ggtitle(expression(paste("Enet vs. NBPR ohne Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
 
 @
 
