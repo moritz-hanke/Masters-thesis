@@ -1263,7 +1263,9 @@ Zur Bestimmung des Modell- bzw. Vorhersagefehlers werden die nach der Bestimmung
 
 Wird der durchschnittliche Vorhersagefehler als Gütekriterium für die Qualität der Schätzungen herangezogen, ist die Enet-Methode ($\text{PE}=238.2$) den $\text{NBPR}_c$-Versionen ($\text{PE}=886.66.2$ bis $\text{PE}=1044.30$) deutlich überlegen. Auch im Hinblick auf die Variabilität der Vorhersagefehler liefert der Enet-Schätzer mit $\text{s}=52.92$ bessere Ergebnisse als die übrigen Methoden. Diese streuen relativ breit um ihren jeweiligen Mittelwert (siehe Abbildung \ref{fig:Histo_PE_Simu}), was als hohe Sensibilität gegenüber geringen numerischen Veränderungen innerhalb der Daten interpretiert werden kann.\\
 
-Tabelle \ref{Tab_Quality_beta_hats} 
+Um die Genauigkeit der $\hat{\beta}_j \neq 0$ für $\beta_j \neq 0$ zu beurteilen, sind in Tabelle \ref{Tab_Quality_beta_hats} die arithmetischen Mittelwerte  der einzelnen Schätzungen aufgeführt. Dabei wird für die Regressionskoeffizienten unterschieden, für die $\boldsymbol{\beta}=2$ bzw. $\boldsymbol{\beta}=1$ gilt. Zusätzlich ist die Genauigkeit für die nicht im Modell vorhanden Regressionskoeffizienten, d.h. $\boldsymbol{\beta}=0$, aufgeführt. Je näher das arithmetische Mittel der entsprechenden Schätzer an dem wahren Wert liegt, desto besser schätzt die jeweilige Methode im Schnitt diejenigen Koeffizienten, die selektiert werden. Zusätzlich ist für jede Methode der Standardfehler des Mittelwerts angegeben, um eine Einschätzung zu erhalten, wie stark die Schätzer um die wahren Werte streuen.\\
+Für $\boldsymbol{\beta}=2$ liegen alle durchschnittlichen Schätzer unter dem wahren Regressionskoeffizienten. Alleine $\text{NBPR}_{\mathscr{C}}$ überschätzt im Schnitt den "'wahren"' Einfluss. Der Enet-Schätzer liefert darüber hinaus den zweitschlechtesten Wert. Allerdings relativiert sich diese Beobachtung durch die Plots in Abbildung \ref{fig:Hist_betahats2}. Anhand der Plots wird deutlich, dass Versionen wie $\text{NBPR}_{\sqrt{d}}$ und $\text{NBPR}_{1}$, deren arithmetisches Mittel näher an $2$ liegt als von der Enet-Regression, in einzelnen Simulationsdurchläufen eine starke Überschätzung liefern, die den Mittelwert nach oben verschieben. 
+
 \begin{comment}
 Da der Algorithmus der $\text{NBPR}_c$-Methode einen Startschätzer braucht (vgl. dazu Abschnitt \ref{Kap_Netzwerkbasierte_Penalisierung}) und dafür der Enet-Schätzer aus Abschnitt \ref{Kap_Schätzung_mittels_Enet} verwendet wird, ist von Interesse, inwieweit sich die einzelnen $\text{NBPR}_c$-Versionen vom Enet-Schätzer hinsichtlich der Selektion der einzelnen $\beta_j$ unterscheiden. Tabelle \ref{Tab_Diff_betas_Enet_Nets} gibt dazu das Verhältnis zwischen der Anzahl an Simulationen, in denen die jeweilige $\text{NBPR}_c$-Version mehr $\hat{\beta}_j \neq 0$ setzt als die Enet-Methode, und den umgekehrten Fall, in dem die Enet-Methode mehr $\hat{\beta}_j \neq 0$ setzt als die jeweilige $\text{NBPR}_c$-Version. Dabei wird für alle Kovariablen  $\boldsymbol{\beta}$ (Spalte $\mathcal{I}^{NBPR_c}/\mathcal{I}^{Enet}$), sowie nur die im wahren Modell vorhandenen Kovariablen $\boldsymbol{\beta} \neq 0$ bzw. nicht vorhandenen Kovariablen $\boldsymbol{\beta} = }$ (Spalte $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ und Spalte $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$) unterschieden. Je näher der Wert an $1$ reicht, desto weniger unterscheidet sich die Kovariablenselektion zwischen Enet- und $\text{NBPR}_c$-Methode über alle Simulationen. Ein Wert von $1$ bedeutet, dass genauso viele Simulationen gibt, in denen eine $\text{NBPR}_c$-Version mehr Kovariablen als die Enet-Methode  beiden Methoden für die jeweils betrachteten Teil von $\boldsymbol{\beta}$ immer die selben Kovariablen wählen. Werte $<1$ sind so zu interpretieren, dass es mehr Simulationen gibt, in denen die Enet-Methode mehr Kovariablen auswählt als die $\text{NBPR}_c$. Umgekehrtes gilt für einen Wert $>1$.\\
 Wenn der gesamten Vektors $\boldsymbol{\beta}$ betrachtet wird, wählt $\text{NBPR}_{\mathscr{B},R}$ in fast allen Simulationen die selben Kovariablen aus wie die Enet-Methode. Dagegen wählen alle anderen $\text{NBPR}_c$-Versionen in deutlich weniger Simulationen mehr Kovariablen als die Enet-Methode aus. Den niedrigsten Wert hat dabei $\text{NBPR}_{\sqrt{d}}$, die in weniger als $40\%$ der Simulationen mehr Kovariablen auswählt als die Enet-Methode. Wird die Unterscheidung für $\boldsymbol{\beta} \neq 0$ bzw. $\boldsymbol{\beta} = 0$ berücksichtigt, fällt das Selektionsergebnis für die $\text{NBPR}_{c}$-Methode in allen Fällen schlechter aus als für die Enet-Methode. $\text{NBPR}_{\mathscr{B},R}$ selektiert zwar in allen Simulationen die selben $\boldsymbol{\beta} \new 0$ wie die Enet-Methode, gleichzeitg werden in mehr Simulationen fäl Kovariablen. $\text{NBPR}_{\mathscr{B},R}$ schneidet noch schlechter ab, da in weniger Simulationen mehr richtige Kovariablen und in mehr Simulationen mehr falsche Kovariablen ausgewählt werden. Zwar wählen die übrigen $\text{NBPR}_c$-Versionen sowohl für den "`wahren Teil"' als auch den "'falschen Teil"' von $\boldsymbol{\beta}$ in weniger Simulationen mehr Kovariablen als die Enet-Methode aus, allerdings sind bei allen Versionen die Werte für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ niedriger als für $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$. Das bedeutet, dass es durchschnittlich mehr Simulationen gibt, in denen die jeweilige $\text{NBPR}_c$-Version mehr falsche Kovariablen ungleich null setzt \textit{ohne} auch mehr richtige Kovariablen ungleich null zu setzen, als es diesen Fall für die Enet-Methode gibt.\\
@@ -2994,6 +2996,178 @@ ggplot(data=b,
   xlab("Simulationsnummer") +
   ylab(expression(paste("Anzahl ausgewählter Kovariablen"))) +
   ggtitle(expression(paste("Enet vs. NBPR ohne Gewichtung für" ,phantom(x), bold(beta), " = ", 0)))
+
+@
+
+\newpage
+\section{Histogramme der durchschnittlichen $\boldsymbol{\hat{\beta}}$ für $\boldsymbol{\beta}=1$, $\boldsymbol{\beta}=2$ und $\boldsymbol{\beta}=0$}
+<<echo=FALSE, message=FALSE, Hist_betahats2, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Histogramme der durchschnittlichen $\\boldsymbol{\\hat{\\beta}}$ für $\\boldsymbol{\\beta} = 2$", fig.cap="Histogramme der durchschnittlichen $\\boldsymbol{\\hat{\\beta}}$ für $\\boldsymbol{\\beta} = 2$">>=
+load("/home/momo/Studium/BIOMETRIE/Masterarbeit/WS_fuer_Plots_Betas_Simu.RData")
+
+
+par(mfrow=c(3,3))
+hist.mean.betas("Enet",
+                beta_hats.enet,
+                1:20,
+                0.00001,
+                15)
+
+hist.mean.betas("NBPR mit Betweenness-\n Rang-Gewichtung",
+                beta.hats.betweenness.rank.brauchbar,
+                1:20,
+                0.00001,
+                15)
+
+hist.mean.betas("NBPR mit Closeness-\n Rang-Gewichtung",
+                beta.hats.closeness.rank.brauchbar,
+                1:20,
+                0.00001,
+                15)
+
+hist.mean.betas("NBPR mit Degree-\n Rang-Gewichtung",
+                beta.hats.DegreeRank.brauchbar,
+                1:20,
+                0.00001,
+                15)
+
+hist.mean.betas("NBPR mit Eigenvektor-\n Rang-Gewichtung",
+                beta.hats.evcent.rank.brauchbar,
+                1:20,
+                0.00001,
+                15)
+
+hist.mean.betas(expression(paste("NBPR mit ",sqrt(d),"-Gewichtung")),
+                beta.hats.sqrtdegree.NOrank.brauchbar,
+                1:20,
+                0.00001,
+                15)
+
+hist.mean.betas("NBPR mit Closeness-\n Gewichtung",
+                beta.hats.closenessNORank.brauchbar,
+                1:20,
+                0.00001,
+                15)
+
+hist.mean.betas("NBPR ohne Gewichtung",
+                beta.hats.noweight.brauchbar,
+                1:20,
+                0.00001,
+                15)
+
+
+@
+
+
+
+<<echo=FALSE, message=FALSE, Hist_betahats1, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Histogramme der durchschnittlichen $\\boldsymbol{\\hat{\\beta}}$ für $\\boldsymbol{\\beta} = 1$", fig.cap="Histogramme der durchschnittlichen $\\boldsymbol{\\hat{\\beta}}$ für $\\boldsymbol{\\beta} = 1$">>=
+load("/home/momo/Studium/BIOMETRIE/Masterarbeit/WS_fuer_Plots_Betas_Simu.RData")
+
+
+par(mfrow=c(3,3))
+hist.mean.betas("Enet",
+                beta_hats.enet,
+                21:50,
+                0.00001,
+                25)
+
+hist.mean.betas("NBPR mit Betweenness-\n Rang-Gewichtung",
+                beta.hats.betweenness.rank.brauchbar,
+                21:50,
+                0.00001,
+                25)
+
+hist.mean.betas("NBPR mit Closeness-\n Rang-Gewichtung",
+                beta.hats.closeness.rank.brauchbar,
+                21:50,
+                0.00001,
+                25)
+
+hist.mean.betas("NBPR mit Degree-\n Rang-Gewichtung",
+                beta.hats.DegreeRank.brauchbar,
+                21:50,
+                0.00001,
+                25)
+
+hist.mean.betas("NBPR mit Eigenvektor-\n Rang-Gewichtung",
+                beta.hats.evcent.rank.brauchbar,
+                21:50,
+                0.00001,
+                25)
+
+hist.mean.betas(expression(paste("NBPR mit ",sqrt(d),"-Gewichtung")),
+                beta.hats.sqrtdegree.NOrank.brauchbar,
+                21:50,
+                0.00001,
+                25)
+
+hist.mean.betas("NBPR mit Closeness-\n Gewichtung",
+                beta.hats.closenessNORank.brauchbar,
+                21:50,
+                0.00001,
+                25)
+
+hist.mean.betas("NBPR ohne Gewichtung",
+                beta.hats.noweight.brauchbar,
+                21:50,
+                0.00001,
+                25)
+@
+
+
+<<echo=FALSE, message=FALSE, Hist_betahats0, fig.pos="H", fig.show='hold', fig.align='center', out.width='0.9\\linewidth', fig.lp="fig:", fig.scap="Histogramme der durchschnittlichen $\\boldsymbol{\\hat{\\beta}}$ für $\\boldsymbol{\\beta} = 0$", fig.cap="Histogramme der durchschnittlichen $\\boldsymbol{\\hat{\\beta}}$ für $\\boldsymbol{\\beta} = 0$">>=
+load("/home/momo/Studium/BIOMETRIE/Masterarbeit/WS_fuer_Plots_Betas_Simu.RData")
+
+
+par(mfrow=c(3,3))
+hist.mean.betas("Enet",
+                beta_hats.enet,
+                51:1000,
+                0.00001,
+                40)
+
+hist.mean.betas("NBPR mit Betweenness-\n Rang-Gewichtung",
+                beta.hats.betweenness.rank.brauchbar,
+                51:1000,
+                0.00001,
+                40)
+
+hist.mean.betas("NBPR mit Closeness-\n Rang-Gewichtung",
+                beta.hats.closeness.rank.brauchbar,
+                51:1000,
+                0.00001,
+                40)
+
+hist.mean.betas("NBPR mit Degree-\n Rang-Gewichtung",
+                beta.hats.DegreeRank.brauchbar,
+                51:1000,
+                0.00001,
+                40)
+
+hist.mean.betas("NBPR mit Eigenvektor-\n Rang-Gewichtung",
+                beta.hats.evcent.rank.brauchbar,
+                51:1000,
+                0.00001,
+                40)
+
+hist.mean.betas(expression(paste("NBPR mit ",sqrt(d),"-Gewichtung")),
+                beta.hats.sqrtdegree.NOrank.brauchbar,
+                51:1000,
+                0.00001,
+                40)
+
+hist.mean.betas("NBPR mit Closeness-\n Gewichtung",
+                beta.hats.closenessNORank.brauchbar,
+                51:1000,
+                0.00001,
+                40)
+
+hist.mean.betas("NBPR ohne Gewichtung",
+                beta.hats.noweight.brauchbar,
+                51:1000,
+                0.00001,
+                40)
+
+
 
 @
 
