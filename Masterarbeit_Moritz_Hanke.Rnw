@@ -1264,7 +1264,11 @@ Zur Bestimmung des Modell- bzw. Vorhersagefehlers werden die nach der Bestimmung
 Wird der durchschnittliche Vorhersagefehler als Gütekriterium für die Qualität der Schätzungen herangezogen, ist die Enet-Methode ($\text{PE}=238.2$) den $\text{NBPR}_c$-Versionen ($\text{PE}=886.66.2$ bis $\text{PE}=1044.30$) deutlich überlegen. Auch im Hinblick auf die Variabilität der Vorhersagefehler liefert der Enet-Schätzer mit $\text{s}=52.92$ bessere Ergebnisse als die übrigen Methoden. Diese streuen relativ breit um ihren jeweiligen Mittelwert (siehe Abbildung \ref{fig:Histo_PE_Simu}), was als hohe Sensibilität gegenüber geringen numerischen Veränderungen innerhalb der Daten interpretiert werden kann.\\
 
 Um die Genauigkeit der $\hat{\beta}_j \neq 0$ für $\beta_j \neq 0$ zu beurteilen, sind in Tabelle \ref{Tab_Quality_beta_hats} die arithmetischen Mittelwerte  der einzelnen Schätzungen aufgeführt. Dabei wird für die Regressionskoeffizienten unterschieden, für die $\boldsymbol{\beta}=2$ bzw. $\boldsymbol{\beta}=1$ gilt. Zusätzlich ist die Genauigkeit für die nicht im Modell vorhanden Regressionskoeffizienten, d.h. $\boldsymbol{\beta}=0$, aufgeführt. Je näher das arithmetische Mittel der entsprechenden Schätzer an dem wahren Wert liegt, desto besser schätzt die jeweilige Methode im Schnitt diejenigen Koeffizienten, die selektiert werden. Zusätzlich ist für jede Methode der Standardfehler des Mittelwerts angegeben, um eine Einschätzung zu erhalten, wie stark die Schätzer um die wahren Werte streuen.\\
-Für $\boldsymbol{\beta}=2$ liegen alle durchschnittlichen Schätzer unter dem wahren Regressionskoeffizienten. Alleine $\text{NBPR}_{\mathscr{C}}$ überschätzt im Schnitt den "'wahren"' Einfluss. Der Enet-Schätzer liefert darüber hinaus den zweitschlechtesten Wert. Allerdings relativiert sich diese Beobachtung durch die Plots in Abbildung \ref{fig:Hist_betahats2}. Anhand der Plots wird deutlich, dass Versionen wie $\text{NBPR}_{\sqrt{d}}$ und $\text{NBPR}_{1}$, deren arithmetisches Mittel näher an $2$ liegt als von der Enet-Regression, in einzelnen Simulationsdurchläufen eine starke Überschätzung liefern, die den Mittelwert nach oben verschieben. 
+Für $\boldsymbol{\beta}=2$ liegen alle durchschnittlichen Schätzer unter dem wahren Regressionskoeffizienten. Alleine $\text{NBPR}_{\mathscr{C}}$ überschätzt im Schnitt den "'wahren"' Einfluss. Der Enet-Schätzer liefert darüber hinaus den zweitschlechtesten Wert. Allerdings relativiert sich diese Beobachtung durch die Plots in Abbildung \ref{fig:Hist_betahats2}. Anhand der Plots wird deutlich, dass Versionen wie $\text{NBPR}_{\sqrt{d}}$ und $\text{NBPR}_{1}$, deren arithmetisches Mittel näher an $2$ liegt als von der Enet-Regression, in einzelnen Simulationsdurchläufen eine starke Überschätzung liefern, die den Mittelwert nach oben verschieben. Auffällig ist darüber hinaus, dass die $\text{NBPR}_c$-Versionen, die eine Gewichtung über die Ränge vornehmen, mit SE-Werten zwischen $\text{SE}=0.070$ und $\text{SE}=0.087$ nahe am Enet-Schätzer liegen ($\text{SE}=0.054$) und teilweise deutlich geringer sind als bei den übrigen $\text{NBPR}_c$-Versionen ($\text{SE}=0.119$ bis $\text{SE}=0.212$). Grund hierfür bei letztgenannten sind die bereist erwähnten möglichen Ausreißer bzw. die generell flachere empirische Verteilung von $\text{NBPR}_{\mathscr{C}}$.\\
+Für $\boldsymbol{\beta}=1$ liegt der Enet-Schätzer mit $1.010$ durchschnittlich sehr dicht am wahren Wert, während die übrigen Schätzmethoden diesen stärker überschätzen. Davon schneidet $\text{NBPR}_{\sqrt{d}}$ dieses mal mit $1.175$ am besten ab, während $\text{NBPR}_{\mathscr{C}}$ zusammen mit $\text{NBPR}_{1}$ wieder die höchste Schätzung liefert. Im Bezug auf den Modellfehler und den empirischen Häufigkeitsverteilungen (\ref{fig:Hist_betahats1}) ergibt sich ein ähnliches Bild wie für $\boldsymbol{\beta}=1$. Weder für $\boldsymbol{\beta}=2$ noch $\boldsymbol{\beta}=1$ liefern die Methoden bei den \textit{durchschnittlichen} $\boldsymbol{\hat{\beta}}$ einen Vorzeichenfehler.\\ 
+Im Fall von $\boldsymbol{\beta}=0$ liefern alle $\text{NBPR}_c$-Versionen mit Werten von circa $1$ deutlich schlechtere Werte als die Enet-Methode ($0.553$). Damit liefern die $\text{NBPR}_c$-Methoden für Fälle, in denen fälschlich $\hat{\beta}_j \neq 0$ gesetzt wird, im Schnitt auch höhere Werte als die Enet-Methode. Die zu $\boldsymbol{\beta}=2$ gehörigen Plots in Abbildung \ref{fig:Hist_betahats0} weisen keine nennenswerte Unterschiede zu den zuvor erwähnten Plots auf. Eine Auffälligkeit für $\boldsymbol{\beta}=0$ ist der Umstand, dass keine Methode zumindest für einen Simulationsdurchlauf ein durchschnittlich negatives $\boldsymbol{\hat{\beta}}$ liefert. Da in dieser Simulationsstudie alle im Modell enthaltenen Regressionskoeffizienten größer null sind, lässt dies die Vermutung zu, dass die Richtung der Werte von fälschlich ungleich null gesetzten Koeffizienten von den Vorzeichen der $\beta_j$ abhängt.
+ 
+keine version hat durschnittlich einen vorzeichenfehler.
 
 \begin{comment}
 Da der Algorithmus der $\text{NBPR}_c$-Methode einen Startschätzer braucht (vgl. dazu Abschnitt \ref{Kap_Netzwerkbasierte_Penalisierung}) und dafür der Enet-Schätzer aus Abschnitt \ref{Kap_Schätzung_mittels_Enet} verwendet wird, ist von Interesse, inwieweit sich die einzelnen $\text{NBPR}_c$-Versionen vom Enet-Schätzer hinsichtlich der Selektion der einzelnen $\beta_j$ unterscheiden. Tabelle \ref{Tab_Diff_betas_Enet_Nets} gibt dazu das Verhältnis zwischen der Anzahl an Simulationen, in denen die jeweilige $\text{NBPR}_c$-Version mehr $\hat{\beta}_j \neq 0$ setzt als die Enet-Methode, und den umgekehrten Fall, in dem die Enet-Methode mehr $\hat{\beta}_j \neq 0$ setzt als die jeweilige $\text{NBPR}_c$-Version. Dabei wird für alle Kovariablen  $\boldsymbol{\beta}$ (Spalte $\mathcal{I}^{NBPR_c}/\mathcal{I}^{Enet}$), sowie nur die im wahren Modell vorhandenen Kovariablen $\boldsymbol{\beta} \neq 0$ bzw. nicht vorhandenen Kovariablen $\boldsymbol{\beta} = }$ (Spalte $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta} \neq 0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta} \neq 0}$ und Spalte $\mathcal{I}^{NBPR_c}_{\boldsymbol{\beta}=0}/\mathcal{I}^{Enet}_{\boldsymbol{\beta}=0}$) unterschieden. Je näher der Wert an $1$ reicht, desto weniger unterscheidet sich die Kovariablenselektion zwischen Enet- und $\text{NBPR}_c$-Methode über alle Simulationen. Ein Wert von $1$ bedeutet, dass genauso viele Simulationen gibt, in denen eine $\text{NBPR}_c$-Version mehr Kovariablen als die Enet-Methode  beiden Methoden für die jeweils betrachteten Teil von $\boldsymbol{\beta}$ immer die selben Kovariablen wählen. Werte $<1$ sind so zu interpretieren, dass es mehr Simulationen gibt, in denen die Enet-Methode mehr Kovariablen auswählt als die $\text{NBPR}_c$. Umgekehrtes gilt für einen Wert $>1$.\\
@@ -1345,6 +1349,7 @@ $\text{NBPR}_{1}$             &  & 0.38                 &  & $1.919$            
 \chapter{Diskussion und Ausblick}\label{Diskussion und Ausblick}
 Da auch unter Verwendung der \texttt{CVX}-Funktion 
 \texttt{square\_pos(norm(\dots,2))} numerische Instabilitäten auftreten, kann die Verwendung der Funktion \texttt{sum\_square(\dots)} als Ursache ausgeschlossen werden. 
+NBPR- Methoden nicht nur höhere FP rate, sondenr auch noch beta gleich 0 im schnitt dann höher
 \begin{comment}
 #######
 ## 1 ##
@@ -2294,16 +2299,16 @@ par(mfrow=c(3,3))
 hist(TP.Enet, main="Enet",
      breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit", ylim=c(0,20))
 
-hist(TP.Betweenness.Rank, main="Betweenness-Zentralität (Ränge)",
+hist(TP.Betweenness.Rank, main="Betweenness-Zentralität \n (Ränge)",
      breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit", ylim=c(0,20))
 
-hist(TP.closeness.Rank, main="Closeness-Zentralität (Ränge)",
+hist(TP.closeness.Rank, main="Closeness-Zentralität \n (Ränge)",
      breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit", ylim=c(0,20))
 
-hist(TP.DegreeRank, main="Knotengrad-Zentralität (Ränge)", 
+hist(TP.DegreeRank, main="Knotengrad-Zentralität \n (Ränge)", 
      breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit", ylim=c(0,20))
 
-hist(TP.evcent.Rank, main="Eigenvektor-Zentralität (Ränge)", 
+hist(TP.evcent.Rank, main="Eigenvektor-Zentralität \n (Ränge)", 
      breaks=seq(0,1,0.05),xlab="RP-Rate",ylab="absolute Häufigkeit", ylim=c(0,20))
 
 hist(TP.closenessNORank, main="Closeness-Zentralität", 
@@ -2328,16 +2333,16 @@ par(mfrow=c(3,3))
 hist(FP.Enet, main="Enet", 
      breaks=seq(0,1,0.05),xlab="FP-Rate",ylab="absolute Häufigkeit", ylim=c(0,70))
 
-hist(FP.Betweenness.Rank, main="Betweenness-Zentralität (Ränge)",
+hist(FP.Betweenness.Rank, main="Betweenness-Zentralität \n (Ränge)",
      breaks=seq(0,1,0.05),xlab="FP-Rate",ylab="absolute Häufigkeit", ylim=c(0,70))
 
-hist(FP.closeness.Rank, main="Closeness-Zentralität (Ränge)",
+hist(FP.closeness.Rank, main="Closeness-Zentralität \n (Ränge)",
      breaks=seq(0,1,0.05),xlab="FP-Rate",ylab="absolute Häufigkeit", ylim=c(0,70))
 
-hist(FP.DegreeRank, main="Knotengrad-Zentralität (Ränge)", 
+hist(FP.DegreeRank, main="Knotengrad-Zentralität \n (Ränge)", 
      breaks=seq(0,1,0.05),xlab="FP-Rate",ylab="absolute Häufigkeit", ylim=c(0,70))
 
-hist(FP.evcent.Rank, main="Eigenvektor-Zentralität (Ränge)", 
+hist(FP.evcent.Rank, main="Eigenvektor-Zentralität \n (Ränge)", 
      breaks=seq(0,1,0.05),xlab="FP-Rate",ylab="absolute Häufigkeit", ylim=c(0,70))
 
 hist(FP.closenessNORank, main="Closeness-Zentralität", 
@@ -2362,16 +2367,16 @@ par(mfrow=c(3,3))
 hist(ME.Enet, main="Enet", 
      breaks=seq(0,1400,50),xlab="ME",ylab="absolute Häufigkeit", ylim=c(0,50))
 
-hist(ME.Betweenness.Rank, main="Betweenness-Zentralität (Ränge)",
+hist(ME.Betweenness.Rank, main="Betweenness-Zentralität \n (Ränge)",
      breaks=seq(0,1400,50),xlab="ME",ylab="absolute Häufigkeit", ylim=c(0,50))
 
-hist(ME.closeness.Rank, main="Closeness-Zentralität (Ränge)",
+hist(ME.closeness.Rank, main="Closeness-Zentralität \n (Ränge)",
      breaks=seq(0,1400,50),xlab="ME",ylab="absolute Häufigkeit", ylim=c(0,50))
 
-hist(ME.DegreeRank, main="Knotengrad-Zentralität (Ränge)", 
+hist(ME.DegreeRank, main="Knotengrad-Zentralität \n (Ränge)", 
      breaks=seq(0,1400,50),xlab="ME",ylab="absolute Häufigkeit", ylim=c(0,50))
 
-hist(ME.evcent.Rank, main="Eigenvektor-Zentralität (Ränge)", 
+hist(ME.evcent.Rank, main="Eigenvektor-Zentralität \n (Ränge)", 
      breaks=seq(0,1400,50),xlab="ME",ylab="absolute Häufigkeit", ylim=c(0,50))
 
 hist(ME.closenessNORank, main="Closeness-Zentralität", 
@@ -2396,16 +2401,16 @@ par(mfrow=c(3,3))
 hist(PE.Enet, main="Enet", 
      breaks=seq(0,2000,100),xlab="PE",ylab="absolute Häufigkeit", ylim=c(0,70) )
 
-hist(PE.Betweenness.Rank, main="Betweenness-Zentralität (Ränge)",
+hist(PE.Betweenness.Rank, main="Betweenness-Zentralität \n (Ränge)",
      breaks=seq(0,2000,100),xlab="PE",ylab="absolute Häufigkeit", ylim=c(0,70))
 
-hist(PE.closeness.Rank, main="Closeness-Zentralität (Ränge)",
+hist(PE.closeness.Rank, main="Closeness-Zentralität \n (Ränge)",
      breaks=seq(0,2000,100),xlab="PE",ylab="absolute Häufigkeit", ylim=c(0,70))
 
-hist(PE.DegreeRank, main="Knotengrad-Zentralität (Ränge)", 
+hist(PE.DegreeRank, main="Knotengrad-Zentralität \n (Ränge)", 
      breaks=seq(0,2000,100),xlab="PE",ylab="absolute Häufigkeit", ylim=c(0,70))
 
-hist(PE.evcent.Rank, main="Eigenvektor-Zentralität (Ränge)", 
+hist(PE.evcent.Rank, main="Eigenvektor-Zentralität \n (Ränge)", 
      breaks=seq(0,2000,100),xlab="PE",ylab="absolute Häufigkeit", ylim=c(0,70))
 
 hist(PE.closenessNORank, main="Closeness-Zentralität", 
